@@ -1,0 +1,26 @@
+name: Spellcheck LaTeX Files
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  spellcheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install codespell
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y codespell
+
+      - name: Run codespell on LaTeX files
+        run: |
+          codespell --ignore-words-list=the,The -I '**/*.tex'  # You can add more custom ignores here
