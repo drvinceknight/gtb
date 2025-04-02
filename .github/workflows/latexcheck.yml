@@ -23,11 +23,11 @@ jobs:
 
       - name: Compile LaTeX
         run: |
-          latexmk -pdf -interaction=nonstopmode -quiet main.tex
+          latexmk --xelatex --shell-escape -interaction=nonstopmode  main.tex
 
       - name: Check for Undefined References
         run: |
-          latexmk -pdf -interaction=nonstopmode -quiet main.tex
+          latexmk --xelatex --shell-escape -interaction=nonstopmode  main.tex
           grep "undefined" main.log || echo "No undefined references found"
 
       - name: Validate Bibliography
