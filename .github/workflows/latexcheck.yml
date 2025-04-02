@@ -16,7 +16,7 @@ jobs:
       - name: Set up LaTeX environment
         run: |
           sudo apt-get update
-          sudo apt-get --no-install-recommends install texlive-latex-extra texlive-xetex texlive-fonts-recommended
+          sudo apt-get --no-install-recommends install texlive-latex-extra texlive-xetex texlive-fonts-recommended lmodern
 
       - name: Compile LaTeX
         run: |
