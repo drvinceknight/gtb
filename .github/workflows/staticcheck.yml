@@ -22,8 +22,12 @@ on:
       - main
 
 jobs:
+<<<<<<< HEAD
   spellcheck:
 >>>>>>> 8dcef01 (Reorganise workflow files.)
+=======
+  staticcheck:
+>>>>>>> 807bff4 (Modify workflow to compilation.)
     runs-on: ubuntu-latest
 
     steps:

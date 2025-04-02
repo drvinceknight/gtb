@@ -1,0 +1,32 @@
+name: LaTeX compilation check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  latex-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up LaTeX environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install texlive-full latexmk chktex curl
+
+      - name: Compile LaTeX
+        run: |
+          xelatex --shell-escape -interaction=nonstopmode  main.tex
+
+      - name: Check for Undefined References
+        run: |
+          xelatex --shell-escape -interaction=nonstopmode  main.tex
+          xelatex --shell-escape -interaction=nonstopmode  main.tex
+          grep "undefined" main.log || echo "No undefined references found"
+
+      - name: Validate Bibliography
+        run: |
+          bibtex main.aux
+          grep "Warning--I didn't find a database entry" main.blg && exit 1 || echo "All citations found."
