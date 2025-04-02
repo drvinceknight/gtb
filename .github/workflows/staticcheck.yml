@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  spellcheck:
+  staticcheck:
     runs-on: ubuntu-latest
 
     steps:
