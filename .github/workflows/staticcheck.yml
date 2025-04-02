@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+<<<<<<<< HEAD:.github/workflows/staticcheck.yml
+name: Static file check
+========
+name: LaTeX compilation check
+>>>>>>>> 8dcef01 (Reorganise workflow files.):.github/workflows/latexcheck.yml
+
+on:
+  workflow_dispatch:
+
+jobs:
+  staticcheck:
+=======
 name: Static file check
 
 on:
@@ -9,7 +22,8 @@ on:
       - main
 
 jobs:
-  staticcheck:
+  spellcheck:
+>>>>>>> 8dcef01 (Reorganise workflow files.)
     runs-on: ubuntu-latest
 
     steps:
@@ -19,10 +33,22 @@ jobs:
       - name: Install codespell
         run: |
           sudo apt-get update
+<<<<<<< HEAD
+<<<<<<<< HEAD:.github/workflows/staticcheck.yml
+          sudo apt-get install -y codespell chktex curl
+========
+          sudo apt-get install texlive-full latexmk chktex curl
+>>>>>>>> 8dcef01 (Reorganise workflow files.):.github/workflows/latexcheck.yml
+
+      - name: Run codespell on LaTeX files
+        run: |
+<<<<<<<< HEAD:.github/workflows/staticcheck.yml
+=======
           sudo apt-get install -y codespell chktex curl
 
       - name: Run codespell on LaTeX files
         run: |
+>>>>>>> 8dcef01 (Reorganise workflow files.)
           codespell '**/*.tex'  # You can add more custom ignores here
 
       - name: Run LaTeX Linter (chktex)
@@ -48,3 +74,19 @@ jobs:
       - name: Check for Consistent File Naming
         run: |
           find . -name "*.tex" | grep -E '[A-Z]' && echo "Inconsistent file naming" && exit 1 || echo "All filenames lowercase."
+<<<<<<< HEAD
+========
+          latexmk --xelatex --shell-escape -interaction=nonstopmode  main.tex
+
+      - name: Check for Undefined References
+        run: |
+          latexmk --xelatex --shell-escape -interaction=nonstopmode  main.tex
+          grep "undefined" main.log || echo "No undefined references found"
+
+      - name: Validate Bibliography
+        run: |
+          bibtex main.aux
+          grep "Warning--I didn't find a database entry" main.blg && exit 1 || echo "All citations found."
+>>>>>>>> 8dcef01 (Reorganise workflow files.):.github/workflows/latexcheck.yml
+=======
+>>>>>>> 8dcef01 (Reorganise workflow files.)
