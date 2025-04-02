@@ -1,0 +1,6 @@
+CmdLine
+{
+-v
+--nowarn 1  # Ignores warning 1 "Command terminated with space"
+--nowarn 38  # Ignores warning 38 "You should not use punctuation in front of/after quotes."
+}

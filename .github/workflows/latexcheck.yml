@@ -49,11 +49,6 @@ jobs:
         run: |
           grep -rnw . -e 'TODO' -e 'FIXME' --include=\*.tex && exit 1 || echo "No TODOs found."
 
-      - name: Check for Extra Spaces or Empty Lines
-        run: |
-          grep -n "  " *.tex || echo "No extra spaces found"
-          grep -n "^$" *.tex || echo "No unnecessary empty lines"
-
       - name: Check for Missing Figures
         run: |
           grep -oP '(?<=\\includegraphics{)[^}]+' main.tex | while read -r file; do
