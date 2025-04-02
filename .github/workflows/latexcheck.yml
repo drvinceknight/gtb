@@ -1,7 +1,9 @@
 name: LaTeX compilation check
 
 on:
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
 
 jobs:
   latex-check:
