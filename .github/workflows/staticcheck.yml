@@ -1,0 +1,50 @@
+name: Static file check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  staticcheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install codespell
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y codespell chktex curl
+
+      - name: Run codespell on LaTeX files
+        run: |
+          codespell '**/*.tex'  # You can add more custom ignores here
+
+      - name: Run LaTeX Linter (chktex)
+        run: |
+          chktex -v main.tex
+
+      - name: Check for Broken Links
+        run: |
+          grep -oP '(?<=\\href{)[^}]+' main.tex | while read -r url; do
+            curl --output /dev/null --silent --head --fail "$url" || echo "Broken URL: $url"
+          done
+
+      - name: Check for TODOs and FIXMEs
+        run: |
+          grep -rnw . -e 'TODO' -e 'FIXME' --include=\*.tex && exit 1 || echo "No TODOs found."
+
+      - name: Check for Missing Figures
+        run: |
+          grep -oP '(?<=\\includegraphics{)[^}]+' main.tex | while read -r file; do
+            if [ ! -f "$file" ]; then echo "Missing image: $file"; exit 1; fi
+          done
+
+      - name: Check for Consistent File Naming
+        run: |
+          find . -name "*.tex" | grep -E '[A-Z]' && echo "Inconsistent file naming" && exit 1 || echo "All filenames lowercase."
