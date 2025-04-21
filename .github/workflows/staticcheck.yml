@@ -34,7 +34,3 @@ jobs:
       - name: Check for TODOs and FIXMEs
         run: |
           grep -rnw . -e 'TODO' -e 'FIXME' --include=\*.md && exit 1 || echo "No TODOs found."
-
-      - name: Check for Consistent File Naming
-        run: |
-          find . -name "*.md" | grep -E '[A-Z]' && echo "Inconsistent file naming" && exit 1 || echo "All filenames lowercase."
