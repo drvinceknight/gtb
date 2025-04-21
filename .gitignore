@@ -35,3 +35,6 @@ latexmk.ps
 
 # Minted
 _minted-main/
+
+# Myst output
+_build/

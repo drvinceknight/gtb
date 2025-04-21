@@ -1,0 +1,20 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: 3d13b0be-b828-4e14-b764-15708f326551
+  # title:
+  # description:
+  # keywords: []
+  # authors: []
+  github: https://github.com/drvinceknight/gt
+  toc:
+    - file: chapters/introduction/main.md
+site:
+  template: book-theme
+  title: Game Theory
+  options:
+    logo_text: Game Theory
+    hide_search: True
+    favicon: favicon.ico
+  # options:
+  #   logo: site_logo.png
