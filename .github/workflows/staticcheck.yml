@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-<<<<<<<< HEAD:.github/workflows/staticcheck.yml
-name: Static file check
-========
-name: LaTeX compilation check
->>>>>>>> 8dcef01 (Reorganise workflow files.):.github/workflows/latexcheck.yml
-
-on:
-  workflow_dispatch:
-
-jobs:
-  staticcheck:
-=======
 name: Static file check
 
 on:
@@ -22,12 +9,7 @@ on:
       - main
 
 jobs:
-<<<<<<< HEAD
-  spellcheck:
->>>>>>> 8dcef01 (Reorganise workflow files.)
-=======
   staticcheck:
->>>>>>> 807bff4 (Modify workflow to compilation.)
     runs-on: ubuntu-latest
 
     steps:
@@ -37,60 +19,22 @@ jobs:
       - name: Install codespell
         run: |
           sudo apt-get update
-<<<<<<< HEAD
-<<<<<<<< HEAD:.github/workflows/staticcheck.yml
-          sudo apt-get install -y codespell chktex curl
-========
-          sudo apt-get install texlive-full latexmk chktex curl
->>>>>>>> 8dcef01 (Reorganise workflow files.):.github/workflows/latexcheck.yml
+          sudo apt-get install -y codespell curl
 
       - name: Run codespell on LaTeX files
         run: |
-<<<<<<<< HEAD:.github/workflows/staticcheck.yml
-=======
-          sudo apt-get install -y codespell chktex curl
-
-      - name: Run codespell on LaTeX files
-        run: |
->>>>>>> 8dcef01 (Reorganise workflow files.)
-          codespell '**/*.tex'  # You can add more custom ignores here
-
-      - name: Run LaTeX Linter (chktex)
-        run: |
-          chktex -v main.tex
+          codespell '**/*.md'  # You can add more custom ignores here
 
       - name: Check for Broken Links
         run: |
-          grep -oP '(?<=\\href{)[^}]+' main.tex | while read -r url; do
+          grep -oP '(?<=\\href{)[^}]+' main.md | while read -r url; do
             curl --output /dev/null --silent --head --fail "$url" || echo "Broken URL: $url"
           done
 
       - name: Check for TODOs and FIXMEs
         run: |
-          grep -rnw . -e 'TODO' -e 'FIXME' --include=\*.tex && exit 1 || echo "No TODOs found."
-
-      - name: Check for Missing Figures
-        run: |
-          grep -oP '(?<=\\includegraphics{)[^}]+' main.tex | while read -r file; do
-            if [ ! -f "$file" ]; then echo "Missing image: $file"; exit 1; fi
-          done
+          grep -rnw . -e 'TODO' -e 'FIXME' --include=\*.md && exit 1 || echo "No TODOs found."
 
       - name: Check for Consistent File Naming
         run: |
-          find . -name "*.tex" | grep -E '[A-Z]' && echo "Inconsistent file naming" && exit 1 || echo "All filenames lowercase."
-<<<<<<< HEAD
-========
-          latexmk --xelatex --shell-escape -interaction=nonstopmode  main.tex
-
-      - name: Check for Undefined References
-        run: |
-          latexmk --xelatex --shell-escape -interaction=nonstopmode  main.tex
-          grep "undefined" main.log || echo "No undefined references found"
-
-      - name: Validate Bibliography
-        run: |
-          bibtex main.aux
-          grep "Warning--I didn't find a database entry" main.blg && exit 1 || echo "All citations found."
->>>>>>>> 8dcef01 (Reorganise workflow files.):.github/workflows/latexcheck.yml
-=======
->>>>>>> 8dcef01 (Reorganise workflow files.)
+          find . -name "*.md" | grep -E '[A-Z]' && echo "Inconsistent file naming" && exit 1 || echo "All filenames lowercase."
