@@ -1,2 +1,4 @@
 mystmd
 jupyter
+numpy
+matplotlib
