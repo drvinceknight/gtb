@@ -9,12 +9,16 @@ project:
   github: https://github.com/drvinceknight/gt
   toc:
     - file: chapters/introduction/main.md
+    - file: chapters/games/main.md
+  export:
+    format: pdf
+    output: exports/main.pdf
 site:
   template: book-theme
   title: Game Theory
   options:
     logo_text: Game Theory
     hide_search: True
-    favicon: favicon.ico
+  favicon: favicon.ico
   # options:
   #   logo: site_logo.png

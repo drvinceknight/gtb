@@ -81,8 +81,6 @@ foundation, serving as a springboard for deeper theoretical analysis.
 
 ## How is this book organised?
 
-## How is this book organised?
-
 Each chapter in this book follows a structured format:
 
 1.  **A motivating case study:** a running example throughout the
@@ -108,7 +106,7 @@ implementations. This book is designed to be flexible, allowing readers
 to approach the material in a way that best suits their background and
 interests.
 
-Figure [1.1](#fig:structure) shows the general structure of the book and
+[](#fig:structure) shows the general structure of the book and
 how the various chapters link together.
 
 ```{figure} assets/chapter_relationship_diagram/main.png
@@ -118,14 +116,3 @@ how the various chapters link together.
 
 Visual representation of the relationships and flow between chapters.
 ```
-
-```{code-cell} python
-
-print(2 + 2)
-```
-
-Here is some mathematics:
-
-$$
-x ^ 2 - x
-$$
