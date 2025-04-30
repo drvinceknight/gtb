@@ -711,7 +711,6 @@ row and column player strategies, treated as row vectors.
 This linear algebraic form will be important in later chapters,
 and it also enables **efficient numerical computation** in programming
 languages that support vectorized matrix operations.
-% TODO Add reference to chapters on polytopes, zero sum games etc...
 
 (sec:using_numpy_for_utility_calculations)=
 
