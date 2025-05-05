@@ -11,6 +11,7 @@ project:
     - file: chapters/introduction/main.md
     - file: chapters/games/main.md
     - file: chapters/rationalisation/main.md
+    - file: chapters/zero_sum_games/main.md
   export:
     format: pdf
     output: exports/main.pdf
@@ -20,6 +21,7 @@ site:
   options:
     logo_text: Game Theory
     hide_search: True
+    outline_maxdepth: 1
   favicon: favicon.ico
   # options:
   #   logo: site_logo.png

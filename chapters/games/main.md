@@ -219,10 +219,13 @@ An alternative approach is to use two separate matrices: $M_r$ for the row
 player and $M_c$ for the column player, defined as follows:
 
 $$
+\label{eqn:payoff_matrices_definition}
 (M_r)_{ij} = u_1(r_i, c_j) \qquad (M_c)_{ij} = u_2(r_i, c_j)
 $$
 
 This is the preferred representation used in this text.
+
+(sec:coordination_game)=
 
 ### Example: Coordination game
 
@@ -351,12 +354,15 @@ distribution over the elements of $\mathcal{A}$.
 
 ---
 
-Typically, a strategy is denoted by  
-$\sigma \in [0, 1]^{|\mathcal{A}|}_{\mathbb{R}}$, subject to the condition:
+Typically, a strategy is denoted by $\sigma \in [0, 1]^{|\mathcal{A}|}_{\mathbb{R}}$, subject to the condition:
 
 $$
 \sum_{i=1}^{|\mathcal{A}|} \sigma_i = 1
 $$
+
+Given an action set $\mathcal{A}$ the set of valid strategies is denoted as $\Delta \mathcal{S}$ so that:
+
+$$\left\{\sigma \in [0, 1]^{|\mathcal{A}|}_{\mathbb{R}} \left|\sum_{i=1}^{|\mathcal{A}|} \sigma_i = 1 \right.\right\}$$
 
 In the [Matching Pennies game](#matching_pennies), a strategy profile such as  
 $\sigma_1 = (0.2, 0.8)$ and $\sigma_2 = (0.6, 0.4)$ implies that player 1 plays
@@ -375,8 +381,6 @@ $$
 Here, we treat $\sigma_i$ as a function $\sigma_i: \mathcal{A}_i \to [0, 1]$
 so that $\sigma_i(a_i)$ is the probability of choosing action $a_i \in 
 \mathcal{A}_i$.
-
----
 
 (sec:example_expected_utility_in_matching_pennies)=
 
@@ -593,10 +597,9 @@ M_c = \begin{pmatrix}
 \end{pmatrix}
 $$
 
-## Exercises: Extensive and Normal Form Games
+## Exercises
 
-```{exercise}
-:label: structure_of_an_extensive_form_game_perfect_information
+### Exercise: Structure of a Perfect Information Game
 
 Using the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_information_bob_first) and the
 [definition of an Extensive Form Game](#definition_extensive_form_game):
@@ -606,10 +609,10 @@ Using the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_inform
 3. What is the partition $(V_i)_{i \in \mathcal{N}}$?
 4. What is the set of possible game outcomes $O$?
 5. What is the mapping $u$ from every leaf of $G$ to an element of $O$?
-```
 
-```{exercise}
-:label: structure_of_an_extensive_form_game_imperfect_information
+---
+
+### Exercise: Structure of an Imperfect Information Game
 
 Using the [Coordination Game with imperfect information](#fig:battle_of_the_sexes_imperfect_information) and the
 [definition of an Extensive Form Game](#definition_extensive_form_game):
@@ -619,14 +622,14 @@ Using the [Coordination Game with imperfect information](#fig:battle_of_the_sexe
 3. What is the partition $(V_i)_{i \in \mathcal{N}}$?
 4. What is the set of possible game outcomes $O$?
 5. What is the mapping $u$ from every leaf of $G$ to an element of $O$?
-```
 
-````{exercise}
-:label: identifying_information_sets_from_game_trees
+---
 
-For each of the following games with
-$\mathcal{N} = \{\text{Alice},\ \text{Bob}\}$, assume that decision nodes
-$A_i$ belong to Alice and $B_i$ belong to Bob. Determine all **information sets**.
+### Exercise: Identifying Information Sets from Game Trees
+
+For each of the following games with $\mathcal{N} = \{\text{Alice},\ \text{Bob}\}$,  
+assume that decision nodes $A_i$ belong to Alice and $B_i$ belong to Bob.  
+Determine all **information sets**.
 
 1.
 
@@ -662,37 +665,39 @@ $A_i$ belong to Alice and $B_i$ belong to Bob. Determine all **information sets*
 :alt: Incoherent extensive form game with imperfect information
 :width: 500px
 ```
-````
 
-```{exercise}
-:label: normal_form_representation_messaging_platform_choice
+---
+
+### Exercise: Messaging Platform Coordination
+
 > Alice, Bob, and Celine are childhood friends who want to stay in touch
-> online. Each has a choice between three messaging platforms: WhatsApp,
-> Instagram, and Snapchat.
+> online. Each has a choice between three messaging platforms:
+> **WhatsApp**, **Instagram**, and **Snapchat**.
 
 - Clearly identify the players and their strategy sets.
 - Propose a reasonable interpretation of utility values.
 - Write the normal form representation of the game.
-```
 
-```{exercise}
-:label: normal_form_representation_peace_or_war
+---
+
+### Exercise: Peace or War — A Strategic Dilemma
 
 > Two neighbouring countries possess highly destructive military forces.
 >
-> - If both attack, each suffers 10,000 civilian casualties.
+> - If both attack, each suffers **10,000** civilian casualties.
 > - If one attacks while the other remains peaceful, the peaceful country suffers
->   15,000 casualties, while the attacker suffers 13,000 in retaliation.
-> - If both remain peaceful, there are no casualties.
+>   **15,000** casualties while the attacker suffers **13,000** in retaliation.
+> - If both remain peaceful, there are **no** casualties.
 
 - Clearly state the players and their strategy sets.
 - Plot the expected utility to each country assuming it plays a mixed strategy
   while the other remains peaceful.
 - Plot the expected utility to each country assuming it plays a mixed strategy
   while the other attacks.
-```
 
 ## Programming
+
+(sec:linear_algebraic_formulation_of_expected_utility)=
 
 ### Linear Algebraic Form of Expected Utility
 
@@ -717,7 +722,7 @@ languages that support vectorized matrix operations.
 ### Using NumPy to Compute Expected Utilities
 
 Python's numerical library **NumPy** [@harris2020array] provides vectorized operations through
-its `array` class. Below, we define the elements from the  
+its `array` class. Below, we define the elements from the
 [earlier Matching Pennies example](#sec:example_expected_utility_in_matching_pennies):
 
 ```{code-cell} python3
@@ -741,7 +746,7 @@ Pennies game happens to be a **zero-sum game** — a topic discussed in a later 
 % Add reference to zero sum chapter
 :::
 
-We can now compute the expected utility for the row player using  
+We can now compute the expected utility for the row player using
 [](#eqn:linear_algebraic_formulation_of_expected_utility):
 
 ```{code-cell} python3
@@ -761,7 +766,7 @@ multiplication.
 
 ### Using Nashpy to Create Games and Compute Utilities
 
-The Python library **Nashpy** [@knight2018nashpy] is specifically designed for two-player games.  
+The Python library **Nashpy** [@knight2018nashpy] is specifically designed for two-player games.
 We can use it to create the [Matching Pennies game](#matching_pennies):
 
 ```{code-cell} python3
@@ -783,9 +788,9 @@ matching_pennies[sigma_r, sigma_c]
 ```
 
 :::{note}
-**Nashpy** is the main Python library used in this text for studying games.  
+**Nashpy** is the main Python library used in this text for studying games.
 Another useful tool is **Gambit**, which supports some different features,
-including the analysis of games with more than two players  
+including the analysis of games with more than two players
 [@savani2024gambit].
 :::
 
@@ -841,10 +846,10 @@ creating a more equitable outcome for all parties.
 
 ## Conclusion
 
-In this chapter, we introduced the formal structure of games, focusing on both  
+In this chapter, we introduced the formal structure of games, focusing on both
 **normal form** and **extensive form** representations. [](#tbl:game_summary) shows a comparison of these two forms.
-We saw how strategies,  
-utilities, and information sets define the behaviour of rational agents in  
+We saw how strategies,
+utilities, and information sets define the behaviour of rational agents in
 interactive decision-making scenarios.
 
 ```{table} The main concepts for Normal Form and Extensive Form Games.
@@ -864,17 +869,21 @@ interactive decision-making scenarios.
 
 ```
 
-Through motivating examples, formal definitions, and real-world applications,  
-we began to see how even simple games can model complex dynamics. From  
-coordinating with friends to navigating competitive environments, these tools  
+Through motivating examples, formal definitions, and real-world applications,
+we began to see how even simple games can model complex dynamics. From
+coordinating with friends to navigating competitive environments, these tools
 lay the groundwork for deeper analysis in the chapters to come.
 
-Next, we turn to the study of **emergent behaviour**, where individual  
-strategies interact in surprising ways across repeated play, populations, or  
-networks of agents. Understanding these patterns is essential for analysing  
+Next, we turn to the study of **emergent behaviour**, where individual
+strategies interact in surprising ways across repeated play, populations, or
+networks of agents. Understanding these patterns is essential for analysing
 systems that evolve over time — and for designing mechanisms that shape them.
 
 ```{attention}
 Every extensive form game has an equivalent representation in normal form,
 where strategies specify complete plans of action across all information sets.
+```
+
+```
+
 ```
