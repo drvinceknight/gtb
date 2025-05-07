@@ -12,6 +12,8 @@ project:
     - file: chapters/games/main.md
     - file: chapters/rationalisation/main.md
     - file: chapters/zero_sum_games/main.md
+    - file: chapters/lemke_howson_algorithm/main.md
+    - file: appendices/integer_pivoting/main.md
   export:
     format: pdf
     output: exports/main.pdf

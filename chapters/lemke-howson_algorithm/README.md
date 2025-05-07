@@ -1,1 +1,0 @@
-# Lemke-Howson Algorithm
