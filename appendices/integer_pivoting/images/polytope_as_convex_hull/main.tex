@@ -1,0 +1,31 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\begin{document}
+
+\begin{tikzpicture}[scale=20]
+  % Ax_1es
+  \draw[->] (-0.05, 0) -- (0.5, 0) node[right] {$x_1$};
+  \draw[->] (0, -0.05) -- (0, 0.5) node[above] {$x_2$};
+
+  % Define the points
+  \coordinate (A) at (0, 0);
+  \coordinate (B) at (0.333, 0);
+  \coordinate (C) at (0.25, 0.25);
+  \coordinate (D) at (0, 0.333);
+
+  % Fill the polytope
+  \filldraw[fill=blue!10, draw=blue, thick]
+    (A) -- (B) -- (C) -- (D) -- cycle;
+
+  % Draw the points
+  \foreach \point/\name in {(A)/A, (B)/B, (C)/C, (D)/D}
+    \fill \point circle[radius=0.01];
+
+  % Label the points
+  \node[below left] at (A) {$(0, 0)$};
+  \node[below right] at (B) {$(\frac{1}{3}, 0)$};
+  \node[above right] at (C) {$(\frac{1}{4}, \frac{1}{4})$};
+  \node[above left] at (D) {$(0, \frac{1}{3})$};
+\end{tikzpicture}
+
+\end{document}
