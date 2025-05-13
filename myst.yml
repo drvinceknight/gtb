@@ -12,7 +12,22 @@ project:
     - file: chapters/games/main.md
     - file: chapters/rationalisation/main.md
     - file: chapters/zero_sum_games/main.md
+    - file: chapters/nash_equilibrium/main.md
+    - file: chapters/subgame_perfection/main.md
+    - file: chapters/repeated_games/main.md
+    - file: chapters/direct_reciprocity/main.md
+    - file: chapters/replicator_dynamics/main.md
+    - file: chapters/moran_process/main.md
+    - file: chapters/best_response_polytopes/main.md
     - file: chapters/lemke_howson_algorithm/main.md
+    - file: chapters/routing_games/main.md
+    - file: chapters/matching_games/main.md
+    - file: chapters/auction_games/main.md
+    - file: chapters/social_choice/main.md
+    - file: chapters/cooperative_games/main.md
+    - file: appendices/numerical_integration/main.md
+    - file: appendices/absorbing_markov_chains/main.md
+    - file: appendices/interior_point_optimisation/main.md
     - file: appendices/integer_pivoting/main.md
   export:
     format: pdf
