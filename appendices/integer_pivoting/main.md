@@ -6,6 +6,8 @@ numbering:
   enumerator: A1.%s
 ---
 
+(app:integer_pivoting)=
+
 # Appendix: Integer Pivoting
 
 (sec:motivating_example_two_views_of_a_polytope)=
@@ -709,10 +711,10 @@ Recall that Python uses 0 based indexing: the first variable/column corresponds
 to index 0.
 ```
 
-We can pivot the tableau on a given column:
+We can pivot the tableau on a given column and given row:
 
 ```{code-cell} python3
-T.pivot_and_drop_label(1)
+T._pivot(column_index=1, pivot_row_index=1)
 ```
 
 This pivoted on the first column returning which non-variable becomes basic as a
@@ -727,7 +729,7 @@ T._tableau
 ## Notable Research
 
 The concept of pivoting and tableaux was first introduced by the mathematician
-George Dantzig in a 1947 report during his tenure at the Pentagon.
+George Dantzig in a 1947 report during his tenure at the Pentagon [@dantzig1947maximization].
 
 The initial publication of this idea is found in [@dantzig1951maximization].
 Although Dantzig did not explicitly mention tableaux, they naturally emerged as

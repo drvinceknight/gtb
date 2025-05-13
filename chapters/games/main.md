@@ -178,6 +178,8 @@ of the game.
 
 Another way to represent a game is in **normal form**.
 
+(sec:normal_form_games)=
+
 ### Definition: Normal Form Game
 
 ---
