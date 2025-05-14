@@ -646,7 +646,15 @@ The **minimax theorem** was first proven by John von Neumann in 1928
 two-player zero-sum game has a value and optimal mixed strategies, was later
 generalised in 1944 [@vonneumann1944theory].
 
-Until the work of [@nash1950equilibrium] this was the minimax theorem was the main solution concept in game theory.
+The **minimax theorem** does not necessarily only apply to zero-sum games but in
+fact applies to any constant sum game where $M_r + M_c = K$ for some constant
+$K$. An example of this is shown in [@chiappori2002testing] where penalty kicks
+are modelled and the payoff matrices correspond to the probability of
+scoring (or for the column player saving) a penalty.
+
+Until the work of [@nash1950equilibrium] the minimax theorem was the main solution concept in game theory.
+Nash noble prize winning work allowed for the subject to greatly expand and find
+a huge number of applications as well as further theoretical avenues.
 
 ## Conclusion
 
