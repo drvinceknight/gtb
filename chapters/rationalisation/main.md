@@ -362,6 +362,8 @@ given the strategies chosen by the other players.
 We can now begin to predict rational behaviour by identifying the best responses
 to actions of the other players.
 
+(exam:predicted_behaviour_through_best_responses_in_the_action_space)=
+
 ### Example: Predicted Behaviour through Best Responses in the Action Space
 
 Consider the following game with payoff matrices for the row and column players:
@@ -608,7 +610,7 @@ $\sigma_2 = \left(0,\ \frac{1}{4},\ 0,\ 0,\ \frac{3}{4}\right)$.
 We begin by computing the expected utilities for each of player 1’s actions:
 
 $$
-A \sigma_2^\mathsf{T} =
+M_r \sigma_2^\mathsf{T} =
 \begin{pmatrix}
 0.75 \\
 -0.5 \\
@@ -623,6 +625,11 @@ From this vector, we observe that:
 $$
 \max_{k \in \mathcal{A}_1} (A \sigma_2^\mathsf{T})_k = 0.75
 $$
+
+```note
+The set actions that a strategy $\sigma$ plays with non zero probability is
+referred to as the support of $\sigma$.
+```
 
 The support of $\sigma_1$ is $\mathcal{S}(\sigma_1) = \{1,\ 3,\ 4\}$.
 Among these, only $(A \sigma_2^\mathsf{T})_1 = 0.75$ equals the maximum.
