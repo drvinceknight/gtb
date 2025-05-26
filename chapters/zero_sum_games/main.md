@@ -668,16 +668,24 @@ zero-sum game and solving a pair of dual linear programs. This connection
 allows us to apply tools from optimisation—such as tableau methods and integer
 pivoting—to find equilibrium strategies.
 
-The table below summarises the two central linear programs:
+[](#tbl:zero_sum_summary) summarises the two central linear programs seen in this chapter.
+
+```{table} The main linear programs for Zero Sum Game
+:label: tbl:zero_sum_summary
+:align: center
+:class: table-bordered
+
 
 | Problem    | Player        | Objective    | Constraints                                      |
 | ---------- | ------------- | ------------ | ------------------------------------------------ |
 | Max-min LP | Row player    | Maximise $u$ | $x M \geq \mathbb{1} u$, $x \in \mathcal{A}_1$   |
 | Min-max LP | Column player | Minimise $v$ | $M y^T \leq \mathbb{1} v$, $y \in \mathcal{A}_2$ |
 
+```
+
 ---
 
-```{important}
+```{attention}
 The **value of a zero-sum game** is the unique number that both players can
 guarantee for themselves through optimal play, and it can be computed by
 solving either the max-min or min-max linear program.

@@ -267,21 +267,59 @@ A two player game is called non degenerate if no strategy of support size $k$ ha
 
 ---
 
-### Example: A degenerate game
+(exam:support_enumeration_for_a_degenerate_game)=
 
-Any game with the following row player utility matrix is degenerate:
+### Example: Support Enumeration for a degenerate game
+
+Let us use support enumeration for the following game.
 
 $$
     M_r =
       \begin{pmatrix}
-           0 & -1 &  1\\
-          -1 &  0 &  1\\
-          -1 &  1 &  0
+           2 & 5 \\
+           0 & 5\\
+      \end{pmatrix}
+\qquad
+    M_c =
+      \begin{pmatrix}
+           2 & 1 \\
+           0 & 1\\
       \end{pmatrix}
 $$
 
-Indeed the strategy $\sigma_c = (0, 0, 1)$ (always play the 3rd column) has 2
-actions that are best responses: the first and second row.
+First, we note that this game is degenerate, there are two best responses in
+action space to the first column:
+
+$$
+    M_r =
+      \begin{pmatrix}
+           \underline{2} & \underline{5} \\
+           0 & \underline{5}\\
+      \end{pmatrix}
+\qquad
+    M_c =
+      \begin{pmatrix}
+           \underline{2} & 1 \\
+           0 & \underline{1}\\
+      \end{pmatrix}
+$$
+
+Evaluating best responses in action space gives Nash equilibria:
+
+$$
+((1, 0), (1, 0)) \qquad ((0, 1), (0, 1))
+$$
+
+We need to consider new pairs of supports:
+
+- $\sigma_1=(x, 1-x)$ and $\sigma_2 = (1, 0)$: there is single best response to
+  the first column so nothing else to consider here.
+- $\sigma_1=(x, 1-x)$ and $\sigma_2 = (0, 1)$: step 2 holds for all $x$, step 3
+  is already satisfied (the vectors are both probability distributions) thus we
+  are left to check the best response condition:
+  $$_sigma_1M_c=(2x, 1)$$
+  the only value of $x$ that gives a pair of best response is when the column
+  player has no incentive to move from the support thus $2x=1 \implies x=1/2$.
 
 ## Exercises
 
@@ -428,7 +466,13 @@ conceptually simple but can become computationally expensive as the action
 spaces grow. Nevertheless, it serves as a useful tool both in theory and in  
 practice, particularly for small-scale empirical models.
 
-The table below summarises the core concepts introduced in this chapter:
+[](#tbl:ne_summary) summarises the core concepts introduced in this chapter.
+
+```{table} The main concepts of Nash equilibrium
+:label: tbl:ne_summary
+:align: center
+:class: table-bordered
+
 
 | Concept                       | Description                                                                        |
 | ----------------------------- | ---------------------------------------------------------------------------------- |
@@ -437,7 +481,11 @@ The table below summarises the core concepts introduced in this chapter:
 | Support enumeration algorithm | Enumerates possible supports and checks conditions for equilibrium                 |
 | Degenerate game               | A game in which some strategy of support size $k$ has more than $k$ best responses |
 
-```{important}
+```
+
+---
+
+```{attention}
 Support enumeration embodies the best response condition and provides an
 accessible, transparent algorithm for computing all equilibria in two-player
 games.
