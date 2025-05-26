@@ -499,6 +499,8 @@ This leads us to a fundamental idea: **every extensive form game corresponds to
 a normal form game**, where strategies describe complete plans of action across
 all information sets.
 
+(sec:mapping_extensive_form_games_to_normal_form)=
+
 ### Mapping Extensive Form Games to Normal Form
 
 An extensive form game can be mapped to a normal form game by enumerating all
@@ -768,7 +770,7 @@ multiplication.
 
 ### Using Nashpy to Create Games and Compute Utilities
 
-The Python library **Nashpy** [@knight2018nashpy] is specifically designed for two-player games.
+The Python library **Nashpy** [@knight2018nashpy] is specifically designed for two-player normal form games.
 We can use it to create the [Matching Pennies game](#matching_pennies):
 
 ```{code-cell} python3
@@ -791,9 +793,6 @@ matching_pennies[sigma_r, sigma_c]
 
 :::{note}
 **Nashpy** is the main Python library used in this text for studying games.
-Another useful tool is **Gambit**, which supports some different features,
-including the analysis of games with more than two players
-[@savani2024gambit].
 :::
 
 ## Notable Research
@@ -880,6 +879,8 @@ Next, we turn to the study of **emergent behaviour**, where individual
 strategies interact in surprising ways across repeated play, populations, or
 networks of agents. Understanding these patterns is essential for analysing
 systems that evolve over time — and for designing mechanisms that shape them.
+
+---
 
 ```{attention}
 Every extensive form game has an equivalent representation in normal form,
