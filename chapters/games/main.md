@@ -231,8 +231,7 @@ This is the preferred representation used in this text.
 
 ### Example: Coordination game
 
-See [](#battle_of_the_sexes) for a sequential form
-representation. The normal form of this game is defined by the following payoff
+The Normal Form Game representation of [](#fig:battle_of_the_sexes_imperfect_information) has the following payoff
 matrices for the row and column players:
 
 $$
@@ -248,6 +247,8 @@ M_c = \begin{pmatrix}
 $$
 
 ---
+
+(exam:prisoners_dilemma)=
 
 ### Example: Prisoners’ Dilemma
 
