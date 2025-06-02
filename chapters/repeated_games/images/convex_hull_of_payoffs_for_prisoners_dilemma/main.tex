@@ -1,0 +1,22 @@
+
+\documentclass[tikz]{standalone}
+\usepackage{tikz,amsmath}
+\begin{document}
+\tikzstyle{end} = [circle, minimum width=3pt, fill, inner sep=0pt, right]
+\begin{tikzpicture}
+    \draw (0,0) -- (6,0) node [below] {$u_1$};
+    \draw (0,0) -- (0,6) node [left] {$u_2$};
+    \draw (5,0) node[end] (A) {} node [above=.3cm,right] {$(5,0)$};
+    \draw (0,5) node[end] (B) {} node [above=.3cm,right] {$(0,5)$};
+    \draw (1,1) node[end] (C) {} node [below,left] {$(1,1)$};
+    \draw (3,3) node[end] (D) {} node [above=.3cm,right] {$(3,3)$};
+    \draw (A) -- (D);
+    \draw (D) -- (B);
+    \draw (B) -- (C);
+    \draw (C) -- (A);
+    \draw [dashed,thick] (C) -- ++(0,3.25);
+    \draw [dashed,thick] (C) -- ++(3.25,0);
+    \draw [->] (4,5.5) node[above] {\small{Feasible average payoffs}} -- (.75,3);
+    \draw [->] (6,2.5) node[above] {\small{Individually rational payoffs}} -- (2,1.25);
+\end{tikzpicture}
+\end{document}

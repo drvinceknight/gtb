@@ -6,4 +6,4 @@ kernelspec:
 
 (chp:lemke_howson_algorithm)=
 
-# Lemke-Howson Algorithm
+# Lemke-Howson Algorithm ❌

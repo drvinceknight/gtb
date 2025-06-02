@@ -1,4 +1,5 @@
-mystmd
+axelrod
 jupyter
-numpy
 matplotlib
+mystmd
+numpy
