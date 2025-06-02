@@ -1,1 +1,0 @@
-# Emergence of cooperation
