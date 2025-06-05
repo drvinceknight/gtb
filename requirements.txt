@@ -3,3 +3,4 @@ jupyter
 matplotlib
 mystmd
 numpy
+python-ternary

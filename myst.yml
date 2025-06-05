@@ -28,6 +28,7 @@ project:
     - file: appendices/absorbing_markov_chains/main.md
     - file: appendices/interior_point_optimisation/main.md
     - file: appendices/integer_pivoting/main.md
+  output_matplotlib_strings: remove"
   export:
     format: pdf
     output: exports/main.pdf
