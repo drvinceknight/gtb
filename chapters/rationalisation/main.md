@@ -626,8 +626,8 @@ $$
 \max_{k \in \mathcal{A}_1} (A \sigma_2^\mathsf{T})_k = 0.75
 $$
 
-```note
-The set actions that a strategy $\sigma$ plays with non zero probability is
+```{note}
+The set of actions that a strategy $\sigma$ plays with non zero probability is
 referred to as the support of $\sigma$.
 ```
 
