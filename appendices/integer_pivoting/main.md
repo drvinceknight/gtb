@@ -782,7 +782,12 @@ This chapter has introduced the core tools required to navigate these geometric
 structures, setting the stage for applications in zero-sum games and Nash
 equilibrium computation.
 
-The following table summarises the key concepts introduced:
+[](#tbl:integer_pivoting) summarises the key concepts introduced in this
+appendix.
+
+```{table} Summary of integer pivoting
+:name: tbl:integer_pivoting
+:align: center
 
 | Concept                | Description                                                            |
 | ---------------------- | ---------------------------------------------------------------------- |
@@ -795,6 +800,7 @@ The following table summarises the key concepts introduced:
 | Pivoting               | Row operations used to exchange basic and non-basic variables          |
 | Minimum ratio test     | Selects the pivot row to preserve feasibility during a pivot           |
 | Integer pivoting       | Pivoting using only integer row operations to maintain exact structure |
+```
 
 ```{important}
 Each tableau corresponds to a vertex of a polytope, and integer pivoting

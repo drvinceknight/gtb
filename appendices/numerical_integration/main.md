@@ -313,7 +313,7 @@ integration, but it highlights the tradeoff between simplicity, accuracy, and
 stability. Modern applications often involve stiff systems or demand high
 accuracy, where more advanced methods are preferable.
 
-The table below summarizes key properties of several commonly used numerical
+[tbl:numerical_methods_summary] summarizes key properties of several commonly used numerical
 integration methods.
 
 ```{table} Summary of numerical methods. Higher-order methods reduce error more quickly with smaller steps. Stiff solvers handle problems where some parts evolve much faster than others.
