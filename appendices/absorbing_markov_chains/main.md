@@ -6,6 +6,8 @@ numbering:
   enumerator: A1.%s
 ---
 
+(app:absorbing_markov_chain)=
+
 # Appendix: Absorbing Markov Chains
 
 (sec:motivating_example_escaping_a_maze)=
@@ -208,6 +210,8 @@ I = \begin{pmatrix}
 \end{pmatrix}
 $$
 
+(sec:definition_of_fundamental_matrix)=
+
 ### Definition: Fundamental Matrix
 
 For an absorbing Markov chain in the form [](#eqn:form_of_absorbing_markov_chain) the fundamental matrix $N$ is given by:
@@ -270,7 +274,9 @@ student will visit state $j=3$ on average $N_{23}=1.36$ times.
 
 This will allow us to identify which absorption state is the most likely.
 
-### Absorption Probability Matrix
+(sec:definition_of_absorption_probability_matrix)=
+
+### Definition: Absorption Probability Matrix
 
 For an absorbing Markov chain in the form [](#eqn:form_of_absorbing_markov_chain) the absorption probability
 matrix $B$ is given by:
