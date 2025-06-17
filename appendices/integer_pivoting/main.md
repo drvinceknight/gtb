@@ -145,6 +145,8 @@ $$
 where $s_i\geq 0$ is the **slack variable** corresponding to the $i$-th
 inequality.
 
+(sec:definition_tableau_representation_of_vertices)=
+
 ### Definition: Tableau Representation of Vertices
 
 For $M \in \mathbb{R}^{m \times n}$ and $b \in \mathbb{R}^m$,
@@ -388,6 +390,8 @@ operations are written as short hand.
 
 This process corresponds to making a non-basic variable basic and carefully
 choosing which basic variable to make non-basic.
+
+(sec:definition_integer_pivoting)=
 
 ### Definition: Integer Pivoting
 

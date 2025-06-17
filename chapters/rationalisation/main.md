@@ -4,6 +4,8 @@ kernelspec:
   display_name: "Python 3"
 ---
 
+(chp:rationality)=
+
 # Rationality
 
 ```{figure} ./logo/main.png

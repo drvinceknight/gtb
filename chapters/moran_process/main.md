@@ -496,7 +496,7 @@ In this chapter, we:
 - Introduced **fixation probabilities**, the likelihood that a given type takes
   over the population;
 - Showed how the process corresponds to an
-  [absorbing Markov chain](app:absorbing_markov_chain), enabling exact analysis;
+  [absorbing Markov chain](#app:absorbing_markov_chain), enabling exact analysis;
 - Proved a general formula for fixation probabilities in the case of two types.
 
 These results highlight how even simple stochastic rules can give rise to rich
