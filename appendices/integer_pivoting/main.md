@@ -80,7 +80,7 @@ supporting half-spaces that together enclose the polytope.
 Polytopes appear throughout mathematics, particularly in **optimisation**, where
 they form the feasible regions of linear programs. These connections are central
 to game theory, especially in the study of [zero-sum games](#chp:zero_sum_games)
-and [general games](#chp:lemke_howson_algorithm).
+and [general games](#chp:best_response_polytopes).
 
 While this example lives in $\mathbb{R}^2$, the techniques extend to
 **higher-dimensional polytopes**. The goal of this chapter is to develop tools
@@ -412,7 +412,7 @@ and you choose a non-basic variable $x_j$ to enter the basis.
 **How** a particular variable $x_j$ is chosen is important and depends on the
 context. Two different approaches will be considered in chapters
 [](#chp:zero_sum_games) and
-[](#chp:lemke_howson_algorithm).
+[](#chp:best_response_polytopes).
 ```
 
 The goal is to
@@ -768,7 +768,7 @@ Two significant works connect integer pivoting to game theory:
   [@adler2013equivalence].
 
 - [@lemke1964equilibrium] introduces the [Lemke-Howson
-  algorithm](#chp:lemke_howson_algorithm),
+  algorithm](#chp:best_response_polytopes),
   which employs integer pivoting to find Nash equilibria in general games.
 
 ## Conclusion

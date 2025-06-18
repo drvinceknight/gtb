@@ -4,6 +4,8 @@ kernelspec:
   display_name: "Python 3"
 ---
 
+(chp:best_response_polytopes)=
+
 # Best response polytopes
 
 (sec:motivating_example_insider_threat_detection)=
