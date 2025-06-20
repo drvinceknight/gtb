@@ -6,6 +6,8 @@ numbering:
   enumerator: A1.%s
 ---
 
+(app:kkt_conditions)=
+
 # Appendix: Karush-Kuhn-Tucker Conditions
 
 (sec:motivating_example_kkt_doughnuts)=
