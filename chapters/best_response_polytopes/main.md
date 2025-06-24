@@ -786,7 +786,8 @@ nondegenerate games, the number of Nash equilibria is always
 [odd](#exercise_odd_number_of_equilibria). The algorithm was later extended to
 $N$-player games in [@wilson1971computing], where the oddness result is also
 generalised. An alternative proof of the oddness theorem is provided in
-[@harsanyi1973oddness].
+[@harsanyi1973oddness] the author of which was awarded the Nobel prize with Nash
+and Selten in 1994.
 
 The worst-case complexity of the Lemke–Howson algorithm is analysed in
 [@savani2004exponentially], which demonstrates that the algorithm may require
