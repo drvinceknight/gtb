@@ -653,8 +653,10 @@ are modelled and the payoff matrices correspond to the probability of
 scoring (or for the column player saving) a penalty.
 
 Until the work of [@nash1950equilibrium] the minimax theorem was the main solution concept in game theory.
-Nash noble prize winning work allowed for the subject to greatly expand and find
-a huge number of applications as well as further theoretical avenues.
+For his foundational work on equilibrium in non-cooperative games,
+John Nash was awarded the Nobel Prize in Economic Sciences in 1994,
+shared with John Harsanyi and Reinhard Selten.
+His contributions form the cornerstone of non-cooperative game theory.
 
 ## Conclusion
 
