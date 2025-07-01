@@ -4,3 +4,4 @@ matplotlib
 mystmd
 numpy
 python-ternary
+sold

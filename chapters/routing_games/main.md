@@ -488,7 +488,7 @@ chapter.
 | Marginal Cost            | $c^*(x) = \frac{d}{dx}(x c(x))$                                          |
 ```
 
-```{important}
+```{attention}
 In routing games, individual rationality does not guarantee
 system-wide efficiency. Tools like potential functions and marginal costs
 provide powerful methods to identify Nash and Optimal flows in

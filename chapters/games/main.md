@@ -887,7 +887,3 @@ systems that evolve over time — and for designing mechanisms that shape them.
 Every extensive form game has an equivalent representation in normal form,
 where strategies specify complete plans of action across all information sets.
 ```
-
-```
-
-```
