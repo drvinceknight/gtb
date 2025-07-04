@@ -5,3 +5,4 @@ mystmd
 numpy
 python-ternary
 sold
+coopgt
