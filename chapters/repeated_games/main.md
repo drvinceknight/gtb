@@ -4,9 +4,11 @@ kernelspec:
   display_name: "Python 3"
 ---
 
+(chp:repeated_games)=
+
 # Repeated Games
 
-(chp:repeated-contractor-game)=
+(example:repeated-contractor-game)=
 
 ## Motivating Example: Construction Contractors
 
@@ -411,7 +413,7 @@ of as a probability of the game ending.
 
 ### Example:
 
-Consider [](#chp:repeated-contractor-game) and assume Firm A plans to undercut at
+Consider [](#example:repeated-contractor-game) and assume Firm A plans to undercut at
 all contracts: bidding low. Firm B plans to start by
 cooperating (bidding high) but if Firm A ever undercuts then Firm B will undercut for all
 subsequent contracts.

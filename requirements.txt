@@ -5,3 +5,5 @@ mystmd
 numpy
 python-ternary
 sold
+coopgt
+pref_voting
