@@ -458,7 +458,7 @@ $$\bar U_i(r,c)=(1-\delta)U_i(r,c)$$
 
 ### Example:
 
-Consider 3 strategies for [](#chp:repeated-contractor-game):
+Consider 3 strategies for [](#example:repeated-contractor-game):
 
 - $S_c$ Always cooperate: bid high on all contracts.
 - $S_d$ Always defect: bid low on all contracts.

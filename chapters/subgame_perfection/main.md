@@ -395,6 +395,26 @@ result = gbt.nash.enumpure_solve(g)
 result.equilibria
 ```
 
+## Notable Research
+
+The concept of subgame perfection was first introduced in
+[@selten1965spieltheoretische] and later reformulated in English in
+[@selten1988reexamination], both by Reinhard Selten. The motivating example for
+this chapter—the Chain Store Paradox—appears in [@selten1978chain], where Selten
+considers multiple sequential market entrants and examines the credibility of
+entry-deterrence strategies.
+
+The framework was extended in [@milgrom1982predation], which introduced
+**asymmetric information** and **reputation effects**. These additions showed how
+players might sustain seemingly irrational threats (such as fighting entry) by
+considering the beliefs and inferences of future opponents.
+
+The idea of subgame perfection was further refined in [@kreps1982sequential],
+which introduced the concept of **sequential equilibrium**, and in
+[@grossman1986perfect], which developed **perfect sequential equilibrium**. These
+refinements allow for the analysis of games where off-equilibrium beliefs matter,
+providing stronger predictions in extensive form games with imperfect information.
+
 ## Conclusion
 
 Subgame perfection refines the concept of Nash equilibrium by requiring that
