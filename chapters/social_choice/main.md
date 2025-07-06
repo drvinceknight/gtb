@@ -22,7 +22,7 @@ unexpected offer from their professor:
 The three candidate topics are:
 
 - **A. [Replicator dynamics](#chp:replicator_dynamics)**
-- **B. [Best response polytopes](chp:best_response_polytopes)**
+- **B. [Best response polytopes](#chp:best_response_polytopes)**
 - **C. [Repeated games](#chp:repeated_games)**
 
 After collecting all the votes, the professor finds that the students fall into
