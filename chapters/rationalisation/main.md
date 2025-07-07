@@ -415,7 +415,7 @@ strategy space and not just the action space.
 
 ### Example: Predicted Behaviour through Best Responses in the Strategy Space
 
-We can also identify best responses when players use **mixed strategies**.
+We can also identify best responses when players use **strategies**.
 Let us begin by examining the **Matching Pennies** game.
 
 #### Example: Matching Pennies
@@ -481,7 +481,7 @@ M_c = \begin{pmatrix}
 \end{pmatrix}
 $$
 
-Assume that player 1 plays a mixed strategy
+Assume that player 1 plays a strategy
 $\sigma_1 = (x,\ 1 - x)$. Then player 2’s expected utilities are:
 
 $$
@@ -514,7 +514,7 @@ We can now determine the best response for player 1 based on the value of $x$:
 
 This example shows how best responses depend continuously on
 the opponent’s strategy, and that indifference can arise at precise
-thresholds in mixed strategies.
+thresholds in strategies.
 
 (thrm:best_response_condition)=
 
@@ -537,7 +537,7 @@ $$
 ### Proof
 
 The term $(A \sigma_c^\mathsf{T})_i$ represents the utility for the row player
-when playing their $i^{\text{th}}$ pure strategy. Thus:
+when playing their $i^{\text{th}}$ action. Thus:
 
 $$
 \sigma_r A \sigma_c^\mathsf{T} = \sum_{i=1}^{m} \sigma_{r}(i) \cdot (A \sigma_c^\mathsf{T})_i
@@ -885,15 +885,15 @@ Nash equilibrium in actions.
 Another line of research explores how the structure of a game influences the
 convergence to equilibrium. For example, in congestion games or routing games,
 players choose paths through a network, and each player’s cost depends on the
-congestion caused by others. These games often admit pure strategy Nash
-equilibria and allow best response dynamics to converge under mild conditions.
+congestion caused by others. These games often admit Nash
+equilibria in actions and allow best response dynamics to converge under mild conditions.
 This property has led to applications in traffic flow, internet routing, and
 load balancing. The work of [@rosenthal1973class] formally introduced this
 class of games and remains a cornerstone of algorithmic game theory.
 
 In an applied context, [@knight2017measuring] models interactions between
 hospitals under performance-based targets. The authors prove the existence of
-an equilibrium in **actions** (as opposed to more general mixed strategies).
+an equilibrium in **actions** (as opposed to more general strategies).
 This finding provides insight into how policy incentives might be structured to
 align hospital decision-making with public health outcomes.
 
@@ -931,7 +931,7 @@ types of games.
 | Strategy Profile                | A complete specification of strategies for all players                     |
 | Incomplete Strategy Profile     | Strategies for all players except one                                      |
 | Common Knowledge of Rationality | All players are rational, and know that others are, recursively            |
-| Best Response Condition         | A formal test for optimality in response to a mixed strategy               |
+| Best Response Condition         | A formal test for optimality in response to a strategy               |
 
 ```
 

@@ -385,6 +385,12 @@ Here, we treat $\sigma_i$ as a function $\sigma_i: \mathcal{A}_i \to [0, 1]$
 so that $\sigma_i(a_i)$ is the probability of choosing action $a_i \in 
 \mathcal{A}_i$.
 
+```{warning}
+In a lot of game theoretic texts strategies in the context of Normal Form games
+are referred to as **Mixed Strategies** and strategies that play a single action
+are referred to as **Pure Strategies**.
+```
+
 (sec:example_expected_utility_in_matching_pennies)=
 
 ### Example: Expected Utility in Matching Pennies
@@ -695,9 +701,9 @@ Determine all **information sets**.
 > - If both remain peaceful, there are **no** casualties.
 
 - Clearly state the players and their strategy sets.
-- Plot the expected utility to each country assuming it plays a mixed strategy
+- Plot the expected utility to each country assuming it plays a strategy
   while the other remains peaceful.
-- Plot the expected utility to each country assuming it plays a mixed strategy
+- Plot the expected utility to each country assuming it plays a strategy
   while the other attacks.
 
 ## Programming

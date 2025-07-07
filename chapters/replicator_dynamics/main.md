@@ -504,7 +504,7 @@ This theorem gives us a practical method for identifying ESS:
 Note that the first condition is very close to the condition for a strict
 Nash equilibrium, while the second adds a refinement that removes certain
 non-strict symmetric equilibria. This distinction is especially important
-when considering equilibria in mixed strategies.
+when considering equilibria in strategies.
 
 ---
 
@@ -561,7 +561,7 @@ $$
 f(\sigma^*, \sigma) > f(\sigma, \sigma)
 $$
 
-Let $\sigma = (\omega, 1 - \omega)$ be an arbitrary mixed strategy.
+Let $\sigma = (\omega, 1 - \omega)$ be an arbitrary strategy.
 Then:
 
 $$
