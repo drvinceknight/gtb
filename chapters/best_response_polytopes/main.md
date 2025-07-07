@@ -778,7 +778,26 @@ You can also enumerate all possible dropped labels:
 list(game.lemke_howson_enumeration())
 ```
 
-### Notable Research
+### Vertex enumeration with Gambit
+
+Gambit can be used to enumerate all pairs of vertices:
+
+```{code-cell} python3
+import pygambit as gbt
+
+game = gbt.Game.from_arrays(M_r, M_c)
+gbt.nash.enummixed_solve(game)
+```
+
+### Lemke-Howson with Gambit
+
+Gambit can be used to carry out the Lemke-Howson algorithm:
+
+```{code-cell} python3
+gbt.nash.lcp_solve(game)
+```
+
+## Notable Research
 
 The original paper presenting the Lemke–Howson algorithm for two-player games is
 [@lemke1964equilibrium]. That paper also contains a constructive proof that, in

@@ -794,7 +794,58 @@ matching_pennies[sigma_r, sigma_c]
 
 :::{note}
 **Nashpy** is the main Python library used in this text for studying games.
+**Gambit** is another Python library that includes implementation of algorithms
+for games with a larger number of players.
 :::
+
+### Creating a 3 player game using Gambit
+
+Here we create a Normal Form game in Gambit [@savani2024gambit] with 3 players:
+
+```{code-cell} python3
+import pygambit as gbt
+
+g = gbt.Game.new_table([2, 2, 2])
+p1, p2, p3 = g.players
+```
+
+Now let us write all the utilities of each outcome:
+
+```{code-cell} python3
+
+g[(0, 0, 0)][p1] = 1
+g[(0, 0, 0)][p2] = 1
+g[(0, 0, 0)][p3] = 1
+
+g[(0, 0, 1)][p1] = 2
+g[(0, 0, 1)][p2] = 1
+g[(0, 0, 1)][p3] = -1
+
+g[(0, 1, 0)][p1] = 2
+g[(0, 1, 0)][p2] = 1
+g[(0, 1, 0)][p3] = -1
+
+g[(0, 1, 1)][p1] = 2
+g[(0, 1, 1)][p2] = 1
+g[(0, 1, 1)][p3] = -1
+
+g[(1, 0, 0)][p1] = 2
+g[(1, 0, 0)][p2] = 1
+g[(1, 0, 0)][p3] = -1
+
+g[(1, 0, 1)][p1] = 2
+g[(1, 0, 1)][p2] = 1
+g[(1, 0, 1)][p3] = -1
+
+g[(1, 1, 0)][p1] = 2
+g[(1, 1, 0)][p2] = 1
+g[(1, 1, 0)][p3] = -1
+
+g[(1, 1, 1)][p1] = 1
+g[(1, 1, 1)][p2] = 1
+g[(1, 1, 1)][p3] = 1
+g
+```
 
 ## Notable Research
 
