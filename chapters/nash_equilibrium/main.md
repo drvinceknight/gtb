@@ -94,6 +94,13 @@ $$
 
 ---
 
+```{warning}
+In many game theory texts, Nash equilibria in normal form games are referred to as
+either pure strategy Nash equilibria, where each player chooses a single
+action with certainty, or mixed strategy Nash equilibria, where players
+randomise over multiple actions with positive probability.
+```
+
 The following algorithm gives an approach to use the [best response condition](#thrm:best_response_condition)
 to systematically find all Nash equilibrium.
 

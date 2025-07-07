@@ -661,7 +661,7 @@ operations research during the mid-20th century.
 
 The **minimax theorem** was first proven by John von Neumann in 1928
 [@vonneumann1928theorie]. This landmark result, stating that every finite,
-two-player zero-sum game has a value and optimal mixed strategies, was later
+two-player zero-sum game has a value and optimal strategies, was later
 generalised in 1944 [@vonneumann1944theory].
 
 The **minimax theorem** does not necessarily only apply to zero-sum games but in

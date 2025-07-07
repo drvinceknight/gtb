@@ -369,8 +369,8 @@ Note that if the row player deviates and plays $r_2$ in the first stage, then
 the column player will play $c_1$ in the second stage.
 
 If both players play these strategies, their utilities are: $(11, 4)$, which is
-better **for both players** than the utilities at any sequence of pure stage
-Nash equilibria.
+better **for both players** than the utilities at any sequence of stage
+Nash equilibria in action space.
 
 **But is this a Nash equilibrium?** To find out, we investigate whether either
 player has an incentive to deviate.
