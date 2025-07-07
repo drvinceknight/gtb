@@ -635,6 +635,24 @@ game = nash.Game(M, -M)
 game.linear_program()
 ```
 
+### Obtain min-max and max-min strategies using Gambit
+
+`Gambit` can be used to directly obtain the min-max and max-min strategies. We
+start by creating a pygambit game from arrays:
+
+```{code-cell} ipython3
+import pygambit as gbt
+
+game = gbt.Game.from_arrays(M, -M)
+game
+```
+
+Now we can solve the underlying linear program:
+
+```{code-cell} python3
+gbt.nash.lp_solve(game)
+```
+
 ## Notable Research
 
 The foundations of zero-sum game theory and its connection to linear
