@@ -6,11 +6,6 @@ kernelspec:
 
 # Games
 
-```{figure} ./logo/main.png
-:alt: Logo of chapter
-:height: 50px
-```
-
 ## Motivating Example
 
 Consider the following scenario: you would like to meet your **friends** for

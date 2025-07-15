@@ -25,7 +25,7 @@ formation of social norms.
 
 Because game theory spans multiple disciplines, no single definition
 fully captures its scope. This book aims to provide a solid
-understanding of game theory---what it can do and how to apply it.
+understanding of game theory: what it can do and how to apply it.
 
 ## Who is this book for?
 
@@ -83,8 +83,9 @@ detailed implementation instructions, including multiple examples and
 exercises that show how to solve specific problems, even when they are
 large and complex. Additionally, it provides an overview of open-source
 software tools that are readily available to solve real-world problems.
-The book also includes case studies demonstrating how game theory can be
-applied in practice. Finally, it offers a rigorous theoretical
+The book also includes discussion of relevant contemporary research aiming to
+demonstrate not only how the topic is applied in practice but also its relevance. 
+Finally, it offers a rigorous theoretical
 foundation, serving as a springboard for deeper theoretical analysis.
 
 ## How is this book organised?
