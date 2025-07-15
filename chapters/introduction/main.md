@@ -42,11 +42,19 @@ markets? A computer programmer implementing a game-theoretic algorithm?
 Whatever your background, this book provides the necessary tools to
 engage with game theory in a meaningful way.
 
-The book includes four chapters that introduce mathematical theory
+The book includes four appendices that introduce mathematical theory
 independently of game theory. For some readers, these may serve as a
 review of familiar topics, while for others, they offer a first
 introduction to key techniques needed to apply game-theoretic ideas
 effectively.
+
+Each chapter includes a section demonstrating how software can be used
+to apply the ideas at scale. These sections assume some familiarity with
+Python and the ability to install external libraries. For an introduction
+to these topics, see the chapters on
+[Using Notebooks](https://vknight.org/pfm/tools-for-mathematics/01-using-notebooks/introduction/main.html)
+and [Installing Libraries](https://vknight.org/pfm/further-information/04-pip-installing/introduction/main.html)
+in the [_Python for Mathematics_](https://vknight.org/pfm/cover.html) text.
 
 Game theory is a field that thrives on cross-disciplinary insights, and
 this book is designed to help readers from different backgrounds develop
@@ -112,7 +120,7 @@ how the various chapters link together.
 ```{figure} assets/chapter_relationship_diagram/main.png
 :alt: A flow diagram between the chapters.
 :label: fig:structure
-:height: 500px
+:height: 300px
 
 Visual representation of the relationships and flow between chapters.
 ```

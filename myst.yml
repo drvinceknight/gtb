@@ -8,6 +8,7 @@ project:
   # authors: []
   github: https://github.com/drvinceknight/gt
   toc:
+    - file: cover.md
     - file: chapters/introduction/main.md
     - file: chapters/games/main.md
     - file: chapters/rationalisation/main.md
@@ -27,9 +28,12 @@ project:
     - file: appendices/absorbing_markov_chains/main.md
     - file: appendices/interior_point_optimisation/main.md
     - file: appendices/integer_pivoting/main.md
+  bibliography:
+    - references.bib
   output_matplotlib_strings: remove
   export:
     format: pdf
+    template: plain_latex_book
     output: exports/main.pdf
 site:
   template: book-theme
