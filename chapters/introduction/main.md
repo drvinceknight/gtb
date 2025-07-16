@@ -84,7 +84,7 @@ exercises that show how to solve specific problems, even when they are
 large and complex. Additionally, it provides an overview of open-source
 software tools that are readily available to solve real-world problems.
 The book also includes discussion of relevant contemporary research aiming to
-demonstrate not only how the topic is applied in practice but also its relevance. 
+demonstrate not only how the topic is applied in practice but also its relevance.
 Finally, it offers a rigorous theoretical
 foundation, serving as a springboard for deeper theoretical analysis.
 
@@ -102,7 +102,7 @@ Each chapter in this book follows a structured format:
 3.  **Exercises:** a range of problems inviting the reader to apply the
     definitions and theory to deepen understanding.
 
-4.  **Practical implementations:** including pseudocode, Python code,
+4.  **Practical implementations:** including Python code,
     and an overview of relevant open-source tools to guide
     implementation.
 
@@ -110,7 +110,7 @@ Each chapter in this book follows a structured format:
     relevant research related to the chapter.
 
 Some readers may prefer to focus on the theoretical foundations, while
-others might engage primarily with the case studies and practical
+others might engage primarily with the examples and practical
 implementations. This book is designed to be flexible, allowing readers
 to approach the material in a way that best suits their background and
 interests.
