@@ -8,11 +8,6 @@ kernelspec:
 
 # Rationality
 
-```{figure} ./logo/main.png
-:alt: Logo of chapter
-:height: 50px
-```
-
 ## Motivating Example: Competing Restaurant Locations
 
 Two restaurant chains, **FreshBite** and **UrbanEats**, are expanding into a new

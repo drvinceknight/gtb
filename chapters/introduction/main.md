@@ -25,7 +25,7 @@ formation of social norms.
 
 Because game theory spans multiple disciplines, no single definition
 fully captures its scope. This book aims to provide a solid
-understanding of game theory---what it can do and how to apply it.
+understanding of game theory: what it can do and how to apply it.
 
 ## Who is this book for?
 
@@ -42,11 +42,19 @@ markets? A computer programmer implementing a game-theoretic algorithm?
 Whatever your background, this book provides the necessary tools to
 engage with game theory in a meaningful way.
 
-The book includes four chapters that introduce mathematical theory
+The book includes four appendices that introduce mathematical theory
 independently of game theory. For some readers, these may serve as a
 review of familiar topics, while for others, they offer a first
 introduction to key techniques needed to apply game-theoretic ideas
 effectively.
+
+Each chapter includes a section demonstrating how software can be used
+to apply the ideas at scale. These sections assume some familiarity with
+Python and the ability to install external libraries. For an introduction
+to these topics, see the chapters on
+[Using Notebooks](https://vknight.org/pfm/tools-for-mathematics/01-using-notebooks/introduction/main.html)
+and [Installing Libraries](https://vknight.org/pfm/further-information/04-pip-installing/introduction/main.html)
+in the [_Python for Mathematics_](https://vknight.org/pfm/cover.html) text.
 
 Game theory is a field that thrives on cross-disciplinary insights, and
 this book is designed to help readers from different backgrounds develop
@@ -75,8 +83,9 @@ detailed implementation instructions, including multiple examples and
 exercises that show how to solve specific problems, even when they are
 large and complex. Additionally, it provides an overview of open-source
 software tools that are readily available to solve real-world problems.
-The book also includes case studies demonstrating how game theory can be
-applied in practice. Finally, it offers a rigorous theoretical
+The book also includes discussion of relevant contemporary research aiming to
+demonstrate not only how the topic is applied in practice but also its relevance. 
+Finally, it offers a rigorous theoretical
 foundation, serving as a springboard for deeper theoretical analysis.
 
 ## How is this book organised?
@@ -112,7 +121,7 @@ how the various chapters link together.
 ```{figure} assets/chapter_relationship_diagram/main.png
 :alt: A flow diagram between the chapters.
 :label: fig:structure
-:height: 500px
+:height: 300px
 
 Visual representation of the relationships and flow between chapters.
 ```
