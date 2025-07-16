@@ -30,7 +30,8 @@ project:
     - file: appendices/integer_pivoting/main.md
   bibliography:
     - references.bib
-  output_matplotlib_strings: remove
+  settings:
+    output_matplotlib_strings: remove
   export:
     format: pdf
     template: plain_latex_book
@@ -42,6 +43,6 @@ site:
     logo_text: Game Theory
     hide_search: True
     outline_maxdepth: 1
-  favicon: favicon.ico
+    favicon: favicon.ico
   # options:
   #   logo: site_logo.png
