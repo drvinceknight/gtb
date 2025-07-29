@@ -2,7 +2,7 @@
 
 ## Theory, software, and research: game theory for the real world.
 
-```{image} ./cover.png
+```{image} ./cover.jpg
 :alt: A page that looks like a notebook with coffee stains and the words Game Theory.
 :width: 500px
 :align: center
