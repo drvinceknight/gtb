@@ -774,8 +774,8 @@ $h = 0.05$ for 10 steps, starting from $x = 3/5$.
 For the following games, obtain all the stable populations for the associated
 pairwise interaction game:
 
-1. $A = \begin{pmatrix} 2 & 4 \\\\ 5 & 3 \end{pmatrix}$
-2. $A = \begin{pmatrix} 1 & 0 \\\\ 0 & 1 \end{pmatrix}$
+1. $A = \begin{pmatrix} 2 & 4 \\ 5 & 3 \end{pmatrix}$
+2. $A = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$
 
 ---
 
@@ -787,24 +787,24 @@ two-player games. In each case, identify all **evolutionarily stable strategies
 
 1.  $$
     M_r = \begin{pmatrix}
-    2 & 4 \\\\
+    2 & 4 \\
     5 & 1
     \end{pmatrix}
     \qquad
     M_c = \begin{pmatrix}
-    2 & 5 \\\\
+    2 & 5 \\
     4 & 1
     \end{pmatrix}
     $$
 
 2.  $$
     M_r = \begin{pmatrix}
-    1 & 0 \\\\
+    1 & 0 \\
     0 & 1
     \end{pmatrix}
     \qquad
     M_c = \begin{pmatrix}
-    1 & 0 \\\\
+    1 & 0 \\
     0 & 1
     \end{pmatrix}
     $$
