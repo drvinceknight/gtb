@@ -187,12 +187,12 @@ in [](#eqn:efficient_payoff_vector).
 
 ---
 
-Given a game $G = (N, v)$, a payoff vector $x$ satisfies the **null player property** if, for a player $i$:
+Given a game $G = (N, v)$, a payoff vector $\lambda$ satisfies the **null player property** if, for a player $i$:
 
 If $v(C \cup i) = v(C)$ for all coalitions $C \subseteq \Omega$, then:
 
 $$
-x_i = 0
+\lambda_i = 0
 $$
 
 ### Example: The Null Player Property in the D&D Battle
@@ -209,12 +209,12 @@ that this player should receive a payoff of 0.
 
 ---
 
-Given a game $G = (N, v)$, a payoff vector $x$ satisfies the **symmetry property** if, for any pair of players $i, j$:
+Given a game $G = (N, v)$, a payoff vector $\lambda$ satisfies the **symmetry property** if, for any pair of players $i, j$:
 
 If $v(C \cup i) = v(C \cup j)$ for all coalitions $C \subseteq \Omega \setminus \{i, j\}$, then:
 
 $$
-x_i = x_j
+\lambda_i = \lambda_j
 $$
 
 ---
@@ -235,10 +235,10 @@ $$
 v^+(C) = v_1(C) + v_2(C) \quad \text{for all } C \subseteq \Omega
 $$
 
-A payoff vector $x$ satisfies the **additivity property** if:
+A payoff vector $\lambda$ satisfies the **additivity property** if:
 
 $$
-x_i^{(G^+)} = x_i^{(G_1)} + x_i^{(G_2)}
+\lambda_i^{(G^+)} = \lambda_i^{(G_1)} + \lambda_i^{(G_2)}
 $$
 
 ---
