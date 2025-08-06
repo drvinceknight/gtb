@@ -633,7 +633,7 @@ As $Q = I_N$:
 $$
 Q_{ij} =
 \begin{cases}
-    1 & \text{if } i = j \\\\
+    1 & \text{if } i = j \\
     0 & \text{otherwise}
 \end{cases}
 $$
@@ -642,8 +642,8 @@ This gives:
 
 $$
 \begin{align*}
-\frac{dx_i}{dt} &= x_i f_i Q_{ii} - x_i \phi \quad \text{for all } i && Q_{ij} = 0 \text{ for all } i \ne j \\\\
-                &= x_i f_i - x_i \phi \quad \text{for all } i && Q_{ii} = 1 \\\\
+\frac{dx_i}{dt} &= x_i f_i Q_{ii} - x_i \phi \quad \text{for all } i && Q_{ij} = 0 \text{ for all } i \ne j \\
+                &= x_i f_i - x_i \phi \quad \text{for all } i && Q_{ii} = 1 \\
                 &= x_i (f_i - \phi) \quad \text{for all } i
 \end{align*}
 $$
