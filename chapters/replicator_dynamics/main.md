@@ -140,7 +140,7 @@ $$
 \dot{x}_i = \tilde x_i(f_i(\tilde x_i) - \phi) = 0
 $$
 
-so either: $\tilde x_i=$ or $f_i(\tilde x_i) - \phi$.
+so either: $\tilde x_i=0$ or $f_i(\tilde x_i) - \phi$.
 
 ### Example: No interior point stable population in the common goods game
 
