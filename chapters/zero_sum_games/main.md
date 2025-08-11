@@ -219,7 +219,7 @@ optimal values of the:
 then $u=v$.
 
 The proof which uses the
-**linear_program_duality_theorem** is omitted from
+**linear program duality theorem** is omitted from
 this book but can be found in [@Vanderbei1998].
 
 Note that this answers the question posed at the end of
