@@ -1,9 +1,10 @@
 axelrod
+coopgt
 jupyter
 matplotlib
 mystmd
 numpy
+pref_voting
+pygambit
 python-ternary
 sold
-coopgt
-pref_voting
