@@ -358,7 +358,7 @@ $$
 \sum_{i=1}^{|\mathcal{A}|} \sigma_i = 1
 $$
 
-Given an action set $\mathcal{A}$ the set of valid strategies is denoted as $\Delta \mathcal{S}$ so that:
+Given an action set $\mathcal{A}$ the set of valid strategies is denoted as $\Delta \mathcal{A}$ so that:
 
 $$\left\{\sigma \in [0, 1]^{|\mathcal{A}|}_{\mathbb{R}} \left|\sum_{i=1}^{|\mathcal{A}|} \sigma_i = 1 \right.\right\}$$
 
