@@ -324,7 +324,7 @@ We need to consider new pairs of supports:
 - $\sigma_1=(x, 1-x)$ and $\sigma_2 = (0, 1)$: step 2 holds for all $x$, step 3
   is already satisfied (the vectors are both probability distributions) thus we
   are left to check the best response condition:
-  $$_sigma_1M_c=(2x, 1)$$
+  $$\sigma_1M_c=(2x, 1)$$
   the only value of $x$ that gives a pair of best response is when the column
   player has no incentive to move from the support thus $2x=1 \implies x=1/2$.
 

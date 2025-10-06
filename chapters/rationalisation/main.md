@@ -45,7 +45,7 @@ competitor’s choice (column).
 
 |                  | Downtown | Midtown | Suburb |
 |------------------|----------|---------|--------|
-| **Downtown**     | 1        | 0       | 3      |
+| **Downtown**     | 1        | 0       | 2      |
 | **Midtown**      | 0        | 2       | 6      |
 | **Suburb**       | 2        | 4       | 5      |
 
@@ -296,7 +296,7 @@ a reasonable prediction but not a definitive one.
 In many cases, we can simplify a game by eliminating dominated strategies.
 However, not all games can be fully resolved using this approach.
 
-Consider the following two games.
+Consider the following game.
 
 $$
 M_r = \begin{pmatrix}
