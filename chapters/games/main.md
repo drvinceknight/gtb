@@ -414,7 +414,7 @@ $\sigma_2 = (0, 1)$, and if $\sigma_1 = (x, 1 - x)$, we have:
 
 $$
 u_1(\sigma_1, \sigma_2) =
-x \cdot 0 + (1 - x) \cdot 1 = 1 - 2x
+x \cdot -1 + (1 - x) \cdot 1 = 1 - 2x
 $$
 
 Similarly, if player 1 always plays Tails, and  
