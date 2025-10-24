@@ -224,9 +224,6 @@ the system going to go back to all students defecting?
 
 ### Definition: Evolutionary Stable Strategy
 
-Given a stable population $x$, $x$ represents an **Evolutionary Stable Strategy** (ESS) if and only if
-there exists $\bar\epsilon>0$ such that:
-
 A strategy $x^*$ is an evolutionarily stable strategy if for all $x_{\epsilon} \neq x^*$ sufficiently close to $x^*$:
 
 $$
