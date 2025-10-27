@@ -140,7 +140,7 @@ $$
 \dot{x}_i = \tilde x_i(f_i(\tilde x_i) - \phi) = 0
 $$
 
-so either: $\tilde x_i=0$ or $f_i(\tilde x_i) - \phi$.
+so either: $\tilde x_i=0$ or $f_i(\tilde x_i) = \phi$.
 
 ### Example: No interior point stable population in the common goods game
 
@@ -192,7 +192,7 @@ $$
 
 For a population with $N$ types of individuals
 Given a population $x \in \mathbb{R}^N_{[0, 1]}$ (with $\sum_{i=1}^Nx_i=1$), some $\epsilon>0$ and
-a strategy $y \in \mathbb{R}^N_{[0, 1]}$ (with $\sum_{i=1}^Nx_i=1$), the post entry population $x_{\epsilon}$ is given by:
+a strategy $y \in \mathbb{R}^N_{[0, 1]}$ (with $\sum_{i=1}^Ny_i=1$), the post entry population $x_{\epsilon}$ is given by:
 
 $$
 x_{\epsilon} = x + \epsilon(y - x)
