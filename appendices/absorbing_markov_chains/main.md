@@ -125,7 +125,6 @@ $$
 \begin{align*}
 \pi ^{(2)} &= \pi ^{(1)} P\\
            &= (5/24\cdot 1/2 + 5\cdot 1/3, 5/24\cdot 1/2 + 5\cdot 1/3, 5/24\cdot 1/2 + 5\cdot 1/3, 5/24\cdot 1/2 + 5\cdot 1/3, 5/24\cdot1/3+1/2, 5/24\cdot1/3+1/2)
-
            &= (25/144, 25/144, 25/144, 25/144, 11/72, 11/72)
 \end{align*}
 $$
@@ -220,7 +219,7 @@ $$
 N = (I - Q) ^ {-1}
 $$
 
-The entry $N_ij$ gives the expected number of times the process is in transient
+The entry $N_{ij}$ gives the expected number of times the process is in transient
 state $j$ before being absorbed having started in state $i$.
 
 (sec:example_fundamental_matrix_of_the_maze)=

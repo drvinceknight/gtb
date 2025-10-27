@@ -708,10 +708,11 @@ $$
 and:
 
 $$
-2 > 1
+2\times 1 = 2 > 1 = 1 + \mu -\mu
 $$
 
-Both of these equations hold for $\mu>0$. This is a convenient form for
+Both of these equations hold for $\mu>0$, in fact the second equation holds for
+all $\mu$. This is a convenient form for
 the Prisoner's Dilemma as it corresponds to a 1-dimensional parametrization.
 
 As a single one-shot game there is not much more to say about the Prisoner's
