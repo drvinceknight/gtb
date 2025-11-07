@@ -8,3 +8,4 @@ pref_voting
 pygambit
 python-ternary
 sold
+matching
