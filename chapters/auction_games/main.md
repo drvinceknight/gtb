@@ -139,7 +139,7 @@ the highest and second-highest bids among the other players.
 We compute the **expected utility** of deviating from $b_i=v_i$ to $b_i\ne v_i$:
 
 $$
-\mathbb{E}[u_i] = \text{prob}(\text{Win})(v_i - b(2)^{-1})
+\mathbb{E}[u_i] = \text{prob}(\text{Win})(v_i - b_{(2)}^{-1})
 $$
 
 Let us distinguish two cases:
@@ -149,7 +149,7 @@ Let us distinguish two cases:
 **Case 1:** $b_i < v_i$ (the deviation is to a lower bid than the value)
 This deviation will cause $\text{prob}(\text{Win})$ to either:
 
-- remain the same in which case $b(2)^{-1}$ also remains the same. There is no
+- remain the same in which case $b_{(2)}^{-1}$ also remains the same. There is no
   change in utility.
 - become 0, the utility does not increase.
 
