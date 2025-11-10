@@ -239,7 +239,7 @@ current matching so we remove it from $A2$'s preference list:
 $$f(A2)=(R4, R3, R5, R1)$$
 
 We could pick any unmatched reviewer, we will pick $A2$ again (for the third
-time), $A2$ has preference list $f(A)=(R4, R3, R5, R1)$, the top of the
+time), $A2$ has preference list $f(A2)=(R4, R3, R5, R1)$, the top of the
 preference list is $R4$ so we set:
 
 $$
@@ -252,13 +252,44 @@ $$
 $$
 
 We now pick $A5$, the final unmatched reviewer, which has $f(A5)=(R5, R3, R4,
-R2, R1)$, the top of the preference list is $R5$ so we set:
+R2, R1)$, the top of the preference list is $R5$ but $R5$ is matched ($M(A3)=R5$). 
+We have $g(R5)=(A5, A3, A4, A1, A2)$ so $R5$ prefers $A5$ to their current
+matching. So we set:
 
 $$
 \begin{align*}
     M(A1) &= R3\\
     M(A2) &= R4\\
-    M(A3) &= R5\\
+    M(A4) &= R2\\
+    M(A5) &= R5\\
+\end{align*}
+$$
+
+We now pick $A3$, the one remaining unmatched author, which has $f(A3)=(R5, R2,
+R3, R1, R4)$, the top of the preference list is $R5$ but $R5$ is matched and
+prefers their current matching so we remove it from $A3$'s preference list:
+
+$$f(A3)=(R2, R3, R1, R4)$$
+
+We now pick $A3$ again as it is still the only unmatched author. The top of the
+preference list is $R2$ but $R2$ is matched and prefers their current matching
+so we remove it from $A3$'s preference list:
+
+$$f(A3)=(R3, R1, R4)$$
+
+We pick $A3$ again. The top of the
+preference list is $R3$ but $R3$ is matched and prefers their current matching
+so we remove it from $A3$'s preference list:
+
+$$f(A3)=(R1, R4)$$
+
+We pick $A3$ again and match it to $R1$ giving the final matching:
+
+$$
+\begin{align*}
+    M(A1) &= R3\\
+    M(A2) &= R4\\
+    M(A3) &= R1\\
     M(A4) &= R2\\
     M(A5) &= R5\\
 \end{align*}
