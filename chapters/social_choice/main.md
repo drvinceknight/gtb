@@ -200,7 +200,7 @@ seen that no Condorcet winner exists.
 
 ---
 
-Let $X$ be a finite set of alternatives. Every alternative obtains $k$ points
+Let $x$ be a finite set of alternatives. Every alternative obtains $k$ points
 from a voter if that voter ranks the alternative above exactly $k$ other
 alternatives.
 The total Borda score of each alternative is the sum of its points across all
@@ -283,7 +283,7 @@ The Borda winner is thus B.
    c. Does the outcome change? What does this tell you about the vulnerability
    of the Borda method to strategic voting?
 
-### A response to Borda from Condorcet
+### Exercise: A response to Borda from Condorcet
 
 Borda proposed the [Borda Method](#def:bordas_method) as a response to the existence of
 Condorcet cycles in simply majority voting. Condorcet then presented the
