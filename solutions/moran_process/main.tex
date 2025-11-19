@@ -1,0 +1,84 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usetikzlibrary{shapes, arrows, positioning}
+
+\usepackage{amsmath,amssymb,mdframed}
+\setcounter{page}{2}
+\setlength{\oddsidemargin}{-0.25in}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-0.5in}
+\setlength{\headsep}{1cm}
+\setlength{\textheight}{9.0in}
+
+\begin{document}
+\begin{enumerate}
+
+\renewcommand\labelenumi{\bfseries\theenumi.}
+
+\item
+Consider the following matrix:
+
+\[
+M =
+\begin{pmatrix}
+3a & a \\
+2a & 2
+\end{pmatrix},
+\qquad a>0.
+\]
+
+\begin{enumerate}
+  \item Show that for all $a>0$ the game defined by $(M, M^{\mathsf T})$ is \emph{not}
+    a Prisoners' Dilemma.
+
+  \item Find all \textbf{Nash equilibria} of the game as a function of $a$.
+
+  \item Now consider a \textbf{two-type Moran process} with a population of size~$N$.
+    Type~1 individuals play row~1; type~2 individuals play row~2.
+
+    The fitness of each type is given by
+    \[
+    f_1(i) =
+      \frac{(i-1) M_{11} + (N-i) M_{12}}{N-1},
+    \qquad
+    f_2(i) =
+      \frac{i\, M_{21} + (N-i-1) M_{22}}{N-1},
+    \]
+    where $i$ is the number of type-1 individuals.
+
+    Using the standard formula
+    \[
+    \rho_i
+    =
+    \frac{
+      1 + \displaystyle\sum_{j=1}^{i-1}
+            \prod_{k=1}^{j} \gamma_k
+    }{
+      1 + \displaystyle\sum_{j=1}^{N-1}
+            \prod_{k=1}^{j} \gamma_k
+    },
+    \qquad
+    \gamma_k = \frac{f_2(k)}{f_1(k)},
+    \]
+
+  \item Compute explicitly the fixation probability of a
+    \textbf{single mutant} ($\rho_1$) for $N\in\{2, 3,4\}$.
+
+  \item For $N\in\{2, 3,4\}$, analyse the fixation probability $\rho_1$ in the two limits
+    \begin{enumerate}
+      \item $a \to 0$,
+      \item $a \to \infty$.
+    \end{enumerate}
+
+    Explain the evolutionary intuition behind these two limiting behaviours and
+    relate them to the role of \textbf{fitness amplification} in
+    frequency-dependent selection.
+\end{enumerate}
+\end{enumerate}
+\end{document}

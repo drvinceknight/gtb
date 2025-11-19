@@ -655,6 +655,8 @@ any history **both** players will act in the same way and no player will have an
 - If we consider a subgame just after no player has deviated from
   $\bar\sigma_i$ then both players continue to use $\bar\sigma_i$.
 
+(def:prisoners-dilemma)=
+
 ### Definition: Prisoner's Dilemma
 
 The general form is:

@@ -393,6 +393,66 @@ For the following games, assuming the mutant is of the second type, obtain the f
 Consider the game $M=\begin{pmatrix}r & 1 \\ 1 & 1\end{pmatrix}$ for $r>1$ and $N$, assuming the mutant is of the second type,
 obtain $\rho_1$ as a function of $r$. How does $r$ effect the chance of fixation?
 
+```{exercise}
+:label: moran_process:exam_style_1
+
+Consider the following matrix:
+
+$$
+M =
+\begin{pmatrix}
+3a & a \\
+2a & 2
+\end{pmatrix},
+\qquad a>0.
+$$
+
+
+1. Show that for all $a>0$ the game defined by $M, M^T$ is **not** a Prisoners' Dilemma.
+
+2. Find all **Nash equilibria** of the game as a function of $a$.  
+
+3. Now consider a **two-type Moran process** with a population of size $N$.  
+Type $1$ individuals play row $1$; type $2$ individuals play row $2$.
+
+The fitness of each type is given by:
+
+$$
+f_1(i) = \left(\frac{(i-1) M_{11} + (N-i) M_{12}}{N-1}\right),
+$$
+
+$$
+f_2(i) = \left(\frac{i\, M_{21} + (N-i-1) M_{22}}{N-1}\right),
+$$
+
+where $i$ is the number of type-1 individuals.
+
+Using the standard formula:
+
+$$
+\rho_i
+=
+\frac{
+1 + \displaystyle\sum_{j=1}^{i-1} \prod_{k=1}^{j} \gamma_k
+}{
+1 + \displaystyle\sum_{j=1}^{N-1} \prod_{k=1}^{j} \gamma_k
+},
+\qquad
+\gamma_k = \frac{f_2(k)}{f_1(k)},
+$$
+
+4. Compute explicitly the fixation probability of a **single mutant** ($\rho_1$) for  
+$N \in \{2, 3, 4\}$.  
+
+5. For $N\in\{2, 3, 4\}$, analyse the fixation probability $\rho_1$ in the two limits:
+
+1. $a \to 0$,  
+2. $a \to \infty$.
+
+Explain the evolutionary intuition behind these two limiting behaviours and relate 
+them to the role of **fitness amplification** in frequency-dependent selection. 
+```
+
 ## Programming
 
 ### Using Nashpy to simulate a Moran process
