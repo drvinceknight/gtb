@@ -70,7 +70,7 @@ stage game, a $T$-stage repeated game is a game in which players play that
 stage game for $T>0$ repetitions. Players make decisions based on the full
 history of play over all the repetitions.
 
-### Example: Counting leaves in repeated games
+#### Example: Counting leaves in repeated games
 
 Consider the following stage games and values of $T$. How many leaves would the
 extensive form representation of the repeated game have?
@@ -133,7 +133,7 @@ A strategy for a player in a repeated game is a mapping from all possible
 histories of play to a probability distribution over the action set of the
 stage game.
 
-### Example: Validity of repeated game strategies
+#### Example: Validity of repeated game strategies
 
 For the [Coordination Game](#sec:coordination_game) with $T=2$
 determine whether the following strategy pairs are valid, and if so, what
@@ -253,7 +253,7 @@ subgame perfect Nash equilibrium.
 
 Where by stage Nash profile we refer to a strategy profile that is a Nash Equilibrium in the stage game.
 
-### Proof
+#### Proof
 
 ---
 
@@ -271,7 +271,7 @@ If we consider (in an inductive way) each subsequent subgame the result holds.
 
 ---
 
-### Example
+#### Example
 
 Consider the following stage game:
 
@@ -310,7 +310,7 @@ Importantly, not all subgame Nash equilibria outcomes are of the above form.
 In a repeated game it is possible for players to encode reputation and trust in
 their strategies.
 
-### Example: Reputation in a repeated game
+#### Example: Reputation in a repeated game
 
 Consider the following stage game with $T=2$:
 
@@ -411,7 +411,7 @@ of as a probability of the game ending.
 
 (exam:utility_with_discounting)=
 
-### Example:
+#### Example:
 
 Consider [](#example:repeated-contractor-game) and assume Firm A plans to undercut at
 all contracts: bidding low. Firm B plans to start by
@@ -456,7 +456,7 @@ We can use this to define the **average payoff** per stage:
 
 $$\bar U_i(r,c)=(1-\delta)U_i(r,c)$$
 
-### Example:
+#### Example:
 
 Consider 3 strategies for [](#example:repeated-contractor-game):
 
@@ -608,7 +608,7 @@ Let $(u_1^*,u_2^*)$ be a pair of Nash equilibrium payoffs for a stage game. For 
 
 ---
 
-### Proof
+#### Proof
 
 ---
 
@@ -689,7 +689,7 @@ This game is a good model of agent (human, etc) interaction: a player can choose
 to take a slight loss of utility for the benefit of the other player **and**
 themselves.
 
-### Example: Simplifed form of the Prisoner's Dilemma:
+#### Example: Simplifed form of the Prisoner's Dilemma:
 
 Under what conditions is the following game a Prisoner's Dilemma:
 
@@ -764,9 +764,9 @@ emergent cooperation in multi-agent systems.
 
 ## Exercises
 
-### Exercise: Constructing non-stage-equilibrium repeated outcomes
+```{exercise} 
+:label: constructing_non-stage-equilibrium_repeated_outcomes
 
----
 
 Recalling that a subgame perfect equilibrium for a finitely repeated game must
 involve a stage Nash equilibrium in the final stage, attempt to identify a
@@ -825,10 +825,11 @@ M_c =
 0 & -1 & 1
 \end{pmatrix}
 $$
+```
 
----
 
-### Exercise: Size of action space
+```{exercise} 
+:label: size_of_action_space
 
 For a general stage game with $(M_r, M_c) \in \mathbb{R}^{(m\times n)^2}$
 identify the size of the action space for the repeated game for each player when:
@@ -836,10 +837,11 @@ identify the size of the action space for the repeated game for each player when
 - $m=2, n=2$ and $T=2$.
 - General $m, n$ and $T=3$.
 - General $m, n, T$.
+```
 
-### Exercise: Identifying Prisoners Dilemmas
+```{exercise} 
+:label: identifying_prisoners_dilemmas
 
----
 
 Justify whether or not the following games are instances of the Prisoners
 Dilemma.
@@ -907,12 +909,12 @@ B =
 0 & 0
 \end{pmatrix}
 $$
+```
 
----
 
-### Exercise: Repeated strategies in the Prisoners Dilemma
+```{exercise} 
+:label: repeated_strategies_in_the_prisoners_dilemma
 
----
 
 Consider the standard Prisoners Dilemma:
 
@@ -944,12 +946,12 @@ following scenarios:
 - The game is repeated infinitely with $\delta = \frac{1}{4}$.
 
 For each case, determine the Nash equilibria in action space.
+```
 
----
 
-### Exercise: Payoffs and equilibrium in the infinite game
+```{exercise} 
+:label: payoffs_and_equilibrium_in_the_infinite_game
 
----
 
 Consider the following stage game:
 
@@ -979,8 +981,8 @@ $$
    - $(0, 3)$
    - $(2, 6)$
    - $(2, 0)$
+```
 
----
 
 ## Programming
 

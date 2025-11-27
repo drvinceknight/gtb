@@ -74,7 +74,7 @@ $s_i$ to $t_i$.
 Every edge $e$ of $G$ has associated to it a nonnegative, continuous and
 nondecreasing cost function (also called latency function) $c_e$.
 
-### Example: The Routing Game Representation of the Delivery Companies Game
+#### Example: The Routing Game Representation of the Delivery Companies Game
 
 For the routing game in [](#fig:competing_delivery_companies_routing_game):
 
@@ -93,7 +93,7 @@ various paths, $f$ is a vector index by $\mathcal{P}$. Furthermore we call $f$ *
 
 $$\sum_{P\in\mathcal{P}_i}f_P=r_i$$
 
-### Example: Feasible Flows for the Delivery Companies Game
+#### Example: Feasible Flows for the Delivery Companies Game
 
 For the routing game in [](#fig:competing_delivery_companies_routing_game):
 
@@ -120,7 +120,7 @@ So we can re-write the cost function as:
 
 $$C(f)=\sum_{e\in E}c_e(f_e)f_e$$
 
-### Example: Cost function for the Delivery Companies Game
+#### Example: Cost function for the Delivery Companies Game
 
 For the routing game in [](#fig:competing_delivery_companies_routing_game):
 
@@ -159,7 +159,7 @@ f_P&\geq 0
 \end{align*}
 $$
 
-### Example: Optimal Flow for the Delivery Companies Games
+#### Example: Optimal Flow for the Delivery Companies Games
 
 In [](#fig:competing_delivery_companies_routing_game_with_flow_vector)
 this corresponds to:
@@ -265,7 +265,7 @@ $$c_{P_1}(f)\leq c_{P_2}(f)$$
 
 A Nash flow ensures that all used paths have minimal costs.
 
-### Example: Nash Flow for Delivery companies game
+#### Example: Nash Flow for Delivery companies game
 
 For [](#fig:competing_delivery_companies_routing_game_with_flow_vector) if we assume that both commodities use
 all paths available to them:
@@ -314,7 +314,7 @@ Given a routing game $(G,r,c)$ we define the **potential function** of a flow as
 
 $$\Phi(f)=\sum_{e\in E}\int_0^{f_e}c_e(x)dx$$
 
-### Example: Potential Function for the delivery company game
+#### Example: Potential Function for the delivery company game
 
 The potential function for [](#fig:competing_delivery_companies_routing_game_with_flow_vector) is given by:
 
@@ -337,7 +337,7 @@ If $c$ is a differentiable cost function then we define the **marginal cost** fu
 
 $$c^*=\frac{d}{dx}(xc(x)$$
 
-### Example: The marginal costs for the delivery company game
+#### Example: The marginal costs for the delivery company game
 
 The marginal costs for [](#fig:competing_delivery_companies_routing_game_with_flow_vector) are given by:
 
@@ -362,9 +362,8 @@ A feasible flow $f^*$ is an optimal flow for $(G,r,c)$ if and only if $f^*$ is a
 
 ## Exercises
 
-(sec:exercise_braess_s_paradox)=
-
-### Exercise: Braess's Paradox
+````{exercise} 
+:label: braess_s_paradox
 
 Determine the optimal and Nash flows for the routing games shown in
 [](#fig:braesss_paradox_without_super_road) and
@@ -384,14 +383,17 @@ A routing game forming the basis of Braess's paradox
 :width: 750px
 
 A routing game known as Braess's paradox.
-```
+````
 
-### Exercise: Nash flow via potential minimisation
+```{exercise} 
+:label: nash_flow_via_potential_minimisation
 
 Use [](#thrm:nash_flow_minimises_the_potential_function) and [](#app:kkt_conditions) to verify that
 $\tilde f=(1/2,1/5)$ is a Nash flow for [](#fig:competing_delivery_companies_routing_game_with_flow_vector).
+```
 
-### Nash flow from marginal cost formulation
+```{exercise}
+:label: nash_flow_from_marginal_cost_formulation
 
 Use [](#thrm:optimal_flow_is_a_nash_for_for_marginal_costs) to confirm that
 
@@ -400,6 +402,7 @@ f=\left(- \frac{\sqrt{11}}{5} + \frac{1}{5}, \frac{12}{25} - \frac{2 \sqrt{11}}{
 $$
 
 is a Nash flow for [](#fig:competing_delivery_companies_routing_game_with_flow_vector).
+```
 
 ## Programming
 
@@ -445,7 +448,7 @@ res
 
 The original paper introducing the notion of Nash flows is
 [@wardrop1952correspondence]. An important phenomenon in this field is
-[Braess's Paradox](#sec:exercise_braess_s_paradox), first described in
+[Braess's Paradox](#braess_s_paradox), first described in
 [@braess1968paradoxon], which shows that adding capacity to a network can
 paradoxically increase overall congestion. This effect is not purely theoretical
 and has been observed in real-world settings [@steinberg1983prevalence;

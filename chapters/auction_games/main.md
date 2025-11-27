@@ -73,7 +73,7 @@ where $q_i$ is the allocation to player $i$, and $p_i$ is their payment.
 
 ---
 
-### Example: The Auction Game for backstage passes
+#### Example: The Auction Game for backstage passes
 
 In [](#sec:motivating_example_bidding_for_backstage_passes),  
 the auction game is defined with $N = 3$ players:
@@ -258,7 +258,8 @@ Thus, any deviation $\bar{b} \ne \frac{N - 1}{N}v_i$ does not improve utility.
 
 ---
 
-### Exercise: Dominant strategies in second-price auctions
+```{exercise} 
+:label: dominant-strategies-in-second-price-auctions
 
 In a second-price auction with two players whose private valuations are:
 
@@ -268,10 +269,12 @@ In a second-price auction with two players whose private valuations are:
 Each player submits a sealed bid. Show that bidding truthfully is a  
 dominant strategy for each player, and compute the resulting allocation,  
 payment, and utility.
+```
 
 ---
 
-### Exercise: Overbidding and underbidding
+```{exercise} 
+:label: overbidding-and-underbidding
 
 Consider a second-price auction with $v_1 = 0.9$, $v_2 = 0.7$, and $v_3 = 0.5$.
 
@@ -282,10 +285,11 @@ and Player 3 bids $b_3 = 0.6$.
 - What is the price paid?
 - What is Player 1's utility?
 - Would Player 1 have been better off bidding truthfully?
+```
 
----
 
-### Exercise: Expected utility in a first-price auction
+```{exercise} 
+:label: expected-utility-in-a-first-price-auction
 
 Let $N = 2$ players, each with valuation $v_i \sim \text{Unif}[0,1]$,  
 use the symmetric strategy $b_i = \frac{1}{2}v_i$.
@@ -293,19 +297,23 @@ use the symmetric strategy $b_i = \frac{1}{2}v_i$.
 Compute the expected utility of Player 1 as a function of their value $v_1$.
 
 _Hint: integrate over the opponent's valuation or bid._
+```
 
 ---
 
-### Exercise: Best response derivation
+```{exercise} 
+:label: best-response-derivation
 
 Using the first-price auction model with $v_i \sim \text{Unif}[0,1]$  
 and the assumption that all other players bid $b_j = \alpha v_j$,  
 show that the best response of Player $i$ is to bid  
 $b_i = \frac{N - 1}{N}v_i$ when $\alpha = \frac{N - 1}{N}$.
+```
 
 ---
 
-### Exercise: Generalising beyond uniform
+```{exercise} 
+:label: generalising-beyond-uniform
 
 Suppose players' values are drawn from an exponential distribution  
 with CDF $F(v) = 1 - e^{-\lambda v}$, and each player bids  
@@ -317,11 +325,10 @@ $b_i = \beta v_i$ in a first-price auction.
 
 _Challenge: compare the optimal $\beta$ to the uniform case._
 
----
+```
 
-(exercises:revenue_equivalence)=
-
-### Exercise: Revenue equivalence between first- and second-price auctions
+```{exercise} 
+:label: revenue_equivalence
 
 Suppose there are $N$ symmetric bidders with valuations $v_i \sim \text{Unif}[0,1]$,  
 drawn independently. In both the first-price and second-price sealed-bid auctions,  
@@ -344,6 +351,7 @@ In $\text{Unif}[0, 1]$, the expected value of the $k$-th order statistic (i.e., 
 $$
 \mathbb{E}[v_{(k)}] = \frac{k}{N + 1}
 $$
+```
 
 ---
 
@@ -399,7 +407,7 @@ Prize in Economics in 1996 for this foundational work.
 
 Another foundational contribution is [@myerson1981optimal], which formulates the design of optimal
 auctions, introduces the concept of virtual valuations, and proves a generalisation of the result
-in [](#exercises:revenue_equivalence): the revenue equivalence theorem. This theorem shows
+in [](#revenue_equivalence): the revenue equivalence theorem. This theorem shows
 that all standard auctions yield the same expected revenue when bidders are risk-neutral and have
 independent private values.
 

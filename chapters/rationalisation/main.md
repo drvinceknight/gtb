@@ -242,7 +242,7 @@ This infinite chain of mutual knowledge is what constitutes **common knowledge**
 By assuming CKR, we justify the use of techniques like the iterated elimination
 of dominated strategies as a model of rational prediction.
 
-### Example: Predicted Behaviour through Iterated Elimination Strategies
+#### Example: Predicted Behaviour through Iterated Elimination Strategies
 
 Consider the following normal form game, with separate payoff matrices for
 the row and column players:
@@ -291,7 +291,7 @@ can sometimes be part of a predicted outcome. This process provides
 a reasonable prediction but not a definitive one.
 ```
 
-### Example: eliminating strategies does not suffice
+#### Example: eliminating strategies does not suffice
 
 In many cases, we can simplify a game by eliminating dominated strategies.
 However, not all games can be fully resolved using this approach.
@@ -361,7 +361,7 @@ to actions of the other players.
 
 (exam:predicted_behaviour_through_best_responses_in_the_action_space)=
 
-### Example: Predicted Behaviour through Best Responses in the Action Space
+#### Example: Predicted Behaviour through Best Responses in the Action Space
 
 Consider the following game with payoff matrices for the row and column players:
 
@@ -408,12 +408,12 @@ This mutual best response suggests a potential **stable outcome**.
 In the next example we will consider finding best responses in the entire
 strategy space and not just the action space.
 
-### Example: Predicted Behaviour through Best Responses in the Strategy Space
+#### Example: Predicted Behaviour through Best Responses in the Strategy Space
 
 We can also identify best responses when players use **strategies**.
 Let us begin by examining the **Matching Pennies** game.
 
-#### Example: Matching Pennies
+##### Example: Matching Pennies
 
 Recalling the [Payoff matrices for the row and column players](#matching_pennies):
 
@@ -460,7 +460,7 @@ From the graph we observe:
 2. If $x > \frac{1}{2}$, then $r_1$ is a best response for player 1.
 3. If $x = \frac{1}{2}$, then player 1 is indifferent between $r_1$ and $r_2$.
 
-### Examples: Coordination Game
+#### Examples: Coordination Game
 
 Recalling the [Payoff matrices for the row and column players](#sec:coordination_game):
 
@@ -529,7 +529,7 @@ $$
 
 ---
 
-### Proof
+#### Proof
 
 The term $(A \sigma_c^\mathsf{T})_i$ represents the utility for the row player
 when playing their $i^{\text{th}}$ action. Thus:
@@ -562,7 +562,7 @@ as required.
 
 (sec:rock_paper_scissors_lizard_spock)=
 
-### Example: Rock Paper Scissors Lizard Spock
+#### Example: Rock Paper Scissors Lizard Spock
 
 The classic Rock Paper Scissors game can be extended to
 **Rock Paper Scissors Lizard Spock**, where:
@@ -640,9 +640,8 @@ only on the action that yields the maximum payoff.
 
 ## Exercises
 
-(exer:iterated_elimination_of_dominated_strategies)=
-
-### Exercise: Iterated Elimination of Strategies
+```{exercise} 
+:label: iterated_elimination_of_strategies
 
 Use **iterated elimination of dominated strategies** to attempt to predict
 rational behaviour in each of the following games. Represent all steps clearly.
@@ -705,20 +704,22 @@ rational behaviour in each of the following games. Represent all steps clearly.
     \end{pmatrix}
     $$
 
----
+```
 
-### Exercise: Identifying Best Responses
+```{exercise} 
+:label: identifying_best_responses
 
-For each game in [](#exer:iterated_elimination_of_dominated_strategies):
+For each game in [](#iterated_elimination_of_strategies):
 
 1. Identify **all best response** actions.
 2. Attempt to predict **rational outcomes** using best response reasoning.
 3. Explain any instances where this approach **fails to fully determine the outcome**
    (e.g. games with multiple best responses).
+```
 
----
 
-### Exercise: Representing Peace and War in Normal Form
+```{exercise} 
+:label: representing_peace_and_war_in_normal_form
 
 Model the following real-world conflict scenario as a **normal form game**.
 
@@ -738,10 +739,11 @@ Answer the following:
    - Peaceful
    - Aggressive
 4. Identify the **best responses** of each country.
+```
 
----
 
-### Exercise: Pricing Strategy in Competing Shops
+```{exercise} 
+:label: pricing_strategy_in_competing_shops
 
 > Two shops on the same street are deciding how to price their product.
 > Each can set the price as **Low**, **Medium**, or **High**.
@@ -755,10 +757,11 @@ Answer the following:
 3. Identify and eliminate any actions that are never chosen under rational behaviour.
 4. Discuss whether this game has any pairs of actions that are best responses to
    each other.
+```
 
----
 
-### Exercise: Task Assignment in a Shared Workspace
+```{exercise} 
+:label: task_assignment_in_a_shared_workspace
 
 > Two workers must each choose a task to complete in a shared workspace:
 > **Documentation**, **Coding**, or **Debugging**.
@@ -771,8 +774,8 @@ Answer the following:
 2. Represent the game in normal form.
 3. Are any actions strictly or weakly dominated?
 4. Determine best responses for both players.
+```
 
----
 
 ## Programming
 

@@ -28,6 +28,9 @@ project:
     - file: appendices/absorbing_markov_chains/main.md
     - file: appendices/interior_point_optimisation/main.md
     - file: appendices/integer_pivoting/main.md
+    - file: appendices/integer_pivoting/main.md
+    - file: solutions/moran_process/main.md
+    - file: solutions/replicator_dynamics/main.md
   bibliography:
     - references.bib
   settings:
@@ -42,7 +45,7 @@ site:
   options:
     logo_text: Game Theory
     hide_search: True
-    outline_maxdepth: 1
+    outline_maxdepth: 2
     favicon: favicon.ico
   # options:
   #   logo: site_logo.png

@@ -107,7 +107,7 @@ In this setting, the fitness of an individual of type $i$ is:
 
 $$f_i(v) = (v_{i} - 1)A_{ii} + \sum_{j\ne i, j=1}^{N}v_jA_{ij}$$
 
-### Example: Selection Probabilities for citation behaviour.
+#### Example: Selection Probabilities for citation behaviour.
 
 For the [](#sec:motivating_example_preprint) let us consider the situation with
 $N$ individuals in the reading group: 3 cite the text book ($T$) and 1 cites the
@@ -173,7 +173,7 @@ $$
 
 (sec:example_fixation_of_citation_behaviour_as_an_absorbing_markov_chain)=
 
-### Example: Fixation of citation behaviour as an absorbing Markov chain
+#### Example: Fixation of citation behaviour as an absorbing Markov chain
 
 For given $N$ the [](#sec:motivating_example_preprint) the underlying absorbing Markov
 chain has a state space that can be indexed by $i$ the number of individuals
@@ -337,7 +337,7 @@ $$\rho_N=1=\left(1+\sum_{j=1}^{N-1}\prod_{k=1}^j\gamma_k\right)\rho_1$$
 
 ---
 
-### Example: Direct calculation of fixation of citation behaviour
+#### Example: Direct calculation of fixation of citation behaviour
 
 For given $N$ the fixation probabilities of [](#sec:motivating_example_preprint) can be found
 directly using [](#eqn:formula_for_fixation_probabilities).
@@ -368,7 +368,8 @@ as calculated [](#sec:example_fixation_of_citation_behaviour_as_an_absorbing_mar
 
 ## Exercises
 
-### Exercise: Moran Process with neutral drift
+```{exercise}
+:label: moran_process_with_neutral_drift
 
 A Moran process with neutral drift is when: $f_k{v}=C$ for all $k$ for all $v$
 for some constant $C$. In other words: a Moran process with neutral drift is a
@@ -380,18 +381,23 @@ For a population with 2 types:
 2. Obtain the transition probability matrix for the Moran process with neutral drift with $N=4$ individuals.
 3. Obtain the general formula for $\rho_1$ for a Moran process with neutral
    drift for general $N$.
+```
 
-### Exercise: Specific fixation probabilities
+```{exercise}
+:label: specific_fixation_probabilities
 
 For the following games, assuming the mutant is of the second type, obtain the fixation probability $\rho_1$ for $N=4$:
 
 1. $M=\begin{pmatrix}1 & 1 \\ 1 & 1\end{pmatrix}$
 2. $M=\begin{pmatrix}1 & 2 \\ 3 & 1\end{pmatrix}$
+```
 
-### Exercise: The effect of fitness
+```{exercise}
+:label: the_effect_of_fitness
 
 Consider the game $M=\begin{pmatrix}r & 1 \\ 1 & 1\end{pmatrix}$ for $r>1$ and $N$, assuming the mutant is of the second type,
 obtain $\rho_1$ as a function of $r$. How does $r$ effect the chance of fixation?
+```
 
 ```{exercise}
 :label: moran_process:exam_style_1

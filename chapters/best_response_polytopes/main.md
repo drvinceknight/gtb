@@ -100,7 +100,7 @@ is not restrictive in practice as we can add a constant to our
 utilities.
 ```
 
-### Example: Best Response Polytopes for the threat detection game
+#### Example: Best Response Polytopes for the threat detection game
 
 Let us construct the best response polytopes for the
 [threat detection game](#sec:motivating_example_insider_threat_detection).
@@ -249,7 +249,7 @@ interpretation when it is a binding inequality for a given vertex.
 
 (sec:example_vertex_labelling_for_the_threat_detection_game)=
 
-### Example: Vertex labelling for the threat detection game
+#### Example: Vertex labelling for the threat detection game
 
 Let us consider the inequalities of $P_r$ and interpret what is implied when the
 inequality is binding:
@@ -378,7 +378,7 @@ Nash equilibrium.
 
 (sec:example_fully_labelled_vertex_pair_for_the_threat_detection_game)=
 
-### Example: Fully labelled vertex pair for the threat detection game
+#### Example: Fully labelled vertex pair for the threat detection game
 
 As shown in [](#sec:example_vertex_labelling_for_the_threat_detection_game):
 
@@ -423,7 +423,7 @@ algorithm returns a Nash equilibrium:
 
 (sec:example_lemke_howson_with_known_vertices)=
 
-### Example: Application of the Lemke–Howson algorithm for the threat detection game with known vertices and labels
+#### Example: Application of the Lemke–Howson algorithm for the threat detection game with known vertices and labels
 
 We will use [](#fig:row_player_best_response_polytope),  
 [](#fig:col_player_best_response_polytope), as well as  
@@ -457,7 +457,7 @@ can be a time-consuming process. In the next example, we will demonstrate how
 the Lemke–Howson algorithm becomes truly efficient through  
 [integer pivoting](#app:integer_pivoting).
 
-### Example: Application of the Lemke-Howson Algorithm for the threat detection game with integer pivoting
+#### Example: Application of the Lemke-Howson Algorithm for the threat detection game with integer pivoting
 
 Using the [definition of a tableau](#sec:definition_tableau_representation_of_vertices) the tableaux for a
 2 player game $(M_r, M_c)\in{\mathbb{R}^{m\times n}_{>0}}^2$ are given by:
@@ -639,15 +639,13 @@ $$
 
 ## Exercises
 
-(exercise:enumeration_of_fully_labelled_vertex_pairs)=
-
-### Exercise: Enumeration of fully labelled vertex pairs
+```{exercise} 
+:label: enumeration_of_fully_labelled_vertex_pairs
 
 For each of the following games, draw the best response polytopes and identify
 all fully labelled vertex pairs:
 
-1. $
-   A =
+1. $$A =
    \begin{pmatrix}
    3 & -1 \\
    2 & 7
@@ -657,10 +655,8 @@ all fully labelled vertex pairs:
    \begin{pmatrix}
    -3 & 1 \\
    1 & -6
-   \end{pmatrix}
-   $
-2. $
-   A =
+   \end{pmatrix}$$
+2. $$A =
    \begin{pmatrix}
    2 & -1 \\
    1 & 3
@@ -670,18 +666,21 @@ all fully labelled vertex pairs:
    \begin{pmatrix}
    -2 & 2 \\
    1 & -2
-   \end{pmatrix}
-   $
+   \end{pmatrix}$$
+```
 
-### Exercise: Lemke-Howson algorithm for 2-by-2 games
+```{exercise} 
+:label: lemke-howson-algorithm-for-2-by-2-games
 
 Using the games from
-[Exercise: Enumeration of fully labelled vertex pairs](#exercise:enumeration_of_fully_labelled_vertex_pairs),
+[](#enumeration_of_fully_labelled_vertex_pairs),
 apply the Lemke–Howson algorithm to compute a Nash equilibrium in each case.
 Carry out the algorithm twice: once using the known vertex structure, and once
 using integer pivoting.
+```
 
-### Exercise: Coffee shop rivalry
+```{exercise} 
+:label: coffee-shop-rivalry
 
 In a busy university district, two independent coffee shops compete for
 customers. Each can choose to:
@@ -700,7 +699,7 @@ The three main customer profiles are:
 The payoff matrices, based on estimated profits (row player: Café A, column
 player: Café B), are:
 
-$
+$$
 M_r =
 \begin{pmatrix}
 3 & 1 & 2 \\
@@ -714,16 +713,16 @@ M_c =
 1 & 2 & 4 \\
 5 & 1 & 3
 \end{pmatrix}
-$
+$$
 
 1. Use the Lemke–Howson algorithm to find a Nash equilibrium. Describe how
    different choices of dropped label may lead to different paths.
 2. Interpret the equilibrium in terms of business strategy: What might the
    equilibrium suggest about the balance between pricing, quality, and advertising?
+```
 
-(exercise_odd_number_of_equilibria)=
-
-### Exercise: Odd number of equilibria
+```{exercise} 
+:label: odd-number-of-equilibria
 
 Assume the game is **nondegenerate**: each vertex of the best response
 polytopes has exactly the number of labels required to define it, and no label
@@ -733,6 +732,7 @@ pair always leads to a **distinct** fully labelled vertex pair.
 
 Under these assumptions, prove that the number of fully labelled vertex pairs —
 and hence the number of Nash equilibria — is always **odd**.
+```
 
 ## Programming
 
@@ -802,7 +802,7 @@ gbt.nash.lcp_solve(game)
 The original paper presenting the Lemke–Howson algorithm for two-player games is
 [@lemke1964equilibrium]. That paper also contains a constructive proof that, in
 nondegenerate games, the number of Nash equilibria is always
-[odd](#exercise_odd_number_of_equilibria). The algorithm was later extended to
+[](#odd-number-of-equilibria). The algorithm was later extended to
 $N$-player games in [@wilson1971computing], where the oddness result is also
 generalised. An alternative proof of the oddness theorem is provided in
 [@harsanyi1973oddness] the author of which was awarded the Nobel prize with Nash

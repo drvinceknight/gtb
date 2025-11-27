@@ -8,7 +8,7 @@ kernelspec:
 
 (motivating_example:dnd_battle)=
 
-## Example: Dividing the loot after a D&D battle
+## Motivating Example: Dividing the loot after a D&D battle
 
 After a climactic boss fight, a party of adventurers must divide a hoard of  
 1,000 gold coins recovered after fighting a dragon.
@@ -49,7 +49,7 @@ $(N, v)$ where $N$ is the number of players and
 $v: 2^{[N]} \to \mathbb{R}$ is a **characteristic function** which  
 maps every coalition of players to a payoff.
 
-### Example: The characteristic function game of the D&D battle
+#### Example: The characteristic function game of the D&D battle
 
 For [the D&D battle](#motivating_example:dnd_battle), we have $N = 3$ and the  
 characteristic function $v$ is given by:
@@ -80,7 +80,7 @@ $v(C_2) \geq v(C_1)$ for all $C_1 \subseteq C_2$.
 
 ---
 
-### Example: The D&D battle is a monotone characteristic function game
+#### Example: The D&D battle is a monotone characteristic function game
 
 The function defined in [](#eqn:dnd_characteristic_function) is monotone.  
 However, the following game is not:
@@ -112,7 +112,7 @@ $C_1 \cap C_2 = \emptyset$.
 
 ---
 
-### Example: The D&D battle is not a superadditive characteristic function game
+#### Example: The D&D battle is not a superadditive characteristic function game
 
 The function defined in [](#eqn:dnd_characteristic_function) is superadditive.  
 However, the following game is not:
@@ -148,7 +148,7 @@ $$
 \sum_{i=1}^N \lambda_i = v(\Omega)
 $$
 
-### Example: A possible payoff vector:
+#### Example: A possible payoff vector:
 
 One possible payoff vector for [](#eqn:dnd_characteristic_function) is:
 
@@ -176,7 +176,7 @@ $$
 \sum_{i=1}^N \lambda_i = v(\Omega)
 $$
 
-### Example: An efficient Payoff Vector for the D&D Battle
+#### Example: An efficient Payoff Vector for the D&D Battle
 
 An efficient payoff vector is one that shares all 1,000 gold coins like the one
 in [](#eqn:efficient_payoff_vector).
@@ -195,7 +195,7 @@ $$
 \lambda_i = 0
 $$
 
-### Example: The Null Player Property in the D&D Battle
+#### Example: The Null Player Property in the D&D Battle
 
 In [](#motivating_example:dnd_battle), Quinn contributes very little, yet still
 adds value to each coalition he joins. For instance, without Quinn, the grand
@@ -219,7 +219,7 @@ $$
 
 ---
 
-### Example: The Symmetry Property in the D&D Battle
+#### Example: The Symmetry Property in the D&D Battle
 
 In [](#motivating_example:dnd_battle), no two players contribute equally to
 every coalition they join. If there were such players, the symmetry property
@@ -243,7 +243,7 @@ $$
 
 ---
 
-### Example: The Additive Property in the D&D Battle
+#### Example: The Additive Property in the D&D Battle
 
 In [](#motivating_example:dnd_battle), if there were in fact two separate battles,
 the method for distributing the gold should  
@@ -263,7 +263,7 @@ $$
 
 ---
 
-### Example: The predecessors for the D&D Battle
+#### Example: The predecessors for the D&D Battle
 
 For [](#motivating_example:dnd_battle) we have $N=3$ if we assume the ordering:
 $(\text{Ren}, \text{Azel}, \text{Quinn})$
@@ -305,7 +305,7 @@ $$
 
 ---
 
-### Example: Marginal Contributions in the D&D Battle
+#### Example: Marginal Contributions in the D&D Battle
 
 For [](#motivating_example:dnd_battle) $(\text{Ren}, \text{Azel}, \text{Quinn})$, with $N = 3$.
 [](#tbl:marginal_contributions_dnd) shows the marginal contribution $\Delta_\pi^G(i)$ for each player
@@ -342,7 +342,7 @@ $$
 
 ---
 
-### Example: The Shapley Value for the D&D Battle
+#### Example: The Shapley Value for the D&D Battle
 
 For [](#motivating_example:dnd_battle) the Shapley value is the vector with
 entries corresponding to the average of each of the columnts of
@@ -360,7 +360,8 @@ Giving: $\phi=(350, 450, 200)$
 
 ## Exercises
 
-### Exercise: Shapley Value Computation and Properties
+```{exercise} 
+:label: shapley-value-computation-and-properties
 
 For the following cooperative games:
 
@@ -419,10 +420,10 @@ v_4(C)=\begin{cases}
 25,&\text{if }C=\{1,2,3,4\}
 \end{cases}
 $$
+```
 
-(exercise:interpreting_linear_models)=
-
-### Exercise: Interpreting linear model performance with the Shapley value
+```{exercise} 
+:label: interpreting_linear_models
 
 In statistics and machine learning, a **linear model** predicts a target
 variable $y$ as a weighted sum of input features $x_1, x_2, \dots, x_n$.
@@ -442,8 +443,7 @@ y = c_1 x_1 + c_2 x_2 + c_3 x_3
 $$
 
 Below are the $R^2$ values obtained from fitting models to different subsets of
-the features. These were generated using synthetic data (you can refer to
-:download:`main.py </_static/data-for-shapley-regression-tutorial/main.py>` for the code).
+the features. These were generated using synthetic data.
 
 | Model                                         | $R^2$ |
 | --------------------------------------------- | ----- |
@@ -463,8 +463,10 @@ the features. These were generated using synthetic data (you can refer to
 
 3. Interpret the result: Which feature contributes the most explanatory power?
    Which contributes the least?
+```
 
-### Exercise: Additivity and Symmetry
+```{exercise} 
+:label: additivity-and-symmetry
 
 Consider the following two cooperative games defined on $N=\{1,2,3\}$:
 
@@ -493,8 +495,10 @@ $$
 2. Obtain the Shapley value for $v_a$ and $v_b$ individually.
 3. Construct the game $(v_a + v_b)$ and calculate the Shapley value.
 4. Verify that the Shapley value of $(v_a + v_b)$ equals the sum of the Shapley values of $v_a$ and $v_b$.
+```
 
-### Exercise: Null Player and Marginal Contributions
+```{exercise} 
+:label: null-player-and-marginal-contributions
 
 Consider the cooperative game $v$ defined on $N=\{1,2,3\}$:
 
@@ -510,8 +514,10 @@ $$
 1. Identify any null players in this game.
 2. Compute the marginal contributions of each player.
 3. Calculate the Shapley value and confirm it respects the null player property.
+```
 
-### Exercise: Properties of the Shapley Value
+```{exercise} 
+:label: properties-of-the-shapley-value
 
 Prove that the Shapley value satisfies the following properties:
 
@@ -522,6 +528,7 @@ Prove that the Shapley value satisfies the following properties:
 
 Note that this does not prove uniqueness; that is, other vectors might satisfy these properties
 (though in fact, the Shapley value is uniquely defined by them).
+```
 
 ## Programming
 
@@ -588,7 +595,7 @@ an efficient approximation method.
 
 One of the most impactful application areas of the Shapley value in recent years
 has been in **model explainability**. As explored in
-[#exercise:interpreting_linear_models](#exercise:interpreting_linear_models),
+[](#interpreting_linear_models),
 the Shapley value provides a principled way to attribute a model’s output to its
 input features. One of the first papers to formalize this idea was
 [@strumbelj2010efficient]. This approach has since seen wide application,
