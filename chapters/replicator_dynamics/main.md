@@ -96,7 +96,7 @@ $$
 This equation describes the change in frequency of each type as proportional to
 how much better (or worse) its fitness is compared to the population average.
 
-### Example: The common good game
+#### Example: The common good game
 
 In the [common good game](#sec:motivating_example) around coffee clubs the
 replicator dynamics equation can be written as:
@@ -142,7 +142,7 @@ $$
 
 so either: $\tilde x_i=0$ or $f_i(\tilde x_i) = \phi$.
 
-### Example: No interior point stable population in the common goods game
+#### Example: No interior point stable population in the common goods game
 
 For
 the [common good game](#sec:motivating_example) around coffee clubs we have some
@@ -175,7 +175,7 @@ $$
 f(y, x) = \sum_{i=1}^Ny_if_i(x)
 $$
 
-### Example: A new student in the Common Goods Game
+#### Example: A new student in the Common Goods Game
 
 For
 the [common good game](#sec:motivating_example)
@@ -188,6 +188,8 @@ f((1/2, 1/2, 0), (0, 1, 0)) = 1/2 f_c(0, 1, 0) + 1/2f_d(0, 1, 0) = 1/2(1/2 - 1)
 + 1/2\dot1/2 = 0
 $$
 
+(sec:definition_post_entry_population)=
+
 ### Definition: Post Entry Population
 
 For a population with $N$ types of individuals
@@ -198,7 +200,7 @@ $$
 x_{\epsilon} = x + \epsilon(y - x)
 $$
 
-### Example: Post Entry Population for the Common Goods Game
+#### Example: Post Entry Population for the Common Goods Game
 
 For
 the [common good game](#sec:motivating_example)
@@ -235,7 +237,7 @@ In practice _sufficiently close_ implies that there exists some $\bar\epsilon$ s
 that for all $y \neq x^*$ and for all $0 < \epsilon < \bar\epsilon$ the post entry population $x_{\epsilon} = x + \epsilon(y - x)$
 satisfies [](#eqn:ess_constraint).
 
-### Example: Are Loners Evolutionarily Stable in the Common Goods Game
+#### Example: Are Loners Evolutionarily Stable in the Common Goods Game
 
 For
 the [common good game](#sec:motivating_example) we have seen that a population
@@ -293,7 +295,7 @@ $$
 \phi = x f
 $$
 
-### Example: The Hawk Dove Game
+#### Example: The Hawk Dove Game
 
 Consider a population of animals. These animals, when they interact, will
 always share their food. Due to a genetic mutation, some of these animals may
@@ -449,7 +451,7 @@ then $\sigma^*$ is an ESS in the corresponding population game.
 
 ---
 
-### Proof
+#### Proof
 
 ---
 
@@ -505,7 +507,7 @@ when considering equilibria in strategies.
 
 ---
 
-### Example: Evolutionary stability in the Hawk-Dove game
+#### Example: Evolutionary stability in the Hawk-Dove game
 
 Let us consider the **Hawk-Dove** game. The associated symmetric two-player game
 can be written in a general form. Let $v$ denote the value of the resource and $c$ the cost of conflict
@@ -600,7 +602,7 @@ $$
 \frac{dx_i}{dt} = \sum_{j=1}^N x_j f_j Q_{ji} - x_i \phi \quad \text{for all } i
 $$
 
-### Example: The Replicator Mutator Dynamics Equation for the Hawk Dove Game
+#### Example: The Replicator Mutator Dynamics Equation for the Hawk Dove Game
 
 Let there be
 a 10% change that
@@ -614,7 +616,7 @@ Q = \begin{pmatrix}
    \end{pmatrix}
 $$
 
-### Example: Recovering the Replicator Dynamics Equation from the Replicator Mutator Dynamics Equation
+#### Example: Recovering the Replicator Dynamics Equation from the Replicator Mutator Dynamics Equation
 
 Show that when $Q=I_N$ (the identity matrix of size $N$) then the replicator
 dynamics equation corresponds to the replicator dynamics equation.
@@ -678,7 +680,7 @@ Here:
 
 ---
 
-### Example: Tennis Serve and Return
+#### Example: Tennis Serve and Return
 
 In tennis, serving and receiving form an asymmetric interaction. The **server**
 (row player) chooses one of two serves, while the **receiver** (column player)
@@ -750,7 +752,8 @@ power remains the strategy player most often.
 
 ## Exercises
 
-### Exercise: Stability from fitness functions
+```{exercise} 
+:label: stability_from_fitness_functions
 
 Consider a population with two types of individuals: $x = (x_1, x_2)$ such that
 $x_1 + x_2 = 1$. Obtain all the stable populations for the system defined by the
@@ -761,22 +764,23 @@ following fitness functions:
 3. $f_1(x) = x_1^2 \qquad f_2(x) = x_2^2$
 
 For each stable population, choose a nearby post-entry state and solve the
-replicator dynamics equation numerically using Euler's method with step size
-$h = 0.05$ for 10 steps, starting from $x = 3/5$.
+replicator dynamics equation numerically to evaluate the evolutionary stability.
+```
 
----
 
-### Exercise: Stable populations from payoff matrices
+```{exercise} 
+:label: stable_populations_from_payoff_matrices
 
 For the following games, obtain all the stable populations for the associated
 pairwise interaction game:
 
 1. $A = \begin{pmatrix} 2 & 4 \\ 5 & 3 \end{pmatrix}$
 2. $A = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$
+```
 
----
 
-### Exercise: Evolutionarily stable strategies in symmetric games
+```{exercise} 
+:label: evolutionarily_stable_strategies_in_symmetric_games
 
 Consider the pairwise contest games defined by the following associated
 two-player games. In each case, identify all **evolutionarily stable strategies
@@ -805,10 +809,11 @@ two-player games. In each case, identify all **evolutionarily stable strategies
     0 & 1
     \end{pmatrix}
     $$
+```
 
----
 
-### Exercise: Typesetting conventions in a mathematics department
+```{exercise} 
+:label: typesetting_conventions_in_a_mathematics_department
 
 > In a mathematics department, researchers can choose to use one of two systems
 > for typesetting their research papers: LaTeX or Word. We will refer to these
@@ -828,13 +833,68 @@ u(W, \chi) = 1 + 2(1 - \mu)
 $$
 
 What are the evolutionarily stable strategies?
+```
+
+
+```{exercise}
+:label: replicator_dynamics:exam_style_1
+
+Throughout, the following game is considered:
+
+Users of an online messaging platform can choose one of two incompatible apps:
+app $A$ or app $B$.  
+The action set in this game is $\mathcal{A}=\{A, B\}$.
+
+Each user gains a base level of utility from being able to send messages at all.
+On top of this, their utility increases with the proportion of other users
+choosing the same app (since it becomes easier to contact friends).
+
+Considering a population vector $x=(x_1,1 - x_1)$ where $x_1$ is the proportion
+of the population using app $A$, the fitness functions are:
+$$
+f_A(x)=1+2x_1,
+\qquad
+f_B(x)=1+2(1-x_1).
+$$
+
+1. **Give an interpretation for the fitness functions.**  
+
+2. **State the replicator dynamics equation for a population with two types.**  
+
+3. **Define a stable population for the replicator dynamics.**  
+
+4. **Define a post–entry population.**  
+
+5. **Define an evolutionary stable strategy (ESS).**  
+
+6. **Give the replicator dynamics equation for this game and obtain all stable populations.**  
+
+7. For each of the following initial populations of $x\in\{(0.01, 0.99), (0.49,0.51), (0.99, 0.01)\}$, 
+   calculate the first 
+   step of Euler's method of numerical integration with a step size of
+   $h=0.01$.  
+
+   In each case offer an interpretation in terms of evolutionary stability.
+
+8. Now suppose that the strength of the coordination benefit is a parameter
+      $a\neq 0$, so that
+      $$
+      f_A(x)=1+a x_1,
+      \qquad
+      f_B(x)=1+a(1-x_1).
+      $$
+      **Derive the replicator dynamics for general $a$ and determine for which
+      values of $a$ the mixed population $x^\star=(\tfrac12,\tfrac12)$ is
+      evolutionarily stable.**  
+      Justify your answer.
+```
 
 ## Programming
 
 In [](#app:numerical_integration), we introduce
 general programming approaches for numerically solving differential equations.
 These apply directly to the replicator dynamics equation. Here, we focus on
-tools specifically tailored to population interaction games.
+tools specifically tailored to pairwise interaction games.
 
 ---
 

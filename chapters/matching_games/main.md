@@ -90,7 +90,7 @@ A matching $M$ is any bijection between $S$ and $R$. If $s\in S$ and $r\in R$ ar
 
 $$M(s)=r$$
 
-### Example: Author Reviewer as a Matching Game
+#### Example: Author Reviewer as a Matching Game
 
 For [](#sec:research_conference_motivating_example) the matching game has size
 $N=5$, the set of proposers $S=(A1, A2, A3, A4, A5)$ the set of
@@ -129,7 +129,7 @@ $$
 A pair $(s,r)$ is said to **block** a matching $M$ if $M(s)\ne r$ but $s$ prefers
 $r$ to $M(s)$ and $r$ prefers $s$ to $M^{-1}(r)$.
 
-### Example: Blocking pair for the author reviewer game
+#### Example: Blocking pair for the author reviewer game
 
 In [](#eqn:unstable_matching) the pair $(A4, R2)$ is a blocking pair as $A4$
 prefer $R2$ to $M(A4)$ and $R2$ prefers $A4$ to $M^{-1}(R2)$.
@@ -138,7 +138,7 @@ prefer $R2$ to $M(A4)$ and $R2$ prefers $A4$ to $M^{-1}(R2)$.
 
 A matching $M$ with no blocking pair is said to be stable.
 
-### Example: A stable matching for the author reviewer game
+#### Example: A stable matching for the author reviewer game
 
 The following is a stable matching for [](#sec:research_conference_motivating_example):
 
@@ -170,7 +170,7 @@ Here is the Gale-Shapley algorithm, which gives a stable matching for a matching
 All possible executions of the Gale-Shapley algorithm yield the same stable matching **and**
 in this stable matching every suitor has the best possible partner in any stable matching.
 
-### Proof
+#### Proof
 
 Suppose that an arbitrary execution $\alpha$ of the algorithm gives $M$ and that another
 execution $\beta$ gives $M'$ such that $\exists$ $s\in S$ such that $s$ prefers $r'=M'(s)$ to $r=M(s)$.
@@ -185,7 +185,7 @@ Thus $s'$ prefers $r'$ to $M'(s')$ so that $(s',r')$ blocks $M'$.
 Each suitor is therefore matched in $M$ with his favorite stable reviewer and since
 $\alpha$ was arbitrary it follows that all possible executions give the same matching.
 
-### Example: Application of the Gale-Shapley algorithm to the author reviewer game
+#### Example: Application of the Gale-Shapley algorithm to the author reviewer game
 
 We start by assigning $A1, A2, A3, A4, A5$ and $R1, R2, R3, R4, R5$ to be
 unmatched.
@@ -299,7 +299,7 @@ $$
 
 In a suitor-optimal stable matching each reviewer has the worst possible matching.
 
-### Proof
+#### Proof
 
 Assume that the result is not true. Let $M_0$ be a suitor-optimal matching
 and assume that there is a stable matching $M'$ such that $\exists$
@@ -310,7 +310,8 @@ they prefer in $M_0$.
 
 ## Exercises
 
-### Exercise: Application of the Gale Shapley Algorithm
+```{exercise}
+:label: application_of_the_gale_shapley_algorithm
 
 Obtain stable suitor optimal and reviewer optimal matchings for the games shown:
 
@@ -361,11 +362,14 @@ Obtain stable suitor optimal and reviewer optimal matchings for the games shown:
         g(R4)&=(A3, A2, A4, A1)\\
     \end{align*}
     $$
+```
 
-### Exercise: Uniqueness with a single reviewer preference list
+```{exercise}
+:label: uniqueness_with_a_single_reviewer_preference_list
 
 Consider a matching game where all reviewers have the same preference list.
 Prove that there is a single stable matching.
+```
 
 ## Programming
 

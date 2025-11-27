@@ -109,7 +109,7 @@ At each information set we remove strategies that are dominated.
 
 ---
 
-### Example
+#### Example
 
 Let us consider the game shown in [](#fig:backwards-induction-running-example-step-1)
 
@@ -183,7 +183,7 @@ are in information sets containing only successors of $x$.
 
 ---
 
-### Example: a game where all nodes initiate subgames
+#### Example: a game where all nodes initiate subgames
 
 A game where all nodes initiate a subgame is given in [](#fig:game-with-perfect-information).
 
@@ -195,7 +195,7 @@ A game where all nodes initiate a subgame is given in [](#fig:game-with-perfect-
 An extensive form game where all nodes initiate a subgame.
 ```
 
-### Example: a game where all nodes do not initiate subgames
+#### Example: a game where all nodes do not initiate subgames
 
 A game **that does not have perfect information** nodes $c$, $f$ and $b$ initiate subgames but all of $b$'s successors do
 not is shown in [](#fig:game-with-imperfect-information)
@@ -293,7 +293,8 @@ n games with perfect information, the Nash equilibrium obtained through backward
 
 ## Exercises
 
-### Exercise: Backward induction practice
+```{exercise} 
+:label: backward_induction_practice
 
 Obtain the Nash equilibrium for the following games using backward induction:
 
@@ -301,10 +302,11 @@ Obtain the Nash equilibrium for the following games using backward induction:
 2. ![](./images/exercise_01_02/main.png)
 3. ![](./images/exercise_01_03/main.png)
 4. ![](./images/exercise_01_04/main.png)
+``````
 
----
 
-### Exercise: Entry, signals, and continuous action
+```{exercise} 
+:label: entry_signals_and_continuous_action
 
 Player 1 chooses a number $x \geq 0$, which Player 2 observes. Then, both
 players simultaneously and independently choose real numbers $y_1, y_2 \in
@@ -314,10 +316,11 @@ players simultaneously and independently choose real numbers $y_1, y_2 \in
 - Player 2: $-(y_1 - 2y_2)^2$
 
 Find the subgame perfect equilibrium of this game.
+```
 
----
 
-### Exercise: Subgame identification and refinement
+```{exercise} 
+:label: subgame_identification_and_refinement
 
 For each of the following extensive form games:
 
@@ -329,10 +332,11 @@ For each of the following extensive form games:
 - Derive the corresponding normal form representations.
 - Find all Nash equilibria.
 - Identify which are subgame perfect.
+```
 
----
 
-### Exercise: Stackelberg ice cream sellers
+```{exercise} 
+:label: stackelberg_ice_cream_sellers
 
 Two ice cream sellers choose locations along a beach represented by $[0,1]$.
 Customers are uniformly distributed and always go to the nearest seller.
@@ -346,16 +350,14 @@ Each seller's payoff is the proportion of customers they serve. Assume:
 - If $x_1 < x_2$, Player 1 serves $[0, \frac{x_1 + x_2}{2}]$, and Player 2 the rest.
 - If $x_2 < x_1$, the roles reverse.
 
-**Tasks:**
-
 1. Write the payoff functions of each player.
 2. Derive Player 2’s best response function $x_2^*(x_1)$.
 3. Use backward induction to find the subgame perfect equilibrium.
 4. Compare this to the simultaneous move version of the game.
 
 > _Hint_: Think geometrically about the midpoint between locations.
+```
 
----
 
 ## Programming
 

@@ -76,7 +76,7 @@ An $N$-player extensive form game **with complete information** consists of:
 
 (battle_of_the_sexes)=
 
-### Example: Sequential Coordination Game
+#### Example: Sequential Coordination Game
 
 Consider the following game, often referred to as the **Battle of the Sexes**.
 
@@ -224,7 +224,7 @@ This is the preferred representation used in this text.
 
 (sec:coordination_game)=
 
-### Example: Coordination game
+#### Example: Coordination game
 
 The Normal Form Game representation of [](#fig:battle_of_the_sexes_imperfect_information) has the following payoff
 matrices for the row and column players:
@@ -245,7 +245,7 @@ $$
 
 (exam:prisoners_dilemma)=
 
-### Example: Prisoners’ Dilemma
+#### Example: Prisoners’ Dilemma
 
 > Two thieves have been caught by the police and separated for questioning.  
 > If both cooperate (remain silent), they each receive a short sentence.  
@@ -269,7 +269,7 @@ $$
 
 ---
 
-### Example: Hawk–Dove
+#### Example: Hawk–Dove
 
 > Suppose two birds of prey must share a limited resource.  
 > Hawks always fight over the resource — potentially to the death or at great
@@ -293,7 +293,7 @@ $$
 
 ---
 
-### Example: Pigs
+#### Example: Pigs
 
 > Two pigs — one dominant and one subservient — share a pen containing a
 > lever that dispenses food.  
@@ -320,7 +320,7 @@ $$
 
 (matching_pennies)=
 
-### Example: Matching Pennies
+#### Example: Matching Pennies
 
 > Two players simultaneously choose to display a coin as either Heads or Tails.  
 > If both players show the same face, player 1 wins.  
@@ -388,7 +388,7 @@ are referred to as **Pure Strategies**.
 
 (sec:example_expected_utility_in_matching_pennies)=
 
-### Example: Expected Utility in Matching Pennies
+#### Example: Expected Utility in Matching Pennies
 
 Using the [Matching Pennies game](#matching_pennies) and the strategy profile  
 $\sigma_1 = (0.2, 0.8)$ and $\sigma_2 = (0.6, 0.4)$, the expected utilities are:
@@ -462,7 +462,7 @@ that set.
 
 ---
 
-### Example: Strategies in the Sequential Coordination Game
+#### Example: Strategies in the Sequential Coordination Game
 
 In the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_information_bob_first),
 Bob has a single decision node. His strategy can be represented as:
@@ -518,7 +518,7 @@ $s = (s_1, s_2, \dots, s_n)$ prescribes one action at each information set.
 For example, $s_2$ specifies the action to take at every vertex contained
 within $(v_i)_2$.
 
-### Example: Strategy Enumeration in the Sequential Coordination Game
+#### Example: Strategy Enumeration in the Sequential Coordination Game
 
 Consider the  
 [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_information_bob_first).
@@ -605,7 +605,8 @@ $$
 
 ## Exercises
 
-### Exercise: Structure of a Perfect Information Game
+```{exercise}
+:label: structure_of_a_perfect_information_game
 
 Using the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_information_bob_first) and the
 [definition of an Extensive Form Game](#definition_extensive_form_game):
@@ -615,10 +616,12 @@ Using the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_inform
 3. What is the partition $(V_i)_{i \in \mathcal{N}}$?
 4. What is the set of possible game outcomes $O$?
 5. What is the mapping $u$ from every leaf of $G$ to an element of $O$?
+```
 
 ---
 
-### Exercise: Structure of an Imperfect Information Game
+```{exercise}
+:label: structure_of_an_imperfect_information_game
 
 Using the [Coordination Game with imperfect information](#fig:battle_of_the_sexes_imperfect_information) and the
 [definition of an Extensive Form Game](#definition_extensive_form_game):
@@ -628,10 +631,12 @@ Using the [Coordination Game with imperfect information](#fig:battle_of_the_sexe
 3. What is the partition $(V_i)_{i \in \mathcal{N}}$?
 4. What is the set of possible game outcomes $O$?
 5. What is the mapping $u$ from every leaf of $G$ to an element of $O$?
+```
 
 ---
 
-### Exercise: Identifying Information Sets from Game Trees
+````{exercise}
+:label: identifying_information_sets_from_game_trees
 
 For each of the following games with $\mathcal{N} = \{\text{Alice},\ \text{Bob}\}$,  
 assume that decision nodes $A_i$ belong to Alice and $B_i$ belong to Bob.  
@@ -671,10 +676,12 @@ Determine all **information sets**.
 :alt: Incoherent extensive form game with imperfect information
 :width: 500px
 ```
+````
 
 ---
 
-### Exercise: Messaging Platform Coordination
+```{exercise}
+:label: messaging_platform_coordination
 
 > Alice, Bob, and Celine are childhood friends who want to stay in touch
 > online. Each has a choice between three messaging platforms:
@@ -683,10 +690,12 @@ Determine all **information sets**.
 - Clearly identify the players and their strategy sets.
 - Propose a reasonable interpretation of utility values.
 - Write the normal form representation of the game.
+```
 
 ---
 
-### Exercise: Peace or War — A Strategic Dilemma
+```{exercise}
+:label: peace_or_War_a_strategic_dilemma
 
 > Two neighbouring countries possess highly destructive military forces.
 >
@@ -700,6 +709,7 @@ Determine all **information sets**.
   while the other remains peaceful.
 - Plot the expected utility to each country assuming it plays a strategy
   while the other attacks.
+```
 
 ## Programming
 

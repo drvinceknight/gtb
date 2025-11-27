@@ -106,7 +106,7 @@ We refer to a complete list of $n$ voters’ preference functions as a
 
 ---
 
-### Example: Preference Function for the Exam Vote
+#### Example: Preference Function for the Exam Vote
 
 For [](#motivating_example:voting_on_exam_topics) the set of alternative is:
 
@@ -130,7 +130,7 @@ all the alternatives.
 
 ---
 
-### Example: Social Welfare Function for the Exam Vote
+#### Example: Social Welfare Function for the Exam Vote
 
 For [](#motivating_example:voting_on_exam_topics) one social welfare function
 would be to rank the outcomes based on number of first choice votes, giving:
@@ -220,7 +220,7 @@ they are widely regarded as reasonable voting rules, especially when full
 transitive rankings are available.
 ```
 
-### Example: The Borda Method for the Exam Vote
+#### Example: The Borda Method for the Exam Vote
 
 For the [](#motivating_example:voting_on_exam_topics):
 
@@ -241,9 +241,10 @@ The Borda winner is thus B.
 
 ## Exercises
 
-### Exercise: Condorcet consistency and cycles
+```{exercise} 
+:label: condorcet_consistency_and_cycles
 
-1. Consider the following preference profile over three alternatives
+Consider the following preference profile over three alternatives
    $X = \{A, B, C\}$:
 
    - 3 voters: $A \succ B \succ C$
@@ -253,12 +254,13 @@ The Borda winner is thus B.
    a. Construct the pairwise majority contests.  
    b. Is there a Condorcet winner?  
    c. Is the majority preference relation transitive?
+```
 
----
 
-### Exercise: Comparing Borda and Condorcet
+```{exercise} 
+:label: comparing_borda_and_condorcet
 
-2. Consider the preference profile:
+Consider the preference profile:
 
    - 4 voters: $A \succ B \succ C$
    - 3 voters: $B \succ C \succ A$
@@ -267,11 +269,12 @@ The Borda winner is thus B.
    a. Compute the Borda scores of each alternative.  
    b. Determine if a Condorcet winner exists.  
    c. Do the Borda and Condorcet methods select the same winner?
+```
 
-### Exercise: Strategic manipulation and the Borda method
+```{exercise} 
+:label: strategic_manipulation_and_the_borda_method
 
-4. Suppose an election uses the Borda count and the following preference
-   profile:
+Suppose an election uses the Borda count and the following preference profile:
 
    - 5 voters: $A \succ B \succ C$
    - 4 voters: $B \succ C \succ A$
@@ -282,8 +285,10 @@ The Borda winner is thus B.
    their ranking to $B \succ A \succ C$. What are the new Borda scores?  
    c. Does the outcome change? What does this tell you about the vulnerability
    of the Borda method to strategic voting?
+```
 
-### Exercise: A response to Borda from Condorcet
+````{exercise} 
+:label: a_response_to_borda_from_condorcet
 
 Borda proposed the [Borda Method](#def:bordas_method) as a response to the existence of
 Condorcet cycles in simply majority voting. Condorcet then presented the
@@ -327,6 +332,7 @@ preference profile of [](#tbl:condorcet_example).
 1. Who is the Condorcet winner (if there is one)?
 2. Who is the Borda winner?
 3. Why would this example be a critique of Borda's approach?
+````
 
 ## Programming
 

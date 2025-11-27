@@ -1,0 +1,69 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usetikzlibrary{shapes, arrows, positioning}
+
+\usepackage{amsmath,amssymb,mdframed}
+\setcounter{page}{2}
+\setlength{\oddsidemargin}{-0.25in}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-0.5in}
+\setlength{\headsep}{1cm}
+\setlength{\textheight}{9.0in}
+
+\begin{document}
+Throughout, the following game is considered:
+
+Users of an online messaging platform can choose one of two incompatible apps:
+app $A$ or app $B$.  
+The action set in this game is $\mathcal{A}=\{A, B\}$.
+
+Each user gains a base level of utility from being able to send messages at all.
+On top of this, their utility increases with the proportion of other users
+choosing the same app (since it becomes easier to contact friends).
+
+Considering a population vector $x=(x_1,1 - x_1)$ where $x_1$ is the proportion
+of the population using app $A$, the fitness functions are:
+\[
+    f_A(x)=1+2x_1,
+    \qquad
+    f_B(x)=1+2(1-x_1).
+\]
+
+\begin{enumerate}
+    \item \textbf{Give an interpretation for the fitness functions.}
+
+    \item \textbf{State the replicator dynamics equation for a population with two types.}
+
+    \item \textbf{Define a stable population for the replicator dynamics.}
+
+    \item \textbf{Define a post--entry population.}
+
+    \item \textbf{Define an evolutionary stable strategy (ESS).}
+
+    \item \textbf{Give the replicator dynamics equation for this game and obtain all stable populations.}
+
+    \item For each of the following initial populations of 
+    $x\in\{(0.01, 0.99), (0.49,0.51), (0.99, 0.01)\}$, 
+    calculate the first step of Euler's method of numerical integration with a 
+    step size of $h=0.01$.  
+    In each case offer an interpretation in terms of evolutionary stability.
+
+    \item Now suppose that the strength of the coordination benefit is a parameter
+      $a\neq 0$, so that
+      \[
+      f_A(x)=1+a x_1,
+      \qquad
+      f_B(x)=1+a(1-x_1).
+      \]
+      \textbf{Derive the replicator dynamics for general $a$ and determine for which
+      values of $a$ the mixed population $x^\star=(\tfrac12,\tfrac12)$ is
+      evolutionarily stable.}  
+      Justify your answer.
+\end{enumerate}
+\end{document}

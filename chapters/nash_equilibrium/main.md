@@ -142,7 +142,7 @@ It is a direct application of the [best response condition](#thrm:best_response_
 and can be generalised to larger $N$.
 ```
 
-### Example: Support enumeration algorithm for the coordination game
+#### Example: Support enumeration algorithm for the coordination game
 
 Let us apply the support enumeration algorithm to
 [the coordination game](#sec:motivating_example_nash_equilibrium).
@@ -276,7 +276,7 @@ A two player game is called non degenerate if no strategy of support size $k$ ha
 
 (exam:support_enumeration_for_a_degenerate_game)=
 
-### Example: Support Enumeration for a degenerate game
+#### Example: Support Enumeration for a degenerate game
 
 Let us use support enumeration for the following game.
 
@@ -330,7 +330,8 @@ We need to consider new pairs of supports:
 
 ## Exercises
 
-### Exercise: Support Enumeration
+```{exercise} 
+:label: support_enumeration
 
 Use support enumeration to find Nash equilibria for the following games:
 
@@ -365,8 +366,10 @@ B =
 1 & -6
 \end{pmatrix}
 $$
+```
 
-### Exercise: Penalty kick strategies and Nash equilibrium
+```{exercise} 
+:label: penalty_kick_strategies_and_nash_equilibrium
 
 A soccer player (Player 1) is taking a penalty kick and can shoot either left or  
 right: $S_1 = \{\text{SL}, \text{SR}\}$. The goalie (Player 2) can dive left or  
@@ -397,6 +400,7 @@ $$
 $$
 
 Determine the new Nash equilibrium for the extended game.
+```
 
 ## Programming
 

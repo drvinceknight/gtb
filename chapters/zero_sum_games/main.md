@@ -115,7 +115,7 @@ $$
 
 In this case, $u$ is the **max-min value** of the game.
 
-### Example: Max-min strategy for modified Rock-Paper-Scissors
+#### Example: Max-min strategy for modified Rock-Paper-Scissors
 
 For the [modified Rock-Paper-Scissors game](#sec:motivating-example-zero-sum-games),
 the **max-min strategy** $x$ for the row player satisfies the following linear
@@ -135,7 +135,7 @@ $$
 
 (exam:max_min_strategy_for_matching_pennies)=
 
-### Example: Max-min strategy for Matching Pennies
+#### Example: Max-min strategy for Matching Pennies
 
 For [](#matching_pennies) with payoff matrix:
 
@@ -280,7 +280,7 @@ b_{\text{eq}} &= 1
 \end{aligned}
 $$
 
-### Example: Standard form for the Modified Rock Paper Scissors Game
+#### Example: Standard form for the Modified Rock Paper Scissors Game
 
 For the [modified Rock-Paper-Scissors game](#sec:motivating-example-zero-sum-games),
 the corresponding coefficients are:
@@ -356,7 +356,7 @@ optimality is reached.
 
 (exam:integer_pivoting_for_modified_rock_paper_scissors)=
 
-### Example: Integer Pivoting for Modified Rock-Paper-Scissors
+#### Example: Integer Pivoting for Modified Rock-Paper-Scissors
 
 We now solve the [modified Rock-Paper-Scissors game](#sec:motivating-example-zero-sum-games)
 using the tableau method. Recall that the standard form coefficients are:
@@ -513,7 +513,8 @@ $$
 
 ## Exercises
 
-### Exercise: Coefficients for standard form LP
+```{exercise} 
+:label: coefficients_for_standard_form_lp
 
 Obtain the coefficients of the [standard form](#sec:zero_sum_game_standard_form_linear_program)
 linear system for the zero-sum games with the following payoff matrices:
@@ -522,10 +523,11 @@ linear system for the zero-sum games with the following payoff matrices:
 2. $M = \begin{pmatrix} -1 & -1\ -1 & 3 \end{pmatrix}$
 3. $M = \begin{pmatrix} 2 & 1 & -3\ -3 & -1 & 3 \end{pmatrix}$
 4. $M = \begin{pmatrix} 3 & -2 & 0\ -3 & 0 & 3 \ 0 & 2 & -5 \end{pmatrix}$
+```
 
----
 
-### Exercise: Max-min strategy for Matching Pennies
+```{exercise} 
+:label: max-min_strategy_for_matching_pennies
 
 For [Example: Max-min strategy for Matching Pennies](#exam:max_min_strategy_for_matching_pennies):
 
@@ -534,10 +536,11 @@ For [Example: Max-min strategy for Matching Pennies](#exam:max_min_strategy_for_
    column player.
 3. Use the [Best Response Condition](#thrm:best_response_condition) to confirm
    your calculations.
+```
 
----
 
-### Exercise: Max-min strategy for Rock Paper Scissors
+```{exercise} 
+:label: max-min_strategy_for_rock_paper_scissors
 
 Obtain the max-min strategy for the standard game of Rock Paper Scissors
 defined by:
@@ -549,10 +552,11 @@ M = \begin{pmatrix}
   -1 & 1  & 0
 \end{pmatrix}
 $$
+```
 
----
 
-### Exercise: Modified Rock Paper Scissors
+```{exercise} 
+:label: modified_rock_paper_scissors
 
 For [Example: Integer pivoting for modified Rock Paper Scissors](#exam:integer_pivoting_for_modified_rock_paper_scissors):
 
@@ -560,8 +564,8 @@ For [Example: Integer pivoting for modified Rock Paper Scissors](#exam:integer_p
    column player.
 2. Use the [Best Response Condition](#thrm:best_response_condition) to confirm
    your calculations.
+```
 
----
 
 ## Programming
 
