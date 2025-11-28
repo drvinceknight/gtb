@@ -59,7 +59,7 @@ x_1 f_1(x) + (1-x_1) f_2(x).
 $$
 
 
-3. From [](#sec:stable_population):
+3. From [](#sec:definition_stable_population):
 
 For a given population game with $N$ types of individuals and fitness functions
 $f_i$ a stable population $\tilde x$ is one for which $\dot x_i=0$ for
