@@ -326,7 +326,7 @@ The Gauss-Jordan Method for inverting a non-singular matrix $A\in\mathbb{R}^{n \
    - Swap rows;
    - Scaling rows;
    - Adding scalar multiples of a row to another row.
-3. One the left hand side of the augmented matrix become $I$ the right hand
+3. Once the left hand side of the augmented matrix become $I$ the right hand
    side is $A^{-1}$.
 
 ### Example: Compute the inverse of a 4 by 4 matrix
@@ -449,10 +449,10 @@ inverse of $A$ (which was used in [](#sec:example_fundamental_matrix_of_the_maze
 $$
 A^{-1} =
     \begin{pmatrix}
-        1 & -1/2 & -1/2 & 0\\
-    -1/2 & 1 & 0 & -1/2\\
-        -1/3 & 0 & 1 & -1/3\\
-        0 & -1/3 & -1/3 & 1
+        26/11 & 18/11 & 18/11 & 15/11\\
+        18/11 & 26/11 & 15/11 & 18/11\\
+        12/11 & 10/11 & 21/11 & 12/11\\
+        10/11 & 12/11 & 12/11 & 21/11
     \end{pmatrix}
 $$
 
