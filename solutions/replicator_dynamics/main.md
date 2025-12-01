@@ -329,13 +329,13 @@ First let us consider the case $a>0$:
 
 - For $0<x_1<\tfrac12$:  
   $x_1>0$, $2x_1-1<0$, $x_1-1<0$ so  
-  $-ax_1(2x_1-1)(x_1-1)>0$.  
+  $-ax_1(2x_1-1)(x_1-1)<0$.  
   Thus for the post entry population $x_1=1/2-\epsilon$ $x_1(t)$ decreases and the flow moves away from $x_1=\tfrac12$
   towards $x_1=0$.
 
 - For $\tfrac12<x_1<1$:  
   $x_1>0$, $2x_1-1>0$, $x_1-1<0$ so  
-  $-ax_1(2x_1-1)(x_1-1)<0$.  
+  $-ax_1(2x_1-1)(x_1-1)>0$.  
   Thus for the post entry population $x_1=1/2+\epsilon$ $x_1(t)$ increases and the flow moves away from $x_1=\tfrac12$
   towards $x_1=1$.
 
@@ -348,7 +348,7 @@ Now let us consider the case $a<0$:
 
 - For $0<x_1<\tfrac12$:  
   $x_1>0$, $2x_1-1<0$, $x_1-1<0$ so  
-  $-ax_1(2x_1-1)(x_1-1)<0$.  
+  $-ax_1(2x_1-1)(x_1-1)>0$.  
   Thus for the post entry population $x_1=1/2-\epsilon$ $x_1(t)$ increases and the flow moves towards from $x_1=\tfrac12$.
 
 - For $\tfrac12<x_1<1$:  
