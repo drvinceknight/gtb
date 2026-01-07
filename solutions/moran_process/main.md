@@ -16,14 +16,14 @@ kernelspec:
 $$
 M_r = 
 \begin{pmatrix}
-    R & T\\
-    S & P
+    R & S\\
+    T & P
 \end{pmatrix}
 $$
 
 with $T > R > P > S$ and $2r > T + S$. In this case we have:
 
-$$R=3a\qquad T=2a \qquad S= \qquad P=2$$
+$$R=3a\qquad T=2a \qquad S=a \qquad P=2$$
 
 This implies that for $a>0$ we have $T<R$ thus this is not Prisoner's Dilemma.
 
