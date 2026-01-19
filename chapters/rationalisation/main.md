@@ -201,14 +201,14 @@ is said to be **weakly dominated** if there exists a
 strategy $\sigma_i \in \Delta(\mathcal{A}_i)$ such that:
 
 $$
-u_i(\sigma_i, s_{-i}) \geq u_i(s_i, s_{-i})
+u_i(\sigma_i, s_{-i}) \geq u_i(a_i, s_{-i})
 \quad \text{for all } s_{-i} \in S_{-i},
 $$
 
 and
 
 $$
-u_i(\sigma_i, \bar{s}) > u_i(s_i, \bar{s})
+u_i(\sigma_i, \bar{s}) > u_i(a_i, \bar{s})
 \quad \text{for some } \bar{s} \in S_{-i}.
 $$
 
