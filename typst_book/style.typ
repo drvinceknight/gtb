@@ -147,7 +147,8 @@
   show heading.where(level: 1): it => {
     pagebreak()
     counter(figure).update(0)
-    counter(figure.where(kind: table)).update(0)
+    counter(figure.where(kind: "figure")).update(0)
+    counter(figure.where(kind: "table")).update(0)
     counter(figure.where(kind: "exercise")).update(0)
     counter(figure.where(kind: "solution")).update(0)
     counter(figure.where(kind: "proof")).update(0)
@@ -207,6 +208,21 @@
       it
     }
   }
+
+  // Render exercises and solutions as level-3 headings (no floating boxes).
+  show figure.where(kind: "exercise"): it => block(width: 100%, breakable: true, [
+    #heading(level: 3, numbering: none, bookmarked: false)[#it.caption]
+    #it.body
+  ])
+  show figure.where(kind: "solution"): it => block(width: 100%, breakable: true, [
+    #heading(level: 3, numbering: none, bookmarked: false)[#it.caption]
+    #it.body
+  ])
+
+  // Remove floating wrappers so exercises/solutions appear inline.
+  // Only target float:true places (from proof()) — leaves absolute-positioned
+  // elements (cover author, etc.) and table floats untouched.
+  show place.where(float: true): it => it.body
 
   // Display the book's contents.
   [#body]
