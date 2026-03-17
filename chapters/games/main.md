@@ -51,9 +51,7 @@ sequence of actions taken by all players.
 
 ## Theory
 
-We now return to the tree diagrams introduced previously. In game theory,
-such trees are used to represent a particular type of game known as an
-**extensive form game**.
+In game theory, trees such as [](#fig:consecutive_decision_tree) are used to represent a particular type of game known as an **extensive form game**.
 
 (definition_extensive_form_game)=
 
@@ -104,8 +102,8 @@ If Bob chooses first, the outcome can be predicted as follows:
 2. Bob, anticipating this, chooses a comedy to secure the slightly higher
    utility he prefers.
 
-(This reasoning uses a method known as **backward induction**, which we will
-formalize later.)
+This reasoning uses a method known as **backward induction**, which we will
+formalize in [](#chp:sub_game_perfection).
 
 Alternatively, we can model the game with Celine moving first, as shown in
 [](#fig:battle_of_the_sexes_perfect_information_celine_first).
@@ -135,8 +133,8 @@ when we study games with **imperfect information**.
 
 ---
 
-Given a game in extensive form  
-$(\mathcal{N}, G, (V_i)_{i \in \mathcal{N}}, O, u)$,  
+Given a game in extensive
+form $(\mathcal{N}, G, (V_i)_{i \in \mathcal{N}}, O, u)$,  
 the set of information sets $v_i$ for player $i \in \mathcal{N}$ is a partition
 of $V_i$.
 
@@ -148,11 +146,13 @@ distinguish their exact location when choosing an action.
 Two nodes of a game tree are said to belong to the same **information set** if
 the player making a decision at that point cannot distinguish between them.
 
+```{attention}
 This implies that:
 
 - Every information set contains vertices for a single player.
 - All vertices in an information set must have the same number of successors
   (with the same action labels).
+```
 
 We represent nodes that are part of the same information set diagrammatically
 by connecting them with a dashed line, as shown in
@@ -170,7 +170,7 @@ information set.
 The coordination game with imperfect information.
 ```
 
-In this case, it becomes significantly more difficult to predict the outcome
+In this case, it becomes significantly less trivial to predict the outcome
 of the game.
 
 Another way to represent a game is in **normal form**.
@@ -184,11 +184,8 @@ Another way to represent a game is in **normal form**.
 An $N$-player normal form game consists of:
 
 - A finite set of $N$ players.
-- An action set for the players:  
-  $\{\mathcal{A}_1, \mathcal{A}_2, \dots, \mathcal{A}_N\}$.
-- A set of payoff functions for the players:  
-  $u_i : \mathcal{A}_1 \times \mathcal{A}_2 \times \dots \times \mathcal{A}_N 
-  \to \mathbb{R}$.
+- An action set for the players: $\{\mathcal{A}_1, \mathcal{A}_2, \dots, \mathcal{A}_N\}$.
+- A set of payoff functions for the players: $u_i : \mathcal{A}_1 \times \mathcal{A}_2 \times \dots \times \mathcal{A}_N \to \mathbb{R}$.
 
 ---
 
@@ -198,9 +195,7 @@ to maximise their individual payoffs.
 #### Bi-Matrix Representation
 
 One common way to represent a two-player normal form game is using a
-**bi-matrix**. Suppose that $N = 2$ and the action sets are:  
-$\mathcal{A}_1 = \{r_i \mid 1 \leq i \leq m \}$ and  
-$\mathcal{A}_2 = \{c_j \mid 1 \leq j \leq n \}$.
+**bi-matrix**. Suppose that $N = 2$ and the action sets are: $\mathcal{A}_1 = \{r_i \mid 1 \leq i \leq m \}$ and $\mathcal{A}_2 = \{c_j \mid 1 \leq j \leq n \}$.
 
 A general bi-matrix mapping rows (actions of the first player) and columns
 (actions of the second player) to pairs of payoff values:
@@ -249,11 +244,7 @@ $$
 
 #### Example: Prisoners’ Dilemma
 
-> Two thieves have been caught by the police and separated for questioning.  
-> If both cooperate (remain silent), they each receive a short sentence.  
-> If one defects (betrays the other), they are offered a deal while the other
-> receives a long sentence.  
-> If both defect, they both receive a medium-length sentence.
+> Two thieves have been caught by the police and separated for questioning. If both cooperate (remain silent), they each receive a short sentence. If one defects (betrays the other), they are offered a deal while the other receives a long sentence. If both defect, they both receive a medium-length sentence.
 
 The normal form of this game is represented by:
 
@@ -273,11 +264,7 @@ $$
 
 #### Example: Hawk–Dove
 
-> Suppose two birds of prey must share a limited resource.  
-> Hawks always fight over the resource — potentially to the death or at great
-> cost — and dominate doves.  
-> Doves, on the other hand, avoid conflict and share the resource if paired
-> with another dove.
+> Suppose two birds of prey must share a limited resource. Hawks always fight over the resource — potentially to the death or at great cost — and dominate doves. Doves, on the other hand, avoid conflict and share the resource if paired with another dove.
 
 This interaction is modelled as:
 
@@ -297,14 +284,7 @@ $$
 
 #### Example: Pigs
 
-> Two pigs — one dominant and one subservient — share a pen containing a
-> lever that dispenses food.  
-> Pressing the lever takes time, giving the other pig an opportunity to eat.  
-> If the dominant pig presses the lever, the subservient pig eats most of the
-> food before being pushed away.  
-> If the subservient pig presses the lever, the dominant pig eats all the food.  
-> If both pigs press the lever, the subservient pig manages to eat a third of
-> the food.
+> Two pigs — one dominant and one subservient — share a pen containing a lever that dispenses food. Pressing the lever takes time, giving the other pig an opportunity to eat. If the dominant pig presses the lever, the subservient pig eats most of the food before being pushed away. If the subservient pig presses the lever, the dominant pig eats all the food. If both pigs press the lever, the subservient pig manages to eat a third of the food.
 
 The game is represented by:
 
@@ -362,7 +342,7 @@ $$
 
 Given an action set $\mathcal{A}$ the set of valid strategies is denoted as $\Delta \mathcal{A}$ so that:
 
-$$\left\{\sigma \in [0, 1]^{|\mathcal{A}|}_{\mathbb{R}} \left|\sum_{i=1}^{|\mathcal{A}|} \sigma_i = 1 \right.\right\}$$
+$$\Delta \mathcal{A}=\left\{\sigma \in [0, 1]^{|\mathcal{A}|}_{\mathbb{R}} \left|\sum_{i=1}^{|\mathcal{A}|} \sigma_i = 1 \right.\right\}$$
 
 In the [Matching Pennies game](#matching_pennies), a strategy profile such as  
 $\sigma_1 = (0.2, 0.8)$ and $\sigma_2 = (0.6, 0.4)$ implies that player 1 plays
@@ -434,21 +414,14 @@ $$
 u_2(\sigma_1, \sigma_2) = y \cdot 1 + (1 - y) \cdot (-1) = 2y - 1
 $$
 
-We can visualise both of these expected utility functions below:
+We can visualise both of these expected utility functions in [](#fig:expected_utility_in_matching_pennies).
 
-```{code-cell} python3
-import matplotlib.pyplot as plt
-import numpy as np
+```{figure} ./images/expected_utility_in_matching_pennies/main.png
+:alt: Expected utility functions for Matching Pennies plotted against the probability of playing Heads.
+:label: fig:expected_utility_in_matching_pennies
+:width: 80%
 
-x = np.linspace(0, 1, 100)
-
-plt.figure()
-plt.plot(x, 1 - 2 * x, label="$u_1$ (column plays tails)")
-plt.plot(x, 2 * x - 1, label="$u_2$ (row plays tails)")
-plt.xlabel("Probability of playing Heads")
-plt.ylabel("Expected Utility")
-plt.legend()
-plt.title("Expected Utility vs Strategy");
+Expected utility for each player as a function of the probability of playing Heads in Matching Pennies.
 ```
 
 ---
@@ -470,9 +443,7 @@ In the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_informati
 Bob has a single decision node. His strategy can be represented as:
 
 $$
-\begin{cases}
 a \to (x, 1 - x)
-\end{cases}
 $$
 
 where $x$ is the probability of choosing "sports".
@@ -480,23 +451,20 @@ where $x$ is the probability of choosing "sports".
 Celine has two decision nodes, which depend on Bob's choice. Her strategy is:
 
 $$
-\begin{cases}
-b \to (x_b, 1 - x_b) \\
-c \to (x_c, 1 - x_c)
-\end{cases}
+\begin{aligned}
+b &\to (x_b, 1 - x_b) \\
+c &\to (x_c, 1 - x_c)
+\end{aligned}
 $$
 
 Here, $x_b$ is the probability of choosing "sports" if Bob chose sports, and
 $x_c$ is the probability of choosing sports if Bob chose comedy.
 
-If Celine is unaware of Bob’s decision, as in the  
-[coordination game with imperfect information](#fig:battle_of_the_sexes_imperfect_information),
+If Celine is unaware of Bob’s decision, as in the [coordination game with imperfect information](#fig:battle_of_the_sexes_imperfect_information),
 then nodes **b** and **c** form a single information set. Her strategy becomes:
 
 $$
-\begin{cases}
 \{b, c\} \to (x, 1 - x)
-\end{cases}
 $$
 
 This leads us to a fundamental idea: **every extensive form game corresponds to
@@ -515,15 +483,14 @@ form game.
 These strategies can be thought of as vectors in the Cartesian product of the
 action sets available at each information set. For a player
 $i \in \mathcal{N}$ with information sets
-$v_i = ((v_i)_1, (v_i)_2, \dots, (v_i)_n)$, a strategy  
-$s = (s_1, s_2, \dots, s_n)$ prescribes one action at each information set.  
+$v_i = ((v_i)_1, (v_i)_2, \dots, (v_i)_n)$, a
+strategy $s = (s_1, s_2, \dots, s_n)$ prescribes one action at each information set.  
 For example, $s_2$ specifies the action to take at every vertex contained
 within $(v_i)_2$.
 
 #### Example: Strategy Enumeration in the Sequential Coordination Game
 
-Consider the  
-[Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_information_bob_first).
+Consider the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_information_bob_first).
 We enumerate all strategies for each player by listing single actions
 taken at each information set.
 
@@ -531,15 +498,7 @@ For Bob, who has a single information set, the list of all strategies in the ext
 single action is:
 
 $$
-\left\{
-\begin{cases}
-a \to (1, 0)
-\end{cases}
-,
-\begin{cases}
-a \to (0, 1)
-\end{cases}
-\right\}
+\bigl\{\; a \to (1, 0),\quad a \to (0, 1) \;\bigr\}
 $$
 
 These correspond to always choosing **Sports** or always choosing **Comedy**.
@@ -553,27 +512,12 @@ For Celine, who has two information sets (after Bob's move), the pure
 strategies in the extensive form are:
 
 $$
-\left\{
-\begin{cases}
-b \to (1, 0) \\
-c \to (1, 0)
-\end{cases}
-,
-\begin{cases}
-b \to (1, 0) \\
-c \to (0, 1)
-\end{cases}
-,
-\begin{cases}
-b \to (0, 1) \\
-c \to (1, 0)
-\end{cases}
-,
-\begin{cases}
-b \to (0, 1) \\
-c \to (0, 1)
-\end{cases}
-\right\}
+\begin{aligned}
+(b \to (1, 0),\; c \to (1, 0))\\
+(b \to (1, 0),\; c \to (0, 1))\\
+(b \to (0, 1),\; c \to (1, 0))\\
+(b \to (0, 1),\; c \to (0, 1))
+\end{aligned}
 $$
 
 These strategies describe how Celine responds to each of Bob’s possible
@@ -960,9 +904,13 @@ so $|\mathcal{N}| = 2$.
 
 2. The game tree $G = (V, E, x^0)$ consists of:
 
-- **Vertices** $V$: the root node $a$ (Bob's decision), two intermediate nodes $b$ and $c$ (Celine's decisions after Bob plays Sports or Comedy respectively), and four terminal (leaf) nodes corresponding to the four possible outcomes.
+- **Vertices** $V$: the root node $a$ (Bob's decision),
+  two intermediate nodes $b$ and $c$ (Celine's decisions after Bob
+  plays Sports or Comedy respectively), and four terminal (leaf)
+  nodes corresponding to the four possible outcomes.
 
-- **Edges** $E$: the edge from $a$ to $b$ (labelled Sports), the edge from $a$ to $c$ (labelled Comedy), and the four edges from $b$ and $c$ to the terminal nodes (each labelled Sports or Comedy).
+- **Edges** $E$: the edge from $a$ to $b$ (labelled Comedy), the edge
+  from $a$ to $c$ (labelled Sports), and the four edges from $b$ and $c$ to the terminal nodes (each labelled Sports or Comedy).
 
 - **Root** $x^0 = a$.
 
@@ -982,10 +930,10 @@ where each pair gives (Bob's utility, Celine's utility).
 
 5. The mapping $u$ from each terminal node to an element of $O$ is:
 
-- Sports–Sports leaf $\mapsto (3,\ 2)$
+- Sports–Sports leaf $\mapsto (2,\ 3)$
 - Sports–Comedy leaf $\mapsto (1,\ 1)$
 - Comedy–Sports leaf $\mapsto (0,\ 0)$
-- Comedy–Comedy leaf $\mapsto (2,\ 3)$
+- Comedy–Comedy leaf $\mapsto (3,\ 2)$
 
 ```
 
@@ -1009,7 +957,7 @@ so $|\mathcal{N}| = 2$.
 
 - **Vertices** $V$: the root node $a$ (Bob's decision), two intermediate nodes $b$ and $c$ (which belong to the same information set for Celine), and four terminal leaf nodes.
 
-- **Edges** $E$: the edge from $a$ to $b$ (Sports), the edge from $a$ to $c$ (Comedy), and four edges from $b$ and $c$ to the terminal nodes (each labelled Sports or Comedy).
+- **Edges** $E$: the edge from $a$ to $b$ (Comedy), the edge from $a$ to $c$ (Sports), and four edges from $b$ and $c$ to the terminal nodes (each labelled Sports or Comedy).
 
 - **Root** $x^0 = a$.
 
@@ -1027,12 +975,13 @@ $$
 
 5. The mapping $u$ from each terminal node to an element of $O$ is the same as in the perfect information game:
 
-- Sports–Sports leaf $\mapsto (3,\ 2)$
+- Sports–Sports leaf $\mapsto (2,\ 3)$
 - Sports–Comedy leaf $\mapsto (1,\ 1)$
 - Comedy–Sports leaf $\mapsto (0,\ 0)$
-- Comedy–Comedy leaf $\mapsto (2,\ 3)$
+- Comedy–Comedy leaf $\mapsto (3,\ 2)$
 
-The key structural difference from the perfect information game is that nodes $b$ and $c$ belong to the **same information set** for Celine — represented by a dashed line connecting them — because Celine cannot observe Bob's choice before making her own.
+The key structural difference from the perfect information game is that nodes $b$ and $c$ belong to
+the **same information set** for Celine, represented by a dashed line connecting them, because Celine cannot observe Bob's choice before making her own.
 
 ```
 
@@ -1048,7 +997,7 @@ For each game with $\mathcal{N} = \{\text{Alice},\ \text{Bob}\}$, decision nodes
 The game tree has Alice at the root with a single decision node. Bob has two decision nodes reached after each of Alice's choices, and he can observe Alice's move. Since all information is available at each node, every node forms its own singleton information set:
 
 $$
-v_{\text{Alice}} = \bigl\{\{A_1\}\bigr\}
+v_{\text{Alice}} = \bigl\{\{A\}\bigr\}
 \qquad
 v_{\text{Bob}} = \bigl\{\{B_1\},\ \{B_2\}\bigr\}
 $$
@@ -1058,7 +1007,7 @@ $$
 Alice moves first. Bob has two decision nodes but cannot distinguish between them (they are connected by a dashed line). Thus Bob's two nodes form a single information set:
 
 $$
-v_{\text{Alice}} = \bigl\{\{A_1\}\bigr\}
+v_{\text{Alice}} = \bigl\{\{A\}\bigr\}
 \qquad
 v_{\text{Bob}} = \bigl\{\{B_1,\ B_2\}\bigr\}
 $$
@@ -1068,26 +1017,29 @@ $$
 All players observe all previous moves; each node is a singleton information set:
 
 $$
-v_{\text{Alice}} = \bigl\{\{A_1\},\ \{A_2\},\ \{A_3\}\bigr\}
+v_{\text{Alice}} = \bigl\{\{A_1\},\ \{A_2\}\bigr\}
 \qquad
-v_{\text{Bob}} = \bigl\{\{B_1\}\bigr\}
+v_{\text{Bob}} = \bigl\{\{B_1\}, \{B_2\}\bigr\}
 $$
 
 (or whatever the specific structure of the tree implies, with each node forming its own information set since information is perfect).
 
 4. **Game 4 (imperfect information, multiple rounds):**
 
-Alice has a single decision node at the root. Bob has multiple decision nodes that are grouped into information sets according to which of Alice's moves he can observe. If Bob cannot distinguish between two of his nodes (e.g.\ $B_1$ and $B_2$ are connected by a dashed line), they form one information set:
+Alice has a single decision node at the root. Bob has multiple decision nodes that are grouped into information sets according to which of Alice's moves he can observe. If Bob cannot distinguish between two of his nodes (e.g. $B_1$ and $B_2$ are connected by a dashed line), they form one information set:
 
 $$
-v_{\text{Alice}} = \bigl\{\{A_1\}\bigr\}
+v_{\text{Alice}} = \bigl\{\{A_1\}, \{A_2\}\bigr\}
 \qquad
 v_{\text{Bob}} = \bigl\{\{B_1,\ B_2\}\bigr\}
 $$
 
 5. **Game 5 (incoherent imperfect information):**
 
-This game is **incoherent** because nodes grouped into the same information set do not have the same number of successors (or the successors have different action labels). This violates the requirement that all vertices in an information set must have identical available actions. Therefore, the depicted grouping is **not a valid information set structure** — a well-formed extensive form game cannot have an information set where the nodes have different action sets available.
+This game is **incoherent** because nodes grouped into the same information set do not have the same
+number of successors (or the successors have different action labels). This violates the requirement
+that all vertices in an information set must have identical available actions. Therefore, the depicted
+grouping is **not a valid information set structure**: a well-formed extensive form game cannot have an information set where the nodes have different action sets available.
 
 ```
 
@@ -1164,21 +1116,19 @@ $$
 Below is code that creates this game using Gambit:
 
 ```{code-cell} python3
+import itertools
 import pygambit as gbt
 
 g = gbt.Game.new_table([3, 3, 3])
 p1, p2, p3 = g.players
-platforms = ["WhatsApp", "Instagram", "Snapchat"]
 
-for i in range(3):
-    for j in range(3):
-        for k in range(3):
-            same_as_p1 = (j == i) + (k == i)
-            same_as_p2 = (i == j) + (k == j)
-            same_as_p3 = (i == k) + (j == k)
-            g[(i, j, k)][p1] = same_as_p1
-            g[(i, j, k)][p2] = same_as_p2
-            g[(i, j, k)][p3] = same_as_p3
+for i, j, k in itertools.product(range(3), repeat=3):
+    same_as_p1 = (j == i) + (k == i)
+    same_as_p2 = (i == j) + (k == j)
+    same_as_p3 = (i == k) + (j == k)
+    g[(i, j, k)][p1] = same_as_p1
+    g[(i, j, k)][p2] = same_as_p2
+    g[(i, j, k)][p3] = same_as_p3
 
 print(g)
 ```
@@ -1218,18 +1168,23 @@ where rows correspond to Country 1's actions (Peace, Attack) and columns to Coun
 
 **Expected utility plots:**
 
-Let $\sigma_1 = (x, 1-x)$ be Country 1's strategy (probability $x$ of playing Peace) and $\sigma_2 = (y, 1-y)$ be Country 2's strategy.
+Let $\sigma_1 = (x, 1-x)$ be Country 1's strategy (probability $x$ of playing Peace)
+and $\sigma_2 = (y, 1-y)$ be Country 2's strategy (probability $y$ of playing Peace).
 
 When Country 2 plays Peace ($y = 1$, $\sigma_2 = (1, 0)$):
 
 $$
-u_1(\sigma_1, \text{Peace}) = x \cdot 0 + (1-x) \cdot (-13000) = -13000(1-x)
+u_1(\sigma_1, \text{Peace}) = x \cdot 0 + (1-x) \cdot (-13000) = 13000x - 13000
 $$
 
 When Country 2 plays Attack ($y = 0$, $\sigma_2 = (0, 1)$):
 
 $$
-u_1(\sigma_1, \text{Attack}) = x \cdot (-15000) + (1-x) \cdot (-10000) = -15000x - 10000(1-x)
+\begin{aligned}
+u_1(\sigma_1, \text{Attack}) &= x \cdot (-15000) + (1-x) \cdot (-10000)\\
+                             &= -15000x - 10000(1-x)\\
+                             &= -5000x - 10000
+\end{aligned}
 $$
 
 By symmetry the same holds for Country 2 with the roles swapped.
@@ -1256,19 +1211,11 @@ plt.legend()
 plt.subplot(1, 2, 2)
 plt.plot(x, u1_given_peace, label="Opponent plays Peace")
 plt.plot(x, u1_given_attack, label="Opponent plays Attack")
-plt.xlabel("Probability of playing Peace ($x$)")
+plt.xlabel("Probability of playing Peace ($y$)")
 plt.ylabel("Expected utility")
 plt.title("Country 2's expected utility (symmetric)")
 plt.legend()
 
 plt.tight_layout()
 ```
-
-**Observations:**
-
-- When the opponent plays Peace, Country 1 maximises utility by playing Attack ($x = 0$), yielding utility $0$ rather than $-13000$.
-- When the opponent plays Attack, Country 1 maximises utility by playing Attack ($x = 0$), yielding utility $-10000$ rather than $-15000$.
-
-In both cases, Attack strictly dominates Peace for Country 1. By symmetry, Attack also strictly dominates Peace for Country 2. This game is an instance of the [Prisoners' Dilemma structure](#exam:prisoners_dilemma): mutual aggression ($-10000, -10000$) is the dominant outcome even though mutual peace $(0, 0)$ is Pareto superior.
-
 ````

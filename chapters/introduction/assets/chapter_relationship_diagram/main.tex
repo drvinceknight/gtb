@@ -26,71 +26,80 @@
 % Legend in top-left corner
 \node[anchor=west, draw=none] at (-10, 5) {\textbf{Legend}};
 \draw[found] (-10, 4.3) rectangle ++(0.5, 0.5);
-\node[ draw=none] at (-8.3, 4.55) {Core concepts};
+\node[draw=none] at (-8.3, 4.55) {Core concepts};
 
 \draw[dynamic] (-10, 3.5) rectangle ++(0.5, 0.5);
-\node[ draw=none] at (-7.6, 3.75) {Dynamic / evolutionary};
+\node[draw=none] at (-7.6, 3.75) {Dynamic / evolutionary};
 
 \draw[applied] (-10, 2.7) rectangle ++(0.5, 0.5);
-\node[ draw=none] at (-7.9, 2.95) {Applied / extended};
+\node[draw=none] at (-7.9, 2.95) {Applied / extended};
 
 \draw[appendix] (-10, 1.9) rectangle ++(0.5, 0.5);
-\node[ draw=none] at (-8.6, 2.15) {Appendix};
+\node[draw=none] at (-8.6, 2.15) {Appendix};
 
-% Core game theory foundation
-\node[found] (games) at (0, 0) {Chapter 1\\Games};
-\node[found] (rationalisation) [right =of games] {Chapter 2\\Rationalisation};
-\node[found] (zero_sum_games) [below =of rationalisation] {Chapter 3\\Zero Sum Games};
-\node[found] (nash) [right=of zero_sum_games] {Chapter 4\\Nash Equilibrium};
-\node[found] (brp) [above =of nash] {Chapter 9\\Best Response\\Polytopes};
-\node[found] (subgame) [right=of brp] {Chapter 5\\Subgame Perfection};
+% ── Core game theory foundations ─────────────────────────────────────────────
+\node[found] (games)          at (0, 0)           {Chapter 1\\Games};
+\node[found] (rationalisation)[right=of games]     {Chapter 2\\Rationalisation};
+\node[found] (zero_sum)       [below=of rationalisation] {Chapter 3\\Zero-Sum Games};
+\node[found] (nash)           [right=of zero_sum]  {Chapter 4\\Nash Equilibrium};
+\node[found] (brp)            [above=of nash]      {Chapter 12\\Best Response\\Polytopes};
+\node[found] (subgame)        [right=of brp]       {Chapter 5\\Subgame Perfection};
 
-% Dynamic and evolutionary games
-\node[dynamic] (repeated) [right =of nash] {Chapter 6\\Repeated Games};
-\node[dynamic] (replicator) [below=of nash] {Chapter 7\\Replicator Dynamics};
-\node[dynamic] (moran)  [right=of replicator] {Chapter 8\\Moran Process};
+% ── Dynamic and evolutionary chapters ────────────────────────────────────────
+\node[dynamic] (repeated)     [right=of nash]      {Chapter 6\\Repeated Games};
+\node[dynamic] (direct_recip) [right=of repeated]  {Chapter 7\\Direct Reciprocity};
+\node[dynamic] (replicator)   [below=of nash]      {Chapter 9\\Replicator Dynamics};
+\node[dynamic] (moran)        [right=of replicator]{Chapter 10\\Moran Process};
+\node[dynamic] (evol_bio)     [right=of moran]     {Chapter 8\\Evolutionary\\Biology};
+\node[dynamic] (further)      [below=of evol_bio]  {Chapter 11\\Further Learning\\Dynamics};
 
-% Extended equilibrium
-\node[applied] (routing) [left=of replicator] {Chapter 10\\Routing Games};
-\node[applied] (auction) [left=of routing] {Chapter 12\\Auction Games};
+% ── Applied chapters ──────────────────────────────────────────────────────────
+\node[applied] (routing)      [left=of replicator] {Chapter 13\\Routing Games};
+\node[applied] (auction)      [left=of routing]    {Chapter 15\\Auction Games};
+\node[applied] (matching)     [below=of auction]   {Chapter 14\\Matching Games};
+\node[applied] (social)       [below=of matching]  {Chapter 16\\Social Choice};
+\node[applied] (coop)         [right=of social]    {Chapter 17\\Cooperative Games};
 
-% Broader game models
-\node[applied] (matching) [below=of auction] {Chapter 11\\Matching Games};
+% ── Appendices ────────────────────────────────────────────────────────────────
+\node[appendix] (numint)   [below=of replicator] {Appendix\\Numerical Integration};
+\node[appendix] (absorb)   [below=of moran]      {Appendix\\Absorbing\\Markov Chains};
+\node[appendix] (ergodic)  [below=of further]    {Appendix\\Ergodic\\Markov Chains};
+\node[appendix] (ip)       [below=of routing]    {Appendix\\Interior Point Opt.};
+\node[appendix] (intpivot) [above=of brp]        {Appendix\\Integer Pivoting};
 
-% Social and cooperative
-\node[applied] (social_choice) [below =of matching] {Chapter 13\\Social Choice};
-\node[applied] (coop) [right=of social_choice] {Chapter 14\\Cooperative Games};
+% ── Edges: foundations ───────────────────────────────────────────────────────
+\draw (games)          -- (rationalisation);
+\draw (rationalisation)-- (zero_sum);
+\draw (rationalisation)-- (nash);
+\draw (zero_sum)       -- (nash);
+\draw (nash)           -- (subgame);
+\draw (nash)           -- (brp);
+\draw (nash)           -- (repeated);
+\draw (nash)           -- (replicator);
+\draw (nash)           -- (routing);
+\draw (nash)           -- (auction);
+\draw (subgame)        -- (repeated);
 
-% Appendices
-\node[appendix] (numint) [below=of replicator] {Appendix\\Numerical Integration};
-\node[appendix] (absorb) [below=of moran] {Appendix\\Absorbing Markov Chains};
-\node[appendix] (ip) [below=of routing] {Appendix\\Interior Point Optimisation};
-\node[appendix] (intpivot) [above=of brp] {Appendix\\Integer Pivoting};
+% ── Edges: dynamics ──────────────────────────────────────────────────────────
+\draw (repeated)       -- (direct_recip);
+\draw (direct_recip)   -- (evol_bio);
+\draw (evol_bio)       -- (moran);
+\draw[<->] (replicator)-- (moran);
+\draw (moran)          -- (further);
+\draw (replicator)     -- (further);
+\draw (evol_bio)       -- (further);
 
-% Edges
-\draw (games) -- (rationalisation);
-\draw (rationalisation) -- (zero_sum_games);
-\draw (rationalisation) -- (nash);
-\draw (rationalisation) -- (repeated);
-\draw (rationalisation) -- (zero_sum_games);
-\draw (zero_sum_games) -- (nash);
-\draw (nash) -- (subgame);
-\draw (nash) -- (repeated);
-\draw (nash) -- (replicator);
-\draw (nash) -- (brp);
-\draw (nash) -- (routing);
-\draw (nash) -- (auction);
-\draw (subgame) -- (repeated);
-\draw[<->] (moran) -- (replicator);
-\draw[<->] (matching) -- (social_choice);
+% ── Edges: applied ───────────────────────────────────────────────────────────
+\draw[<->] (matching)  -- (social);
 
-% Appendix edges
-\draw[dashed path] (numint) -- (replicator);
-\draw[dashed path] (absorb) -- (moran);
+% ── Appendix edges (dashed) ──────────────────────────────────────────────────
+\draw[dashed path] (numint)   -- (replicator);
+\draw[dashed path] (absorb)   -- (moran);
+\draw[dashed path] (ergodic)  -- (moran);
+\draw[dashed path] (ergodic)  -- (further);
 \draw[dashed path] (intpivot) -- (brp);
-\draw[dashed path] (intpivot) -- (zero_sum_games);
-\draw[dashed path] (ip) -- (routing);
-
+\draw[dashed path] (intpivot) -- (zero_sum);
+\draw[dashed path] (ip)       -- (routing);
 
 \end{tikzpicture}
 \end{document}

@@ -82,11 +82,18 @@ every decision node, not just on the equilibrium path.
 **Dynamics and long-run behaviour** — The middle chapters study how
 equilibria arise and persist over time. [Repeated Games](#chp:repeated_games)
 examines how cooperation can be sustained when players interact
-indefinitely, culminating in the Folk Theorem. [Replicator Dynamics](#chp:replicator_dynamics)
+indefinitely, culminating in the Folk Theorem. [Direct Reciprocity](#chp:direct_reciprocity)
+extends this to memory-one strategies, showing how simple conditional rules
+such as Tit-for-Tat can stabilise cooperation. [Evolutionary Biology](#chp:evolutionary_biology)
+traces the biological origins of evolutionary game theory, introducing the
+concept of an evolutionarily stable strategy and motivating the dynamical
+models that follow. [Replicator Dynamics](#chp:replicator_dynamics)
 models how strategy frequencies evolve in large populations under selection
-pressure, providing a bridge between game theory and evolutionary biology.
-The [Moran Process](#chp:moran_process) studies fixation in finite
-populations. [Best Response Polytopes](#chp:best_response_polytopes)
+pressure. The [Moran Process](#chp:moran_process) studies fixation in finite
+populations. [Further Learning Dynamics](#chp:further_learning_dynamics)
+examines how the choice of update rule — imitation, best response, or
+generational turnover — shapes long-run outcomes across these models.
+[Best Response Polytopes](#chp:best_response_polytopes)
 introduces the Lemke–Howson algorithm as a geometric method for computing Nash
 equilibria in two-player games.
 
@@ -100,10 +107,9 @@ decision-making and impossibility results. [Cooperative Games](#chp:cooperative_
 considers coalition formation, the characteristic function, and the Shapley
 value.
 
-Four **appendices** provide self-contained mathematical background: numerical
-integration, absorbing Markov chains, interior point optimisation (KKT
-conditions), integer pivoting, and an overview of learning and evolutionary
-dynamics.
+Five **appendices** provide self-contained mathematical background: numerical
+integration, absorbing Markov chains, ergodic Markov chains, interior point
+optimisation (KKT conditions), and integer pivoting.
 
 ## How is this book different from similar books?
 
