@@ -470,9 +470,9 @@ In the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_informati
 Bob has a single decision node. His strategy can be represented as:
 
 $$
-\left\{\begin{aligned}
-a &\to (x, 1 - x)
-\end{aligned}\right.
+\begin{cases}
+a \to (x, 1 - x)
+\end{cases}
 $$
 
 where $x$ is the probability of choosing "sports".
@@ -480,10 +480,10 @@ where $x$ is the probability of choosing "sports".
 Celine has two decision nodes, which depend on Bob's choice. Her strategy is:
 
 $$
-\left\{\begin{aligned}
-b &\to (x_b, 1 - x_b) \\
-c &\to (x_c, 1 - x_c)
-\end{aligned}\right.
+\begin{cases}
+b \to (x_b, 1 - x_b) \\
+c \to (x_c, 1 - x_c)
+\end{cases}
 $$
 
 Here, $x_b$ is the probability of choosing "sports" if Bob chose sports, and
@@ -494,9 +494,9 @@ If Celine is unaware of Bob’s decision, as in the
 then nodes **b** and **c** form a single information set. Her strategy becomes:
 
 $$
-\left\{\begin{aligned}
-\{b, c\} &\to (x, 1 - x)
-\end{aligned}\right.
+\begin{cases}
+\{b, c\} \to (x, 1 - x)
+\end{cases}
 $$
 
 This leads us to a fundamental idea: **every extensive form game corresponds to
@@ -532,8 +532,13 @@ single action is:
 
 $$
 \left\{
-a \to (1, 0),\
+\begin{cases}
+a \to (1, 0)
+\end{cases}
+,
+\begin{cases}
 a \to (0, 1)
+\end{cases}
 \right\}
 $$
 
@@ -549,10 +554,25 @@ strategies in the extensive form are:
 
 $$
 \left\{
-\begin{pmatrix} b \to (1, 0) \\ c \to (1, 0) \end{pmatrix},\
-\begin{pmatrix} b \to (1, 0) \\ c \to (0, 1) \end{pmatrix},\
-\begin{pmatrix} b \to (0, 1) \\ c \to (1, 0) \end{pmatrix},\
-\begin{pmatrix} b \to (0, 1) \\ c \to (0, 1) \end{pmatrix}
+\begin{cases}
+b \to (1, 0) \\
+c \to (1, 0)
+\end{cases}
+,
+\begin{cases}
+b \to (1, 0) \\
+c \to (0, 1)
+\end{cases}
+,
+\begin{cases}
+b \to (0, 1) \\
+c \to (1, 0)
+\end{cases}
+,
+\begin{cases}
+b \to (0, 1) \\
+c \to (0, 1)
+\end{cases}
 \right\}
 $$
 
