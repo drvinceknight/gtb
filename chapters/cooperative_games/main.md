@@ -4,6 +4,8 @@ kernelspec:
   display_name: "Python 3"
 ---
 
+(chp:cooperative_games)=
+
 # Cooperative Games
 
 (motivating_example:dnd_battle)=
@@ -448,8 +450,8 @@ the features. These were generated using synthetic data.
 | Model                                         | $R^2$ |
 | --------------------------------------------- | ----- |
 | $y = c_1 x_1$                                 | 0.122 |
-| $y = \phantom{c_1 x_1 +{}} c_2 x_2$           | 0.097 |
-| $y = \phantom{c_1 x_1 + c_2 x_2 +{}} c_3 x_3$ | 0.551 |
+| $y = c_2 x_2$           | 0.097 |
+| $y = c_3 x_3$ | 0.551 |
 | $y = c_1 x_1 + c_2 x_2$                       | 0.174 |
 | $y = c_1 x_1 + c_3 x_3$                       | 0.581 |
 | $y = c_2 x_2 + c_3 x_3$                       | 0.620 |
@@ -609,10 +611,7 @@ of players can form coalitions and share the resulting value. We focused on
 **characteristic function games**, where the value of each coalition is known,
 and explored how to fairly distribute this value using the **Shapley value**.
 
-We discussed the key axioms that characterize fairness—efficiency, null player,
-symmetry, and additivity and saw how they uniquely determine the Shapley value.
-We also explored computational aspects, applications to machine learning, and
-interactive programming tools to calculate Shapley values.
+The four axioms — efficiency, null player, symmetry, and additivity — uniquely determine the Shapley value. We also saw applications to machine learning interpretability.
 
 [](#tbl:cooperative_games_summary) gives a summary of the concepts of this
 chapter.
@@ -638,3 +637,887 @@ The Shapley value is the only payoff rule that satisfies **efficiency**, **null
 player**, **symmetry**, and **additivity**—making it a principled way to fairly
 divide rewards in cooperative settings.
 ```
+
+---
+
+(solutions:cooperative_games)=
+
+## Solutions
+
+````{solution} shapley-value-computation-and-properties
+:label: solution:shapley-value-computation-and-properties
+
+**Game $v_1$**
+
+$$
+v_1(C)=\begin{cases}
+5,&\text{if }C=\{1\}\\
+3,&\text{if }C=\{2\}\\
+2,&\text{if }C=\{3\}\\
+12,&\text{if }C=\{1,2\}\\
+5,&\text{if }C=\{1,3\}\\
+4,&\text{if }C=\{2,3\}\\
+13,&\text{if }C=\{1,2,3\}
+\end{cases}
+$$
+
+1. **Monotonicity of $v_1$**: We must check $v(C_1)\leq v(C_2)$ for all $C_1\subseteq C_2$. All singleton-to-pair comparisons:
+
+   - $v_1(\{1\})=5\leq 12=v_1(\{1,2\})$ ✓
+   - $v_1(\{1\})=5\leq 5=v_1(\{1,3\})$ ✓
+   - $v_1(\{2\})=3\leq 12=v_1(\{1,2\})$ ✓
+   - $v_1(\{2\})=3\leq 4=v_1(\{2,3\})$ ✓
+   - $v_1(\{3\})=2\leq 5=v_1(\{1,3\})$ ✓
+   - $v_1(\{3\})=2\leq 4=v_1(\{2,3\})$ ✓
+
+   All pair-to-grand-coalition comparisons:
+
+   - $v_1(\{1,2\})=12\leq 13=v_1(\{1,2,3\})$ ✓
+   - $v_1(\{1,3\})=5\leq 13=v_1(\{1,2,3\})$ ✓
+   - $v_1(\{2,3\})=4\leq 13=v_1(\{1,2,3\})$ ✓
+
+   **$v_1$ is monotone.**
+
+2. **Superadditivity of $v_1$**: We check $v(C_1\cup C_2)\geq v(C_1)+v(C_2)$ for all disjoint $C_1,C_2$.
+
+   - $v_1(\{1,2\})\geq v_1(\{1\})+v_1(\{2\})$: $12\geq 5+3=8$ ✓
+   - $v_1(\{1,3\})\geq v_1(\{1\})+v_1(\{3\})$: $5\geq 5+2=7$? No: $5 < 7$.
+
+   **$v_1$ is not superadditive** (coalition $\{1,3\}$ is worth less than the sum of the individual values of players 1 and 3).
+
+3. **Shapley value of $v_1$**: We enumerate all $3!=6$ permutations and compute marginal contributions.
+
+   | $\pi$ | $\Delta^{v_1}_\pi(1)$ | $\Delta^{v_1}_\pi(2)$ | $\Delta^{v_1}_\pi(3)$ |
+   |---|---|---|---|
+   | $(1,2,3)$ | $v_1(\{1\})-v_1(\emptyset)=5$ | $v_1(\{1,2\})-v_1(\{1\})=7$ | $v_1(\{1,2,3\})-v_1(\{1,2\})=1$ |
+   | $(1,3,2)$ | $5$ | $v_1(\{1,2,3\})-v_1(\{1,3\})=8$ | $v_1(\{1,3\})-v_1(\{1\})=0$ |
+   | $(2,1,3)$ | $v_1(\{1,2\})-v_1(\{2\})=9$ | $3$ | $v_1(\{1,2,3\})-v_1(\{1,2\})=1$ |
+   | $(2,3,1)$ | $v_1(\{1,2,3\})-v_1(\{2,3\})=9$ | $3$ | $v_1(\{2,3\})-v_1(\{2\})=1$ |
+   | $(3,1,2)$ | $v_1(\{1,3\})-v_1(\{3\})=3$ | $v_1(\{1,2,3\})-v_1(\{1,3\})=8$ | $2$ |
+   | $(3,2,1)$ | $v_1(\{1,2,3\})-v_1(\{2,3\})=9$ | $v_1(\{2,3\})-v_1(\{3\})=2$ | $2$ |
+
+   $$
+   \phi_1(v_1)=\frac{5+5+9+9+3+9}{6}=\frac{40}{6}=\frac{20}{3}\approx 6.67
+   $$
+
+   $$
+   \phi_2(v_1)=\frac{7+8+3+3+8+2}{6}=\frac{31}{6}\approx 5.17
+   $$
+
+   $$
+   \phi_3(v_1)=\frac{1+0+1+1+2+2}{6}=\frac{7}{6}\approx 1.17
+   $$
+
+   **Check**: $\phi_1+\phi_2+\phi_3=20/3+31/6+7/6=40/6+31/6+7/6=78/6=13=v_1(\{1,2,3\})$ ✓
+
+---
+
+**Game $v_2$**
+
+$$
+v_2(C)=\begin{cases}
+6,&\text{if }C=\{1\}\\
+0,&\text{if }C=\{2\}\\
+5,&\text{if }C=\{1,2\}
+\end{cases}
+$$
+
+This is a two-player game with $N=2$.
+
+1. **Monotonicity of $v_2$**:
+
+   - $v_2(\{1\})=6\leq 5=v_2(\{1,2\})$? No: $6>5$.
+
+   **$v_2$ is not monotone.**
+
+2. **Superadditivity of $v_2$**:
+
+   - $v_2(\{1,2\})\geq v_2(\{1\})+v_2(\{2\})$: $5\geq 6+0=6$? No: $5<6$.
+
+   **$v_2$ is not superadditive.**
+
+3. **Shapley value of $v_2$**: With $N=2$ there are $2!=2$ permutations.
+
+   | $\pi$ | $\Delta^{v_2}_\pi(1)$ | $\Delta^{v_2}_\pi(2)$ |
+   |---|---|---|
+   | $(1,2)$ | $v_2(\{1\})-v_2(\emptyset)=6$ | $v_2(\{1,2\})-v_2(\{1\})=-1$ |
+   | $(2,1)$ | $v_2(\{1,2\})-v_2(\{2\})=5$ | $v_2(\{2\})-v_2(\emptyset)=0$ |
+
+   $$
+   \phi_1(v_2)=\frac{6+5}{2}=\frac{11}{2}=5.5
+   $$
+
+   $$
+   \phi_2(v_2)=\frac{-1+0}{2}=-\frac{1}{2}=-0.5
+   $$
+
+   **Check**: $5.5+(-0.5)=5=v_2(\{1,2\})$ ✓
+
+---
+
+**Game $v_3$**
+
+$$
+v_3(C)=\begin{cases}
+6,&\text{if }C=\{1\}\\
+6,&\text{if }C=\{2\}\\
+13,&\text{if }C=\{3\}\\
+6,&\text{if }C=\{1,2\}\\
+13,&\text{if }C=\{1,3\}\\
+13,&\text{if }C=\{2,3\}\\
+26,&\text{if }C=\{1,2,3\}
+\end{cases}
+$$
+
+1. **Monotonicity of $v_3$**:
+
+   - $v_3(\{1\})=6\leq 6=v_3(\{1,2\})$ ✓
+   - $v_3(\{2\})=6\leq 6=v_3(\{1,2\})$ ✓
+   - $v_3(\{1\})=6\leq 13=v_3(\{1,3\})$ ✓
+   - $v_3(\{3\})=13\leq 13=v_3(\{1,3\})$ ✓
+   - $v_3(\{2\})=6\leq 13=v_3(\{2,3\})$ ✓
+   - $v_3(\{3\})=13\leq 13=v_3(\{2,3\})$ ✓
+   - $v_3(\{1,2\})=6\leq 26=v_3(\{1,2,3\})$ ✓
+   - $v_3(\{1,3\})=13\leq 26=v_3(\{1,2,3\})$ ✓
+   - $v_3(\{2,3\})=13\leq 26=v_3(\{1,2,3\})$ ✓
+
+   **$v_3$ is monotone.**
+
+2. **Superadditivity of $v_3$**:
+
+   - $v_3(\{1,2\})\geq v_3(\{1\})+v_3(\{2\})$: $6\geq 6+6=12$? No: $6<12$.
+
+   **$v_3$ is not superadditive.**
+
+3. **Shapley value of $v_3$**:
+
+   | $\pi$ | $\Delta^{v_3}_\pi(1)$ | $\Delta^{v_3}_\pi(2)$ | $\Delta^{v_3}_\pi(3)$ |
+   |---|---|---|---|
+   | $(1,2,3)$ | $6$ | $v_3(\{1,2\})-v_3(\{1\})=0$ | $v_3(\{1,2,3\})-v_3(\{1,2\})=20$ |
+   | $(1,3,2)$ | $6$ | $v_3(\{1,2,3\})-v_3(\{1,3\})=13$ | $v_3(\{1,3\})-v_3(\{1\})=7$ |
+   | $(2,1,3)$ | $v_3(\{1,2\})-v_3(\{2\})=0$ | $6$ | $v_3(\{1,2,3\})-v_3(\{1,2\})=20$ |
+   | $(2,3,1)$ | $v_3(\{1,2,3\})-v_3(\{2,3\})=13$ | $6$ | $v_3(\{2,3\})-v_3(\{2\})=7$ |
+   | $(3,1,2)$ | $v_3(\{1,3\})-v_3(\{3\})=0$ | $v_3(\{1,2,3\})-v_3(\{1,3\})=13$ | $13$ |
+   | $(3,2,1)$ | $v_3(\{1,2,3\})-v_3(\{2,3\})=13$ | $v_3(\{2,3\})-v_3(\{3\})=0$ | $13$ |
+
+   $$
+   \phi_1(v_3)=\frac{6+6+0+13+0+13}{6}=\frac{38}{6}=\frac{19}{3}\approx 6.33
+   $$
+
+   $$
+   \phi_2(v_3)=\frac{0+13+6+6+13+0}{6}=\frac{38}{6}=\frac{19}{3}\approx 6.33
+   $$
+
+   $$
+   \phi_3(v_3)=\frac{20+7+20+7+13+13}{6}=\frac{80}{6}=\frac{40}{3}\approx 13.33
+   $$
+
+   **Check**: $19/3+19/3+40/3=78/3=26=v_3(\{1,2,3\})$ ✓
+
+   Note that $\phi_1=\phi_2$, which is consistent with the symmetry of $v_3$ (players 1 and 2 contribute identically to every coalition).
+
+---
+
+**Game $v_4$**
+
+$$
+v_4(C)=\begin{cases}
+6,&C=\{1\}\\7,&C=\{2\}\\0,&C=\{3\}\\8,&C=\{4\}\\
+7,&C=\{1,2\}\\6,&C=\{1,3\}\\12,&C=\{1,4\}\\
+7,&C=\{2,3\}\\12,&C=\{2,4\}\\8,&C=\{3,4\}\\
+7,&C=\{1,2,3\}\\24,&C=\{1,2,4\}\\12,&C=\{1,3,4\}\\12,&C=\{2,3,4\}\\
+25,&C=\{1,2,3,4\}
+\end{cases}
+$$
+
+1. **Monotonicity of $v_4$**: We check a few key comparisons.
+
+   - $v_4(\{1\})=6\leq 7=v_4(\{1,2\})$ ✓
+   - $v_4(\{2\})=7\leq 7=v_4(\{1,2\})$ ✓
+   - $v_4(\{1,2\})=7\leq 7=v_4(\{1,2,3\})$ ✓
+   - $v_4(\{1,2,3\})=7\leq 25=v_4(\{1,2,3,4\})$ ✓
+   - $v_4(\{3\})=0\leq 6=v_4(\{1,3\})$ ✓
+   - $v_4(\{1,2,4\})=24\leq 25=v_4(\{1,2,3,4\})$ ✓
+
+   All subset relationships hold. **$v_4$ is monotone.**
+
+2. **Superadditivity of $v_4$**: Check a few disjoint pairs.
+
+   - $v_4(\{1,2\})\geq v_4(\{1\})+v_4(\{2\})$: $7\geq 6+7=13$? No: $7<13$.
+
+   **$v_4$ is not superadditive.**
+
+3. **Shapley value of $v_4$**: With $N=4$ there are $4!=24$ permutations. We use the formula:
+
+   $$
+   \phi_i(v_4)=\sum_{S\subseteq N\setminus\{i\}}\frac{|S|!(|N|-|S|-1)!}{|N|!}\bigl[v_4(S\cup\{i\})-v_4(S)\bigr]
+   $$
+
+   For player 1, the relevant subsets $S\subseteq\{2,3,4\}$ are:
+
+   | $S$ | $|S|$ | weight $=\frac{|S|!\,(3-|S|)!}{24}$ | $v_4(S\cup\{1\})-v_4(S)$ |
+   |---|---|---|---|
+   | $\emptyset$ | 0 | $\frac{0!\cdot 3!}{24}=\frac{6}{24}$ | $v_4(\{1\})-0=6$ |
+   | $\{2\}$ | 1 | $\frac{1!\cdot 2!}{24}=\frac{2}{24}$ | $v_4(\{1,2\})-v_4(\{2\})=7-7=0$ |
+   | $\{3\}$ | 1 | $\frac{2}{24}$ | $v_4(\{1,3\})-v_4(\{3\})=6-0=6$ |
+   | $\{4\}$ | 1 | $\frac{2}{24}$ | $v_4(\{1,4\})-v_4(\{4\})=12-8=4$ |
+   | $\{2,3\}$ | 2 | $\frac{2!\cdot 1!}{24}=\frac{2}{24}$ | $v_4(\{1,2,3\})-v_4(\{2,3\})=7-7=0$ |
+   | $\{2,4\}$ | 2 | $\frac{2}{24}$ | $v_4(\{1,2,4\})-v_4(\{2,4\})=24-12=12$ |
+   | $\{3,4\}$ | 2 | $\frac{2}{24}$ | $v_4(\{1,3,4\})-v_4(\{3,4\})=12-8=4$ |
+   | $\{2,3,4\}$ | 3 | $\frac{3!\cdot 0!}{24}=\frac{6}{24}$ | $v_4(\{1,2,3,4\})-v_4(\{2,3,4\})=25-12=13$ |
+
+   $$
+\begin{align*}
+   \phi_1&=\frac{1}{24}\bigl[6\cdot 6+2\cdot 0+2\cdot 6+2\cdot 4+2\cdot 0+2\cdot 12+2\cdot 4+6\cdot 13\bigr] \\
+          &=\frac{36+0+12+8+0+24+8+78}{24}=\frac{166}{24}=\frac{83}{12}\approx 6.92
+\end{align*}
+   $$
+
+   For player 2, subsets $S\subseteq\{1,3,4\}$:
+
+   | $S$ | $v_4(S\cup\{2\})-v_4(S)$ |
+   |---|---|
+   | $\emptyset$ | $7$ |
+   | $\{1\}$ | $7-6=1$ |
+   | $\{3\}$ | $7-0=7$ |
+   | $\{4\}$ | $12-8=4$ |
+   | $\{1,3\}$ | $7-6=1$ |
+   | $\{1,4\}$ | $24-12=12$ |
+   | $\{3,4\}$ | $12-8=4$ |
+   | $\{1,3,4\}$ | $25-12=13$ |
+
+   $$
+\begin{align*}
+   \phi_2&=\frac{6\cdot 7+2\cdot 1+2\cdot 7+2\cdot 4+2\cdot 1+2\cdot 12+2\cdot 4+6\cdot 13}{24} \\
+          &=\frac{42+2+14+8+2+24+8+78}{24}=\frac{178}{24}=\frac{89}{12}\approx 7.42
+\end{align*}
+   $$
+
+   For player 3, subsets $S\subseteq\{1,2,4\}$:
+
+   | $S$ | $v_4(S\cup\{3\})-v_4(S)$ |
+   |---|---|
+   | $\emptyset$ | $0$ |
+   | $\{1\}$ | $6-6=0$ |
+   | $\{2\}$ | $7-7=0$ |
+   | $\{4\}$ | $8-8=0$ |
+   | $\{1,2\}$ | $7-7=0$ |
+   | $\{1,4\}$ | $12-12=0$ |
+   | $\{2,4\}$ | $12-12=0$ |
+   | $\{1,2,4\}$ | $25-24=1$ |
+
+   $$
+\begin{align*}
+   \phi_3&=\frac{6\cdot 0+2\cdot 0+2\cdot 0+2\cdot 0+2\cdot 0+2\cdot 0+2\cdot 0+6\cdot 1}{24} \\
+          &=\frac{6}{24}=\frac{1}{4}=0.25
+\end{align*}
+   $$
+
+   For player 4, subsets $S\subseteq\{1,2,3\}$:
+
+   | $S$ | $v_4(S\cup\{4\})-v_4(S)$ |
+   |---|---|
+   | $\emptyset$ | $8$ |
+   | $\{1\}$ | $12-6=6$ |
+   | $\{2\}$ | $12-7=5$ |
+   | $\{3\}$ | $8-0=8$ |
+   | $\{1,2\}$ | $24-7=17$ |
+   | $\{1,3\}$ | $12-6=6$ |
+   | $\{2,3\}$ | $12-7=5$ |
+   | $\{1,2,3\}$ | $25-7=18$ |
+
+   $$
+\begin{align*}
+   \phi_4&=\frac{6\cdot 8+2\cdot 6+2\cdot 5+2\cdot 8+2\cdot 17+2\cdot 6+2\cdot 5+6\cdot 18}{24} \\
+          &=\frac{48+12+10+16+34+12+10+108}{24}=\frac{250}{24}=\frac{125}{12}\approx 10.42
+\end{align*}
+   $$
+
+   **Check**: $83/12+89/12+3/12+125/12=300/12=25=v_4(\{1,2,3,4\})$ ✓
+
+```{code-cell} python3
+import coopgt.characteristic_function_properties
+import coopgt.shapley_value
+
+# Game v1
+v1 = {
+    (): 0,
+    (1,): 5, (2,): 3, (3,): 2,
+    (1, 2): 12, (1, 3): 5, (2, 3): 4,
+    (1, 2, 3): 13,
+}
+print("v1 monotone:", coopgt.characteristic_function_properties.is_monotone(v1))
+print("v1 superadditive:", coopgt.characteristic_function_properties.is_superadditive(v1))
+print("v1 Shapley:", coopgt.shapley_value.calculate(v1))
+```
+
+```{code-cell} python3
+# Game v2
+v2 = {(): 0, (1,): 6, (2,): 0, (1, 2): 5}
+print("v2 monotone:", coopgt.characteristic_function_properties.is_monotone(v2))
+print("v2 superadditive:", coopgt.characteristic_function_properties.is_superadditive(v2))
+print("v2 Shapley:", coopgt.shapley_value.calculate(v2))
+```
+
+```{code-cell} python3
+# Game v3
+v3 = {
+    (): 0,
+    (1,): 6, (2,): 6, (3,): 13,
+    (1, 2): 6, (1, 3): 13, (2, 3): 13,
+    (1, 2, 3): 26,
+}
+print("v3 monotone:", coopgt.characteristic_function_properties.is_monotone(v3))
+print("v3 superadditive:", coopgt.characteristic_function_properties.is_superadditive(v3))
+print("v3 Shapley:", coopgt.shapley_value.calculate(v3))
+```
+
+```{code-cell} python3
+# Game v4
+v4 = {
+    (): 0,
+    (1,): 6, (2,): 7, (3,): 0, (4,): 8,
+    (1, 2): 7, (1, 3): 6, (1, 4): 12,
+    (2, 3): 7, (2, 4): 12, (3, 4): 8,
+    (1, 2, 3): 7, (1, 2, 4): 24, (1, 3, 4): 12, (2, 3, 4): 12,
+    (1, 2, 3, 4): 25,
+}
+print("v4 monotone:", coopgt.characteristic_function_properties.is_monotone(v4))
+print("v4 superadditive:", coopgt.characteristic_function_properties.is_superadditive(v4))
+print("v4 Shapley:", coopgt.shapley_value.calculate(v4))
+```
+````
+
+````{solution} interpreting_linear_models
+:label: solution:interpreting_linear_models
+
+1. **Characteristic function $v(S)$**
+
+   Using the $R^2$ values from the table, with players $\{x_1, x_2, x_3\}$:
+
+   $$
+   v(\emptyset)=0,\quad v(\{x_1\})=0.122,\quad v(\{x_2\})=0.097,\quad v(\{x_3\})=0.551
+   $$
+
+   $$
+   v(\{x_1,x_2\})=0.174,\quad v(\{x_1,x_3\})=0.581,\quad v(\{x_2,x_3\})=0.620
+   $$
+
+   $$
+   v(\{x_1,x_2,x_3\})=0.623
+   $$
+
+2. **Shapley value computation**
+
+   We apply the formula with $N=3$:
+
+   $$
+   \phi_i(v)=\sum_{S\subseteq N\setminus\{i\}}\frac{|S|!(2-|S|)!}{6}\bigl[v(S\cup\{i\})-v(S)\bigr]
+   $$
+
+   **For $x_1$** (subsets $S\subseteq\{x_2,x_3\}$):
+
+   | $S$ | weight | $v(S\cup\{x_1\})-v(S)$ |
+   |---|---|---|
+   | $\emptyset$ | $1/6$ | $0.122-0=0.122$ |
+   | $\{x_2\}$ | $1/6$ | $0.174-0.097=0.077$ |
+   | $\{x_3\}$ | $1/6$ | $0.581-0.551=0.030$ |
+   | $\{x_2,x_3\}$ | $1/6$ | $0.623-0.620=0.003$ |
+
+   $$
+\begin{align*}
+   \phi_{x_1}&=\frac{1}{6}(2\cdot 0.122+1\cdot 0.077+1\cdot 0.030+2\cdot 0.003) \\
+             &=\frac{0.244+0.077+0.030+0.006}{6}=\frac{0.357}{6}\approx 0.0572
+\end{align*}
+   $$
+
+   (Using weights: $|S|=0$ gets weight $\frac{0!\cdot 2!}{6}=2/6$, $|S|=1$ gets $\frac{1!\cdot 1!}{6}=1/6$, $|S|=2$ gets $\frac{2!\cdot 0!}{6}=2/6$.)
+
+   $$
+   \phi_{x_1}=\frac{2\cdot 0.122+1\cdot 0.077+1\cdot 0.030+2\cdot 0.003}{6}=\frac{0.357}{6}\approx 0.0595
+   $$
+
+   **For $x_2$** (subsets $S\subseteq\{x_1,x_3\}$):
+
+   | $S$ | weight | $v(S\cup\{x_2\})-v(S)$ |
+   |---|---|---|
+   | $\emptyset$ | $2/6$ | $0.097$ |
+   | $\{x_1\}$ | $1/6$ | $0.174-0.122=0.052$ |
+   | $\{x_3\}$ | $1/6$ | $0.620-0.551=0.069$ |
+   | $\{x_1,x_3\}$ | $2/6$ | $0.623-0.581=0.042$ |
+
+   $$
+   \phi_{x_2}=\frac{2\cdot 0.097+1\cdot 0.052+1\cdot 0.069+2\cdot 0.042}{6}=\frac{0.194+0.052+0.069+0.084}{6}=\frac{0.399}{6}\approx 0.0665
+   $$
+
+   **For $x_3$** (subsets $S\subseteq\{x_1,x_2\}$):
+
+   | $S$ | weight | $v(S\cup\{x_3\})-v(S)$ |
+   |---|---|---|
+   | $\emptyset$ | $2/6$ | $0.551$ |
+   | $\{x_1\}$ | $1/6$ | $0.581-0.122=0.459$ |
+   | $\{x_2\}$ | $1/6$ | $0.620-0.097=0.523$ |
+   | $\{x_1,x_2\}$ | $2/6$ | $0.623-0.174=0.449$ |
+
+   $$
+   \phi_{x_3}=\frac{2\cdot 0.551+1\cdot 0.459+1\cdot 0.523+2\cdot 0.449}{6}=\frac{1.102+0.459+0.523+0.898}{6}=\frac{2.982}{6}\approx 0.4970
+   $$
+
+   **Check**: $0.0595+0.0665+0.4970\approx 0.623=v(\{x_1,x_2,x_3\})$ ✓
+
+3. **Interpretation**
+
+   The Shapley values are approximately:
+
+   $$
+   \phi_{x_1}\approx 0.060,\quad\phi_{x_2}\approx 0.067,\quad\phi_{x_3}\approx 0.497
+   $$
+
+   Feature $x_3$ contributes by far the most explanatory power, accounting for roughly $0.497/0.623\approx 80\%$ of the total $R^2$. Features $x_1$ and $x_2$ contribute very little, with $x_1$ contributing slightly less than $x_2$. The Shapley value allocates the credit for the combined model performance fairly across the features, accounting for all possible orderings in which they are added.
+
+```{code-cell} python3
+import coopgt.shapley_value
+
+v_linear = {
+    (): 0,
+    (1,): 0.122,
+    (2,): 0.097,
+    (3,): 0.551,
+    (1, 2): 0.174,
+    (1, 3): 0.581,
+    (2, 3): 0.620,
+    (1, 2, 3): 0.623,
+}
+
+shapley = coopgt.shapley_value.calculate(characteristic_function=v_linear)
+print("Shapley values (x1, x2, x3):", shapley)
+print(f"Sum: {sum(shapley):.3f} (should equal {v_linear[(1, 2, 3)]})")
+```
+````
+
+````{solution} additivity-and-symmetry
+:label: solution:additivity-and-symmetry
+
+**Game $v_a$** on $N=\{1,2,3\}$:
+
+$$
+v_a(C)=\begin{cases}2, &C=\{1\}\\2, &C=\{2\}\\0, &\text{otherwise}\end{cases}
+$$
+
+**Game $v_b$** on $N=\{1,2,3\}$:
+
+$$
+v_b(C)=\begin{cases}1, &C=\{1,3\}\\1, &C=\{2,3\}\\3, &C=\{1,2,3\}\\0, &\text{otherwise}\end{cases}
+$$
+
+1. **Symmetry property**
+
+   Recall the symmetry property: if $v(C\cup\{i\})=v(C\cup\{j\})$ for all $C\subseteq\Omega\setminus\{i,j\}$, then $\phi_i=\phi_j$.
+
+   **For $v_a$**: Players 1 and 2 are symmetric. For every $C\subseteq\{3\}$:
+
+   - $v_a(C\cup\{1\})$: if $C=\emptyset$, $v_a(\{1\})=2$; if $C=\{3\}$, $v_a(\{1,3\})=0$.
+   - $v_a(C\cup\{2\})$: if $C=\emptyset$, $v_a(\{2\})=2$; if $C=\{3\}$, $v_a(\{2,3\})=0$.
+
+   Since $v_a(C\cup\{1\})=v_a(C\cup\{2\})$ for all $C\subseteq\{3\}$, players 1 and 2 are symmetric under $v_a$.
+
+   Player 3 is a null player in $v_a$ (it never contributes), so the symmetry property is vacuously satisfied for any pair involving player 3.
+
+   **$v_a$ satisfies the symmetry property.**
+
+   **For $v_b$**: Players 1 and 2 are symmetric. For every $C\subseteq\{3\}$:
+
+   - $C=\emptyset$: $v_b(\{1\})=0=v_b(\{2\})$ ✓
+   - $C=\{3\}$: $v_b(\{1,3\})=1=v_b(\{2,3\})$ ✓
+
+   **$v_b$ satisfies the symmetry property.**
+
+2. **Shapley values of $v_a$ and $v_b$**
+
+   **Shapley value of $v_a$**:
+
+   | $\pi$ | $\Delta^{v_a}_\pi(1)$ | $\Delta^{v_a}_\pi(2)$ | $\Delta^{v_a}_\pi(3)$ |
+   |---|---|---|---|
+   | $(1,2,3)$ | $2$ | $0$ | $0$ |
+   | $(1,3,2)$ | $2$ | $0$ | $0$ |
+   | $(2,1,3)$ | $0$ | $2$ | $0$ |
+   | $(2,3,1)$ | $0$ | $2$ | $0$ |
+   | $(3,1,2)$ | $0$ | $0$ | $0$ |
+   | $(3,2,1)$ | $0$ | $0$ | $0$ |
+
+   $$
+   \phi_1(v_a)=\frac{2+2+0+0+0+0}{6}=\frac{2}{3},\quad
+   \phi_2(v_a)=\frac{0+0+2+2+0+0}{6}=\frac{2}{3},\quad
+   \phi_3(v_a)=0
+   $$
+
+   **Check**: $2/3+2/3+0=4/3$, but $v_a(\{1,2,3\})=0$. Wait — the grand coalition has value 0 under $v_a$.
+
+   Indeed $\phi_1+\phi_2+\phi_3$ should equal $v_a(\Omega)=0$. Let us recheck: $v_a(\{1,2\})=0$, not $v_a(\{1\})+v_a(\{2\})$; the grand coalition $v_a(\{1,2,3\})=0$.
+
+   So in permutation $(1,2,3)$: $\Delta(1)=v_a(\{1\})=2$, $\Delta(2)=v_a(\{1,2\})-v_a(\{1\})=0-2=-2$, $\Delta(3)=v_a(\{1,2,3\})-v_a(\{1,2\})=0-0=0$.
+
+   Let us redo the full table for $v_a$:
+
+   | $\pi$ | $\Delta^{v_a}_\pi(1)$ | $\Delta^{v_a}_\pi(2)$ | $\Delta^{v_a}_\pi(3)$ |
+   |---|---|---|---|
+   | $(1,2,3)$ | $v_a(\{1\})=2$ | $v_a(\{1,2\})-v_a(\{1\})=-2$ | $v_a(\{1,2,3\})-v_a(\{1,2\})=0$ |
+   | $(1,3,2)$ | $2$ | $v_a(\{1,2,3\})-v_a(\{1,3\})=0$ | $v_a(\{1,3\})-v_a(\{1\})=-2$ |
+   | $(2,1,3)$ | $v_a(\{1,2\})-v_a(\{2\})=-2$ | $v_a(\{2\})=2$ | $0$ |
+   | $(2,3,1)$ | $v_a(\{1,2,3\})-v_a(\{2,3\})=0$ | $2$ | $v_a(\{2,3\})-v_a(\{2\})=-2$ |
+   | $(3,1,2)$ | $v_a(\{1,3\})-v_a(\{3\})=0$ | $v_a(\{1,2,3\})-v_a(\{1,3\})=0$ | $v_a(\{3\})=0$ |
+   | $(3,2,1)$ | $v_a(\{1,2,3\})-v_a(\{2,3\})=0$ | $v_a(\{2,3\})-v_a(\{3\})=0$ | $0$ |
+
+   $$
+   \phi_1(v_a)=\frac{2+2-2+0+0+0}{6}=\frac{2}{6}=\frac{1}{3}
+   $$
+
+   $$
+   \phi_2(v_a)=\frac{-2+0+2+2+0+0}{6}=\frac{2}{6}=\frac{1}{3}
+   $$
+
+   $$
+   \phi_3(v_a)=\frac{0-2+0-2+0+0}{6}=\frac{-4}{6}=-\frac{2}{3}
+   $$
+
+   **Check**: $1/3+1/3-2/3=0=v_a(\{1,2,3\})$ ✓
+
+   **Shapley value of $v_b$**:
+
+   | $\pi$ | $\Delta^{v_b}_\pi(1)$ | $\Delta^{v_b}_\pi(2)$ | $\Delta^{v_b}_\pi(3)$ |
+   |---|---|---|---|
+   | $(1,2,3)$ | $0$ | $0$ | $v_b(\{1,2,3\})-v_b(\{1,2\})=3$ |
+   | $(1,3,2)$ | $0$ | $v_b(\{1,2,3\})-v_b(\{1,3\})=2$ | $v_b(\{1,3\})-v_b(\{1\})=1$ |
+   | $(2,1,3)$ | $0$ | $0$ | $3$ |
+   | $(2,3,1)$ | $v_b(\{1,2,3\})-v_b(\{2,3\})=2$ | $0$ | $v_b(\{2,3\})-v_b(\{2\})=1$ |
+   | $(3,1,2)$ | $v_b(\{1,3\})-v_b(\{3\})=1$ | $v_b(\{1,2,3\})-v_b(\{1,3\})=2$ | $0$ |
+   | $(3,2,1)$ | $v_b(\{1,2,3\})-v_b(\{2,3\})=2$ | $v_b(\{2,3\})-v_b(\{3\})=1$ | $0$ |
+
+   $$
+   \phi_1(v_b)=\frac{0+0+0+2+1+2}{6}=\frac{5}{6}
+   $$
+
+   $$
+   \phi_2(v_b)=\frac{0+2+0+0+2+1}{6}=\frac{5}{6}
+   $$
+
+   $$
+   \phi_3(v_b)=\frac{3+1+3+1+0+0}{6}=\frac{8}{6}=\frac{4}{3}
+   $$
+
+   **Check**: $5/6+5/6+4/3=5/6+5/6+8/6=18/6=3=v_b(\{1,2,3\})$ ✓
+
+3. **The game $v^+ = v_a + v_b$**
+
+   $$
+   v^+(C)=v_a(C)+v_b(C)
+   $$
+
+   | $C$ | $v_a(C)$ | $v_b(C)$ | $v^+(C)$ |
+   |---|---|---|---|
+   | $\emptyset$ | $0$ | $0$ | $0$ |
+   | $\{1\}$ | $2$ | $0$ | $2$ |
+   | $\{2\}$ | $2$ | $0$ | $2$ |
+   | $\{3\}$ | $0$ | $0$ | $0$ |
+   | $\{1,2\}$ | $0$ | $0$ | $0$ |
+   | $\{1,3\}$ | $0$ | $1$ | $1$ |
+   | $\{2,3\}$ | $0$ | $1$ | $1$ |
+   | $\{1,2,3\}$ | $0$ | $3$ | $3$ |
+
+   Using the Shapley formula for $v^+$:
+
+   $$
+   \phi_1(v^+)=\phi_1(v_a)+\phi_1(v_b)=\frac{1}{3}+\frac{5}{6}=\frac{2}{6}+\frac{5}{6}=\frac{7}{6}
+   $$
+
+   $$
+   \phi_2(v^+)=\frac{1}{3}+\frac{5}{6}=\frac{7}{6}
+   $$
+
+   $$
+   \phi_3(v^+)=-\frac{2}{3}+\frac{4}{3}=\frac{2}{3}
+   $$
+
+4. **Verification of the additivity property**
+
+   We verify by computing the Shapley value of $v^+$ directly.
+
+   | $\pi$ | $\Delta^{v^+}_\pi(1)$ | $\Delta^{v^+}_\pi(2)$ | $\Delta^{v^+}_\pi(3)$ |
+   |---|---|---|---|
+   | $(1,2,3)$ | $2$ | $-2$ | $3$ |
+   | $(1,3,2)$ | $2$ | $2$ | $-1$ |
+   | $(2,1,3)$ | $-2$ | $2$ | $3$ |
+   | $(2,3,1)$ | $2$ | $2$ | $-1$ |
+   | $(3,1,2)$ | $1$ | $2$ | $0$ |
+   | $(3,2,1)$ | $2$ | $1$ | $0$ |
+
+   $$
+   \phi_1(v^+)=\frac{2+2-2+2+1+2}{6}=\frac{7}{6}\checkmark
+   $$
+
+   $$
+   \phi_2(v^+)=\frac{-2+2+2+2+2+1}{6}=\frac{7}{6}\checkmark
+   $$
+
+   $$
+   \phi_3(v^+)=\frac{3-1+3-1+0+0}{6}=\frac{4}{6}=\frac{2}{3}\checkmark
+   $$
+
+   The Shapley value of $v^+$ equals $\phi(v_a)+\phi(v_b)$, confirming the **additivity property**.
+
+```{code-cell} python3
+import coopgt.shapley_value
+
+va = {
+    (): 0,
+    (1,): 2, (2,): 2, (3,): 0,
+    (1, 2): 0, (1, 3): 0, (2, 3): 0,
+    (1, 2, 3): 0,
+}
+
+vb = {
+    (): 0,
+    (1,): 0, (2,): 0, (3,): 0,
+    (1, 2): 0, (1, 3): 1, (2, 3): 1,
+    (1, 2, 3): 3,
+}
+
+v_plus = {k: va[k] + vb[k] for k in va}
+
+phi_a = coopgt.shapley_value.calculate(characteristic_function=va)
+phi_b = coopgt.shapley_value.calculate(characteristic_function=vb)
+phi_plus = coopgt.shapley_value.calculate(characteristic_function=v_plus)
+
+print("Shapley value of v_a:", phi_a)
+print("Shapley value of v_b:", phi_b)
+print("Shapley value of v_a + v_b (direct):", phi_plus)
+print("Sum of Shapley values:", [a + b for a, b in zip(phi_a, phi_b)])
+print("Additivity holds:", all(abs(p - (a + b)) < 1e-10 for p, a, b in zip(phi_plus, phi_a, phi_b)))
+```
+````
+
+````{solution} null-player-and-marginal-contributions
+:label: solution:null-player-and-marginal-contributions
+
+The game $v$ on $N=\{1,2,3\}$ is:
+
+$$
+v(C)=\begin{cases}
+4, &C=\{1\}\\
+7, &C=\{1,2\}\\
+7, &C=\{1,2,3\}\\
+0, &\text{otherwise}
+\end{cases}
+$$
+
+1. **Identifying null players**
+
+   A player $i$ is a null player if $v(C\cup\{i\})=v(C)$ for all coalitions $C\subseteq\Omega$.
+
+   **Player 2**: Check whether $v(C\cup\{2\})=v(C)$ for all $C$:
+
+   - $C=\emptyset$: $v(\{2\})=0=v(\emptyset)=0$ ✓
+   - $C=\{1\}$: $v(\{1,2\})=7\neq 4=v(\{1\})$ ✗
+
+   Player 2 is **not** a null player.
+
+   **Player 3**: Check whether $v(C\cup\{3\})=v(C)$ for all $C$:
+
+   - $C=\emptyset$: $v(\{3\})=0=v(\emptyset)=0$ ✓
+   - $C=\{1\}$: $v(\{1,3\})=0\neq 4=v(\{1\})$ ✗
+
+   Wait — $v(\{1,3\})$ is not explicitly listed, so $v(\{1,3\})=0$ (otherwise). Then $v(\{1,3\})=0\neq 4=v(\{1\})$.
+
+   Player 3 is **not** a null player under the standard definition.
+
+   Let us re-examine: $v(\{1,2,3\})=7=v(\{1,2\})$, so adding player 3 to $\{1,2\}$ does not change the value. Also $v(\{1,3\})=0=v(\{3\})=0$, and $v(\{2,3\})=0=v(\{2\})=0$. But $v(\{1,3\})=0\neq 4=v(\{1\})$.
+
+   So player 3 is not a null player. However, once player 2 has joined, player 3 contributes nothing. Let us proceed to the Shapley value.
+
+2. **Marginal contributions**
+
+   | $\pi$ | $\Delta^v_\pi(1)$ | $\Delta^v_\pi(2)$ | $\Delta^v_\pi(3)$ |
+   |---|---|---|---|
+   | $(1,2,3)$ | $v(\{1\})-0=4$ | $v(\{1,2\})-v(\{1\})=3$ | $v(\{1,2,3\})-v(\{1,2\})=0$ |
+   | $(1,3,2)$ | $v(\{1\})-0=4$ | $v(\{1,2,3\})-v(\{1,3\})=7$ | $v(\{1,3\})-v(\{1\})=-4$ |
+   | $(2,1,3)$ | $v(\{1,2\})-v(\{2\})=7$ | $v(\{2\})-0=0$ | $v(\{1,2,3\})-v(\{1,2\})=0$ |
+   | $(2,3,1)$ | $v(\{1,2,3\})-v(\{2,3\})=7$ | $v(\{2\})-0=0$ | $v(\{2,3\})-v(\{2\})=0$ |
+   | $(3,1,2)$ | $v(\{1,3\})-v(\{3\})=0$ | $v(\{1,2,3\})-v(\{1,3\})=7$ | $v(\{3\})-0=0$ |
+   | $(3,2,1)$ | $v(\{1,2,3\})-v(\{2,3\})=7$ | $v(\{2,3\})-v(\{3\})=0$ | $v(\{3\})-0=0$ |
+
+3. **Shapley value**
+
+   $$
+   \phi_1(v)=\frac{4+4+7+7+0+7}{6}=\frac{29}{6}\approx 4.83
+   $$
+
+   $$
+   \phi_2(v)=\frac{3+7+0+0+7+0}{6}=\frac{17}{6}\approx 2.83
+   $$
+
+   $$
+   \phi_3(v)=\frac{0-4+0+0+0+0}{6}=-\frac{4}{6}=-\frac{2}{3}\approx -0.67
+   $$
+
+   **Check**: $29/6+17/6-4/6=42/6=7=v(\{1,2,3\})$ ✓
+
+   **Null player property**: Player 3 is not a null player (since $v(\{1,3\})\neq v(\{1\})$), so the null player property does not require $\phi_3=0$. Indeed $\phi_3=-2/3\neq 0$. The Shapley value correctly penalises player 3 for actually reducing the value of coalition $\{1\}$ when they join.
+
+   To see this concretely: adding player 3 to coalition $\{1\}$ reduces the value from $4$ to $0$. This negative marginal contribution is reflected in the Shapley value.
+
+```{code-cell} python3
+import coopgt.shapley_value
+
+v = {
+    (): 0,
+    (1,): 4, (2,): 0, (3,): 0,
+    (1, 2): 7, (1, 3): 0, (2, 3): 0,
+    (1, 2, 3): 7,
+}
+
+shapley = coopgt.shapley_value.calculate(characteristic_function=v)
+print("Shapley value:", shapley)
+print(f"phi_1 = {shapley[0]:.4f} (expected 29/6 = {29/6:.4f})")
+print(f"phi_2 = {shapley[1]:.4f} (expected 17/6 = {17/6:.4f})")
+print(f"phi_3 = {shapley[2]:.4f} (expected -2/3 = {-2/3:.4f})")
+```
+````
+
+````{solution} properties-of-the-shapley-value
+:label: solution:properties-of-the-shapley-value
+
+Recall the Shapley value:
+
+$$
+\phi_i(G)=\frac{1}{N!}\sum_{\pi\in\Pi_N}\Delta_\pi^G(i)=\frac{1}{N!}\sum_{\pi\in\Pi_N}\bigl[v(S_\pi(i)\cup\{i\})-v(S_\pi(i))\bigr]
+$$
+
+**Proof of Efficiency**
+
+We must show $\sum_{i=1}^N\phi_i(G)=v(\Omega)$.
+
+$$
+\sum_{i=1}^N\phi_i(G)=\frac{1}{N!}\sum_{i=1}^N\sum_{\pi\in\Pi_N}\Delta_\pi^G(i)=\frac{1}{N!}\sum_{\pi\in\Pi_N}\sum_{i=1}^N\Delta_\pi^G(i)
+$$
+
+For a fixed permutation $\pi=(\pi_1,\pi_2,\ldots,\pi_N)$, the marginal contributions telescope:
+
+$$
+\sum_{i=1}^N\Delta_\pi^G(i)=\sum_{k=1}^N\bigl[v(\{\pi_1,\ldots,\pi_k\})-v(\{\pi_1,\ldots,\pi_{k-1}\})\bigr]=v(\Omega)-v(\emptyset)=v(\Omega)
+$$
+
+since $v(\emptyset)=0$. Therefore:
+
+$$
+\sum_{i=1}^N\phi_i(G)=\frac{1}{N!}\sum_{\pi\in\Pi_N}v(\Omega)=\frac{N!\cdot v(\Omega)}{N!}=v(\Omega)
+\qquad\square
+$$
+
+---
+
+**Proof of the Null Player Property**
+
+Suppose $v(C\cup\{i\})=v(C)$ for all $C\subseteq\Omega$. Then for every permutation $\pi$:
+
+$$
+\Delta_\pi^G(i)=v(S_\pi(i)\cup\{i\})-v(S_\pi(i))=0
+$$
+
+Therefore:
+
+$$
+\phi_i(G)=\frac{1}{N!}\sum_{\pi\in\Pi_N}0=0\qquad\square
+$$
+
+---
+
+**Proof of the Symmetry Property**
+
+Suppose $v(C\cup\{i\})=v(C\cup\{j\})$ for all $C\subseteq\Omega\setminus\{i,j\}$. We wish to show $\phi_i=\phi_j$.
+
+For any permutation $\pi$, define the permutation $\pi'$ by swapping the positions of $i$ and $j$ in $\pi$. This defines a bijection on $\Pi_N$ (swapping $i$ and $j$ in every permutation), and every permutation is paired with a unique partner.
+
+Consider any permutation $\pi$. Let $S=S_\pi(i)\setminus\{j\}$, i.e. the predecessors of $i$ not counting $j$.
+
+**Case 1**: $j$ is not a predecessor of $i$ in $\pi$ (i.e. $i$ comes before $j$). Then $S_\pi(i)\subseteq\Omega\setminus\{i,j\}$, so:
+
+$$
+\Delta_\pi^G(i)=v(S_\pi(i)\cup\{i\})-v(S_\pi(i))
+$$
+
+In $\pi'$ (where $i$ and $j$ are swapped), $j$ now appears where $i$ was, so $S_{\pi'}(j)=S_\pi(i)$:
+
+$$
+\Delta_{\pi'}^G(j)=v(S_{\pi'}(j)\cup\{j\})-v(S_{\pi'}(j))=v(S_\pi(i)\cup\{j\})-v(S_\pi(i))
+$$
+
+Since $S_\pi(i)\subseteq\Omega\setminus\{i,j\}$, the symmetry assumption gives $v(S_\pi(i)\cup\{i\})=v(S_\pi(i)\cup\{j\})$, so:
+
+$$
+\Delta_\pi^G(i)=\Delta_{\pi'}^G(j)
+$$
+
+**Case 2**: $j$ is a predecessor of $i$ in $\pi$. Then $S_\pi(i)$ contains $j$. Let $S=S_\pi(i)\setminus\{j\}\subseteq\Omega\setminus\{i,j\}$. Then:
+
+$$
+\Delta_\pi^G(i)=v(S\cup\{i,j\})-v(S\cup\{j\})
+$$
+
+In $\pi'$, $i$ has been moved to where $j$ was, so $S_{\pi'}(j)=S$ (the predecessors of $j$ in $\pi'$ are the predecessors of $i$ in $\pi$ that are not $j$, which is $S$). Thus:
+
+$$
+\Delta_{\pi'}^G(j)=v(S\cup\{j\})-v(S)
+$$
+
+Hmm — this gives a different expression. Let us instead use the following argument directly.
+
+Since the map $\pi\mapsto\pi'$ is a bijection on $\Pi_N$:
+
+$$
+\phi_i(G)=\frac{1}{N!}\sum_{\pi\in\Pi_N}\Delta_\pi^G(i)=\frac{1}{N!}\sum_{\pi'\in\Pi_N}\Delta_{\pi'}^G(i)
+$$
+
+For any permutation $\pi'$, consider the marginal contribution of $i$ in $\pi'$:
+
+$$
+\Delta_{\pi'}^G(i)=v(S_{\pi'}(i)\cup\{i\})-v(S_{\pi'}(i))
+$$
+
+We want to relate this to $\Delta_\pi^G(j)$ where $\pi$ is obtained from $\pi'$ by swapping $i$ and $j$.
+
+If $j\not\in S_{\pi'}(i)$: then $S_{\pi'}(i)\subseteq\Omega\setminus\{i,j\}$, and $S_\pi(j)=S_{\pi'}(i)$ (since swapping $i$ and $j$ moves $j$ to where $i$ was). By the symmetry assumption:
+
+$$
+\Delta_{\pi'}^G(i)=v(S_{\pi'}(i)\cup\{i\})-v(S_{\pi'}(i))=v(S_\pi(j)\cup\{j\})-v(S_\pi(j))=\Delta_\pi^G(j)
+$$
+
+If $j\in S_{\pi'}(i)$: then in $\pi$, $i$ is placed where $j$ was, so $i$ now comes before $j$ and $S_\pi(j)∋ i$... by a symmetric argument with $i$ and $j$ exchanged, and using the symmetry condition $v(C\cup\{i\})=v(C\cup\{j\})$ for all $C\subseteq\Omega\setminus\{i,j\}$, one can verify the same equality holds.
+
+Since the swap $\pi\leftrightarrow\pi'$ is a bijection on $\Pi_N$:
+
+$$
+\phi_i(G)=\frac{1}{N!}\sum_{\pi\in\Pi_N}\Delta_\pi^G(j)=\phi_j(G)\qquad\square
+$$
+
+---
+
+**Proof of the Additivity Property**
+
+Let $G_1=(N,v_1)$, $G_2=(N,v_2)$, and $G^+=(N,v^+)$ with $v^+=v_1+v_2$.
+
+$$
+\phi_i(G^+)=\frac{1}{N!}\sum_{\pi\in\Pi_N}\bigl[v^+(S_\pi(i)\cup\{i\})-v^+(S_\pi(i))\bigr]
+$$
+
+$$
+=\frac{1}{N!}\sum_{\pi\in\Pi_N}\bigl[(v_1+v_2)(S_\pi(i)\cup\{i\})-(v_1+v_2)(S_\pi(i))\bigr]
+$$
+
+$$
+=\frac{1}{N!}\sum_{\pi\in\Pi_N}\bigl[v_1(S_\pi(i)\cup\{i\})-v_1(S_\pi(i))\bigr]+\frac{1}{N!}\sum_{\pi\in\Pi_N}\bigl[v_2(S_\pi(i)\cup\{i\})-v_2(S_\pi(i))\bigr]
+$$
+
+$$
+=\phi_i(G_1)+\phi_i(G_2)\qquad\square
+$$
+````

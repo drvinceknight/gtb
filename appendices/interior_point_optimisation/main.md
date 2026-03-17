@@ -356,3 +356,218 @@ With equality constraints, we introduce the Lagrangian and set its gradient to z
 With inequality constraints, the Karush-Kuhn-Tucker conditions extend this further,
 adding complementary slackness and nonnegative multipliers to capture which constraints are active at the optimum.
 ```
+
+---
+
+(solutions:interior_point_optimisation)=
+
+## Solutions
+
+### Solution to Exercise 1: Understanding KKT Components
+
+The problem is:
+
+$$
+\begin{aligned}
+\text{Minimise} \quad & f(x, y) = x^2 + y^2 \\
+\text{subject to} \quad & x + y \geq 2 \\
+& x \geq 0, \quad y \geq 0
+\end{aligned}
+$$
+
+1. **Standard form.** We rewrite all constraints as $g_i \leq 0$:
+
+   $$
+   \begin{aligned}
+   g_1(x, y) &= -(x + y - 2) = 2 - x - y \leq 0 \\
+   g_2(x, y) &= -x \leq 0 \\
+   g_3(x, y) &= -y \leq 0
+   \end{aligned}
+   $$
+
+   There are no equality constraints ($h_j$).
+
+2. **KKT conditions.** With Lagrange multipliers $\lambda_1, \lambda_2, \lambda_3 \geq 0$,
+   the Lagrangian is:
+
+   $$
+   \mathcal{L}(x, y, \lambda) = x^2 + y^2 + \lambda_1(2 - x - y) - \lambda_2 x - \lambda_3 y.
+   $$
+
+   **Stationarity:**
+
+   $$
+   \frac{\partial \mathcal{L}}{\partial x} = 2x - \lambda_1 - \lambda_2 = 0
+   \qquad \Rightarrow \qquad 2x = \lambda_1 + \lambda_2
+   $$
+
+   $$
+   \frac{\partial \mathcal{L}}{\partial y} = 2y - \lambda_1 - \lambda_3 = 0
+   \qquad \Rightarrow \qquad 2y = \lambda_1 + \lambda_3
+   $$
+
+   **Primal feasibility:**
+   $$
+   2 - x - y \leq 0, \quad -x \leq 0, \quad -y \leq 0.
+   $$
+
+   **Dual feasibility:**
+   $$
+   \lambda_1, \lambda_2, \lambda_3 \geq 0.
+   $$
+
+   **Complementary slackness:**
+   $$
+   \lambda_1(2 - x - y) = 0, \quad \lambda_2 (-x) = 0, \quad \lambda_3(-y) = 0.
+   $$
+
+3. **Finding the KKT point.** The objective $f(x,y) = x^2 + y^2$ is strictly
+   convex, so any KKT point is the unique global minimum.
+
+   The unconstrained minimum is $(0, 0)$, which violates $x + y \geq 2$. We
+   therefore expect the constraint $g_1 = 0$ to be active, i.e., $x + y = 2$.
+   By symmetry of the objective, the minimum on the line $x + y = 2$ with
+   $x, y \geq 0$ occurs at $x = y = 1$.
+
+   **Verify the KKT conditions at $(1, 1)$:**
+
+   Since $x = 1 > 0$ and $y = 1 > 0$, complementary slackness gives
+   $\lambda_2 = \lambda_3 = 0$. Since $g_1 = 0$ (active), $\lambda_1$ may be
+   nonzero.
+
+   From stationarity:
+   $$
+   2(1) = \lambda_1 + 0 \implies \lambda_1 = 2.
+   $$
+
+   Check: $2y = 2(1) = 2 = \lambda_1 + \lambda_3 = 2 + 0$ ✓.
+
+   All KKT conditions are satisfied with $\lambda_1 = 2$, $\lambda_2 = \lambda_3 = 0$.
+
+   The global minimum is at $(x^*, y^*) = (1, 1)$ with $f(1, 1) = 2$.
+
+   ```{code-cell} python3
+   import numpy as np
+   import scipy.optimize
+
+   def objective(v):
+       return v[0]**2 + v[1]**2
+
+   constraints = [
+       {'type': 'ineq', 'fun': lambda v: v[0] + v[1] - 2},
+       {'type': 'ineq', 'fun': lambda v: v[0]},
+       {'type': 'ineq', 'fun': lambda v: v[1]},
+   ]
+
+   res = scipy.optimize.minimize(objective, [1, 1], constraints=constraints)
+   print("Optimal solution:", res.x)
+   print("Optimal value:", res.fun)
+   ```
+
+---
+
+### Solution to Exercise 2: Symbolic Derivation of KKT Conditions
+
+The problem is:
+
+$$
+\begin{aligned}
+\text{Maximise} \quad & \log(x) + \log(1 - x) \\
+\text{subject to} \quad & 0.1 \leq x \leq 0.9
+\end{aligned}
+$$
+
+1. **Concavity of the objective.** Let $h(x) = \log(x) + \log(1-x)$ on
+   $(0, 1)$. Computing the second derivative:
+
+   $$
+   h'(x) = \frac{1}{x} - \frac{1}{1-x}, \qquad
+   h''(x) = -\frac{1}{x^2} - \frac{1}{(1-x)^2} < 0 \quad \forall x \in (0,1).
+   $$
+
+   Since $h''(x) < 0$ on $(0, 1)$, the function is strictly concave on this
+   interval.
+
+2. **KKT conditions.** We convert to minimisation of $-h(x)$ and write the
+   constraints in standard form $g_i(x) \leq 0$:
+
+   $$
+   g_1(x) = 0.1 - x \leq 0, \qquad g_2(x) = x - 0.9 \leq 0.
+   $$
+
+   The Lagrangian for the minimisation of $-\log(x) - \log(1-x)$ is:
+
+   $$
+   \mathcal{L}(x, \lambda) = -\log(x) - \log(1-x) + \lambda_1(0.1 - x) + \lambda_2(x - 0.9).
+   $$
+
+   **Stationarity:**
+
+   $$
+   \frac{d\mathcal{L}}{dx} = -\frac{1}{x} + \frac{1}{1-x} - \lambda_1 + \lambda_2 = 0.
+   $$
+
+   **Primal feasibility:** $0.1 - x \leq 0$ and $x - 0.9 \leq 0$.
+
+   **Dual feasibility:** $\lambda_1, \lambda_2 \geq 0$.
+
+   **Complementary slackness:** $\lambda_1(0.1 - x) = 0$ and $\lambda_2(x - 0.9) = 0$.
+
+3. **Solving for the optimal $x$.**
+
+   The unconstrained maximum of $h(x)$ satisfies $h'(x) = 0$:
+
+   $$
+   \frac{1}{x} = \frac{1}{1-x} \implies x = 1 - x \implies x = \frac{1}{2}.
+   $$
+
+   Since $x^* = 1/2$ lies strictly inside $[0.1, 0.9]$, both constraints are
+   inactive: $g_1(1/2) = 0.1 - 0.5 = -0.4 < 0$ and
+   $g_2(1/2) = 0.5 - 0.9 = -0.4 < 0$.
+
+   Complementary slackness therefore requires $\lambda_1 = \lambda_2 = 0$.
+
+   **Verifying stationarity with $x = 1/2$, $\lambda_1 = \lambda_2 = 0$:**
+
+   $$
+   -\frac{1}{1/2} + \frac{1}{1 - 1/2} - 0 + 0 = -2 + 2 = 0. \quad \checkmark
+   $$
+
+   All KKT conditions are satisfied. Since the problem is concave (equivalently,
+   we are minimising a convex function), $x^* = 1/2$ is the global maximum with
+   $\lambda_1 = \lambda_2 = 0$.
+
+   The maximum value is $h(1/2) = \log(1/2) + \log(1/2) = -2\log 2 \approx -1.386$.
+
+   ```{code-cell} python3
+   import numpy as np
+   import scipy.optimize
+
+   def neg_objective(x):
+       return -(np.log(x[0]) + np.log(1 - x[0]))
+
+   constraints = [
+       {'type': 'ineq', 'fun': lambda x: x[0] - 0.1},
+       {'type': 'ineq', 'fun': lambda x: 0.9 - x[0]},
+   ]
+
+   res = scipy.optimize.minimize(neg_objective, [0.5], constraints=constraints)
+   print("Optimal x:", res.x[0])
+   print("Maximum value:", -res.fun)
+   print("Lambda_1 (should be 0):", 0.0, "(constraint inactive)")
+   print("Lambda_2 (should be 0):", 0.0, "(constraint inactive)")
+   ```
+
+   ```{code-cell} python3
+   import sympy as sym
+
+   x = sym.Symbol("x")
+   h = sym.log(x) + sym.log(1 - x)
+   h_prime = sym.diff(h, x)
+   h_double_prime = sym.diff(h_prime, x)
+
+   print("h'(x) =", h_prime)
+   print("h''(x) =", sym.simplify(h_double_prime))
+   print("Unconstrained optimum:", sym.solve(h_prime, x))
+   print("h(1/2) =", h.subs(x, sym.Rational(1, 2)))
+   ```

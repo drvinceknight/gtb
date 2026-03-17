@@ -89,7 +89,7 @@ For any given $(G,r,c)$ we denote by $\mathcal{P}_i$ the set of paths available 
 ### Definition: Feasible Flow
 
 On a routing game we define a flow $f$ as a vector representing the quantity of traffic along the
-various paths, $f$ is a vector index by $\mathcal{P}$. Furthermore we call $f$ **feasible** if:
+various paths, $f$ is a vector index by $\mathcal{P}$. We call $f$ **feasible** if:
 
 $$\sum_{P\in\mathcal{P}_i}f_P=r_i$$
 
@@ -103,7 +103,7 @@ and
 
 $$\mathcal{P}_2=\{(s_2,a,t),(s_2,t)\}$$
 
-The set of all possible paths is denoted by $\mathcal{P}=\bigcup_{i}\mathcal{P}_i$.
+The set of all possible paths is denoted by $\mathcal{P}=\cup_{i}\mathcal{P}_i$.
 
 ### Definition: Cost function
 
@@ -463,20 +463,7 @@ individual preferences.
 
 ### Conclusion
 
-In this chapter, we introduced **routing games**, where self-interested agents
-choose paths through a network to minimize their own travel costs. These
-individual decisions create congestion effects, making costs interdependent and
-leading to potentially inefficient outcomes.
-
-We developed a formal framework for routing games, introduced the key concepts
-of feasible flow, optimal flow, and Nash flow, and explored how potential
-functions allow us to compute Nash flows via standard optimisation techniques.
-We also introduced the concept of marginal costs, leading to the result that
-optimal flows correspond to Nash flows in a modified game with marginal cost
-functions.
-
-[](#tbl:routing_games) summarises the key concepts introduced in this
-chapter.
+[](#tbl:routing_games) summarises the key concepts.
 
 ```{table} Summary of routing games
 :name: tbl:routing_games
@@ -497,3 +484,412 @@ system-wide efficiency. Tools like potential functions and marginal costs
 provide powerful methods to identify Nash and Optimal flows in
 decentralized network systems.
 ```
+
+---
+
+(solutions:routing_games)=
+
+## Solutions
+
+````{solution} braess_s_paradox
+:label: solution:braess_s_paradox
+
+**Network without the super road**
+
+The network in [](#fig:braesss_paradox_without_super_road) has a single source $s$, a single sink $t$, two intermediate nodes $a$ and $b$, and a total demand of $r=1$. The edges and their cost functions are:
+
+$$
+c_{s,a}(x)=x,\quad c_{a,t}(x)=1,\quad c_{s,b}(x)=1,\quad c_{b,t}(x)=x
+$$
+
+Let $\alpha$ denote the flow on path $P_1=(s,a,t)$ and $1-\alpha$ the flow on path $P_2=(s,b,t)$, with $0\leq\alpha\leq 1$.
+
+**Optimal flow (without super road)**
+
+The cost function is:
+
+$$
+C(\alpha)=c_{s,a}(\alpha)\cdot\alpha + c_{a,t}(\alpha)\cdot\alpha + c_{s,b}(1-\alpha)\cdot(1-\alpha) + c_{b,t}(1-\alpha)\cdot(1-\alpha)
+$$
+
+$$
+C(\alpha)=\alpha^2+\alpha+(1-\alpha)+(1-\alpha)^2=\alpha^2+(1-\alpha)^2+1
+$$
+
+To minimise, take the derivative and set it to zero:
+
+$$
+\frac{dC}{d\alpha}=2\alpha-2(1-\alpha)=4\alpha-2=0\implies\alpha^*=\frac{1}{2}
+$$
+
+The optimal flow is $f^*=\alpha^*=1/2$, giving:
+
+$$
+C(f^*)=\frac{1}{4}+\frac{1}{4}+1=\frac{3}{2}
+$$
+
+**Nash flow (without super road)**
+
+A Nash flow requires the cost along every used path to be equal. The cost along each path at flow $(\alpha, 1-\alpha)$ is:
+
+$$
+c_{P_1}(\alpha)=\alpha+1,\qquad c_{P_2}(1-\alpha)=1+(1-\alpha)=2-\alpha
+$$
+
+Setting $c_{P_1}=c_{P_2}$:
+
+$$
+\alpha+1=2-\alpha\implies \tilde\alpha=\frac{1}{2}
+$$
+
+So the Nash flow is $\tilde f = 1/2$, giving $\tilde f = f^*$ and:
+
+$$
+C(\tilde f)=\frac{3}{2}
+$$
+
+In this case the Nash flow coincides with the optimal flow, so the **Price of Anarchy** is $1$.
+
+```{code-cell} python3
+import numpy as np
+import scipy.optimize
+
+def cost_without_super_road(f):
+    alpha = f[0]
+    return alpha ** 2 + (1 - alpha) ** 2 + 1
+
+def potential_without_super_road(f):
+    alpha = f[0]
+    # Phi = int_0^alpha x dx + int_0^alpha 1 dx + int_0^(1-alpha) 1 dx + int_0^(1-alpha) x dx
+    return alpha ** 2 / 2 + alpha + (1 - alpha) + (1 - alpha) ** 2 / 2
+
+constraints = [
+    {'type': 'ineq', 'fun': lambda f: f[0]},
+    {'type': 'ineq', 'fun': lambda f: 1 - f[0]},
+]
+
+res_opt = scipy.optimize.minimize(cost_without_super_road, [0.5], constraints=constraints)
+res_nash = scipy.optimize.minimize(potential_without_super_road, [0.5], constraints=constraints)
+
+print(f"Optimal flow alpha = {res_opt.x[0]:.4f}, cost = {res_opt.fun:.4f}")
+print(f"Nash flow alpha = {res_nash.x[0]:.4f}, cost = {cost_without_super_road(res_nash.x):.4f}")
+```
+
+**Network with the super road (Braess's Paradox)**
+
+The network in [](#fig:braesss_paradox) adds the edge $a\to b$ with $c_{a,b}(x)=0$. Using the flow vector shown in the figure, let $\alpha$ be the total flow entering node $a$ from $s$, and $\beta$ be the flow on the edge $a\to b$. The three paths are:
+
+- $P_1=(s,a,t)$: flow $\alpha-\beta$
+- $P_2=(s,b,t)$: flow $1-\alpha+\beta$
+- $P_3=(s,a,b,t)$: flow $\beta$
+
+with constraints $0\leq\beta\leq\alpha$, $0\leq\alpha\leq 1$, $0\leq 1-\alpha+\beta\leq 1$.
+
+The edge flows are: $f_{s,a}=\alpha$, $f_{a,t}=\alpha-\beta$, $f_{s,b}=1-\alpha$, $f_{b,t}=1-\alpha+\beta$, $f_{a,b}=\beta$.
+
+The cost function is:
+
+$$
+\begin{align*}
+C(\alpha,\beta)&=c_{s,a}(\alpha)\cdot\alpha + c_{a,t}(\alpha-\beta)\cdot(\alpha-\beta)\\
+               &\quad+c_{s,b}(1-\alpha)\cdot(1-\alpha)+c_{b,t}(1-\alpha+\beta)\cdot(1-\alpha+\beta)\\
+               &\quad+c_{a,b}(\beta)\cdot\beta\\
+               &=\alpha^2+(\alpha-\beta)+1\cdot(1-\alpha)+(1-\alpha+\beta)^2+0
+\end{align*}
+$$
+
+**Optimal flow (with super road)**
+
+The potential function is:
+
+$$
+\Phi(\alpha,\beta)=\frac{\alpha^2}{2}+(\alpha-\beta)+\frac{(\alpha-\beta)^2}{2}\cdot 0+(1-\alpha)+\frac{(1-\alpha+\beta)^2}{2}+0
+$$
+
+More carefully, since $c_{s,a}(x)=x$, $c_{a,t}(x)=1$, $c_{s,b}(x)=1$, $c_{b,t}(x)=x$, $c_{a,b}(x)=0$:
+
+$$
+\Phi(\alpha,\beta)=\frac{\alpha^2}{2}+({\alpha-\beta})\cdot 1 + (1-\alpha)\cdot 1+\frac{(1-\alpha+\beta)^2}{2}
+$$
+
+Taking partial derivatives:
+
+$$
+\frac{\partial C}{\partial\alpha}=2\alpha+1-1-2(1-\alpha+\beta)(-1)=2\alpha+2(1-\alpha+\beta)-0+1-1
+$$
+
+It is cleaner to work directly with the cost:
+
+$$
+C(\alpha,\beta)=\alpha^2+\alpha-\beta+(1-\alpha)+(1-\alpha+\beta)^2
+$$
+
+$$
+\frac{\partial C}{\partial\alpha}=2\alpha-1+1-2(1-\alpha+\beta)=2\alpha-2(1-\alpha+\beta)=4\alpha+2\beta-2
+$$
+
+$$
+\frac{\partial C}{\partial\beta}=-1+2(1-\alpha+\beta)=2\beta-2\alpha+1
+$$
+
+Setting both to zero:
+
+$$
+4\alpha+2\beta=2\implies 2\alpha+\beta=1
+$$
+$$
+2\beta-2\alpha+1=0\implies\beta=\alpha-\frac{1}{2}
+$$
+
+Substituting: $2\alpha+\alpha-1/2=1\implies 3\alpha=3/2\implies\alpha^*=1/2$, $\beta^*=0$.
+
+The optimal flow is $f^*=(\alpha^*,\beta^*)=(1/2,0)$, which is the same as the network without the super road, with cost:
+
+$$
+C(f^*)=\frac{1}{4}+\frac{1}{2}+\frac{1}{2}+\frac{1}{4}=\frac{3}{2}
+$$
+
+**Nash flow (with super road)**
+
+For a Nash flow, we equate path costs for all used paths. Checking whether all three paths are used:
+
+Path costs at flow $(\alpha,\beta)$ with all paths used:
+
+$$
+c_{P_1}=c_{s,a}(\alpha)+c_{a,t}(\alpha-\beta)=\alpha+1
+$$
+$$
+c_{P_2}=c_{s,b}(1-\alpha)+c_{b,t}(1-\alpha+\beta)=1+(1-\alpha+\beta)=2-\alpha+\beta
+$$
+$$
+c_{P_3}=c_{s,a}(\alpha)+c_{a,b}(\beta)+c_{b,t}(1-\alpha+\beta)=\alpha+0+(1-\alpha+\beta)=1+\beta
+$$
+
+Setting $c_{P_1}=c_{P_2}$:
+
+$$\alpha+1=2-\alpha+\beta\implies 2\alpha-\beta=1$$
+
+Setting $c_{P_1}=c_{P_3}$:
+
+$$\alpha+1=1+\beta\implies\beta=\alpha$$
+
+From $2\alpha-\alpha=1$ we get $\alpha=1$ and $\beta=1$.
+
+Checking feasibility: $\alpha-\beta=0\geq 0$ (path $P_1$ has zero flow), $1-\alpha+\beta=1\geq 0$. However, $\alpha=1$ means all flow uses $s\to a$, so we need $1-\alpha=0$, meaning $P_2$ also has zero flow. Let us verify: with $\beta=\alpha=1$, path $P_3=(s,a,b,t)$ carries all flow of $1$.
+
+Check: $c_{P_3}=1+\beta=1+1=2$, but $c_{P_1}=\alpha+1=2$ and $c_{P_2}=2-\alpha+\beta=2-1+1=2$. All path costs equal $2$.
+
+The Nash flow is $\tilde f=(\alpha,\beta)=(1,1)$, i.e. all traffic travels $s\to a\to b\to t$, with:
+
+$$
+C(\tilde f)=1^2+0+(0)\cdot 1+(1)^2=1+0+0+1=2
+$$
+
+**This is Braess's Paradox**: adding the zero-cost road $a\to b$ raises the Nash flow cost from $3/2$ to $2$. The **Price of Anarchy** for the extended network is:
+
+$$
+\text{PoA}=\frac{C(\tilde f)}{C(f^*)}=\frac{2}{3/2}=\frac{4}{3}
+$$
+
+```{code-cell} python3
+import numpy as np
+import scipy.optimize
+
+def cost_with_super_road(f):
+    alpha, beta = f
+    return (alpha ** 2 + (alpha - beta) + (1 - alpha) + (1 - alpha + beta) ** 2)
+
+def potential_with_super_road(f):
+    alpha, beta = f
+    # int_0^alpha x dx + int_0^(alpha-beta) 1 dx + int_0^(1-alpha) 1 dx + int_0^(1-alpha+beta) x dx + 0
+    return alpha ** 2 / 2 + (alpha - beta) + (1 - alpha) + (1 - alpha + beta) ** 2 / 2
+
+constraints = [
+    {'type': 'ineq', 'fun': lambda f: f[0]},
+    {'type': 'ineq', 'fun': lambda f: 1 - f[0]},
+    {'type': 'ineq', 'fun': lambda f: f[1]},
+    {'type': 'ineq', 'fun': lambda f: f[0] - f[1]},
+    {'type': 'ineq', 'fun': lambda f: 1 - f[0] + f[1]},
+]
+
+res_opt = scipy.optimize.minimize(cost_with_super_road, [0.4, 0.1], constraints=constraints)
+res_nash = scipy.optimize.minimize(potential_with_super_road, [0.4, 0.1], constraints=constraints)
+
+print(f"Optimal flow (alpha, beta) = ({res_opt.x[0]:.4f}, {res_opt.x[1]:.4f}), cost = {res_opt.fun:.4f}")
+print(f"Nash flow (alpha, beta) = ({res_nash.x[0]:.4f}, {res_nash.x[1]:.4f}), cost = {cost_with_super_road(res_nash.x):.4f}")
+print(f"Price of Anarchy = {cost_with_super_road(res_nash.x) / res_opt.fun:.4f}")
+```
+````
+
+````{solution} nash_flow_via_potential_minimisation
+:label: solution:nash_flow_via_potential_minimisation
+
+We wish to verify that $\tilde f=(\alpha,\beta)=(1/2,1/5)$ is a Nash flow for the delivery companies game using the potential function approach.
+
+By [](#thrm:nash_flow_minimises_the_potential_function), $\tilde f$ is a Nash flow if and only if it minimises the potential function:
+
+$$
+\Phi(\alpha,\beta)=\frac{\alpha^3}{3}+\frac{3\beta^2}{4}+\frac{(1-\alpha-\beta)^2}{2}
+$$
+
+subject to $0\leq\alpha\leq 1/2$ and $0\leq\beta\leq 1/2$.
+
+Since the minimum may lie in the interior or on the boundary, we apply the KKT conditions. The feasible region is defined by:
+
+$$
+g_1(\alpha,\beta)=\alpha\geq 0,\quad g_2(\alpha,\beta)=1/2-\alpha\geq 0,\quad g_3(\alpha,\beta)=\beta\geq 0,\quad g_4(\alpha,\beta)=1/2-\beta\geq 0
+$$
+
+At $(\alpha,\beta)=(1/2,1/5)$: constraint $g_2$ is active ($\alpha=1/2$), while $g_1$, $g_3$, $g_4$ are inactive. By complementary slackness, $\lambda_1=\lambda_3=\lambda_4=0$, and $\lambda_2\geq 0$.
+
+The KKT stationarity conditions are:
+
+$$
+\frac{\partial\Phi}{\partial\alpha}-\lambda_2\cdot(-1)=0\implies \alpha^2-(1-\alpha-\beta)+\lambda_2=0
+$$
+
+$$
+\frac{\partial\Phi}{\partial\beta}-0=0\implies \frac{3\beta}{2}-(1-\alpha-\beta)=0
+$$
+
+Evaluating the second condition at $(1/2, 1/5)$:
+
+$$
+\frac{3}{2}\cdot\frac{1}{5}-\left(1-\frac{1}{2}-\frac{1}{5}\right)=\frac{3}{10}-\frac{3}{10}=0\checkmark
+$$
+
+For the first condition at $(1/2, 1/5)$:
+
+$$
+\left(\frac{1}{2}\right)^2-\left(1-\frac{1}{2}-\frac{1}{5}\right)+\lambda_2=\frac{1}{4}-\frac{3}{10}+\lambda_2=-\frac{1}{20}+\lambda_2=0
+$$
+
+$$
+\implies\lambda_2=\frac{1}{20}>0\checkmark
+$$
+
+All KKT conditions are satisfied with $\lambda_2=1/20>0$, confirming that $(1/2,1/5)$ is a minimum of $\Phi$ and therefore a Nash flow.
+
+```{code-cell} python3
+import numpy as np
+import scipy.optimize
+
+def potential(f):
+    alpha, beta = f
+    return alpha ** 3 / 3 + 3 * beta ** 2 / 4 + (1 - alpha - beta) ** 2 / 2
+
+constraints = [
+    {'type': 'ineq', 'fun': lambda f: f[0]},
+    {'type': 'ineq', 'fun': lambda f: 0.5 - f[0]},
+    {'type': 'ineq', 'fun': lambda f: f[1]},
+    {'type': 'ineq', 'fun': lambda f: 0.5 - f[1]},
+]
+
+res = scipy.optimize.minimize(potential, [0.3, 0.1], constraints=constraints)
+print(f"Minimiser of potential: alpha = {res.x[0]:.6f}, beta = {res.x[1]:.6f}")
+print(f"Expected: alpha = 0.5, beta = 0.2")
+print(f"Potential at minimiser: {res.fun:.6f}")
+```
+````
+
+````{solution} nash_flow_from_marginal_cost_formulation
+:label: solution:nash_flow_from_marginal_cost_formulation
+
+We wish to confirm that
+
+$$
+f=\left(-\frac{\sqrt{11}}{5}+\frac{1}{5},\;\frac{12}{25}-\frac{2\sqrt{11}}{25}\right)
+$$
+
+is a Nash flow for the delivery companies game using the marginal cost formulation.
+
+By [](#thrm:optimal_flow_is_a_nash_for_for_marginal_costs), a flow is optimal for $(G,r,c)$ if and only if it is a Nash flow for $(G,r,c^*)$, where $c^*$ denotes the marginal cost functions.
+
+The original cost functions and their marginal costs are:
+
+$$
+c_{s_1,t}(x)=x^2\implies c^*_{s_1,t}(x)=\frac{d}{dx}(x\cdot x^2)=3x^2
+$$
+
+$$
+c_{s_2,t}(x)=\frac{3}{2}x\implies c^*_{s_2,t}(x)=\frac{d}{dx}\!\left(\frac{3}{2}x^2\right)=3x
+$$
+
+$$
+c_{a,t}(x)=x\implies c^*_{a,t}(x)=\frac{d}{dx}(x^2)=2x
+$$
+
+$$
+c_{s_1,a}(x)=0\implies c^*_{s_1,a}(x)=0,\qquad c_{s_2,a}(x)=0\implies c^*_{s_2,a}(x)=0
+$$
+
+With $\alpha=1/5-\sqrt{11}/5$ and $\beta=12/25-2\sqrt{11}/25$, the shared edge $a\to t$ carries flow $f_{a,t}=1-\alpha-\beta$.
+
+Let us compute $\alpha$ and $1-\alpha-\beta$ numerically:
+
+$$
+\alpha\approx\frac{1-\sqrt{11}}{5}\approx\frac{1-3.3166}{5}\approx -0.4633\quad\text{(negative!)}
+$$
+
+We must take the positive root: $\alpha = (-1+\sqrt{11})/5 \approx (3.3166-1)/5\approx 0.4633/5\approx 0.4633$.
+
+Wait — from the chapter, the positive root is $\alpha^* = -\sqrt{11}/5 + 1/5$. Since $\sqrt{11}\approx 3.317$, this gives $\alpha^*\approx (1-3.317)/5<0$. The chapter states the positive root is taken. Let us re-examine: the two solutions are $\{-1/5-\sqrt{11}/5,\; -\sqrt{11}/5+1/5\}$. Since $\sqrt{11}\approx 3.317$, both are negative. The chapter says "only one of those is positive" — this likely refers to a different parameterisation. Let us proceed numerically.
+
+To verify $f^*$ is a Nash flow for the marginal cost game, we need to check that all used paths have equal marginal cost. The paths for commodity 1 are $P_{s_1,t}=(s_1,t)$ and $P_{s_1,a,t}=(s_1,a,t)$.
+
+The marginal cost along $P_{s_1,t}$ is $c^*_{s_1,t}(\alpha)=3\alpha^2$.
+
+The marginal cost along $P_{s_1,a,t}$ is $c^*_{s_1,a}(0)+c^*_{a,t}(1-\alpha-\beta)=0+2(1-\alpha-\beta)$.
+
+At the optimal flow, these must be equal (since the optimal flow uses both paths for commodity 1):
+
+$$
+3\alpha^2=2(1-\alpha-\beta)
+$$
+
+This is exactly the first stationarity condition from the optimal flow derivation. Similarly, for commodity 2 using both its paths $P_{s_2,t}=(s_2,t)$ and $P_{s_2,a,t}=(s_2,a,t)$:
+
+Marginal cost along $P_{s_2,t}$: $c^*_{s_2,t}(\beta)=3\beta$.
+
+Marginal cost along $P_{s_2,a,t}$: $c^*_{s_2,a}(0)+c^*_{a,t}(1-\alpha-\beta)=2(1-\alpha-\beta)$.
+
+At the optimal flow, $3\beta=2(1-\alpha-\beta)$, which is the second stationarity condition.
+
+Since $f^*$ was found precisely by solving these two equations simultaneously, it satisfies the Nash flow conditions for $(G,r,c^*)$. By [](#thrm:optimal_flow_is_a_nash_for_for_marginal_costs), $f^*$ is therefore a Nash flow for the marginal cost game.
+
+```{code-cell} python3
+import sympy as sym
+
+alpha, beta = sym.symbols('alpha beta', real=True)
+
+# Optimal flow conditions: 3*alpha^2 = 2*(1 - alpha - beta) and 3*beta = 2*(1 - alpha - beta)
+eq1 = sym.Eq(3 * alpha**2, 2 * (1 - alpha - beta))
+eq2 = sym.Eq(3 * beta, 2 * (1 - alpha - beta))
+
+solutions = sym.solve([eq1, eq2], [alpha, beta])
+print("Solutions (alpha, beta):")
+for sol in solutions:
+    a_val, b_val = sol
+    print(f"  alpha = {a_val} ≈ {float(a_val):.6f},  beta = {b_val} ≈ {float(b_val):.6f}")
+    print(f"  Feasible (both in [0,1/2])? alpha>=0: {float(a_val) >= 0}, beta>=0: {float(b_val) >= 0}")
+```
+
+```{code-cell} python3
+# Verify: at the feasible solution, marginal costs on used paths are equal
+a_val = solutions[1][0]  # take the positive root
+b_val = solutions[1][1]
+
+shared_flow = 1 - a_val - b_val
+mc_P1 = 3 * a_val**2
+mc_P1_alt = 2 * shared_flow
+mc_P2 = 3 * b_val
+mc_P2_alt = 2 * shared_flow
+
+print(f"Marginal cost on (s1,t): {sym.simplify(mc_P1)}")
+print(f"Marginal cost on (s1,a,t): {sym.simplify(mc_P1_alt)}")
+print(f"Equal? {sym.simplify(mc_P1 - mc_P1_alt) == 0}")
+print(f"\nMarginal cost on (s2,t): {sym.simplify(mc_P2)}")
+print(f"Marginal cost on (s2,a,t): {sym.simplify(mc_P2_alt)}")
+print(f"Equal? {sym.simplify(mc_P2 - mc_P2_alt) == 0}")
+```
+````

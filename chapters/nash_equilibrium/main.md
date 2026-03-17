@@ -12,7 +12,7 @@ kernelspec:
 
 ### Motivating Example
 
-In the [Coordination Game](#sec:motivating-example-zero-sum-games), in how many  
+In the [Coordination Game](#sec:coordination_game), in how many
 situations do neither player have an incentive to **independently** change  
 their strategy?
 
@@ -99,6 +99,36 @@ In many game theory texts, Nash equilibria in normal form games are referred to 
 either pure strategy Nash equilibria, where each player chooses a single
 action with certainty, or mixed strategy Nash equilibria, where players
 randomise over multiple actions with positive probability.
+```
+
+### Theorem: Existence of Nash Equilibrium
+
+---
+
+Every finite $N$-player normal form game has at least one Nash equilibrium.
+
+---
+
+#### Proof sketch
+
+The proof, due to [@nash1950equilibrium], applies **Kakutani's fixed-point
+theorem** to the best response correspondence. For each player $i$, define:
+
+$$
+\beta_i(s_{-i}) = \arg\max_{\sigma_i \in \Delta(\mathcal{A}_i)} u_i(\sigma_i, s_{-i})
+$$
+
+The joint best response correspondence
+$\beta: \prod_i \Delta(\mathcal{A}_i) \to \prod_i \Delta(\mathcal{A}_i)$
+satisfies the conditions of Kakutani's theorem — strategy spaces are compact and
+convex, and $\beta$ has a closed graph and convex values — so a fixed point
+$\tilde{s}$ exists. Any fixed point satisfies
+$\tilde{s}_i \in \beta_i(\tilde{s}_{-i})$ for all $i$, which is precisely the
+Nash equilibrium condition.
+
+```{note}
+This theorem guarantees existence but not uniqueness. As seen in the coordination
+game, multiple Nash equilibria — including mixed strategy equilibria — can coexist.
 ```
 
 The following algorithm gives an approach to use the [best response condition](#thrm:best_response_condition)
@@ -472,10 +502,7 @@ systematic method for identifying all equilibria in a two-player game using the
 response condition and provides a computational approach that works well for  
 many games, particularly when the number of actions is small.
 
-It is important to recognise that the support enumeration algorithm is  
-conceptually simple but can become computationally expensive as the action  
-spaces grow. Nevertheless, it serves as a useful tool both in theory and in  
-practice, particularly for small-scale empirical models.
+The support enumeration algorithm is conceptually simple but becomes expensive as action spaces grow; it is most useful for small games.
 
 [](#tbl:ne_summary) summarises the core concepts introduced in this chapter.
 
@@ -501,3 +528,394 @@ Support enumeration embodies the best response condition and provides an
 accessible, transparent algorithm for computing all equilibria in two-player
 games.
 ```
+
+---
+
+(solutions:nash_equilibrium)=
+
+## Solutions
+
+````{solution} support_enumeration
+:label: solution:support_enumeration
+
+We apply the [support enumeration algorithm](#def:support_enumeration_algorithm) to find all Nash equilibria.
+
+**Game 1:**
+
+$$
+A = \begin{pmatrix} 3 & 3 & 2 \\ 2 & 1 & 3 \end{pmatrix}
+\qquad
+B = \begin{pmatrix} 2 & 1 & 3 \\ 2 & 3 & 2 \end{pmatrix}
+$$
+
+The row player has 2 actions ($r_1, r_2$) and the column player has 3 actions ($c_1, c_2, c_3$).
+
+**Step 1: Pure strategy (support size 1 each) Nash equilibria.**
+
+Underline best responses:
+
+$$
+A = \begin{pmatrix} \underline{3} & \underline{3} & 2 \\ 2 & 1 & \underline{3} \end{pmatrix}
+\qquad
+B = \begin{pmatrix} \underline{2} & 1 & \underline{3} \\ \underline{2} & \underline{3} & 2 \end{pmatrix}
+$$
+
+- Column player's best responses: $c_1$ is best response to $r_1$ (payoff $2 = 2$, tied) and $r_2$ (payoff $2 = 2$, tied); $c_3$ is best response to $r_1$ (payoff $3$) and $r_1$ (payoff $3$); $c_2$ is best response to $r_2$ (payoff $3$).
+
+Wait, let me re-check. For column player payoffs by row:
+- Against $r_1$: $c_1$ gives $2$, $c_2$ gives $1$, $c_3$ gives $3$. Best response: $c_3$.
+- Against $r_2$: $c_1$ gives $2$, $c_2$ gives $3$, $c_3$ gives $2$. Best response: $c_2$.
+
+For row player payoffs by column:
+- Against $c_1$: $r_1$ gives $3$, $r_2$ gives $2$. Best response: $r_1$.
+- Against $c_2$: $r_1$ gives $3$, $r_2$ gives $1$. Best response: $r_1$.
+- Against $c_3$: $r_1$ gives $2$, $r_2$ gives $3$. Best response: $r_2$.
+
+Mutual best response pairs (both underlined):
+- $(r_1, c_1)$: $r_1$ is BR to $c_1$, but $c_3$ is BR to $r_1$ (not $c_1$). Not a NE.
+- $(r_1, c_2)$: $r_1$ is BR to $c_2$, but $c_3$ is BR to $r_1$ (not $c_2$). Not a NE.
+- $(r_2, c_3)$: $r_2$ is BR to $c_3$, and $c_2$ is BR to $r_2$ (not $c_3$). Not a NE.
+
+No pure strategy Nash equilibrium exists from mutual best response pairs.
+
+**Step 2: Mixed strategy supports.**
+
+Since $|I| \neq |J|$ for $|I| = 1$, $|J| = 2$ or $3$ does not give valid equilibria (the row player with a single pure action would only be indifferent if the column player's support makes them equal, but for $|I|=1$ both columns would need to give equal payoff to the row player — check below).
+
+Consider $I = \{r_1, r_2\}$, $J = \{c_1, c_2\}$: Let $\sigma_r = (x, 1-x)$ and $\sigma_c = (y_1, y_2, 0)$ with $y_1 + y_2 = 1$.
+
+Column player indifference (row player's payoffs equal under $\sigma_r$):
+
+$$
+3x + 2(1-x) = 3x + 1(1-x)
+$$
+$$
+x + 2 = 2x + 1 \implies x = 1
+$$
+
+But $x = 1$ means $\sigma_r = (1, 0)$, which has support $\{r_1\}$, not $\{r_1, r_2\}$. No valid mixed NE with this support.
+
+Consider $I = \{r_1, r_2\}$, $J = \{c_1, c_3\}$: Let $\sigma_c = (y_1, 0, y_3)$ with $y_1 + y_3 = 1$.
+
+Row player indifference:
+$$
+3y_1 + 2y_3 = 2y_1 + 3y_3 \implies y_1 = y_3 = \frac{1}{2}
+$$
+
+Column player indifference:
+$$
+2x + 2(1-x) = 3x + 2(1-x)
+$$
+$$
+2 = x + 2 \implies x = 0
+$$
+
+But $x = 0$ means support $\{r_2\}$, not $\{r_1, r_2\}$. No valid NE.
+
+Consider $I = \{r_1, r_2\}$, $J = \{c_2, c_3\}$: Let $\sigma_c = (0, y_2, y_3)$ with $y_2 + y_3 = 1$.
+
+Row player indifference:
+$$
+3y_2 + 2y_3 = 1y_2 + 3y_3 \implies 2y_2 = y_3
+$$
+
+With $y_2 + y_3 = 1$: $y_2 + 2y_2 = 1 \implies y_2 = 1/3$, $y_3 = 2/3$.
+
+Column player indifference:
+$$
+1 \cdot x + 3(1-x) = 3x + 2(1-x) \implies 3 - 2x = x + 2 \implies x = \frac{1}{3}
+$$
+
+So $\sigma_r = (1/3, 2/3)$ and $\sigma_c = (0, 1/3, 2/3)$.
+
+**Step 3: Check non-negativity.** Both are valid probability distributions with non-negative entries.
+
+**Step 4: Best response condition.**
+
+$$
+A \sigma_c^T = \begin{pmatrix} 3 & 3 & 2 \\ 2 & 1 & 3 \end{pmatrix} \begin{pmatrix} 0 \\ 1/3 \\ 2/3 \end{pmatrix} = \begin{pmatrix} 0 + 1 + 4/3 \\ 0 + 1/3 + 2 \end{pmatrix} = \begin{pmatrix} 7/3 \\ 7/3 \end{pmatrix}
+$$
+
+Both rows give $7/3$, confirming $\sigma_r$ is a best response to $\sigma_c$.
+
+$$
+\sigma_r B = \begin{pmatrix} 1/3 & 2/3 \end{pmatrix} \begin{pmatrix} 2 & 1 & 3 \\ 2 & 3 & 2 \end{pmatrix} = \begin{pmatrix} 2 & 7/3 & 7/3 \end{pmatrix}
+$$
+
+The maximum value is $7/3$, achieved at columns $c_2$ and $c_3$ (the support of $\sigma_c$). Column $c_1$ gives $2 < 7/3$, and $c_1$ is not in the support of $\sigma_c$, so the condition is satisfied.
+
+**Nash equilibria for Game 1:**
+
+$$
+\left\{ \left(\left(\frac{1}{3}, \frac{2}{3}\right),\ \left(0, \frac{1}{3}, \frac{2}{3}\right)\right) \right\}
+$$
+
+---
+
+**Game 2:**
+
+$$
+A = \begin{pmatrix} 3 & -1 \\ 2 & 7 \end{pmatrix}
+\qquad
+B = \begin{pmatrix} -3 & 1 \\ 1 & -6 \end{pmatrix}
+$$
+
+**Pure strategy best responses:**
+
+- Row player: $r_1$ BR to $c_1$ ($3 > 2$); $r_2$ BR to $c_2$ ($7 > -1$).
+- Column player: $c_2$ BR to $r_1$ ($1 > -3$); $c_1$ BR to $r_2$ ($1 > -6$).
+
+No mutual best response pairs: $(r_1, c_1)$ — $c_2$ is BR to $r_1$, not $c_1$; $(r_2, c_2)$ — $c_1$ is BR to $r_2$, not $c_2$. No pure NE.
+
+**Mixed strategy with $I = \{r_1, r_2\}$, $J = \{c_1, c_2\}$:**
+
+Let $\sigma_r = (x, 1-x)$ and $\sigma_c = (y, 1-y)$.
+
+Row player indifference:
+$$
+3y - 1(1-y) = 2y + 7(1-y)
+$$
+$$
+4y - 1 = 7 - 5y \implies 9y = 8 \implies y = \frac{8}{9}
+$$
+
+Column player indifference:
+$$
+-3x + 1(1-x) = 1x - 6(1-x)
+$$
+$$
+1 - 4x = 7x - 6 \implies 7 = 11x \implies x = \frac{7}{11}
+$$
+
+**Check non-negativity:** $0 < 7/11 < 1$ and $0 < 8/9 < 1$. Valid.
+
+**Best response condition:**
+
+$$
+A \sigma_c^T = \begin{pmatrix} 3 & -1 \\ 2 & 7 \end{pmatrix} \begin{pmatrix} 8/9 \\ 1/9 \end{pmatrix} = \begin{pmatrix} 24/9 - 1/9 \\ 16/9 + 7/9 \end{pmatrix} = \begin{pmatrix} 23/9 \\ 23/9 \end{pmatrix}
+$$
+
+Both rows give $23/9$, confirming $\sigma_r$ is a best response to $\sigma_c$.
+
+$$
+\sigma_r B = \begin{pmatrix} 7/11 & 4/11 \end{pmatrix} \begin{pmatrix} -3 & 1 \\ 1 & -6 \end{pmatrix} = \begin{pmatrix} -21/11 + 4/11 & 7/11 - 24/11 \end{pmatrix} = \begin{pmatrix} -17/11 & -17/11 \end{pmatrix}
+$$
+
+Both columns give $-17/11$, confirming $\sigma_c$ is a best response to $\sigma_r$.
+
+**Nash equilibria for Game 2:**
+
+$$
+\left\{ \left(\left(\frac{7}{11}, \frac{4}{11}\right),\ \left(\frac{8}{9}, \frac{1}{9}\right)\right) \right\}
+$$
+
+```{code-cell} python3
+import nashpy as nash
+import numpy as np
+
+# Game 1
+A1 = np.array([[3, 3, 2], [2, 1, 3]])
+B1 = np.array([[2, 1, 3], [2, 3, 2]])
+g1 = nash.Game(A1, B1)
+print("Game 1 Nash equilibria:")
+for eq in g1.support_enumeration():
+    print(" ", eq)
+
+# Game 2
+A2 = np.array([[3, -1], [2, 7]])
+B2 = np.array([[-3, 1], [1, -6]])
+g2 = nash.Game(A2, B2)
+print("\nGame 2 Nash equilibria:")
+for eq in g2.support_enumeration():
+    print(" ", eq)
+```
+
+````
+
+---
+
+````{solution} penalty_kick_strategies_and_nash_equilibrium
+:label: solution:penalty_kick_strategies_and_nash_equilibrium
+
+**Setup:**
+
+Player 1 (kicker) has action set $S_1 = \{\text{SL},\ \text{SR}\}$. Player 2 (goalkeeper) has action set $S_2 = \{\text{DL},\ \text{DR}\}$.
+
+The probability of scoring matrix is:
+
+$$
+P = \begin{pmatrix}
+0.8 & 0.15 \\
+0.2 & 0.95
+\end{pmatrix}
+$$
+
+The payoff matrices are:
+
+$$
+M_r = \begin{pmatrix} 0.8 & 0.15 \\ 0.2 & 0.95 \end{pmatrix}
+\qquad
+M_c = \begin{pmatrix} 0.2 & 0.85 \\ 0.8 & 0.05 \end{pmatrix}
+$$
+
+since the goalkeeper's utility is the probability of saving (i.e.\ $1 -$ scoring probability). This is a constant-sum (not zero-sum) game, but we can find Nash equilibria using support enumeration.
+
+**Pure strategy best responses:**
+
+- Row player: against DL ($c_1$): SL gives $0.8 > 0.2$, so SL is BR; against DR ($c_2$): SR gives $0.95 > 0.15$, so SR is BR.
+- Column player: against SL ($r_1$): DR gives $0.85 > 0.20$, so DR is BR; against SR ($r_2$): DL gives $0.8 > 0.05$, so DL is BR.
+
+No pure NE (each player's best response leads away from the current profile).
+
+**Mixed strategy NE with $I = \{\text{SL},\text{SR}\}$, $J = \{\text{DL},\text{DR}\}$:**
+
+Let $\sigma_1 = (x, 1-x)$ and $\sigma_2 = (y, 1-y)$.
+
+**Row player indifference** (kicker indifferent between SL and SR):
+
+$$
+0.8y + 0.15(1-y) = 0.2y + 0.95(1-y)
+$$
+$$
+0.65y + 0.15 = 0.95 - 0.75y \implies 1.4y = 0.8 \implies y = \frac{4}{7} \approx 0.5714
+$$
+
+**Column player indifference** (goalkeeper indifferent between DL and DR):
+
+$$
+0.2x + 0.8(1-x) = 0.85x + 0.05(1-x)
+$$
+$$
+0.8 - 0.6x = 0.05 + 0.8x \implies 0.75 = 1.4x \implies x = \frac{75}{140} = \frac{15}{28} \approx 0.5357
+$$
+
+**Non-negativity check:** Both $y = 4/7$ and $x = 15/28$ lie in $(0,1)$. Valid.
+
+**Nash equilibrium (two-action game):**
+
+$$
+\sigma_1^* = \left(\frac{15}{28},\ \frac{13}{28}\right)
+\qquad
+\sigma_2^* = \left(\frac{4}{7},\ \frac{3}{7}\right)
+$$
+
+**Extended game with three kicker actions:**
+
+Now $S_1 = \{\text{SL},\ \text{SM},\ \text{SR}\}$ and $S_2 = \{\text{DL},\ \text{DR}\}$:
+
+$$
+M_r = \begin{pmatrix} 0.8 & 0.15 \\ 0.5 & 0.5 \\ 0.2 & 0.95 \end{pmatrix}
+\qquad
+M_c = \begin{pmatrix} 0.2 & 0.85 \\ 0.5 & 0.5 \\ 0.8 & 0.05 \end{pmatrix}
+$$
+
+**Pure strategy best responses:**
+
+- Row player: against DL: SM gives $0.5 > 0.2$... SL gives $0.8 > 0.5$, so SL is BR to DL; against DR: SR gives $0.95 > 0.5$, SR is BR to DR.
+- Column player: against SL: DR gives $0.85 > 0.2$; against SM: DL and DR both give $0.5$ (indifferent); against SR: DL gives $0.8 > 0.05$.
+
+No pure NE (same reasoning as before — the kicker and goalkeeper's best responses cycle).
+
+**Support enumeration for mixed NE:**
+
+We consider all support pairs. Since the goalkeeper has only 2 actions, the goalkeeper must play a mixture over both columns in any mixed NE. We check which support for the kicker is consistent.
+
+**Support $\{SL, SR\}$:** As computed above, $y = 4/7$ and $x_{SL} = 15/28$. But we must also check that SM is not a better response than SL and SR for the kicker:
+
+$$
+u_r(\text{SM}, \sigma_2^*) = 0.5 \cdot (4/7) + 0.5 \cdot (3/7) = 0.5
+$$
+
+$$
+u_r(\text{SL}, \sigma_2^*) = 0.8 \cdot (4/7) + 0.15 \cdot (3/7) = (3.2 + 0.45)/7 = 3.65/7 \approx 0.521
+$$
+
+Since $u_r(\text{SM}) = 0.5 < 0.521 = u_r(\text{SL}, \sigma_2^*)$, SM is not a best response under $\sigma_2^*$, so the support $\{SL, SR\}$ equilibrium from the two-action game **remains valid**:
+
+$$
+\sigma_1^* = \left(\frac{15}{28},\ 0,\ \frac{13}{28}\right), \qquad \sigma_2^* = \left(\frac{4}{7},\ \frac{3}{7}\right)
+$$
+
+**Support $\{SL, SM\}$:** Row player indifference between SL and SM:
+
+$$
+0.8y + 0.15(1-y) = 0.5y + 0.5(1-y)
+$$
+$$
+0.65y + 0.15 = 0.5 \implies y = \frac{0.35}{0.65} = \frac{7}{13}
+$$
+
+Column player indifference (using SL and SM payoffs for the goalkeeper):
+
+$$
+0.2x_{SL} + 0.5x_{SM} = 0.85 x_{SL} + 0.5 x_{SM}
+$$
+$$
+0.2x_{SL} = 0.85 x_{SL} \implies 0 = 0.65 x_{SL}
+$$
+
+This requires $x_{SL} = 0$, which contradicts the support $\{SL, SM\}$. No NE with this support.
+
+**Support $\{SM, SR\}$:** By symmetric reasoning (SM vs SR), no NE with this support (by analogous calculation $x_{SR} = 0$).
+
+**Support $\{SL, SM, SR\}$:** The goalkeeper must be indifferent, and we have two equations for two unknowns ($x_{SL}, x_{SM}$ with $x_{SR} = 1 - x_{SL} - x_{SM}$):
+
+$$
+0.2 x_{SL} + 0.5 x_{SM} + 0.8(1 - x_{SL} - x_{SM}) = 0.85 x_{SL} + 0.5 x_{SM} + 0.05(1 - x_{SL} - x_{SM})
+$$
+$$
+0.8 - 0.6 x_{SL} - 0.3 x_{SM} = 0.05 + 0.8 x_{SL} + 0.45 x_{SM}
+$$
+$$
+0.75 = 1.4 x_{SL} + 0.75 x_{SM} \qquad (*)
+$$
+
+Kicker indifference (SL = SM = SR under $y$):
+
+$$
+0.8y + 0.15(1-y) = 0.5y + 0.5(1-y) = 0.2y + 0.95(1-y)
+$$
+
+From SL = SR: $0.8y + 0.15(1-y) = 0.2y + 0.95(1-y) \implies 0.65y + 0.15 = 0.95 - 0.75y \implies y = 4/7$.
+
+From SL = SM: $0.8y + 0.15(1-y) = 0.5y + 0.5(1-y) \implies 0.65y + 0.15 = 0.5 \implies y = 0.35/0.65 = 7/13 \neq 4/7$.
+
+Since both conditions on $y$ cannot hold simultaneously, there is no Nash equilibrium with full support $\{SL, SM, SR\}$.
+
+**Conclusion:** The only Nash equilibrium in the extended game is:
+
+$$
+\sigma_1^* = \left(\frac{15}{28},\ 0,\ \frac{13}{28}\right), \qquad \sigma_2^* = \left(\frac{4}{7},\ \frac{3}{7}\right)
+$$
+
+The middle shot (SM) is never played at equilibrium: its scoring probabilities are convex combinations of SL and SR probabilities, so it does not provide any strategic advantage. The goalkeeper's optimal mixing makes the kicker indifferent between only SL and SR.
+
+```{code-cell} python3
+import nashpy as nash
+import numpy as np
+
+# Two-action game
+M_r_2 = np.array([[0.8, 0.15], [0.2, 0.95]])
+M_c_2 = 1 - M_r_2
+g2 = nash.Game(M_r_2, M_c_2)
+print("Two-action game Nash equilibria:")
+for eq in g2.support_enumeration():
+    print(" ", eq)
+
+# Three-action game
+M_r_3 = np.array([[0.8, 0.15], [0.5, 0.5], [0.2, 0.95]])
+M_c_3 = 1 - M_r_3
+g3 = nash.Game(M_r_3, M_c_3)
+print("\nThree-action game Nash equilibria:")
+for eq in g3.support_enumeration():
+    print(" ", eq)
+
+# Verify SM is not a best response in the two-action equilibrium
+sigma_2 = np.array([4/7, 3/7])
+row_utilities = M_r_3 @ sigma_2
+print("\nKicker's utilities under equilibrium goalkeeper strategy:", row_utilities)
+print("SM utility ({:.4f}) < SL utility ({:.4f})? {}".format(
+    row_utilities[1], row_utilities[0], row_utilities[1] < row_utilities[0]))
+```
+
+````

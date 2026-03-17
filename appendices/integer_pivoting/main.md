@@ -69,7 +69,7 @@ $$
   x_1 \geq 0 \\
   x_2 \geq 0 \\
   x_1 + 3x_2 \leq 1 \\
-  3x_1 + 3x \leq 1 \\
+  3x_1 + 3x_2 \leq 1 \\
 \end{array}
 \right\}
 $$
@@ -782,9 +782,7 @@ representation, we are able to:
 - Perform exact row operations that correspond to movement along polytope edges;
 - Interpret basic and non-basic variables as defining vertices and directions of movement.
 
-This chapter has introduced the core tools required to navigate these geometric
-structures, setting the stage for applications in zero-sum games and Nash
-equilibrium computation.
+These tools underpin the algorithms used for zero-sum games and Nash equilibrium computation.
 
 [](#tbl:integer_pivoting) summarises the key concepts introduced in this
 appendix.
@@ -810,4 +808,336 @@ appendix.
 Each tableau corresponds to a vertex of a polytope, and integer pivoting
 lets us move precisely from one vertex to a neighboring one—forming the
 algorithmic core of many key results in game theory.
+```
+
+---
+
+(solutions:integer_pivoting)=
+
+## Solutions
+
+### Solution to Exercise: Polytope Representation
+
+**1.** $V = \{(0,0), (0,1), (1,0), (1,1)\}$
+
+This is the unit square. As the intersection of half-spaces:
+
+$$
+\mathcal{P} = \{x \in \mathbb{R}^2 \mid x_1 \geq 0,\ x_2 \geq 0,\ x_1 \leq 1,\ x_2 \leq 1\}
+$$
+
+In standard form $Mx \leq b$:
+
+$$
+M = \begin{pmatrix}-1 & 0 \\ 0 & -1 \\ 1 & 0 \\ 0 & 1\end{pmatrix},
+\qquad b = \begin{pmatrix}0 \\ 0 \\ 1 \\ 1\end{pmatrix}.
+$$
+
+**2.** $V = \{(0,0), (0, 1/4), (1, 2/3), (2, 1/5)\}$
+
+We must find the convex hull of these four points. Computing the supporting
+half-spaces (using the convex hull):
+
+The edges of the convex hull connect:
+- $(0,0)$ to $(0,1/4)$: left edge, $x_1 \geq 0$.
+- $(0,0)$ to $(2,1/5)$: bottom edge. The line through these points has slope
+  $1/10$, giving $x_2 \geq x_1/10$, i.e., $x_1 - 10 x_2 \leq 0$.
+- $(0,1/4)$ to $(1,2/3)$: upper-left edge. Slope = $(2/3 - 1/4)/1 = 5/12$.
+  Line: $x_2 - 1/4 = (5/12)(x_1 - 0)$, i.e., $x_2 = 5x_1/12 + 1/4$, giving
+  $-5x_1 + 12x_2 \leq 3$.
+- $(1,2/3)$ to $(2,1/5)$: upper-right edge. Slope = $(1/5 - 2/3)/1 = -7/15$.
+  Line: $x_2 - 2/3 = (-7/15)(x_1 - 1)$, i.e., $7x_1 + 15x_2 \leq 17$.
+- $(2,1/5)$ to $(0,0)$: see bottom edge above (they share the same bounding
+  line $x_1 - 10x_2 \leq 0$ together with $x_1 \leq 2$).
+
+A complete half-space representation is:
+
+$$
+x_1 \geq 0, \quad x_1 - 10 x_2 \leq 0, \quad -5x_1 + 12x_2 \leq 3, \quad 7x_1 + 15x_2 \leq 17, \quad x_1 \leq 2.
+$$
+
+```{code-cell} python3
+import scipy.spatial
+import numpy as np
+import matplotlib.pyplot as plt
+
+V1 = np.array([[0,0],[0,1],[1,0],[1,1]], dtype=float)
+hull1 = scipy.spatial.ConvexHull(V1)
+fig, axes = plt.subplots(1, 3, figsize=(9, 3))
+
+for ax, V, title in zip(
+    axes,
+    [
+        np.array([[0,0],[0,1],[1,0],[1,1]], dtype=float),
+        np.array([[0,0],[0,1/4],[1,2/3],[2,1/5]], dtype=float),
+        np.array([[0,0],[0,1/4],[1,2/3],[2,1/5],[1,0]], dtype=float),
+    ],
+    ["V1: unit square", "V2: 4 points", "V3: 5 points"]
+):
+    hull = scipy.spatial.ConvexHull(V)
+    scipy.spatial.convex_hull_plot_2d(hull, ax=ax)
+    ax.scatter(V[:, 0], V[:, 1], color="red", zorder=5)
+    ax.set_title(title)
+
+plt.tight_layout()
+```
+
+```{code-cell} python3
+# Show the half-space inequalities for V2
+V2 = np.array([[0,0],[0,1/4],[1,2/3],[2,1/5]], dtype=float)
+hull2 = scipy.spatial.ConvexHull(V2)
+print("Half-space equations for V2 (each row: [a, b, c] means a*x1 + b*x2 + c <= 0):")
+print(hull2.equations)
+```
+
+**3.** $V = \{(0,0), (0,1/4), (1,2/3), (2,1/5), (1,0)\}$
+
+The point $(1,0)$ lies inside or on the boundary of the convex hull of $V$ from
+part 2 (it is below the bottom edge $x_1 - 10x_2 \leq 0$ at $x_1=1$:
+$1 - 0 = 1 > 0$, so $(1,0)$ is actually outside that edge). Adding $(1,0)$
+changes the convex hull.
+
+```{code-cell} python3
+V3 = np.array([[0,0],[0,1/4],[1,2/3],[2,1/5],[1,0]], dtype=float)
+hull3 = scipy.spatial.ConvexHull(V3)
+print("Half-space equations for V3:")
+print(hull3.equations)
+print("\nVertices of hull3:", V3[hull3.vertices])
+```
+
+---
+
+(solutions:integer_pivoting:basic_nonbasic)=
+
+### Solution to Exercise: Basic and Non-Basic Variables
+
+**1.** For
+
+$$
+T^{(a)} = \begin{pmatrix}
+1 & 0 & 5 & 1 & 1 \\
+0 & 1 & 4 & 9 & 1
+\end{pmatrix}
+$$
+
+The columns (from left to right) correspond to variables $x_1, x_2, x_3, x_4$
+(or $s_1, s_2$ if these are slack variables). A basic variable corresponds to a
+column that has exactly one nonzero entry (a unit vector). Inspecting the
+columns:
+
+- Column 1 ($x_1$): $(1, 0)^T$ — unit vector. **Basic.**
+- Column 2 ($x_2$): $(0, 1)^T$ — unit vector. **Basic.**
+- Column 3 ($x_3$): $(5, 4)^T$ — not a unit vector. **Non-basic.**
+- Column 4 ($x_4$): $(1, 9)^T$ — not a unit vector. **Non-basic.**
+
+**Basic variables:** $x_1, x_2$.
+**Non-basic variables:** $x_3, x_4$.
+
+Setting non-basic variables to zero: $x_3 = x_4 = 0$, the system gives
+$x_1 = 1$ and $x_2 = 1$, so the corresponding vertex is $(x_1, x_2) = (1, 1)$
+(if $x_3, x_4$ are the original variables, otherwise the vertex is in the
+$x_1, x_2$ coordinates).
+
+**2.** For
+
+$$
+T^{(b)} = \begin{pmatrix}
+4 & 8 & 1 & 0 & 1 \\
+8 & 1 & 0 & 1 & 1
+\end{pmatrix}
+$$
+
+- Column 1 ($x_1$): $(4, 8)^T$ — not a unit vector. **Non-basic.**
+- Column 2 ($x_2$): $(8, 1)^T$ — not a unit vector. **Non-basic.**
+- Column 3 ($s_1$): $(1, 0)^T$ — unit vector. **Basic.**
+- Column 4 ($s_2$): $(0, 1)^T$ — unit vector. **Basic.**
+
+**Basic variables:** $s_1, s_2$.
+**Non-basic variables:** $x_1, x_2$.
+
+Setting non-basic variables to zero: $x_1 = x_2 = 0$, and from the last
+column, $s_1 = 1$, $s_2 = 1$. This corresponds to the origin vertex.
+
+---
+
+### Solution to Exercise: Integer Pivoting
+
+We perform integer pivoting on each non-basic variable for the two tableaux
+from the exercise above.
+
+**Pivoting on $T^{(a)}$:** The non-basic variables are $x_3$ and $x_4$.
+
+**Pivot on $x_3$ (column 3):**
+
+The pivot column entries are $(5, 4)$. Both are positive, so we apply the
+minimum ratio test:
+
+- Row 1: $b_1 / T_{13} = 1/5$
+- Row 2: $b_2 / T_{23} = 1/4$
+
+The minimum ratio is $1/5$ in row 1, so we pivot on row 1.
+
+To eliminate $x_3$ from row 2: multiply row 1 by 4 and subtract row 2 times
+5:
+
+$$
+\begin{align*}
+\text{new row 2} &= 4 \times \text{row 1} - 5 \times \text{row 2} \\
+&= 4(1,0,5,1,1) - 5(0,1,4,9,1) = (4, -5, 0, -41, -1).
+\end{align*}
+$$
+
+Wait — the last entry becomes negative. The minimum ratio test ensures
+feasibility, so let us redo more carefully using integer pivoting as defined
+in [](#sec:definition_integer_pivoting): multiply row 2 by 5 and subtract 4
+times row 1 (to zero out column 3 in row 2):
+
+$$
+\begin{align*}
+\text{new row 2} &= 5 \times (0,1,4,9,1) - 4 \times (1,0,5,1,1) \\
+&= (0,5,20,45,5) - (4,0,20,4,4) = (-4, 5, 0, 41, 1).
+\end{align*}
+$$
+
+The updated tableau is:
+
+$$
+T^{(a')} = \begin{pmatrix}
+1 & 0 & 5 & 1 & 1 \\
+-4 & 5 & 0 & 41 & 1
+\end{pmatrix}
+$$
+
+The basic variables are now $x_3$ (from row 1) and $x_2$ (from row 2). Setting
+non-basic variables $x_1 = x_4 = 0$: from row 1, $5x_3 = 1 \Rightarrow x_3 = 1/5$;
+from row 2, $5x_2 = 1 \Rightarrow x_2 = 1/5$.
+
+**Pivot on $x_4$ (column 4) of $T^{(a)}$:**
+
+The pivot column entries are $(1, 9)$. Both positive. Minimum ratio test:
+
+- Row 1: $1/1 = 1$
+- Row 2: $1/9$
+
+Minimum is $1/9$ in row 2. Pivot on row 2. Eliminate $x_4$ from row 1:
+multiply row 2 by 1 and subtract row 1 times 9 (integer pivoting):
+
+$$
+\begin{align*}
+\text{new row 1} &= 9 \times (0,1,4,9,1) - 1 \times (1,0,5,1,1) \\
+&= (0,9,36,81,9) - (1,0,5,1,1) = (-1, 9, 31, 80, 8).
+\end{align*}
+$$
+
+The updated tableau is:
+
+$$
+T^{(a'')} = \begin{pmatrix}
+-1 & 9 & 31 & 80 & 8 \\
+0 & 1 & 4 & 9 & 1
+\end{pmatrix}
+$$
+
+**Pivoting on $T^{(b)}$:** The non-basic variables are $x_1$ and $x_2$.
+
+**Pivot on $x_1$ (column 1):**
+
+The pivot column entries are $(4, 8)$. Both positive. Minimum ratio test:
+
+- Row 1: $1/4$
+- Row 2: $1/8$
+
+Minimum is $1/8$ in row 2. Pivot on row 2. Eliminate $x_1$ from row 1:
+
+$$
+\begin{align*}
+\text{new row 1} &= 8 \times (4,8,1,0,1) - 4 \times (8,1,0,1,1) \\
+&= (32,64,8,0,8) - (32,4,0,4,4) = (0, 60, 8, -4, 4).
+\end{align*}
+$$
+
+The updated tableau is:
+
+$$
+T^{(b')} = \begin{pmatrix}
+0 & 60 & 8 & -4 & 4 \\
+8 & 1 & 0 & 1 & 1
+\end{pmatrix}
+$$
+
+Basic variables are now $x_1$ (row 2) and $s_1$ (row 1). Setting $x_2 = s_2 = 0$:
+from row 2, $8x_1 = 1 \Rightarrow x_1 = 1/8$.
+
+**Pivot on $x_2$ (column 2):**
+
+Starting from $T^{(b)}$, the pivot column entries are $(8, 1)$. Both positive.
+Minimum ratio test:
+
+- Row 1: $1/8$
+- Row 2: $1/1 = 1$
+
+Minimum is $1/8$ in row 1. Pivot on row 1. Eliminate $x_2$ from row 2:
+
+$$
+\begin{align*}
+\text{new row 2} &= 8 \times (8,1,0,1,1) - 1 \times (4,8,1,0,1) \\
+&= (64,8,0,8,8) - (4,8,1,0,1) = (60, 0, -1, 8, 7).
+\end{align*}
+$$
+
+The updated tableau is:
+
+$$
+T^{(b'')} = \begin{pmatrix}
+4 & 8 & 1 & 0 & 1 \\
+60 & 0 & -1 & 8 & 7
+\end{pmatrix}
+$$
+
+Basic variables are now $s_1$ (row 1) and $x_2$ (row 2). Setting $x_1 = s_2 = 0$:
+from row 1, $8x_2 + s_1 = 1$; from row 2, $8s_2 = 7$... Actually with $x_1 = s_2 = 0$:
+row 1 gives $8x_2 = 1 \Rightarrow x_2 = 1/8$.
+
+```{code-cell} python3
+import numpy as np
+
+# Tableau T^(a)
+T_a = np.array([[1, 0, 5, 1, 1],
+                [0, 1, 4, 9, 1]], dtype=float)
+
+# Pivot on column 3 (index 2), pivot row 1 (index 0): minimum ratio 1/5
+T_a_pivot_x3 = T_a.copy()
+pivot_col, pivot_row = 2, 0
+# new_row2 = 5*row2 - 4*row1 (to zero column 3 in row 2)
+T_a_pivot_x3[1] = T_a[1] * T_a[0, pivot_col] - T_a[0] * T_a[1, pivot_col]
+print("T^(a) after pivot on x3 (col 3, row 1):")
+print(T_a_pivot_x3)
+
+# Pivot on column 4 (index 3) of T^(a), pivot row 2 (index 1): minimum ratio 1/9
+T_a_pivot_x4 = T_a.copy()
+pivot_col, pivot_row = 3, 1
+# new_row1 = 9*row1 - row2 (to zero column 4 in row 1)
+T_a_pivot_x4[0] = T_a[0] * T_a[1, pivot_col] - T_a[1] * T_a[0, pivot_col]
+print("\nT^(a) after pivot on x4 (col 4, row 2):")
+print(T_a_pivot_x4)
+```
+
+```{code-cell} python3
+# Tableau T^(b)
+T_b = np.array([[4, 8, 1, 0, 1],
+                [8, 1, 0, 1, 1]], dtype=float)
+
+# Pivot on x1 (col 1, index 0), pivot row 2 (index 1): minimum ratio 1/8
+T_b_pivot_x1 = T_b.copy()
+pivot_col, pivot_row = 0, 1
+T_b_pivot_x1[0] = T_b[0] * T_b[1, pivot_col] - T_b[1] * T_b[0, pivot_col]
+print("T^(b) after pivot on x1 (col 1, row 2):")
+print(T_b_pivot_x1)
+
+# Pivot on x2 (col 2, index 1), pivot row 1 (index 0): minimum ratio 1/8
+T_b_pivot_x2 = T_b.copy()
+pivot_col, pivot_row = 1, 0
+T_b_pivot_x2[1] = T_b[1] * T_b[0, pivot_col] - T_b[0] * T_b[1, pivot_col]
+print("\nT^(b) after pivot on x2 (col 2, row 1):")
+print(T_b_pivot_x2)
 ```

@@ -4,6 +4,8 @@ kernelspec:
   display_name: "Python 3"
 ---
 
+(chp:games)=
+
 # Games
 
 ## Motivating Example
@@ -23,7 +25,7 @@ do?
 :height: 250px
 
 A probabilistic decision tree. A square node is used to indicate a decision and
-a circlular node is used to indicate a probailistic event.
+a circular node is used to indicate a probabilistic event.
 ```
 
 As illustrated in [Figure 1](#fig:probabilistic_decision_tree), if you must
@@ -638,8 +640,8 @@ Using the [Coordination Game with imperfect information](#fig:battle_of_the_sexe
 ````{exercise}
 :label: identifying_information_sets_from_game_trees
 
-For each of the following games with $\mathcal{N} = \{\text{Alice},\ \text{Bob}\}$,  
-assume that decision nodes $A_i$ belong to Alice and $B_i$ belong to Bob.  
+For each of the following games with $\mathcal{N} = \{\text{Alice},\ \text{Bob}\}$,
+assume that decision nodes $A_i$ belong to Alice and $B_i$ belong to Bob.
 Determine all **information sets**.
 
 1.
@@ -816,7 +818,7 @@ Here we create a Normal Form game in Gambit [@savani2024gambit] with 3 players:
 ```{code-cell} python3
 import pygambit as gbt
 
-g = gbt.Game.new_table([2, 2, 2])
+g = gbt.Game.new_table([2, 2, 2], title="3 player game")
 p1, p2, p3 = g.players
 ```
 
@@ -855,7 +857,7 @@ g[(1, 1, 0)][p3] = -1
 g[(1, 1, 1)][p1] = 1
 g[(1, 1, 1)][p2] = 1
 g[(1, 1, 1)][p3] = 1
-g
+print(g)
 ```
 
 ## Notable Research
@@ -910,11 +912,7 @@ creating a more equitable outcome for all parties.
 
 ## Conclusion
 
-In this chapter, we introduced the formal structure of games, focusing on both
-**normal form** and **extensive form** representations. [](#tbl:game_summary) shows a comparison of these two forms.
-We saw how strategies,
-utilities, and information sets define the behaviour of rational agents in
-interactive decision-making scenarios.
+[](#tbl:game_summary) compares the two representations covered in this chapter.
 
 ```{table} The main concepts for Normal Form and Extensive Form Games.
 :label: tbl:game_summary
@@ -933,19 +931,344 @@ interactive decision-making scenarios.
 
 ```
 
-Through motivating examples, formal definitions, and real-world applications,
-we began to see how even simple games can model complex dynamics. From
-coordinating with friends to navigating competitive environments, these tools
-lay the groundwork for deeper analysis in the chapters to come.
-
-Next, we turn to the study of **emergent behaviour**, where individual
-strategies interact in surprising ways across repeated play, populations, or
-networks of agents. Understanding these patterns is essential for analysing
-systems that evolve over time — and for designing mechanisms that shape them.
-
 ---
 
 ```{attention}
 Every extensive form game has an equivalent representation in normal form,
 where strategies specify complete plans of action across all information sets.
 ```
+
+---
+
+(solutions:games)=
+
+## Solutions
+
+```{solution} structure_of_a_perfect_information_game
+:label: solution:structure_of_a_perfect_information_game
+
+We refer to the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_information_bob_first)
+in which Bob moves first and Celine responds after observing Bob's choice.
+
+1. The finite set of players is:
+
+$$
+\mathcal{N} = \{\text{Bob},\ \text{Celine}\}
+$$
+
+so $|\mathcal{N}| = 2$.
+
+2. The game tree $G = (V, E, x^0)$ consists of:
+
+- **Vertices** $V$: the root node $a$ (Bob's decision), two intermediate nodes $b$ and $c$ (Celine's decisions after Bob plays Sports or Comedy respectively), and four terminal (leaf) nodes corresponding to the four possible outcomes.
+
+- **Edges** $E$: the edge from $a$ to $b$ (labelled Sports), the edge from $a$ to $c$ (labelled Comedy), and the four edges from $b$ and $c$ to the terminal nodes (each labelled Sports or Comedy).
+
+- **Root** $x^0 = a$.
+
+3. The partition $(V_i)_{i \in \mathcal{N}}$ assigns each non-terminal vertex to a player:
+
+$$
+V_{\text{Bob}} = \{a\}, \qquad V_{\text{Celine}} = \{b,\ c\}
+$$
+
+4. The set of possible outcomes $O$ consists of the four terminal leaf payoff pairs:
+
+$$
+O = \{(3,\ 2),\ (1,\ 1),\ (0,\ 0),\ (2,\ 3)\}
+$$
+
+where each pair gives (Bob's utility, Celine's utility).
+
+5. The mapping $u$ from each terminal node to an element of $O$ is:
+
+- Sports–Sports leaf $\mapsto (3,\ 2)$
+- Sports–Comedy leaf $\mapsto (1,\ 1)$
+- Comedy–Sports leaf $\mapsto (0,\ 0)$
+- Comedy–Comedy leaf $\mapsto (2,\ 3)$
+
+```
+
+---
+
+```{solution} structure_of_an_imperfect_information_game
+:label: solution:structure_of_an_imperfect_information_game
+
+We refer to the [Coordination Game with imperfect information](#fig:battle_of_the_sexes_imperfect_information)
+in which neither player observes the other's choice.
+
+1. The finite set of players is:
+
+$$
+\mathcal{N} = \{\text{Bob},\ \text{Celine}\}
+$$
+
+so $|\mathcal{N}| = 2$.
+
+2. The game tree $G = (V, E, x^0)$ consists of:
+
+- **Vertices** $V$: the root node $a$ (Bob's decision), two intermediate nodes $b$ and $c$ (which belong to the same information set for Celine), and four terminal leaf nodes.
+
+- **Edges** $E$: the edge from $a$ to $b$ (Sports), the edge from $a$ to $c$ (Comedy), and four edges from $b$ and $c$ to the terminal nodes (each labelled Sports or Comedy).
+
+- **Root** $x^0 = a$.
+
+3. The partition $(V_i)_{i \in \mathcal{N}}$ is:
+
+$$
+V_{\text{Bob}} = \{a\}, \qquad V_{\text{Celine}} = \{b,\ c\}
+$$
+
+4. The set of possible outcomes $O$ consists of the four terminal leaf payoff pairs:
+
+$$
+O = \{(3,\ 2),\ (1,\ 1),\ (0,\ 0),\ (2,\ 3)\}
+$$
+
+5. The mapping $u$ from each terminal node to an element of $O$ is the same as in the perfect information game:
+
+- Sports–Sports leaf $\mapsto (3,\ 2)$
+- Sports–Comedy leaf $\mapsto (1,\ 1)$
+- Comedy–Sports leaf $\mapsto (0,\ 0)$
+- Comedy–Comedy leaf $\mapsto (2,\ 3)$
+
+The key structural difference from the perfect information game is that nodes $b$ and $c$ belong to the **same information set** for Celine — represented by a dashed line connecting them — because Celine cannot observe Bob's choice before making her own.
+
+```
+
+---
+
+```{solution} identifying_information_sets_from_game_trees
+:label: solution:identifying_information_sets_from_game_trees
+
+For each game with $\mathcal{N} = \{\text{Alice},\ \text{Bob}\}$, decision nodes labelled $A_i$ belong to Alice and $B_i$ belong to Bob. Information sets partition each player's decision nodes into groups that player cannot distinguish.
+
+1. **Game 1 (perfect information, Alice moves first):**
+
+The game tree has Alice at the root with a single decision node. Bob has two decision nodes reached after each of Alice's choices, and he can observe Alice's move. Since all information is available at each node, every node forms its own singleton information set:
+
+$$
+v_{\text{Alice}} = \bigl\{\{A_1\}\bigr\}
+\qquad
+v_{\text{Bob}} = \bigl\{\{B_1\},\ \{B_2\}\bigr\}
+$$
+
+2. **Game 2 (imperfect information):**
+
+Alice moves first. Bob has two decision nodes but cannot distinguish between them (they are connected by a dashed line). Thus Bob's two nodes form a single information set:
+
+$$
+v_{\text{Alice}} = \bigl\{\{A_1\}\bigr\}
+\qquad
+v_{\text{Bob}} = \bigl\{\{B_1,\ B_2\}\bigr\}
+$$
+
+3. **Game 3 (perfect information, multiple rounds):**
+
+All players observe all previous moves; each node is a singleton information set:
+
+$$
+v_{\text{Alice}} = \bigl\{\{A_1\},\ \{A_2\},\ \{A_3\}\bigr\}
+\qquad
+v_{\text{Bob}} = \bigl\{\{B_1\}\bigr\}
+$$
+
+(or whatever the specific structure of the tree implies, with each node forming its own information set since information is perfect).
+
+4. **Game 4 (imperfect information, multiple rounds):**
+
+Alice has a single decision node at the root. Bob has multiple decision nodes that are grouped into information sets according to which of Alice's moves he can observe. If Bob cannot distinguish between two of his nodes (e.g.\ $B_1$ and $B_2$ are connected by a dashed line), they form one information set:
+
+$$
+v_{\text{Alice}} = \bigl\{\{A_1\}\bigr\}
+\qquad
+v_{\text{Bob}} = \bigl\{\{B_1,\ B_2\}\bigr\}
+$$
+
+5. **Game 5 (incoherent imperfect information):**
+
+This game is **incoherent** because nodes grouped into the same information set do not have the same number of successors (or the successors have different action labels). This violates the requirement that all vertices in an information set must have identical available actions. Therefore, the depicted grouping is **not a valid information set structure** — a well-formed extensive form game cannot have an information set where the nodes have different action sets available.
+
+```
+
+---
+
+````{solution} messaging_platform_coordination
+:label: solution:messaging_platform_coordination
+
+We model the three-player messaging platform coordination game.
+
+**Players and strategy sets:**
+
+The players are:
+
+$$
+\mathcal{N} = \{\text{Alice},\ \text{Bob},\ \text{Celine}\}
+$$
+
+Each player has the same action set:
+
+$$
+\mathcal{A}_i = \{\text{WhatsApp},\ \text{Instagram},\ \text{Snapchat}\}
+\qquad \text{for } i \in \mathcal{N}
+$$
+
+**Interpretation of utility values:**
+
+A reasonable interpretation is that each player's utility equals the number of the other two friends who choose the same platform. The motivation is that each person gains value from being able to communicate with friends — more shared connections means higher utility.
+
+Under this interpretation:
+- Utility $= 2$ if all three choose the same platform.
+- Utility $= 1$ if exactly two of the three choose the same platform (and the player is one of the two matching).
+- Utility $= 0$ if the player is alone on their chosen platform.
+
+**Normal form representation:**
+
+Since there are three players, the game cannot be expressed as a single bi-matrix. Instead, for each choice of Celine's action, we write a bi-matrix for Alice (row) and Bob (column):
+
+Using W = WhatsApp, I = Instagram, S = Snapchat, and payoff triples (Alice, Bob, Celine):
+
+**Celine plays W:**
+
+$$
+\begin{array}{l|ccc}
+ & W & I & S \\
+W & (2,2,2) & (1,0,1) & (1,0,1) \\
+I & (0,1,1) & (1,1,0) & (0,0,0) \\
+S & (0,1,1) & (0,0,0) & (1,1,0)
+\end{array}
+$$
+
+**Celine plays I:**
+
+$$
+\begin{array}{l|ccc}
+ & W & I & S \\
+W & (1,1,0) & (0,0,0) & (0,0,0) \\
+I & (0,0,1) & (2,2,2) & (1,0,1) \\
+S & (0,0,1) & (1,0,1) & (1,1,0)
+\end{array}
+$$
+
+**Celine plays S:**
+
+$$
+\begin{array}{l|ccc}
+ & W & I & S \\
+W & (1,1,0) & (0,0,0) & (0,0,0) \\
+I & (0,0,0) & (1,1,0) & (0,0,0) \\
+S & (0,0,1) & (0,0,1) & (2,2,2)
+\end{array}
+$$
+
+Below is code that creates this game using Gambit:
+
+```{code-cell} python3
+import pygambit as gbt
+
+g = gbt.Game.new_table([3, 3, 3])
+p1, p2, p3 = g.players
+platforms = ["WhatsApp", "Instagram", "Snapchat"]
+
+for i in range(3):
+    for j in range(3):
+        for k in range(3):
+            same_as_p1 = (j == i) + (k == i)
+            same_as_p2 = (i == j) + (k == j)
+            same_as_p3 = (i == k) + (j == k)
+            g[(i, j, k)][p1] = same_as_p1
+            g[(i, j, k)][p2] = same_as_p2
+            g[(i, j, k)][p3] = same_as_p3
+
+print(g)
+```
+
+````
+
+---
+
+````{solution} peace_or_War_a_strategic_dilemma
+:label: solution:peace_or_War_a_strategic_dilemma
+
+**Players and strategy sets:**
+
+The players are the two countries, which we call Country 1 (row player) and Country 2 (column player). Each has the action set:
+
+$$
+\mathcal{A}_i = \{\text{Peace},\ \text{Attack}\}
+$$
+
+**Payoff matrices:**
+
+Using utility equal to the negative of casualties, the payoff matrices are:
+
+$$
+M_r = \begin{pmatrix}
+0 & -15000 \\
+-13000 & -10000
+\end{pmatrix}
+\qquad
+M_c = \begin{pmatrix}
+0 & -13000 \\
+-15000 & -10000
+\end{pmatrix}
+$$
+
+where rows correspond to Country 1's actions (Peace, Attack) and columns to Country 2's actions (Peace, Attack).
+
+**Expected utility plots:**
+
+Let $\sigma_1 = (x, 1-x)$ be Country 1's strategy (probability $x$ of playing Peace) and $\sigma_2 = (y, 1-y)$ be Country 2's strategy.
+
+When Country 2 plays Peace ($y = 1$, $\sigma_2 = (1, 0)$):
+
+$$
+u_1(\sigma_1, \text{Peace}) = x \cdot 0 + (1-x) \cdot (-13000) = -13000(1-x)
+$$
+
+When Country 2 plays Attack ($y = 0$, $\sigma_2 = (0, 1)$):
+
+$$
+u_1(\sigma_1, \text{Attack}) = x \cdot (-15000) + (1-x) \cdot (-10000) = -15000x - 10000(1-x)
+$$
+
+By symmetry the same holds for Country 2 with the roles swapped.
+
+```{code-cell} python3
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 1, 100)
+
+u1_given_peace = -13000 * (1 - x)
+u1_given_attack = -15000 * x - 10000 * (1 - x)
+
+plt.figure(figsize=(7, 3))
+
+plt.subplot(1, 2, 1)
+plt.plot(x, u1_given_peace, label="Opponent plays Peace")
+plt.plot(x, u1_given_attack, label="Opponent plays Attack")
+plt.xlabel("Probability of playing Peace ($x$)")
+plt.ylabel("Expected utility")
+plt.title("Country 1's expected utility")
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(x, u1_given_peace, label="Opponent plays Peace")
+plt.plot(x, u1_given_attack, label="Opponent plays Attack")
+plt.xlabel("Probability of playing Peace ($x$)")
+plt.ylabel("Expected utility")
+plt.title("Country 2's expected utility (symmetric)")
+plt.legend()
+
+plt.tight_layout()
+```
+
+**Observations:**
+
+- When the opponent plays Peace, Country 1 maximises utility by playing Attack ($x = 0$), yielding utility $0$ rather than $-13000$.
+- When the opponent plays Attack, Country 1 maximises utility by playing Attack ($x = 0$), yielding utility $-10000$ rather than $-15000$.
+
+In both cases, Attack strictly dominates Peace for Country 1. By symmetry, Attack also strictly dominates Peace for Country 2. This game is an instance of the [Prisoners' Dilemma structure](#exam:prisoners_dilemma): mutual aggression ($-10000, -10000$) is the dominant outcome even though mutual peace $(0, 0)$ is Pareto superior.
+
+````

@@ -1,0 +1,19 @@
+[project]
+name = "gtb"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "axelrod",
+    "coopgt",
+    "jupyter",
+    "matplotlib",
+    "mystmd",
+    "numpy",
+    "pref-voting",
+    "pygambit",
+    "python-ternary",
+    "sold",
+    "matching",
+    "nashpy>=0.0.43",
+    "numba>=0.64.0",
+]

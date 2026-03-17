@@ -62,6 +62,49 @@ a shared mathematical foundation. Whether your interest is theoretical
 or applied, the goal is to equip you with the tools to explore game
 theory with confidence.
 
+## What does this book cover?
+
+The book is organised into three broad themes.
+
+**Foundations of strategic interaction** — The opening chapters establish the
+core language of game theory. The [Games](#chp:games) chapter introduces normal
+and extensive form representations, strategies, and utilities. [Rationalisation](#chp:rationality)
+develops the idea of best responses and iterated elimination of dominated
+strategies. [Zero-Sum Games](#chp:zero_sum_games) shows how minimax optimisation
+and linear programming characterise optimal play when players' interests are
+directly opposed. [Nash Equilibrium](#chp:nash_equilibrium) formalises the
+central solution concept — a strategy profile from which no player wishes to
+deviate unilaterally — and the support enumeration algorithm provides a
+systematic way to compute it. [Subgame Perfection](#chp:sub_game_perfection)
+refines Nash equilibrium for extensive form games by requiring rationality at
+every decision node, not just on the equilibrium path.
+
+**Dynamics and long-run behaviour** — The middle chapters study how
+equilibria arise and persist over time. [Repeated Games](#chp:repeated_games)
+examines how cooperation can be sustained when players interact
+indefinitely, culminating in the Folk Theorem. [Replicator Dynamics](#chp:replicator_dynamics)
+models how strategy frequencies evolve in large populations under selection
+pressure, providing a bridge between game theory and evolutionary biology.
+The [Moran Process](#chp:moran_process) studies fixation in finite
+populations. [Best Response Polytopes](#chp:best_response_polytopes)
+introduces the Lemke–Howson algorithm as a geometric method for computing Nash
+equilibria in two-player games.
+
+**Applied models** — The final chapters apply game-theoretic reasoning to
+specific domains. [Routing Games](#chp:routing_games) studies how selfish routing
+decisions lead to inefficiency (the Price of Anarchy). [Matching Games](#chp:matching_games)
+covers the Gale–Shapley algorithm and stable matchings. [Auction Games](#chp:auctions)
+analyses first- and second-price auctions and Bayesian equilibrium bidding
+strategies. [Social Choice](#chp:social_choice) investigates collective
+decision-making and impossibility results. [Cooperative Games](#chp:cooperative_games)
+considers coalition formation, the characteristic function, and the Shapley
+value.
+
+Four **appendices** provide self-contained mathematical background: numerical
+integration, absorbing Markov chains, interior point optimisation (KKT
+conditions), integer pivoting, and an overview of learning and evolutionary
+dynamics.
+
 ## How is this book different from similar books?
 
 There are a number of excellent books on game theory that are highly
@@ -81,7 +124,7 @@ and [@gusfield1989stable], to name just a few.
 This book, however, offers something that these fantastic works do not:
 detailed implementation instructions, including multiple examples and
 exercises that show how to solve specific problems, even when they are
-large and complex. Additionally, it provides an overview of open-source
+large and complex. It also provides an overview of open-source
 software tools that are readily available to solve real-world problems.
 The book also includes discussion of relevant contemporary research aiming to
 demonstrate not only how the topic is applied in practice but also its relevance.

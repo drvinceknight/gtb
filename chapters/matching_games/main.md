@@ -176,7 +176,7 @@ Suppose that an arbitrary execution $\alpha$ of the algorithm gives $M$ and that
 execution $\beta$ gives $M'$ such that $\exists$ $s\in S$ such that $s$ prefers $r'=M'(s)$ to $r=M(s)$.
 
 Without loss of generality this implies that during $\alpha$ $r'$ must have rejected $s$.
-Suppose, again without loss of generality that this was the first occasion that a rejection occured
+Suppose, again without loss of generality that this was the first occasion that a rejection occurred
 during $\alpha$ and assume that this rejection occurred because $r'=M(s')$.
 This implies that $s'$ has no stable match that is higher in $s'$'s preference list
 than $r'$ (as we have assumed that this is the first rejection).
@@ -473,3 +473,374 @@ structures. This insight has led to numerous successful applications in market
 design, from medical residency matches to school choice systems and organ
 donation programs.
 ```
+
+---
+
+(solutions:matching_games)=
+
+## Solutions
+
+````{solution} application_of_the_gale_shapley_algorithm
+:label: solution:application_of_the_gale_shapley_algorithm
+
+For each game we run the Gale-Shapley algorithm from the suitor (A) side to
+obtain the suitor-optimal matching, then repeat with the reviewer (R) side
+proposing to obtain the reviewer-optimal (equivalently, suitor-pessimal) matching.
+
+**1.**
+
+$$
+\begin{align*}
+    f(A1)&=(R2, R1, R3)\\
+    f(A2)&=(R1, R3, R2)\\
+    f(A3)&=(R1, R3, R2)\\
+    g(R1)&=(A1, A2, A3)\\
+    g(R2)&=(A2, A1, A3)\\
+    g(R3)&=(A2, A3, A1)\\
+\end{align*}
+$$
+
+**Suitor-optimal matching (A proposes):**
+
+- A1 proposes to R2 (top of A1's list). R2 is unmatched, so $M(A1)=R2$.
+- A2 proposes to R1 (top of A2's list). R1 is unmatched, so $M(A2)=R1$.
+- A3 proposes to R1 (top of A3's list). R1 is matched to A2. $g(R1)=(A1,A2,A3)$,
+  so R1 prefers A2 to A3. A3 is rejected; remove R1 from A3's list:
+  $f(A3)=(R3, R2)$.
+- A3 proposes to R3. R3 is unmatched, so $M(A3)=R3$.
+
+Suitor-optimal matching:
+
+$$
+M_S: \quad M(A1)=R2,\quad M(A2)=R1,\quad M(A3)=R3
+$$
+
+**Verification (no blocking pairs):**
+
+- $(A1, R1)$: A1 prefers R2 to R1 (R2 is first in A1's list). Not blocking.
+- $(A1, R3)$: A1 prefers R2 to R3. Not blocking.
+- $(A2, R2)$: A2 prefers R1 to R2. Not blocking.
+- $(A2, R3)$: A2 prefers R1 to R3. Not blocking.
+- $(A3, R1)$: A3 prefers R1 to R3, but R1 prefers A2 (current match) to A3. Not blocking.
+- $(A3, R2)$: A3 prefers R3 to R2 (R3 is second, R2 is third in A3's remaining list).
+  Actually $f(A3)=(R1,R3,R2)$ originally, so A3 prefers R3 to R2. Not blocking.
+
+The matching is stable.
+
+**Reviewer-optimal matching (R proposes):**
+
+- R1 proposes to A1 (top of R1's list). A1 is unmatched, so $M^{-1}(R1)=A1$.
+- R2 proposes to A2 (top of R2's list). A2 is unmatched, so $M^{-1}(R2)=A2$.
+- R3 proposes to A2 (top of R3's list). A2 is matched to R2.
+  $f(A2)=(R1,R3,R2)$, so A2 prefers R3 to R2. R2 is rejected; $M^{-1}(R3)=A2$.
+  R2 removes A2 from its list: $g(R2)=(A1,A3)$.
+- R2 proposes to A1. A1 is matched to R1. $f(A1)=(R2,R1,R3)$, so A1 prefers R2 to R1.
+  R1 is rejected; $M^{-1}(R2)=A1$. R1 removes A1 from its list: $g(R1)=(A2,A3)$.
+- R1 proposes to A2. A2 is matched to R3. $f(A2)=(R1,R3,R2)$, so A2 prefers R1 to R3.
+  R3 is rejected; $M^{-1}(R1)=A2$. R3 removes A2 from its list: $g(R3)=(A3,A1)$.
+- R3 proposes to A3. A3 is unmatched, so $M^{-1}(R3)=A3$.
+
+Reviewer-optimal matching:
+
+$$
+M_R: \quad M(A1)=R2,\quad M(A2)=R1,\quad M(A3)=R3
+$$
+
+In this case both matchings coincide.
+
+---
+
+**2.**
+
+$$
+\begin{align*}
+    f(A1)&=(R1, R3, R2)\\
+    f(A2)&=(R2, R3, R1)\\
+    f(A3)&=(R1, R3, R2)\\
+    g(R1)&=(A1, A2, A3)\\
+    g(R2)&=(A2, A3, A1)\\
+    g(R3)&=(A2, A3, A1)\\
+\end{align*}
+$$
+
+**Suitor-optimal matching (A proposes):**
+
+- A1 proposes to R1. R1 is unmatched, so $M(A1)=R1$.
+- A2 proposes to R2. R2 is unmatched, so $M(A2)=R2$.
+- A3 proposes to R1. R1 is matched to A1. $g(R1)=(A1,A2,A3)$, so R1 prefers A1 to A3.
+  A3 is rejected; $f(A3)=(R3,R2)$.
+- A3 proposes to R3. R3 is unmatched, so $M(A3)=R3$.
+
+Suitor-optimal matching:
+
+$$
+M_S: \quad M(A1)=R1,\quad M(A2)=R2,\quad M(A3)=R3
+$$
+
+**Reviewer-optimal matching (R proposes):**
+
+- R1 proposes to A1. A1 is unmatched, so $M^{-1}(R1)=A1$.
+- R2 proposes to A2. A2 is unmatched, so $M^{-1}(R2)=A2$.
+- R3 proposes to A2. A2 is matched to R2. $f(A2)=(R2,R3,R1)$, so A2 prefers R2 to R3.
+  R3 is rejected; $g(R3)=(A3,A1)$.
+- R3 proposes to A3. A3 is unmatched, so $M^{-1}(R3)=A3$.
+
+Reviewer-optimal matching:
+
+$$
+M_R: \quad M(A1)=R1,\quad M(A2)=R2,\quad M(A3)=R3
+$$
+
+Again both matchings coincide.
+
+---
+
+**3.**
+
+$$
+\begin{align*}
+    f(A1)&=(R1, R4, R2, R3)\\
+    f(A2)&=(R2, R1, R3, R4)\\
+    f(A3)&=(R4, R1, R3, R2)\\
+    f(A4)&=(R1, R4, R3, R2)\\
+    g(R1)&=(A1, A4, A2, A3)\\
+    g(R2)&=(A1, A3, A4, A2)\\
+    g(R3)&=(A4, A1, A3, A2)\\
+    g(R4)&=(A2, A4, A1, A3)\\
+\end{align*}
+$$
+
+**Suitor-optimal matching (A proposes):**
+
+- A1 proposes to R1. R1 is unmatched, so $M(A1)=R1$.
+- A2 proposes to R2. R2 is unmatched, so $M(A2)=R2$.
+- A3 proposes to R4. R4 is unmatched, so $M(A3)=R4$.
+- A4 proposes to R1. R1 matched to A1. $g(R1)=(A1,A4,A2,A3)$: R1 prefers A1 to A4.
+  A4 rejected; $f(A4)=(R4,R3,R2)$.
+- A4 proposes to R4. R4 matched to A3. $g(R4)=(A2,A4,A1,A3)$: R4 prefers A4 to A3.
+  A3 displaced; $M(A4)=R4$. A3's list: $f(A3)=(R1,R3,R2)$.
+- A3 proposes to R1. R1 matched to A1. $g(R1)=(A1,A4,A2,A3)$: R1 prefers A1 to A3.
+  A3 rejected; $f(A3)=(R3,R2)$.
+- A3 proposes to R3. R3 unmatched, so $M(A3)=R3$.
+
+Suitor-optimal matching:
+
+$$
+M_S: \quad M(A1)=R1,\quad M(A2)=R2,\quad M(A3)=R3,\quad M(A4)=R4
+$$
+
+**Reviewer-optimal matching (R proposes):**
+
+- R1 proposes to A1. A1 unmatched, so $M^{-1}(R1)=A1$.
+- R2 proposes to A1. A1 matched to R1. $f(A1)=(R1,R4,R2,R3)$: A1 prefers R1 to R2.
+  R2 rejected; $g(R2)=(A3,A4,A2)$.
+- R3 proposes to A4. A4 unmatched, so $M^{-1}(R3)=A4$.
+- R4 proposes to A2. A2 unmatched, so $M^{-1}(R4)=A2$.
+- R2 proposes to A3. A3 unmatched, so $M^{-1}(R2)=A3$.
+
+Reviewer-optimal matching:
+
+$$
+M_R: \quad M(A1)=R1,\quad M(A2)=R4,\quad M(A3)=R2,\quad M(A4)=R3
+$$
+
+---
+
+**4.**
+
+$$
+\begin{align*}
+    f(A1)&=(R2, R1, R4, R3)\\
+    f(A2)&=(R2, R3, R1, R4)\\
+    f(A3)&=(R1, R4, R3, R2)\\
+    f(A4)&=(R1, R4, R3, R2)\\
+    g(R1)&=(A1, A2, A4, A3)\\
+    g(R2)&=(A4, A2, A1, A3)\\
+    g(R3)&=(A4, A1, A3, A2)\\
+    g(R4)&=(A3, A2, A4, A1)\\
+\end{align*}
+$$
+
+**Suitor-optimal matching (A proposes):**
+
+- A1 proposes to R2. R2 unmatched, so $M(A1)=R2$.
+- A2 proposes to R2. R2 matched to A1. $g(R2)=(A4,A2,A1,A3)$: R2 prefers A2 to A1.
+  A1 displaced; $M(A2)=R2$. A1's list: $f(A1)=(R1,R4,R3)$.
+- A3 proposes to R1. R1 unmatched, so $M(A3)=R1$.
+- A4 proposes to R1. R1 matched to A3. $g(R1)=(A1,A2,A4,A3)$: R1 prefers A4 to A3.
+  A3 displaced; $M(A4)=R1$. A3's list: $f(A3)=(R4,R3,R2)$.
+- A1 proposes to R1. R1 matched to A4. $g(R1)=(A1,A2,A4,A3)$: R1 prefers A1 to A4.
+  A4 displaced; $M(A1)=R1$. A4's list: $f(A4)=(R4,R3,R2)$.
+- A4 proposes to R4. R4 unmatched, so $M(A4)=R4$.
+- A3 proposes to R4. R4 matched to A4. $g(R4)=(A3,A2,A4,A1)$: R4 prefers A3 to A4.
+  A4 displaced; $M(A3)=R4$. A4's list: $f(A4)=(R3,R2)$.
+- A4 proposes to R3. R3 unmatched, so $M(A4)=R3$.
+
+Suitor-optimal matching:
+
+$$
+M_S: \quad M(A1)=R1,\quad M(A2)=R2,\quad M(A3)=R4,\quad M(A4)=R3
+$$
+
+**Reviewer-optimal matching (R proposes):**
+
+- R1 proposes to A1. A1 unmatched, so $M^{-1}(R1)=A1$.
+- R2 proposes to A4. A4 unmatched, so $M^{-1}(R2)=A4$.
+- R3 proposes to A4. A4 matched to R2. $f(A4)=(R1,R4,R3,R2)$: A4 prefers R3 to R2.
+  R2 rejected; $M^{-1}(R3)=A4$. $g(R2)=(A2,A1,A3)$.
+- R4 proposes to A3. A3 unmatched, so $M^{-1}(R4)=A3$.
+- R2 proposes to A2. A2 unmatched, so $M^{-1}(R2)=A2$.
+
+Reviewer-optimal matching:
+
+$$
+M_R: \quad M(A1)=R1,\quad M(A2)=R2,\quad M(A3)=R4,\quad M(A4)=R3
+$$
+
+Both matchings again coincide.
+
+The following code verifies the suitor-optimal matchings using the `matching` library:
+
+```{code-cell} python3
+import matching
+import matching.games
+
+
+def solve_matching(suitor_prefs, reviewer_prefs):
+    suitor_names = list(suitor_prefs.keys())
+    reviewer_names = list(reviewer_prefs.keys())
+    suitors = {name: matching.Player(name) for name in suitor_names}
+    reviewers = {name: matching.Player(name) for name in reviewer_names}
+    for name, prefs in suitor_prefs.items():
+        suitors[name].set_prefs([reviewers[r] for r in prefs])
+    for name, prefs in reviewer_prefs.items():
+        reviewers[name].set_prefs([suitors[s] for s in prefs])
+    game = matching.games.StableMarriage(
+        list(suitors.values()), list(reviewers.values())
+    )
+    result = game.solve()
+    return {str(k): str(v) for k, v in result.items()}
+
+
+# Game 1
+result1 = solve_matching(
+    {"A1": ["R2","R1","R3"], "A2": ["R1","R3","R2"], "A3": ["R1","R3","R2"]},
+    {"R1": ["A1","A2","A3"], "R2": ["A2","A1","A3"], "R3": ["A2","A3","A1"]},
+)
+print("Game 1 suitor-optimal:", result1)
+```
+
+```{code-cell} python3
+# Game 2
+result2 = solve_matching(
+    {"A1": ["R1","R3","R2"], "A2": ["R2","R3","R1"], "A3": ["R1","R3","R2"]},
+    {"R1": ["A1","A2","A3"], "R2": ["A2","A3","A1"], "R3": ["A2","A3","A1"]},
+)
+print("Game 2 suitor-optimal:", result2)
+```
+
+```{code-cell} python3
+# Game 3
+result3 = solve_matching(
+    {
+        "A1": ["R1","R4","R2","R3"],
+        "A2": ["R2","R1","R3","R4"],
+        "A3": ["R4","R1","R3","R2"],
+        "A4": ["R1","R4","R3","R2"],
+    },
+    {
+        "R1": ["A1","A4","A2","A3"],
+        "R2": ["A1","A3","A4","A2"],
+        "R3": ["A4","A1","A3","A2"],
+        "R4": ["A2","A4","A1","A3"],
+    },
+)
+print("Game 3 suitor-optimal:", result3)
+```
+
+```{code-cell} python3
+# Game 4
+result4 = solve_matching(
+    {
+        "A1": ["R2","R1","R4","R3"],
+        "A2": ["R2","R3","R1","R4"],
+        "A3": ["R1","R4","R3","R2"],
+        "A4": ["R1","R4","R3","R2"],
+    },
+    {
+        "R1": ["A1","A2","A4","A3"],
+        "R2": ["A4","A2","A1","A3"],
+        "R3": ["A4","A1","A3","A2"],
+        "R4": ["A3","A2","A4","A1"],
+    },
+)
+print("Game 4 suitor-optimal:", result4)
+```
+````
+
+````{solution} uniqueness_with_a_single_reviewer_preference_list
+:label: solution:uniqueness_with_a_single_reviewer_preference_list
+
+**Claim:** If all reviewers share the same preference list over suitors, there is
+exactly one stable matching.
+
+**Proof:**
+
+Let the shared reviewer preference list rank the suitors as
+$s_{\sigma(1)} \succ s_{\sigma(2)} \succ \cdots \succ s_{\sigma(N)}$
+(where $\sigma$ is a permutation of $\{1, \dots, N\}$ giving the common ordering).
+
+Suppose, for contradiction, that there are two distinct stable matchings $M$ and
+$M'$.
+
+Since $M \ne M'$ and both are bijections from suitors to reviewers, there exists
+some suitor $s$ with $M(s) \ne M'(s)$. Let $r = M(s)$ and $r' = M'(s)$.
+
+Because all reviewers share the same preference list, the reviewer $r'$ (who is
+matched to some $s'' \ne s$ in $M$) either prefers $s$ to $s''$ or prefers $s''$
+to $s$.
+
+**Case 1:** $r'$ prefers $s$ to $s'' = M^{-1}(r')$.
+
+Then in matching $M$, the pair $(s, r')$ is a blocking pair: $s$ prefers $r'$
+(since $M'(s)=r'$ and $s$ prefers $r'$ to $r$ — otherwise $s$ would be matched to
+$r$ in $M'$ as well after running the algorithm) and $r'$ prefers $s$ to its
+current partner $s''$. This contradicts the stability of $M$.
+
+**Case 2:** $r'$ prefers $s''$ to $s$.
+
+Since all reviewers share the same preference list, this preference is the same
+for every reviewer. In particular, every reviewer ranks $s''$ above $s$. But then
+in matching $M'$, consider the pair $(s'', M'(s''))$. The suitor $s''$ is matched
+to some reviewer $r''$ in $M'$. Since in $M$, $s''$ is matched to $r'$, and $r'$
+prefers $s''$ to $s$, we can recursively construct a chain. Since $N$ is finite
+this chain must eventually lead to a contradiction.
+
+More precisely, we can argue by a counting/ranking argument: since all reviewers
+have the same preference list, the reviewer-optimal stable matching is unique and
+equals the suitor-pessimal matching. The suitor-optimal matching is also unique
+(by the theorem on unique output of the Gale-Shapley algorithm). If the suitor-
+and reviewer-optimal matchings differ, one could exhibit a blocking pair. We show
+they must coincide.
+
+In the Gale-Shapley algorithm (suitors propose), when suitor $s_i$ proposes to
+reviewer $r$, reviewer $r$ accepts the proposal from whichever of its current
+tentative partner or $s_i$ it prefers — using the shared preference list. Because
+all reviewers consult the same ranking, the outcome is fully determined by this
+single ordering: a suitor higher in the common ranking will always displace a
+suitor lower in it. Thus:
+
+- Each reviewer $r$ ends up matched to the highest-ranked suitor (in the shared
+  list) who ever proposes to it.
+- Since suitors propose in decreasing order of preference and are rejected only
+  when a better (in the shared ranking) suitor proposes, the final matching is
+  entirely determined by the shared ranking.
+
+Any two executions of the algorithm therefore produce the same matching.
+Furthermore, no other stable matching can exist: if $M$ is stable and $M \ne M_S$
+(the Gale-Shapley output), then some reviewer $r$ is matched to a suitor $s$
+ranked lower in the shared list than their partner in $M_S$. But then the pair
+$(M_S^{-1}(r), r)$ is a blocking pair for $M$, contradicting stability.
+
+Hence there is exactly one stable matching. ◼
+````

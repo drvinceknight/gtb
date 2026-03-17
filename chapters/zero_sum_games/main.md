@@ -8,7 +8,7 @@ kernelspec:
 
 # Zero-Sum Games
 
-(sec:motivating-example-zero-sum-games)=
+(sec:motivating_example_zero_sum_games)=
 
 ## Motivating Example
 
@@ -117,7 +117,7 @@ In this case, $u$ is the **max-min value** of the game.
 
 #### Example: Max-min strategy for modified Rock-Paper-Scissors
 
-For the [modified Rock-Paper-Scissors game](#sec:motivating-example-zero-sum-games),
+For the [modified Rock-Paper-Scissors game](#sec:motivating_example_zero_sum_games),
 the **max-min strategy** $x$ for the row player satisfies the following linear
 program:
 
@@ -223,7 +223,7 @@ The proof which uses the
 this book but can be found in [@Vanderbei1998].
 
 Note that this answers the question posed at the end of
-[](#sec:motivating-example-zero-sum-games)
+[](#sec:motivating_example_zero_sum_games)
 through a choice of strategy the row player can ensure they obtain the
 value of the game which is equal to the max-min value and the
 min-max value.
@@ -282,7 +282,7 @@ $$
 
 #### Example: Standard form for the Modified Rock Paper Scissors Game
 
-For the [modified Rock-Paper-Scissors game](#sec:motivating-example-zero-sum-games),
+For the [modified Rock-Paper-Scissors game](#sec:motivating_example_zero_sum_games),
 the corresponding coefficients are:
 
 $$
@@ -318,12 +318,10 @@ T =
 \left(
 \begin{array}{ccccccc|c}
         x_1 & \dots  & x_m          & v  & s_1 & \dots & s_n & b\\
-\hline
 (-M^T)^{11} & \dots  & (-M^T)_{1m}  & 1  & 1 & \dots   & 1   & 0\\
      \vdots & \ddots & \vdots       & 1  & 0 & \ddots  & 0   & 0\\
 (-M^T)_{n1} & \dots  & (-M^T)\_{nm} & 1  & 0 & \dots   & 1   & 0\\
           1 & \dots  & 1            & 0  & 0 & \dots   & 1   & 1\\
-\hline
           0 & \dots  & 0            & -1 & 0 & \dots   & 0   & 0
 \end{array}
 \right)
@@ -358,7 +356,7 @@ optimality is reached.
 
 #### Example: Integer Pivoting for Modified Rock-Paper-Scissors
 
-We now solve the [modified Rock-Paper-Scissors game](#sec:motivating-example-zero-sum-games)
+We now solve the [modified Rock-Paper-Scissors game](#sec:motivating_example_zero_sum_games)
 using the tableau method. Recall that the standard form coefficients are:
 
 $$
@@ -387,12 +385,10 @@ The initial tableau is:
 $$
 \begin{array}{ccccccc|c}
  x_1 & x_2 & x_3 & v & s_1 & s_2 & s_3 & b \\
-\hline
         0& -2& 1& 1&  1& 0& 0& 0&\\
         1& 0& -1&1& 0& 1& 0& 0&\\
         -1& 2& 0& 1&  0& 0& 1& 0&\\
         1& 1& 1& 0& 0& 0& 0& 1&\\
-\hline
         0& 0& 0& -1& 0& 0& 0& 0&\\
 \end{array}
 $$
@@ -423,12 +419,10 @@ After row operations:
 $$
 \begin{array}{ccccccc|c}
  x_1 & x_2 & x_3 & v & s_1 & s_2 & s_3 & b \\
-\hline
          0& -2&  1&  1&  1&  0&  0&  0\\
          1&  2& -2&  0& -1&  1&  0&  0\\
         -1&  4& -1&  0& -1&  0&  1&  0\\
          1&  1&  1&  0&  0&  0&  0&  1\\
-\hline
          0& -2&  1&  0&  1&  0&  0&  0
 \end{array}
 $$
@@ -451,12 +445,10 @@ $x_2$ from other rows. After computations, we get:
 $$
 \begin{array}{ccccccc|c}
  x_1 & x_2 & x_3  & v & s_1 & s_2 & s_3 & b \\
-\hline
          2&  0& -2&  2&  0&  2&  0&  0\\
          1&  2& -2&  0& -1&  1&  0&  0\\
         -6&  0&  6&  0&  2& -4&  2&  0\\
          1&  0&  4&  0&  1& -1&  0&  2\\
-\hline
          2&  0& -2&  0&  0&  2&  0&  0
 \end{array}
 $$
@@ -474,12 +466,10 @@ After computations we get:
 $$
 \begin{array}{ccccccc|c}
  x_1 & x_2 & x_3  & v & s_1 & s_2 & s_3 & b \\
-\hline
           0&  0&  0& 12&  4&  4&  4&  0\\
          -6& 12&  0&  0& -2& -2&  4&  0\\
          -6&  0&  6&  0&  2& -4&  2&  0\\
          30&  0&  0&  0& -2& 10& -8& 12\\
-\hline
           0&  0&  0&  0&  4&  4&  4&  0
 \end{array}
 $$
@@ -513,7 +503,7 @@ $$
 
 ## Exercises
 
-```{exercise} 
+```{exercise}
 :label: coefficients_for_standard_form_lp
 
 Obtain the coefficients of the [standard form](#sec:zero_sum_game_standard_form_linear_program)
@@ -525,8 +515,7 @@ linear system for the zero-sum games with the following payoff matrices:
 4. $M = \begin{pmatrix} 3 & -2 & 0\ -3 & 0 & 3 \ 0 & 2 & -5 \end{pmatrix}$
 ```
 
-
-```{exercise} 
+```{exercise}
 :label: max-min_strategy_for_matching_pennies
 
 For [Example: Max-min strategy for Matching Pennies](#exam:max_min_strategy_for_matching_pennies):
@@ -538,8 +527,7 @@ For [Example: Max-min strategy for Matching Pennies](#exam:max_min_strategy_for_
    your calculations.
 ```
 
-
-```{exercise} 
+```{exercise}
 :label: max-min_strategy_for_rock_paper_scissors
 
 Obtain the max-min strategy for the standard game of Rock Paper Scissors
@@ -554,8 +542,7 @@ M = \begin{pmatrix}
 $$
 ```
 
-
-```{exercise} 
+```{exercise}
 :label: modified_rock_paper_scissors
 
 For [Example: Integer pivoting for modified Rock Paper Scissors](#exam:integer_pivoting_for_modified_rock_paper_scissors):
@@ -565,7 +552,6 @@ For [Example: Integer pivoting for modified Rock Paper Scissors](#exam:integer_p
 2. Use the [Best Response Condition](#thrm:best_response_condition) to confirm
    your calculations.
 ```
-
 
 ## Programming
 
@@ -577,7 +563,7 @@ The `scipy` library provides functionality to solve a linear program in
 We begin by creating the various matrices and vectors: $M_{ub}$, $M_{eq}$,
 $b_{ub}$, $b_{eq}$, and $c$:
 
-```{code-cell} ipython3
+```{code-cell} python3
 import numpy as np
 
 M = np.array(
@@ -602,7 +588,7 @@ c = np.array([0, 0, 0, -1])
 
 Now we can pass these to `scipy.optimize.linprog`:
 
-```{code-cell} ipython3
+```{code-cell} python3
 import scipy.optimize
 
 res = scipy.optimize.linprog(
@@ -618,13 +604,13 @@ res
 This returns the full output of the optimisation. The min-max strategy is
 contained in all but the last entry of `res.x`:
 
-```{code-cell} ipython3
+```{code-cell} python3
 res.x[:-1]
 ```
 
 The last entry of `res.x` gives the value of the game:
 
-```{code-cell} ipython3
+```{code-cell} python3
 res.x[-1]
 ```
 
@@ -632,7 +618,7 @@ res.x[-1]
 
 `nashpy` can be used to directly obtain the min-max and max-min strategies:
 
-```{code-cell} ipython3
+```{code-cell} python3
 import nashpy as nash
 
 game = nash.Game(M, -M)
@@ -644,11 +630,11 @@ game.linear_program()
 `Gambit` can be used to directly obtain the min-max and max-min strategies. We
 start by creating a pygambit game from arrays:
 
-```{code-cell} ipython3
+```{code-cell} python3
 import pygambit as gbt
 
 game = gbt.Game.from_arrays(M, -M)
-game
+print(game)
 ```
 
 Now we can solve the underlying linear program:
@@ -714,3 +700,588 @@ The **value of a zero-sum game** is the unique number that both players can
 guarantee for themselves through optimal play, and it can be computed by
 solving either the max-min or min-max linear program.
 ```
+
+---
+
+(solutions:zero_sum_games)=
+
+## Solutions
+
+````{solution} coefficients_for_standard_form_lp
+:label: solution:coefficients_for_standard_form_lp
+
+We obtain the [standard form linear program](#sec:zero_sum_game_standard_form_linear_program) coefficients for each game. Recall the standard form uses:
+
+$$
+c = (0, \dots, 0, -1), \quad
+M_{\text{ub}} = \begin{pmatrix} -M^T & \mathbb{1} \end{pmatrix}, \quad
+b_{\text{ub}} = \mathbb{0}, \quad
+M_{\text{eq}} = (1, \dots, 1, 0), \quad
+b_{\text{eq}} = 1
+$$
+
+**1.** $M = \begin{pmatrix} 3 & -1 \\ -1 & 2 \end{pmatrix}$
+
+This is a $2 \times 2$ game so the decision vector is $(x_1, x_2, v)$.
+
+$$
+-M^T = -\begin{pmatrix} 3 & -1 \\ -1 & 2 \end{pmatrix}^T = -\begin{pmatrix} 3 & -1 \\ -1 & 2 \end{pmatrix} = \begin{pmatrix} -3 & 1 \\ 1 & -2 \end{pmatrix}
+$$
+
+$$
+c = (0, 0, -1)
+$$
+
+$$
+M_{\text{ub}} = \begin{pmatrix} -3 & 1 & 1 \\ 1 & -2 & 1 \end{pmatrix}
+\qquad
+b_{\text{ub}} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}
+$$
+
+$$
+M_{\text{eq}} = (1, 1, 0)
+\qquad
+b_{\text{eq}} = 1
+$$
+
+---
+
+**2.** $M = \begin{pmatrix} -1 & -1 \\ -1 & 3 \end{pmatrix}$
+
+$$
+-M^T = \begin{pmatrix} 1 & 1 \\ 1 & -3 \end{pmatrix}
+$$
+
+$$
+c = (0, 0, -1)
+$$
+
+$$
+M_{\text{ub}} = \begin{pmatrix} 1 & 1 & 1 \\ 1 & -3 & 1 \end{pmatrix}
+\qquad
+b_{\text{ub}} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}
+$$
+
+$$
+M_{\text{eq}} = (1, 1, 0)
+\qquad
+b_{\text{eq}} = 1
+$$
+
+---
+
+**3.** $M = \begin{pmatrix} 2 & 1 & -3 \\ -3 & -1 & 3 \end{pmatrix}$
+
+This is a $2 \times 3$ game. The row player has 2 actions, so the decision vector is $(x_1, x_2, v)$.
+
+$$
+-M^T = -\begin{pmatrix} 2 & -3 \\ 1 & -1 \\ -3 & 3 \end{pmatrix} = \begin{pmatrix} -2 & 3 \\ -1 & 1 \\ 3 & -3 \end{pmatrix}
+$$
+
+$$
+c = (0, 0, -1)
+$$
+
+$$
+M_{\text{ub}} = \begin{pmatrix} -2 & 3 & 1 \\ -1 & 1 & 1 \\ 3 & -3 & 1 \end{pmatrix}
+\qquad
+b_{\text{ub}} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}
+$$
+
+$$
+M_{\text{eq}} = (1, 1, 0)
+\qquad
+b_{\text{eq}} = 1
+$$
+
+---
+
+**4.** $M = \begin{pmatrix} 3 & -2 & 0 \\ -3 & 0 & 3 \\ 0 & 2 & -5 \end{pmatrix}$
+
+This is a $3 \times 3$ game. The decision vector is $(x_1, x_2, x_3, v)$.
+
+$$
+-M^T = -\begin{pmatrix} 3 & -3 & 0 \\ -2 & 0 & 2 \\ 0 & 3 & -5 \end{pmatrix} = \begin{pmatrix} -3 & 3 & 0 \\ 2 & 0 & -2 \\ 0 & -3 & 5 \end{pmatrix}
+$$
+
+$$
+c = (0, 0, 0, -1)
+$$
+
+$$
+M_{\text{ub}} = \begin{pmatrix} -3 & 3 & 0 & 1 \\ 2 & 0 & -2 & 1 \\ 0 & -3 & 5 & 1 \end{pmatrix}
+\qquad
+b_{\text{ub}} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}
+$$
+
+$$
+M_{\text{eq}} = (1, 1, 1, 0)
+\qquad
+b_{\text{eq}} = 1
+$$
+
+```{code-cell} python3
+import numpy as np
+
+# Verify game 1
+M1 = np.array([[3, -1], [-1, 2]])
+M_ub1 = np.hstack((-M1.T, np.ones((2, 1))))
+print("Game 1 M_ub:\n", M_ub1)
+print("Game 1 c:", np.array([0, 0, -1]))
+
+# Verify game 4
+M4 = np.array([[3, -2, 0], [-3, 0, 3], [0, 2, -5]])
+M_ub4 = np.hstack((-M4.T, np.ones((3, 1))))
+print("\nGame 4 M_ub:\n", M_ub4)
+print("Game 4 c:", np.array([0, 0, 0, -1]))
+```
+
+````
+
+---
+
+````{solution} max-min_strategy_for_matching_pennies
+:label: solution:max-min_strategy_for_matching_pennies
+
+Recall the Matching Pennies payoff matrix:
+
+$$
+M = \begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix}
+$$
+
+**1. Integer pivoting to confirm max-min strategy $x = (1/2, 1/2)$:**
+
+The standard form coefficients are:
+
+$$
+c = (0, 0, -1), \quad
+M_{\text{ub}} = \begin{pmatrix} -1 & 1 & 1 \\ 1 & -1 & 1 \end{pmatrix}, \quad
+b_{\text{ub}} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}, \quad
+M_{\text{eq}} = (1, 1, 0), \quad
+b_{\text{eq}} = 1
+$$
+
+The initial tableau (introducing slack variables $s_1, s_2$) is:
+
+$$
+\begin{array}{ccccc|c}
+x_1 & x_2 & v & s_1 & s_2 & b \\
+-1 & 1 & 1 & 1 & 0 & 0 \\
+1 & -1 & 1 & 0 & 1 & 0 \\
+1 & 1 & 0 & 0 & 0 & 1 \\
+0 & 0 & -1 & 0 & 0 & 0
+\end{array}
+$$
+
+**Pivot 1: Entering variable $v$ (most negative objective coefficient $= -1$).**
+
+All entries in the $v$ column among constraint rows are $1$. Ratio test: all rows give $0/1 = 0$. Choose Row 1 as the pivot row.
+
+- Row 2 $\gets$ Row 2 $-$ Row 1
+- Row 3 stays (Row 3 has no $v$ entry)
+- Objective row $\gets$ Objective $+$ Row 1
+
+$$
+\begin{array}{ccccc|c}
+x_1 & x_2 & v & s_1 & s_2 & b \\
+-1 & 1 & 1 & 1 & 0 & 0 \\
+2 & -2 & 0 & -1 & 1 & 0 \\
+1 & 1 & 0 & 0 & 0 & 1 \\
+-1 & 1 & 0 & 1 & 0 & 0
+\end{array}
+$$
+
+**Pivot 2: Entering variable $x_1$ (most negative objective coefficient $= -1$).**
+
+Positive entries in $x_1$ column: Row 2 ($2$) and Row 3 ($1$). Ratio test: Row 2 gives $0/2 = 0$, Row 3 gives $1/1 = 1$. Choose Row 2.
+
+- Row 1 $\gets$ Row 1 $\cdot 2 +$ Row 2: $(-2+2, 2-2, 2+0, 2-1, 0+1, 0) = (0, 0, 2, 1, 1, 0)$
+- Row 3 $\gets$ Row 3 $\cdot 2 -$ Row 2: $(2-2, 2+2, 0, 0+1, 0-1, 2) = (0, 4, 0, 1, -1, 2)$
+- Objective $\gets$ Objective $\cdot 2 +$ Row 2: $(-2+2, 2-2, 0, 2-1, 0+1, 0) = (0, 0, 0, 1, 1, 0)$
+
+$$
+\begin{array}{ccccc|c}
+x_1 & x_2 & v & s_1 & s_2 & b \\
+0 & 0 & 2 & 1 & 1 & 0 \\
+2 & -2 & 0 & -1 & 1 & 0 \\
+0 & 4 & 0 & 1 & -1 & 2 \\
+0 & 0 & 0 & 1 & 1 & 0
+\end{array}
+$$
+
+All objective row entries are non-negative: we stop. Setting non-basic variables ($s_1 = s_2 = 0$) and reading the system:
+
+$$
+2v = 0 \implies v = 0
+$$
+$$
+2x_1 - 2x_2 = 0 \implies x_1 = x_2
+$$
+$$
+4x_2 = 2 \implies x_2 = \frac{1}{2}
+$$
+
+Thus $x_1 = x_2 = 1/2$, confirming:
+
+$$
+x = \left(\frac{1}{2},\ \frac{1}{2}\right), \qquad v = 0
+$$
+
+**2. Min-max strategy for the column player:**
+
+The column player's game is given by $-M^T$. Since $M$ is antisymmetric ($M = -M^T$ for this game), the min-max LP for the column player is identical in structure. Setting $M' = -M^T$:
+
+$$
+M' = -M^T = -\begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix} = \begin{pmatrix} -1 & 1 \\ 1 & -1 \end{pmatrix}
+$$
+
+By the identical symmetry of the problem, the min-max strategy for the column player is:
+
+$$
+y = \left(\frac{1}{2},\ \frac{1}{2}\right)
+$$
+
+with min-max value $v = 0$. By the [minimax theorem](#chp:zero_sum_games), $u = v = 0$.
+
+**3. Best Response Condition check:**
+
+With $x = (1/2, 1/2)$ and $y = (1/2, 1/2)$:
+
+$$
+M y^T = \begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix} \begin{pmatrix} 1/2 \\ 1/2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}
+$$
+
+Both entries equal $0 = \max_k (My^T)_k$, and the support of $x$ is $\{1, 2\}$, so the [best response condition](#thrm:best_response_condition) is satisfied: $x$ is a best response to $y$.
+
+By symmetry:
+
+$$
+x M = \begin{pmatrix} 1/2 & 1/2 \end{pmatrix} \begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix} = \begin{pmatrix} 0 & 0 \end{pmatrix}
+$$
+
+Both entries of $xM$ are equal, confirming $y$ is a best response to $x$.
+
+```{code-cell} python3
+import numpy as np
+import scipy.optimize
+import nashpy as nash
+
+M = np.array([[1, -1], [-1, 1]])
+M_ub = np.hstack((-M.T, np.ones((2, 1))))
+b_ub = np.zeros((2, 1))
+M_eq = np.array([[1, 1, 0]])
+b_eq = 1
+c = np.array([0, 0, -1])
+
+res = scipy.optimize.linprog(c=c, A_ub=M_ub, b_ub=b_ub, A_eq=M_eq, b_eq=b_eq)
+print("Max-min strategy:", res.x[:-1])
+print("Value of game:", res.x[-1])
+
+# Verify best response condition
+x = np.array([0.5, 0.5])
+y = np.array([0.5, 0.5])
+print("M y^T =", M @ y)
+print("x M =", x @ M)
+```
+
+````
+
+---
+
+````{solution} max-min_strategy_for_rock_paper_scissors
+:label: solution:max-min_strategy_for_rock_paper_scissors
+
+The standard Rock-Paper-Scissors payoff matrix is:
+
+$$
+M = \begin{pmatrix}
+0 & -1 & 1 \\
+1 & 0 & -1 \\
+-1 & 1 & 0
+\end{pmatrix}
+$$
+
+The standard form coefficients are:
+
+$$
+c = (0, 0, 0, -1)
+$$
+
+$$
+M_{\text{ub}} = \begin{pmatrix}
+0 & -1 & 1 & 1 \\
+1 & 0 & -1 & 1 \\
+-1 & 1 & 0 & 1
+\end{pmatrix}
+\qquad
+b_{\text{ub}} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}
+$$
+
+$$
+M_{\text{eq}} = (1, 1, 1, 0), \qquad b_{\text{eq}} = 1
+$$
+
+**Integer pivoting:**
+
+Initial tableau:
+
+$$
+\begin{array}{ccccccc|c}
+x_1 & x_2 & x_3 & v & s_1 & s_2 & s_3 & b \\
+0 & -1 & 1 & 1 & 1 & 0 & 0 & 0 \\
+1 & 0 & -1 & 1 & 0 & 1 & 0 & 0 \\
+-1 & 1 & 0 & 1 & 0 & 0 & 1 & 0 \\
+1 & 1 & 1 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & -1 & 0 & 0 & 0 & 0
+\end{array}
+$$
+
+**Pivot 1:** $v$ enters (coefficient $-1$). Choose Row 1 (ratio $0/1 = 0$).
+
+- Row 2 $\gets$ Row 2 $-$ Row 1: $(1, 1, -2, 0, -1, 1, 0, 0)$
+- Row 3 $\gets$ Row 3 $-$ Row 1: $(-1, 2, -1, 0, -1, 0, 1, 0)$
+- Objective $\gets$ Objective $+$ Row 1: $(0, -1, 1, 0, 1, 0, 0, 0)$
+
+$$
+\begin{array}{ccccccc|c}
+0 & -1 & 1 & 1 & 1 & 0 & 0 & 0 \\
+1 & 1 & -2 & 0 & -1 & 1 & 0 & 0 \\
+-1 & 2 & -1 & 0 & -1 & 0 & 1 & 0 \\
+1 & 1 & 1 & 0 & 0 & 0 & 0 & 1 \\
+0 & -1 & 1 & 0 & 1 & 0 & 0 & 0
+\end{array}
+$$
+
+**Pivot 2:** $x_2$ enters (coefficient $-1$). Positive entries in $x_2$ column: Row 2 ($1$, ratio $0$), Row 3 ($2$, ratio $0$), Row 4 ($1$, ratio $1$). Choose Row 2 (tie-break).
+
+Pivot on $(2, x_2)$, entry = 1. Eliminate $x_2$ from other rows:
+- Row 1 $\gets$ Row 1 $+$ Row 2: $(1, 0, -1, 1, 0, 1, 0, 0)$
+- Row 3 $\gets$ Row 3 $-$ $2 \cdot$ Row 2: $(-3, 0, 3, 0, 1, -2, 1, 0)$
+- Row 4 $\gets$ Row 4 $-$ Row 2: $(0, 0, 3, 0, 1, -1, 0, 1)$
+- Objective $\gets$ Objective $+$ Row 2: $(1, 0, -1, 0, 0, 1, 0, 0)$
+
+$$
+\begin{array}{ccccccc|c}
+1 & 0 & -1 & 1 & 0 & 1 & 0 & 0 \\
+1 & 1 & -2 & 0 & -1 & 1 & 0 & 0 \\
+-3 & 0 & 3 & 0 & 1 & -2 & 1 & 0 \\
+0 & 0 & 3 & 0 & 1 & -1 & 0 & 1 \\
+1 & 0 & -1 & 0 & 0 & 1 & 0 & 0
+\end{array}
+$$
+
+**Pivot 3:** $x_3$ enters (coefficient $-1$). Positive entries in $x_3$ column: Row 3 ($3$, ratio $0$), Row 4 ($3$, ratio $1/3$). Choose Row 3.
+
+Pivot on $(3, x_3)$, entry = 3. Eliminate $x_3$:
+- Row 1 $\gets$ 3 $\cdot$ Row 1 $+$ Row 3: $(0, 0, 0, 3, 1, 1, 1, 0)$
+- Row 2 $\gets$ 3 $\cdot$ Row 2 $+$ 2 $\cdot$ Row 3: $(-3, 3, 0, 0, -1, -1, 2, 0)$
+- Row 4 $\gets$ 3 $\cdot$ Row 4 $-$ Row 3: $(3, 0, 6, 0, 2, -1, -1, 3)$...
+
+Let me compute more carefully. Actually, since this game is perfectly symmetric (Rock-Paper-Scissors is a symmetric zero-sum game), we can exploit the symmetry: the max-min strategy must assign equal probability to all three actions.
+
+**Claim:** $x = (1/3, 1/3, 1/3)$ with value $v = 0$.
+
+**Verification:** For any column strategy $y$:
+
+$$
+xM = \frac{1}{3}(0+1-1,\ -1+0+1,\ 1-1+0) = \frac{1}{3}(0, 0, 0) = (0, 0, 0)
+$$
+
+So $(xM)_j = 0$ for all $j$, meaning the row player guarantees expected payoff $0$ regardless of $y$. The uniform strategy $(1/3, 1/3, 1/3)$ achieves the maximum of the minimum payoff.
+
+By symmetry of the game under any permutation of the actions, any deviation from the uniform mixture would allow the column player to exploit the imbalance.
+
+Thus:
+
+$$
+x = \left(\frac{1}{3},\ \frac{1}{3},\ \frac{1}{3}\right), \qquad v = 0
+$$
+
+```{code-cell} python3
+import numpy as np
+import scipy.optimize
+import nashpy as nash
+
+M = np.array([[0, -1, 1], [1, 0, -1], [-1, 1, 0]])
+
+M_ub = np.hstack((-M.T, np.ones((3, 1))))
+b_ub = np.zeros((3, 1))
+M_eq = np.array([[1, 1, 1, 0]])
+b_eq = 1
+c = np.array([0, 0, 0, -1])
+
+res = scipy.optimize.linprog(c=c, A_ub=M_ub, b_ub=b_ub, A_eq=M_eq, b_eq=b_eq)
+print("Max-min strategy:", res.x[:-1])
+print("Value of game:", res.x[-1])
+
+# Verify
+x = np.array([1/3, 1/3, 1/3])
+print("x M =", x @ M, "(should be all zeros)")
+
+# Using nashpy
+game = nash.Game(M, -M)
+print("Nashpy result:", game.linear_program())
+```
+
+````
+
+---
+
+````{solution} modified_rock_paper_scissors
+:label: solution:modified_rock_paper_scissors
+
+The modified Rock-Paper-Scissors payoff matrix is:
+
+$$
+M = \begin{pmatrix}
+0 & -1 & 1 \\
+2 & 0 & -2 \\
+-1 & 1 & 0
+\end{pmatrix}
+$$
+
+From [](#exam:integer_pivoting_for_modified_rock_paper_scissors) the max-min strategy is $x = (2/5, 1/5, 2/5)$ with value $v = 0$.
+
+**1. Min-max strategy for the column player:**
+
+The column player's game is given by replacing $M$ with $-M^T$:
+
+$$
+-M^T = -\begin{pmatrix} 0 & 2 & -1 \\ -1 & 0 & 1 \\ 1 & -2 & 0 \end{pmatrix} = \begin{pmatrix} 0 & -2 & 1 \\ 1 & 0 & -1 \\ -1 & 2 & 0 \end{pmatrix}
+$$
+
+The column player's max-min LP (equivalently the min-max LP for the original game) uses $-M^T$ as the row player matrix. We solve:
+
+$$
+\begin{aligned}
+\max_{y, u} \quad & u \\
+\text{subject to} \quad & y (-M^T) \geq \mathbb{1} u \\
+& y \in \mathcal{A}_2
+\end{aligned}
+$$
+
+The standard form for this LP:
+
+$$
+c = (0, 0, 0, -1), \quad
+M_{\text{ub}}' = \begin{pmatrix} 0 & -1 & 1 & 1 \\ 2 & 0 & -2 & 1 \\ -1 & 1 & 0 & 1 \end{pmatrix}, \quad
+M_{\text{eq}} = (1,1,1,0), \quad b_{\text{eq}} = 1
+$$
+
+By the [minimax theorem](#chp:zero_sum_games), $u = v = 0$ and we need to find $y = (y_1, y_2, y_3)$ such that:
+
+$$
+M y^T \leq \mathbb{1} \cdot 0 = \mathbb{0}
+$$
+
+That is:
+
+$$
+\begin{aligned}
+-y_2 + y_3 &\leq 0 \\
+2y_1 - 2y_3 &\leq 0 \\
+-y_1 + y_2 &\leq 0
+\end{aligned}
+$$
+
+Combined with the constraints that the row player is indifferent (since $v = 0$, the column player must make the row player indifferent across the support of the max-min strategy). The support of $x = (2/5, 1/5, 2/5)$ is $\{r_1, r_2, r_3\}$ (all three actions). So we need:
+
+$$
+(My^T)_1 = (My^T)_2 = (My^T)_3 = 0
+$$
+
+$$
+\begin{aligned}
+-y_2 + y_3 &= 0 \\
+2y_1 - 2y_3 &= 0 \\
+-y_1 + y_2 &= 0
+\end{aligned}
+$$
+
+From the first equation: $y_3 = y_2$.
+From the second: $y_1 = y_3 = y_2$.
+So $y_1 = y_2 = y_3$. With $y_1 + y_2 + y_3 = 1$:
+
+$$
+y = \left(\frac{1}{3},\ \frac{1}{3},\ \frac{1}{3}\right)
+$$
+
+**2. Best Response Condition check:**
+
+We verify that $x = (2/5, 1/5, 2/5)$ is a best response to $y = (1/3, 1/3, 1/3)$:
+
+$$
+\begin{align*}
+My^T &= \begin{pmatrix}
+0 & -1 & 1 \\
+2 & 0 & -2 \\
+-1 & 1 & 0
+\end{pmatrix}
+\begin{pmatrix} 1/3 \\ 1/3 \\ 1/3 \end{pmatrix} \\
+&= \begin{pmatrix}
+(0 - 1 + 1)/3 \\
+(2 + 0 - 2)/3 \\
+(-1 + 1 + 0)/3
+\end{pmatrix} \\
+&= \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}
+\end{align*}
+$$
+
+All entries are equal to $0 = \max_k(My^T)_k$. Since the support of $x = \{1, 2, 3\}$ (all three actions have positive weight), the [best response condition](#thrm:best_response_condition) is satisfied. $x$ is a best response to $y$.
+
+We verify $y = (1/3, 1/3, 1/3)$ is a best response to $x = (2/5, 1/5, 2/5)$:
+
+$$
+xM = \begin{pmatrix} 2/5 & 1/5 & 2/5 \end{pmatrix}
+\begin{pmatrix}
+0 & -1 & 1 \\
+2 & 0 & -2 \\
+-1 & 1 & 0
+\end{pmatrix}
+$$
+
+$$
+\begin{align*}
+&= \left(\frac{0 \cdot 2 + 2 \cdot 1 - 1 \cdot 2}{5},\ \frac{-2 + 0 + 2}{5},\ \frac{2 - 2 + 0}{5}\right)\\
+&= \left(\frac{0}{5},\ \frac{0}{5},\ \frac{0}{5}\right) = (0, 0, 0)
+\end{align*}
+$$
+
+All entries of $xM$ are equal and equal to $0$. The support of $y = \{1, 2, 3\}$, so the best response condition is satisfied for $y$ as well.
+
+```{code-cell} python3
+import numpy as np
+import scipy.optimize
+import nashpy as nash
+
+M = np.array([[0, -1, 1], [2, 0, -2], [-1, 1, 0]])
+
+# Max-min for row player
+M_ub_row = np.hstack((-M.T, np.ones((3, 1))))
+b_ub = np.zeros((3, 1))
+M_eq = np.array([[1, 1, 1, 0]])
+b_eq = 1
+c = np.array([0, 0, 0, -1])
+res_row = scipy.optimize.linprog(c=c, A_ub=M_ub_row, b_ub=b_ub, A_eq=M_eq, b_eq=b_eq)
+print("Max-min (row) strategy:", res_row.x[:-1])
+print("Max-min value:", res_row.x[-1])
+
+# Min-max for column player using -M^T
+M_neg_T = -M.T
+M_ub_col = np.hstack((-M_neg_T.T, np.ones((3, 1))))
+res_col = scipy.optimize.linprog(c=c, A_ub=M_ub_col, b_ub=b_ub, A_eq=M_eq, b_eq=b_eq)
+print("Min-max (column) strategy:", res_col.x[:-1])
+print("Min-max value:", res_col.x[-1])
+
+# Best response condition check
+x = np.array([2/5, 1/5, 2/5])
+y = np.array([1/3, 1/3, 1/3])
+print("\nM y^T =", M @ y, "(should be [0, 0, 0])")
+print("x M =", x @ M, "(should be [0, 0, 0])")
+
+# Using nashpy
+game = nash.Game(M, -M)
+print("\nNashpy linear_program:", game.linear_program())
+```
+
+````

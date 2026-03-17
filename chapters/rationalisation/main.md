@@ -130,7 +130,7 @@ combined with the assumption of full information and mutual rationality, leads t
 the predicted outcome:
 
 - FreshBite opens in **Midtown**: with an expected profit of £3,000.
-- UrbanEats opens in **Surbuban**: with an expected profit of £4,000
+- UrbanEats opens in **Suburb**: with an expected profit of £4,000
 
 ```{note}
 This outcome is not necessarily optimal for both players, but it is rational
@@ -449,7 +449,7 @@ x = np.array((0, 1))
 plt.figure()
 plt.plot(2 * x - 1, label=r"$u_1(r_1, \sigma_2) = 2x - 1$")
 plt.plot(1 -  2 * x, label=r"$ u_1(r_2, \sigma_2) = 1 - 2x $")
-plt.title("Utility of the row player's actions as a function of the stratey played by the column player")
+plt.title("Utility of the row player's actions as a function of the strategy played by the column player")
 plt.xlabel("$x$")
 plt.legend();
 ```
@@ -496,7 +496,7 @@ x = np.array((0, 1))
 plt.figure()
 plt.plot(x + 1, label=r"$u_2(\sigma_1, c_1) = x + 1$")
 plt.plot(3 - 3 * x, label=r"$ u_2(\sigma_2, c_2) = 3 - 3 x $")
-plt.title("Utility of the column player's actions as a function of the stratey played by the row player")
+plt.title("Utility of the column player's actions as a function of the strategy played by the row player")
 plt.xlabel("$x$")
 plt.legend();
 ```
@@ -904,11 +904,7 @@ outcomes that rational players would be unlikely to avoid—such as the
 elimination of actions that never perform best and the selection of strategies
 that respond optimally to others.
 
-Using both motivating examples and formal definitions, we saw how
-**iterated elimination** and **best response analysis** can reveal
-plausible behaviours in one-shot games. We also explored how reasoning about
-rationality can be extended beyond pure actions to **strategies**,
-where probability plays a role in decision-making.
+**Iterated elimination** and **best response analysis** reveal plausible behaviours in one-shot games, and both extend naturally to **strategies** where probability plays a role.
 
 These concepts (summarised in [](#tbl:rationality_summary)) lay the foundation for understanding **equilibrium**—the central
 concept where players’ strategies mutually reinforce each other. In the next
@@ -937,3 +933,521 @@ types of games.
 If a strategy is never a best response to any opponent strategy, it can
 be safely ignored in predicting rational behaviour.
 ```
+
+---
+
+(solutions:rationalisation)=
+
+## Solutions
+
+````{solution} iterated_elimination_of_strategies
+:label: solution:iterated_elimination_of_strategies
+
+We apply iterated elimination of dominated strategies to each game.
+
+**Game 1:**
+
+$$
+A = \begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}
+\qquad
+B = \begin{pmatrix} 1 & 1 \\ 1 & 3 \end{pmatrix}
+$$
+
+**Step 1 (Row player):** Compare $r_1 = (2, 1)$ and $r_2 = (1, 1)$. Since $r_1$ gives payoff $2 > 1$ against $c_1$ and payoff $1 = 1$ against $c_2$, row $r_2$ is **weakly dominated** by $r_1$. Eliminate $r_2$.
+
+**Step 2 (Column player):** With only $r_1$ remaining, the column player compares $c_1$ (payoff $1$) and $c_2$ (payoff $1$). Both yield the same payoff, so neither is dominated. We cannot eliminate further.
+
+**Predicted outcome:** $r_1$ is the only rational row choice; the column player is indifferent and may play either column. The prediction is $(r_1, c_1)$ or $(r_1, c_2)$ depending on the column player's tie-breaking.
+
+---
+
+**Game 2:**
+
+$$
+A = \begin{pmatrix} 2 & 1 & 3 & 17 \\ 27 & 3 & 1 & 1 \\ 4 & 6 & 7 & 18 \end{pmatrix}
+\qquad
+B = \begin{pmatrix} 11 & 9 & 10 & 22 \\ 0 & 1 & 1 & 0 \\ 2 & 10 & 12 & 0 \end{pmatrix}
+$$
+
+**Step 1 (Row player):** Compare each row:
+
+- $r_1 = (2, 1, 3, 17)$
+- $r_2 = (27, 3, 1, 1)$
+- $r_3 = (4, 6, 7, 18)$
+
+Comparing $r_1$ and $r_3$: $r_3$ gives $4 > 2$, $6 > 1$, $7 > 3$, $18 > 17$ against all columns. So $r_1$ is **strictly dominated** by $r_3$. Eliminate $r_1$.
+
+**Step 2 (Column player):** With $r_2$ and $r_3$ remaining, the column payoffs are:
+
+$$
+B' = \begin{pmatrix} 0 & 1 & 1 & 0 \\ 2 & 10 & 12 & 0 \end{pmatrix}
+$$
+
+Compare each column for the column player. Looking at $c_4$: against $r_2$ it gives $0$, against $r_3$ it gives $0$. Column $c_1$: against $r_2$ gives $0$, against $r_3$ gives $2$. So $c_4$ is weakly dominated by $c_1$ (same against $r_2$, worse against $r_3$). Eliminate $c_4$.
+
+**Step 3 (Column player):** With columns $c_1, c_2, c_3$ remaining:
+
+$$
+B'' = \begin{pmatrix} 0 & 1 & 1 \\ 2 & 10 & 12 \end{pmatrix}
+$$
+
+Compare $c_1$ vs $c_2$: $c_2$ gives $1 > 0$ against $r_2$ and $10 > 2$ against $r_3$. So $c_1$ is **strictly dominated** by $c_2$. Eliminate $c_1$.
+
+**Step 4 (Row player):** With $r_2$, $r_3$ and columns $c_2$, $c_3$:
+
+$$
+A'' = \begin{pmatrix} 3 & 1 \\ 6 & 7 \end{pmatrix}
+$$
+
+Compare $r_2 = (3, 1)$ and $r_3 = (6, 7)$: $r_3$ strictly dominates $r_2$ on both entries. Eliminate $r_2$.
+
+**Step 5 (Column player):** With only $r_3$ and columns $c_2$, $c_3$:
+
+$$
+B''' = \begin{pmatrix} 10 & 12 \end{pmatrix}
+$$
+
+$c_3$ gives $12 > 10$, so $c_2$ is strictly dominated by $c_3$. Eliminate $c_2$.
+
+**Predicted outcome:** $(r_3, c_3)$.
+
+---
+
+**Game 3:**
+
+$$
+A = \begin{pmatrix} 3 & 3 & 2 \\ 2 & 1 & 3 \end{pmatrix}
+\qquad
+B = \begin{pmatrix} 2 & 1 & 3 \\ 2 & 3 & 2 \end{pmatrix}
+$$
+
+**Step 1 (Column player):** Compare columns for the column player:
+
+- $c_1$ gives $(2, 2)$, $c_2$ gives $(1, 3)$, $c_3$ gives $(3, 2)$.
+
+No column is dominated (each column is best for a different row). Check $c_1$ vs $c_3$: $c_3$ gives $3 > 2$ against $r_1$ but $2 = 2$ against $r_2$. So $c_1$ is **weakly dominated** by $c_3$. Eliminate $c_1$.
+
+**Step 2 (Row player):** With $c_2$ and $c_3$ remaining:
+
+$$
+A' = \begin{pmatrix} 3 & 2 \\ 1 & 3 \end{pmatrix}
+$$
+
+Compare $r_1 = (3, 2)$ and $r_2 = (1, 3)$: neither dominates the other (row 1 is better against $c_2$, row 2 is better against $c_3$). We cannot eliminate further.
+
+**Result:** Iterated elimination of weakly dominated strategies reduces the game to:
+
+$$
+A' = \begin{pmatrix} 3 & 2 \\ 1 & 3 \end{pmatrix}
+\qquad
+B' = \begin{pmatrix} 1 & 3 \\ 3 & 2 \end{pmatrix}
+$$
+
+No unique prediction is obtained. Further analysis (e.g.\ best responses) is required.
+
+---
+
+**Game 4:**
+
+$$
+A = \begin{pmatrix} 3 & -1 \\ 2 & 7 \end{pmatrix}
+\qquad
+B = \begin{pmatrix} -3 & 1 \\ 1 & -6 \end{pmatrix}
+$$
+
+**Row player:** Compare $r_1 = (3, -1)$ and $r_2 = (2, 7)$. Neither dominates: $r_1 > r_2$ against $c_1$, but $r_2 > r_1$ against $c_2$.
+
+**Column player:** Compare $c_1 = (-3, 1)$ and $c_2 = (1, -6)$ for column payoffs. Neither dominates: $c_2 > c_1$ against $r_1$, but $c_1 > c_2$ against $r_2$.
+
+**Result:** No strategies can be eliminated. Iterated elimination does not reduce this game.
+
+```{code-cell} python3
+import nashpy as nash
+import numpy as np
+
+# Game 1
+A1 = np.array([[2, 1], [1, 1]])
+B1 = np.array([[1, 1], [1, 3]])
+print("Game 1 - checking: r2 weakly dominated by r1?",
+      all(A1[0, :] >= A1[1, :]) and any(A1[0, :] > A1[1, :]))
+
+# Game 2
+A2 = np.array([[2, 1, 3, 17], [27, 3, 1, 1], [4, 6, 7, 18]])
+B2 = np.array([[11, 9, 10, 22], [0, 1, 1, 0], [2, 10, 12, 0]])
+print("Game 2 - r3 strictly dominates r1?",
+      all(A2[2, :] > A2[0, :]))
+```
+
+````
+
+---
+
+````{solution} identifying_best_responses
+:label: solution:identifying_best_responses
+
+We identify all best response actions for each game in [](#iterated_elimination_of_strategies) and attempt to predict rational outcomes.
+
+**Game 1:**
+
+$$
+A = \begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}
+\qquad
+B = \begin{pmatrix} 1 & 1 \\ 1 & 3 \end{pmatrix}
+$$
+
+Underline best responses (maximum in each column for the row player, maximum in each row for the column player):
+
+$$
+A = \begin{pmatrix} \underline{2} & 1 \\ 1 & 1 \end{pmatrix}
+\qquad
+B = \begin{pmatrix} 1 & \underline{1} \\ 1 & \underline{3} \end{pmatrix}
+$$
+
+- Row player: $r_1$ is the unique best response to $c_1$; both $r_1$ and $r_2$ are best responses to $c_2$.
+- Column player: Both $c_1$ and $c_2$ are best responses to $r_1$ (payoff tied at $1$); $c_2$ is the unique best response to $r_2$.
+
+Pairs where both are mutual best responses: $(r_1, c_1)$ and $(r_1, c_2)$. However $(r_1, c_1)$ requires column player to choose $c_1$ over $c_2$ even though both are tied — there is no strict incentive. Both $(r_1, c_1)$ and $(r_1, c_2)$ are predicted rational outcomes.
+
+---
+
+**Game 2:**
+
+$$
+A = \begin{pmatrix} 2 & 1 & 3 & 17 \\ 27 & 3 & 1 & 1 \\ 4 & 6 & 7 & 18 \end{pmatrix}
+\qquad
+B = \begin{pmatrix} 11 & 9 & 10 & 22 \\ 0 & 1 & 1 & 0 \\ 2 & 10 & 12 & 0 \end{pmatrix}
+$$
+
+Best response underlines:
+
+$$
+A = \begin{pmatrix} 2 & 1 & 3 & 17 \\ \underline{27} & 3 & 1 & 1 \\ 4 & \underline{6} & \underline{7} & \underline{18} \end{pmatrix}
+\qquad
+B = \begin{pmatrix} \underline{11} & \underline{9} & \underline{10} & \underline{22} \\ 0 & 1 & 1 & 0 \\ 2 & 10 & \underline{12} & 0 \end{pmatrix}
+$$
+
+- Row player: $r_2$ is best response to $c_1$; $r_3$ is best response to $c_2$, $c_3$, and $c_4$.
+- Column player: $c_4$ is best response to $r_1$; $c_1$, $c_2$, $c_3$, $c_4$ are all best responses to $r_2$ (checking: $B$ row 2 is $(0,1,1,0)$ — $c_2$ and $c_3$ tied); $c_3$ is best response to $r_3$.
+
+The unique mutual best response pair is $(r_3, c_3)$, confirming the predicted outcome from iterated elimination.
+
+---
+
+**Game 3:**
+
+$$
+A = \begin{pmatrix} 3 & 3 & 2 \\ 2 & 1 & 3 \end{pmatrix}
+\qquad
+B = \begin{pmatrix} 2 & 1 & 3 \\ 2 & 3 & 2 \end{pmatrix}
+$$
+
+Best response underlines:
+
+$$
+A = \begin{pmatrix} \underline{3} & \underline{3} & 2 \\ 2 & 1 & \underline{3} \end{pmatrix}
+\qquad
+B = \begin{pmatrix} \underline{2} & 1 & \underline{3} \\ \underline{2} & \underline{3} & 2 \end{pmatrix}
+$$
+
+- Row player: $r_1$ is best response to $c_1$ and $c_2$; $r_2$ is best response to $c_3$; both are tied against $c_1$ for payoff $3$ vs $2$ (no, $3 > 2$ so $r_1$ is unique best response to $c_1$). Actually $r_1$ gives $3$ against both $c_1$ and $c_2$, and $r_2$ gives $3$ against $c_3$.
+- Column player: $c_1$ is best response to $r_1$ (payoff $2$) and $r_2$ (payoff $2$); $c_2$ is best response to $r_2$ (payoff $3$); $c_3$ is best response to $r_1$ (payoff $3$).
+
+Pairs where both are mutual best responses:
+- $(r_1, c_3)$: $r_1$ gives $2$ against $c_3$ (not a best response since $r_2$ gives $3$ against $c_3$). Not a NE.
+- $(r_2, c_2)$: $r_2$ gives $1$ against $c_2$, but $r_1$ gives $3$. Not a NE.
+- $(r_1, c_1)$: $r_1$ is best response to $c_1$ (payoff $3 > 2$); $c_1$ gives column payoff $2$, but $c_3$ gives $3 > 2$. So $c_1$ is not a best response to $r_1$. Not a NE.
+
+No pure strategy Nash equilibrium exists. The approach of pure strategy best responses fails to fully determine the outcome; mixed strategies are required, illustrating a case where best response analysis in the action space does not resolve the game.
+
+---
+
+**Game 4:**
+
+$$
+A = \begin{pmatrix} 3 & -1 \\ 2 & 7 \end{pmatrix}
+\qquad
+B = \begin{pmatrix} -3 & 1 \\ 1 & -6 \end{pmatrix}
+$$
+
+Best response underlines:
+
+$$
+A = \begin{pmatrix} \underline{3} & -1 \\ 2 & \underline{7} \end{pmatrix}
+\qquad
+B = \begin{pmatrix} -3 & \underline{1} \\ \underline{1} & -6 \end{pmatrix}
+$$
+
+- Row player: $r_1$ is best response to $c_1$; $r_2$ is best response to $c_2$.
+- Column player: $c_2$ is best response to $r_1$; $c_1$ is best response to $r_2$.
+
+No action profile has both entries underlined simultaneously — there is **no pure strategy Nash equilibrium**. Best response reasoning fails to determine the outcome from the action space alone; a mixed strategy equilibrium must exist (guaranteed by Nash's theorem).
+
+```{code-cell} python3
+import nashpy as nash
+import numpy as np
+
+# Game 1
+A1 = np.array([[2, 1], [1, 1]])
+B1 = np.array([[1, 1], [1, 3]])
+g1 = nash.Game(A1, B1)
+print("Game 1 Nash equilibria:", list(g1.support_enumeration()))
+
+# Game 2
+A2 = np.array([[2, 1, 3, 17], [27, 3, 1, 1], [4, 6, 7, 18]])
+B2 = np.array([[11, 9, 10, 22], [0, 1, 1, 0], [2, 10, 12, 0]])
+g2 = nash.Game(A2, B2)
+print("Game 2 Nash equilibria:", list(g2.support_enumeration()))
+
+# Game 3
+A3 = np.array([[3, 3, 2], [2, 1, 3]])
+B3 = np.array([[2, 1, 3], [2, 3, 2]])
+g3 = nash.Game(A3, B3)
+print("Game 3 Nash equilibria:", list(g3.support_enumeration()))
+
+# Game 4
+A4 = np.array([[3, -1], [2, 7]])
+B4 = np.array([[-3, 1], [1, -6]])
+g4 = nash.Game(A4, B4)
+print("Game 4 Nash equilibria:", list(g4.support_enumeration()))
+```
+
+````
+
+---
+
+````{solution} representing_peace_and_war_in_normal_form
+:label: solution:representing_peace_and_war_in_normal_form
+
+1. **Players and action sets:**
+
+The players are Country 1 and Country 2 (the row and column players). The action sets are:
+
+$$
+\mathcal{A}_1 = \mathcal{A}_2 = \{\text{Peace},\ \text{Attack}\}
+$$
+
+2. **Normal form with utilities as negative of casualties:**
+
+$$
+M_r = \begin{pmatrix}
+0 & -15000 \\
+-13000 & -10000
+\end{pmatrix}
+\qquad
+M_c = \begin{pmatrix}
+0 & -13000 \\
+-15000 & -10000
+\end{pmatrix}
+$$
+
+Rows and columns correspond to (Peace, Attack). When Country 1 attacks and Country 2 is peaceful, Country 1 suffers $13000$ casualties (from retaliation) and Country 2 suffers $15000$ casualties.
+
+3. **Expected utility plots:**
+
+Let $\sigma_1 = (x, 1-x)$ where $x$ is the probability Country 1 plays Peace.
+
+When Country 2 plays Peace ($\sigma_2 = (1, 0)$):
+
+$$
+u_1(x, \text{Peace}) = 0 \cdot x + (-13000)(1-x) = -13000 + 13000x
+$$
+
+When Country 2 plays Attack ($\sigma_2 = (0, 1)$):
+
+$$
+u_1(x, \text{Attack}) = (-15000) x + (-10000)(1-x) = -10000 - 5000x
+$$
+
+```{code-cell} python3
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 1, 100)
+
+u1_peace = -13000 + 13000 * x
+u1_attack = -10000 - 5000 * x
+
+plt.figure(figsize=(7, 3))
+
+plt.subplot(1, 2, 1)
+plt.plot(x, u1_peace, label="Country 2 plays Peace")
+plt.plot(x, u1_attack, label="Country 2 plays Attack")
+plt.xlabel("Probability of Peace ($x$)")
+plt.ylabel("Expected utility for Country 1")
+plt.title("Country 1 expected utility")
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(x, u1_peace, label="Country 1 plays Peace")
+plt.plot(x, u1_attack, label="Country 1 plays Attack")
+plt.xlabel("Probability of Peace ($x$)")
+plt.ylabel("Expected utility for Country 2")
+plt.title("Country 2 expected utility (symmetric)")
+plt.legend()
+
+plt.tight_layout()
+```
+
+4. **Best responses:**
+
+For Country 1:
+
+- When Country 2 plays Peace: $u_1(\text{Peace}) = 0$ and $u_1(\text{Attack}) = -13000$. So **Peace** is the best response.
+- When Country 2 plays Attack: $u_1(\text{Peace}) = -15000$ and $u_1(\text{Attack}) = -10000$. So **Attack** is the best response.
+
+By symmetry the same holds for Country 2.
+
+Thus Attack is not universally dominant here (Peace is best when the opponent is peaceful). The game has two pure Nash equilibria: (Peace, Peace) and (Attack, Attack), as well as a mixed strategy equilibrium. This differs from the pure Prisoners' Dilemma structure where Attack is always dominant. The specific casualty values give a coordination element: both countries prefer mutual peace, but mutual attack is also a self-reinforcing outcome once fear of unilateral peaceful behaviour takes hold.
+
+````
+
+---
+
+````{solution} pricing_strategy_in_competing_shops
+:label: solution:pricing_strategy_in_competing_shops
+
+1. **Plausible utility table:**
+
+We define utilities to reflect the trade-off between market share and margin. Let the total market profit be normalised so that equal pricing splits it. A lower price steals customers but earns less per unit; a higher price loses customers but earns more per unit (up to a point).
+
+A plausible assignment (in arbitrary units) for Shop 1 (row) and Shop 2 (column):
+
+$$
+M_r = \begin{pmatrix}
+3 & 5 & 6 \\
+1 & 3 & 5 \\
+0 & 1 & 3
+\end{pmatrix}
+\qquad
+M_c = \begin{pmatrix}
+3 & 1 & 0 \\
+5 & 3 & 1 \\
+6 & 5 & 3
+\end{pmatrix}
+$$
+
+where rows/columns correspond to (Low, Medium, High). When prices are equal, each shop earns $3$. When Shop 1 undercuts Shop 2, Shop 1 earns more and Shop 2 earns less.
+
+2. **Normal form:** The game is represented by the two matrices $M_r$ and $M_c$ above.
+
+3. **Iterated elimination of dominated strategies:**
+
+For the row player, compare High ($0, 1, 3$) to Medium ($1, 3, 5$): Medium gives strictly higher payoff against all column actions. High is **strictly dominated** by Medium. Eliminate High for the row player.
+
+By symmetry (the game is symmetric under reflection), High is also **strictly dominated** for the column player. Eliminate the High column.
+
+After elimination:
+
+$$
+M_r' = \begin{pmatrix}
+3 & 5 \\
+1 & 3
+\end{pmatrix}
+\qquad
+M_c' = \begin{pmatrix}
+3 & 1 \\
+5 & 3
+\end{pmatrix}
+$$
+
+Now compare Low ($3, 5$) to Medium ($1, 3$) for the row player: Low strictly dominates Medium (in the reduced game). Eliminate Medium.
+
+By symmetry eliminate Medium for the column player.
+
+After full elimination: both shops play **Low**.
+
+4. **Best response pairs:**
+
+After iterated elimination, the only remaining action for both players is Low. (Low, Low) is a pair of best responses. In the fully reduced $1 \times 1$ game the unique outcome is mutual Low pricing — consistent with a Prisoners' Dilemma-like structure where competitive pressure drives prices down even though both shops would prefer mutual Medium or High pricing.
+
+```{code-cell} python3
+import nashpy as nash
+import numpy as np
+
+M_r = np.array([[3, 5, 6], [1, 3, 5], [0, 1, 3]])
+M_c = np.array([[3, 1, 0], [5, 3, 1], [6, 5, 3]])
+
+g = nash.Game(M_r, M_c)
+print("Nash equilibria:", list(g.support_enumeration()))
+```
+
+````
+
+---
+
+````{solution} task_assignment_in_a_shared_workspace
+:label: solution:task_assignment_in_a_shared_workspace
+
+1. **Utility matrix construction:**
+
+Let Worker 1 be the row player and Worker 2 be the column player. Actions are Documentation (D), Coding (C), Debugging (Db). Utilities reflect:
+- If same task: penalty for coordination overhead, base utility reduced.
+- If different tasks: bonus for complementary work.
+- Each worker has individual skill strengths: Worker 1 is better at Coding, Worker 2 is better at Debugging.
+
+$$
+M_r = \begin{pmatrix}
+1 & 3 & 4 \\
+4 & 2 & 5 \\
+3 & 4 & 1
+\end{pmatrix}
+\qquad
+M_c = \begin{pmatrix}
+1 & 4 & 3 \\
+3 & 2 & 4 \\
+5 & 4 & 1
+\end{pmatrix}
+$$
+
+Rows/columns correspond to (Documentation, Coding, Debugging). Diagonal entries are lower (same task, coordination overhead). Off-diagonal entries are higher (different tasks, complementary productivity).
+
+2. **Normal form:** The game is represented by $M_r$ and $M_c$ above.
+
+3. **Dominated strategies:**
+
+For the row player, compare Documentation ($1, 3, 4$) and Coding ($4, 2, 5$):
+- Against Documentation: Coding gives $4 > 1$.
+- Against Coding: Documentation gives $3 > 2$.
+
+Neither dominates the other. Compare Documentation and Debugging ($3, 4, 1$):
+- Against Documentation: Debugging gives $3 > 1$.
+- Against Coding: Debugging gives $4 > 3$.
+- Against Debugging: Documentation gives $4 > 1$.
+
+No strategy is strictly dominated by a single other strategy. No actions are strictly dominated; we would need to check domination by mixtures. For this illustrative matrix, no pure strategy is strictly or weakly dominated.
+
+4. **Best responses:**
+
+Underline row player's best responses (column-wise maxima) and column player's best responses (row-wise maxima):
+
+$$
+M_r = \begin{pmatrix}
+1 & 3 & 4 \\
+\underline{4} & 2 & \underline{5} \\
+3 & \underline{4} & 1
+\end{pmatrix}
+\qquad
+M_c = \begin{pmatrix}
+1 & 4 & 3 \\
+3 & 2 & \underline{4} \\
+\underline{5} & \underline{4} & 1
+\end{pmatrix}
+$$
+
+- Row player: $r_2$ (Coding) is best response to $c_1$ (Documentation) and $c_3$ (Debugging); $r_3$ (Debugging) is best response to $c_2$ (Coding).
+- Column player: $c_3$ (Debugging) is best response to $r_2$ (Coding); $c_1$ (Documentation) and $c_2$ (Coding) are both best responses to $r_3$ (Debugging).
+
+The unique mutual best response pair: $(r_2, c_3)$ — Worker 1 codes and Worker 2 debugs. This is a Nash equilibrium in pure actions, consistent with the intuition that workers should specialise in complementary tasks.
+
+```{code-cell} python3
+import nashpy as nash
+import numpy as np
+
+M_r = np.array([[1, 3, 4], [4, 2, 5], [3, 4, 1]])
+M_c = np.array([[1, 4, 3], [3, 2, 4], [5, 4, 1]])
+
+g = nash.Game(M_r, M_c)
+print("Nash equilibria:", list(g.support_enumeration()))
+```
+
+````

@@ -677,10 +677,7 @@ many other domains, demonstrating their versatility and theoretical interest:
 
 ## Conclusion
 
-In this appendix, we explored **absorbing Markov chains** through both theory
-and application. These models provide powerful tools for analysing systems
-where eventual absorption is guaranteed — such as escape processes, games, and
-evolutionary dynamics.
+**Absorbing Markov chains** model systems where eventual absorption is guaranteed — escape processes, games, and evolutionary dynamics.
 
 The key concepts covered in this chapter are summarised [](#tbl:absorbing_markov_chains_summary).
 
@@ -702,7 +699,294 @@ The key concepts covered in this chapter are summarised [](#tbl:absorbing_markov
 ```{important}
 In an absorbing Markov chain, long-term behaviour is entirely determined by
 the structure of the transient-to-absorbing pathways. Once the system’s
-dynamics are encoded in matrix form, powerful linear algebra tools allow us
-to compute **expected times**, **absorption probabilities**, and **visit
-patterns** with precision and clarity.
+dynamics are encoded in matrix form, linear algebra allows exact computation of **expected times**, **absorption probabilities**, and **visit patterns**.
 ```
+
+---
+
+(solutions:absorbing_markov_chains)=
+
+## Solutions
+
+### Solution to Exercise: Transition Classification
+
+1. **Identifying transient and absorbing states.**
+
+   State 4 is absorbing because $P_{44} = 1$. States 1, 2, and 3 are transient:
+   from each of them there is a positive probability path to state 4 (e.g.,
+   state 3 reaches state 4 directly with probability 0.25, and states 1 and 2
+   reach state 3 which then reaches state 4).
+
+2. **Canonical form.** Reordering the states as transient states $\{1, 2, 3\}$
+   first and absorbing state $\{4\}$ last, the matrix is already in canonical
+   form:
+
+   $$
+   P =
+   \begin{pmatrix}
+   Q & R \\
+   0 & I
+   \end{pmatrix}
+   $$
+
+   where
+
+   $$
+   Q = \begin{pmatrix}
+   0.5 & 0.5 & 0 \\
+   0.25 & 0.5 & 0.25 \\
+   0 & 0.25 & 0.5
+   \end{pmatrix},
+   \qquad
+   R = \begin{pmatrix}
+   0 \\ 0 \\ 0.25
+   \end{pmatrix},
+   \qquad
+   I = (1).
+   $$
+
+3. **Fundamental matrix $N = (I - Q)^{-1}$.**
+
+   $$
+   I - Q = \begin{pmatrix}
+   0.5 & -0.5 & 0 \\
+   -0.25 & 0.5 & -0.25 \\
+   0 & -0.25 & 0.5
+   \end{pmatrix}
+   $$
+
+   Computing the inverse:
+
+   $$
+   N = (I - Q)^{-1} = \begin{pmatrix}
+   4 & 4 & 2 \\
+   2 & 6 & 3 \\
+   1 & 3 & 4
+   \end{pmatrix}
+   $$
+
+   Here is code to confirm this calculation:
+
+   ```{code-cell} python3
+   import numpy as np
+
+   Q = np.array([
+       [0.5,  0.5,  0.0 ],
+       [0.25, 0.5,  0.25],
+       [0.0,  0.25, 0.5 ],
+   ])
+   R = np.array([[0.0], [0.0], [0.25]])
+
+   N = np.linalg.inv(np.eye(3) - Q)
+   print("Fundamental matrix N:")
+   print(np.round(N, 6))
+   ```
+
+4. **Expected number of steps until absorption.** The expected number of steps
+   before absorption starting from transient state $i$ is the $i$-th entry of
+   the vector $t = N \mathbf{1}$ where $\mathbf{1}$ is the all-ones vector:
+
+   $$
+\begin{align*}
+   t &= N \mathbf{1} = \begin{pmatrix} 4+4+2 \\ 2+6+3 \\ 1+3+4 \end{pmatrix} \\
+   &= \begin{pmatrix} 10 \\ 11 \\ 8 \end{pmatrix}
+\end{align*}
+   $$
+
+   So starting from state 1 the expected absorption time is 10 steps, from
+   state 2 it is 11 steps, and from state 3 it is 8 steps.
+
+   ```{code-cell} python3
+   t = N @ np.ones(3)
+   print("Expected steps to absorption:", t)
+   ```
+
+---
+
+### Solution to Exercise: Expected Visits
+
+The maze transition matrix from [](#sec:motivating_example_escaping_a_maze) has
+fundamental matrix (computed in [](#sec:example_fundamental_matrix_of_the_maze)):
+
+$$
+N = \begin{pmatrix}
+26/11 & 18/11 & 18/11 & 15/11 \\
+18/11 & 26/11 & 15/11 & 18/11 \\
+12/11 & 10/11 & 21/11 & 12/11 \\
+10/11 & 12/11 & 12/11 & 21/11
+\end{pmatrix}
+$$
+
+where the transient states are rooms 1 through 4 and the absorbing states are
+rooms 5 and 6.
+
+1. **Expected visits to Room 4 starting from Room 1.** By the definition of the
+   [fundamental matrix](#sec:definition_of_fundamental_matrix), $N_{ij}$ gives
+   the expected number of visits to transient state $j$ before absorption,
+   starting from state $i$. Room 4 corresponds to column index 4 (i.e., $j=4$)
+   and Room 1 corresponds to row index 1 (i.e., $i=1$), so the answer is:
+
+   $$
+   N_{14} = \frac{15}{11} \approx 1.36
+   $$
+
+2. **Most visited ordinary room when starting from Room 3.** Looking at row 3
+   of $N$:
+
+   $$
+   N_{3\cdot} = \left(\frac{12}{11},\ \frac{10}{11},\ \frac{21}{11},\ \frac{12}{11}\right)
+   $$
+
+   The largest entry is $N_{33} = 21/11 \approx 1.91$, so Room 3 itself is
+   visited most often. This makes intuitive sense since the student starts there
+   and must leave before being absorbed.
+
+   ```{code-cell} python3
+   import numpy as np
+
+   Q_maze = np.array([
+       [0,    1/2,  1/2,  0  ],
+       [1/2,  0,    0,    1/2],
+       [1/3,  0,    0,    1/3],
+       [0,    1/3,  1/3,  0  ],
+   ])
+   R_maze = np.array([
+       [0,   0  ],
+       [0,   0  ],
+       [1/3, 0  ],
+       [0,   1/3],
+   ])
+
+   N_maze = np.linalg.inv(np.eye(4) - Q_maze)
+   print("Fundamental matrix N (maze):")
+   from fractions import Fraction
+   import sympy as sym
+   N_sym = sym.Matrix(sym.eye(4) - sym.Matrix([
+       [0,    sym.Rational(1,2),  sym.Rational(1,2),  0               ],
+       [sym.Rational(1,2), 0,     0,                   sym.Rational(1,2)],
+       [sym.Rational(1,3), 0,     0,                   sym.Rational(1,3)],
+       [0,    sym.Rational(1,3),  sym.Rational(1,3),  0               ],
+   ])).inv()
+   N_sym
+   ```
+
+   ```{code-cell} python3
+   print("Expected visits to Room 4 starting from Room 1:", sym.Rational(15, 11))
+   print("Row 3 of N:", [N_sym[2, j] for j in range(4)])
+   print("Most visited room starting from Room 3: Room", 1 + max(range(4), key=lambda j: N_sym[2, j]))
+   ```
+
+---
+
+### Solution to Exercise: Symbolic Fundamental Matrix
+
+Let
+
+$$
+Q = \begin{pmatrix} 0 & a \\ b & 0 \end{pmatrix}, \qquad 0 < a, b < 1.
+$$
+
+1. **Fundamental matrix $N = (I - Q)^{-1}$.**
+
+   $$
+   I - Q = \begin{pmatrix} 1 & -a \\ -b & 1 \end{pmatrix}
+   $$
+
+   The determinant of $I - Q$ is $1 - ab$. Since $0 < a, b < 1$ we have
+   $0 < ab < 1$ so $1 - ab > 0$ and the matrix is invertible. Therefore:
+
+   $$
+   N = (I - Q)^{-1} = \frac{1}{1 - ab}
+   \begin{pmatrix} 1 & a \\ b & 1 \end{pmatrix}
+   $$
+
+   In component form:
+
+   $$
+   N_{11} = N_{22} = \frac{1}{1 - ab}, \qquad N_{12} = \frac{a}{1 - ab}, \qquad N_{21} = \frac{b}{1 - ab}.
+   $$
+
+2. **Expected total steps before absorption.** The expected number of total
+   steps before absorption from state $i$ is $(N \mathbf{1})_i$:
+
+   $$
+   N \mathbf{1} = \frac{1}{1-ab}
+   \begin{pmatrix} 1 + a \\ 1 + b \end{pmatrix}
+   $$
+
+   So starting from state 1, the expected total steps is $\dfrac{1+a}{1-ab}$,
+   and starting from state 2, it is $\dfrac{1+b}{1-ab}$.
+
+   ```{code-cell} python3
+   import sympy as sym
+
+   a, b = sym.symbols("a b", positive=True)
+   Q_sym = sym.Matrix([[0, a], [b, 0]])
+   I_sym = sym.eye(2)
+   N_sym2 = (I_sym - Q_sym).inv()
+   sym.simplify(N_sym2)
+   ```
+
+   ```{code-cell} python3
+   t_sym = N_sym2 * sym.Matrix([1, 1])
+   sym.simplify(t_sym)
+   ```
+
+---
+
+### Solution to Exercise: Absorption Probabilities
+
+Given:
+
+$$
+Q = \begin{pmatrix} 0.2 & 0.3 \\ 0.4 & 0.1 \end{pmatrix},
+\qquad
+R = \begin{pmatrix} 0.5 & 0 \\ 0 & 0.5 \end{pmatrix}.
+$$
+
+1. **Fundamental matrix $N$.**
+
+   $$
+   I - Q = \begin{pmatrix} 0.8 & -0.3 \\ -0.4 & 0.9 \end{pmatrix}
+   $$
+
+   The determinant is $0.8 \times 0.9 - (-0.3)(-0.4) = 0.72 - 0.12 = 0.60$.
+
+   $$
+\begin{align*}
+   N &= (I - Q)^{-1} = \frac{1}{0.6}\begin{pmatrix} 0.9 & 0.3 \\ 0.4 & 0.8 \end{pmatrix} \\
+   &= \begin{pmatrix} 1.5 & 0.5 \\ 2/3 & 4/3 \end{pmatrix}
+\end{align*}
+   $$
+
+2. **Absorption probability matrix $B = NR$.**
+
+   $$
+\begin{align*}
+   B &= NR = \begin{pmatrix} 1.5 & 0.5 \\ 2/3 & 4/3 \end{pmatrix}
+   \begin{pmatrix} 0.5 & 0 \\ 0 & 0.5 \end{pmatrix} \\
+   &= \begin{pmatrix} 0.75 & 0.25 \\ 1/3 & 2/3 \end{pmatrix}
+\end{align*}
+   $$
+
+3. **Interpretation of $B_{12}$.** The entry $B_{12} = 0.25$ is the probability
+   that the process, starting from transient state 1, is eventually absorbed
+   into absorbing state 2. In other words, starting from state 1, there is a
+   25% chance of being absorbed into state 2 and a 75% chance of being absorbed
+   into state 1.
+
+   ```{code-cell} python3
+   import numpy as np
+
+   Q_abs = np.array([[0.2, 0.3], [0.4, 0.1]])
+   R_abs = np.array([[0.5, 0.0], [0.0, 0.5]])
+
+   N_abs = np.linalg.inv(np.eye(2) - Q_abs)
+   print("Fundamental matrix N:")
+   print(N_abs)
+
+   B = N_abs @ R_abs
+   print("\nAbsorption probability matrix B = NR:")
+   print(B)
+   print("\nB[0, 1] =", B[0, 1], "(probability of absorption into state 2 from state 1)")
+   ```

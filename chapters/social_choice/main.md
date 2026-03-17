@@ -414,11 +414,6 @@ a scoring rule. While each method has strengths and limitations, they both offer
 principled approaches to navigating the trade-offs inherent in group decision
 making.
 
-Modern research builds on these ideas to address strategic voting,
-computational barriers, and settings with multiple winners. These insights
-reinforce that although no voting system is perfect, there are many thoughtful
-and rigorous ways to design collective choice mechanisms.
-
 ```{list-table}
 :header-rows: 1
 :name: tbl:social_choice_summary
@@ -447,3 +442,473 @@ Arrow’s impossibility theorem does not mean that all voting rules are equally
 bad. It means that trade-offs are inevitable. Understanding the strengths and
 limits of each method allows us to choose the right tool for the context.
 ```
+
+---
+
+(solutions:social_choice)=
+
+## Solutions
+
+````{solution} condorcet_consistency_and_cycles
+:label: solution:condorcet_consistency_and_cycles
+
+The preference profile over $X = \{A, B, C\}$ is:
+
+- 3 voters: $A \succ B \succ C$
+- 2 voters: $B \succ C \succ A$
+- 2 voters: $C \succ A \succ B$
+
+There are 7 voters in total.
+
+**a. Pairwise majority contests:**
+
+**A vs B:**
+
+- 3 voters prefer $A$ to $B$ (group 1).
+- 2 voters prefer $B$ to $A$ (group 2).
+- 2 voters prefer $A$ to $B$ (group 3: $C \succ A \succ B$, so $A \succ B$).
+
+Total: $A$ preferred by $3+2=5$ voters, $B$ preferred by $2$ voters.
+
+**$A$ beats $B$ with 5 votes to 2.**
+
+**B vs C:**
+
+- 3 voters prefer $B$ to $C$ (group 1: $A \succ B \succ C$).
+- 2 voters prefer $B$ to $C$ (group 2: $B \succ C \succ A$).
+- 2 voters prefer $C$ to $B$ (group 3).
+
+Total: $B$ preferred by $3+2=5$ voters, $C$ preferred by $2$ voters.
+
+**$B$ beats $C$ with 5 votes to 2.**
+
+**C vs A:**
+
+- 3 voters prefer $A$ to $C$ (group 1).
+- 2 voters prefer $C$ to $A$ (group 2).
+- 2 voters prefer $C$ to $A$ (group 3).
+
+Total: $C$ preferred by $2+2=4$ voters, $A$ preferred by $3$ voters.
+
+**$A$ beats $C$ with 3 votes to 4.**
+
+Wait — let us recount. Group 1 ($A\succ B\succ C$): prefer $A$ to $C$. Group 2
+($B\succ C\succ A$): prefer $C$ to $A$. Group 3 ($C\succ A\succ B$): prefer $C$
+to $A$.
+
+Total preferring $A$: 3. Total preferring $C$: $2+2=4$.
+
+**$C$ beats $A$ with 4 votes to 3.**
+
+**Summary of pairwise results:**
+- $A \succ_{\text{maj}} B$ (5 to 2)
+- $B \succ_{\text{maj}} C$ (5 to 2)
+- $C \succ_{\text{maj}} A$ (4 to 3)
+
+**b. Is there a Condorcet winner?**
+
+A Condorcet winner must beat all other alternatives in pairwise majority
+comparisons.
+
+- $A$ beats $B$ but loses to $C$. Not a Condorcet winner.
+- $B$ beats $C$ but loses to $A$. Not a Condorcet winner.
+- $C$ beats $A$ but loses to $B$. Not a Condorcet winner.
+
+**There is no Condorcet winner.**
+
+**c. Is the majority preference relation transitive?**
+
+The majority relation gives $A \succ_{\text{maj}} B$, $B \succ_{\text{maj}} C$,
+but $C \succ_{\text{maj}} A$ (not $A \succ_{\text{maj}} C$).
+
+Transitivity would require $A \succ_{\text{maj}} C$, but we have the opposite.
+Therefore **the majority preference relation is not transitive**. This is a
+Condorcet cycle: $A$ beats $B$, $B$ beats $C$, $C$ beats $A$.
+
+```{code-cell} python3
+import pref_voting.profiles
+import pref_voting.c1_methods
+
+# Encode: A=0, B=1, C=2
+profile = pref_voting.profiles.Profile(
+    [[0, 1, 2]] * 3 + [[1, 2, 0]] * 2 + [[2, 0, 1]] * 2
+)
+condorcet_winner = pref_voting.c1_methods.condorcet(profile)
+print("Condorcet winner(s):", condorcet_winner)
+```
+
+```{code-cell} python3
+# Pairwise margin matrix
+import numpy as np
+
+# voters[i] = list of preferences in order (most to least preferred)
+votes = [[0, 1, 2]] * 3 + [[1, 2, 0]] * 2 + [[2, 0, 1]] * 2
+n_alt = 3
+margin = np.zeros((n_alt, n_alt), dtype=int)
+for v in votes:
+    for i in range(n_alt):
+        for j in range(i + 1, n_alt):
+            x, y = v[i], v[j]
+            margin[x][y] += 1
+            margin[y][x] -= 1
+
+labels = ["A", "B", "C"]
+print("Pairwise margins (row beats column by this many votes):")
+for i in range(n_alt):
+    for j in range(n_alt):
+        if i != j:
+            print(f"  {labels[i]} vs {labels[j]}: {margin[i][j]:+d}")
+```
+````
+
+````{solution} comparing_borda_and_condorcet
+:label: solution:comparing_borda_and_condorcet
+
+The preference profile is:
+
+- 4 voters: $A \succ B \succ C$
+- 3 voters: $B \succ C \succ A$
+- 2 voters: $C \succ A \succ B$
+
+There are 9 voters in total.
+
+**a. Borda scores:**
+
+With three alternatives, each voter assigns 2 points to their first choice,
+1 point to their second choice, and 0 points to their last choice.
+
+- **A:** $4 \times 2 + 3 \times 0 + 2 \times 1 = 8 + 0 + 2 = 10$
+- **B:** $4 \times 1 + 3 \times 2 + 2 \times 0 = 4 + 6 + 0 = 10$
+- **C:** $4 \times 0 + 3 \times 1 + 2 \times 2 = 0 + 3 + 4 = 7$
+
+Borda scores: $A = 10$, $B = 10$, $C = 7$.
+
+The Borda method produces a **tie between $A$ and $B$**. (Without a tie-breaking
+rule, neither is uniquely selected.)
+
+**b. Condorcet winner:**
+
+**A vs B:**
+
+- 4 voters prefer $A$ (group 1).
+- 3 voters prefer $B$ (group 2).
+- 2 voters prefer $A$ (group 3: $C \succ A \succ B$, so $A \succ B$).
+
+$A$ preferred by $4+2=6$, $B$ preferred by $3$. **$A$ beats $B$ 6 to 3.**
+
+**A vs C:**
+
+- 4 voters prefer $A$ (group 1).
+- 3 voters prefer $C$ (group 2).
+- 2 voters prefer $C$ (group 3).
+
+$A$ preferred by $4$, $C$ preferred by $3+2=5$. **$C$ beats $A$ 5 to 4.**
+
+**B vs C:**
+
+- 4 voters prefer $B$ (group 1).
+- 3 voters prefer $B$ (group 2).
+- 2 voters prefer $C$ (group 3).
+
+$B$ preferred by $4+3=7$, $C$ preferred by $2$. **$B$ beats $C$ 7 to 2.**
+
+Pairwise results: $A$ beats $B$; $B$ beats $C$; $C$ beats $A$. This is again a
+Condorcet cycle. **There is no Condorcet winner.**
+
+**c. Do Borda and Condorcet select the same winner?**
+
+There is no Condorcet winner here (due to the cycle). The Borda method yields a
+tie between $A$ and $B$. Since no Condorcet winner exists, we cannot directly
+compare the two methods in terms of who they "select", but we can note that the
+Borda method at least produces a complete ranking and is decisive (up to ties),
+while the Condorcet method fails to identify a winner in this case.
+
+```{code-cell} python3
+import pref_voting.profiles
+import pref_voting.c1_methods
+import pref_voting.scoring_methods
+
+profile = pref_voting.profiles.Profile(
+    [[0, 1, 2]] * 4 + [[1, 2, 0]] * 3 + [[2, 0, 1]] * 2
+)
+print("Condorcet winner:", pref_voting.c1_methods.condorcet(profile))
+print("Borda winner:", pref_voting.scoring_methods.borda(profile))
+```
+
+```{code-cell} python3
+# Manual Borda score computation
+groups = [(4, [0, 1, 2]), (3, [1, 2, 0]), (2, [2, 0, 1])]
+n_alt = 3
+borda_scores = [0, 0, 0]
+for count, ranking in groups:
+    for rank, alt in enumerate(ranking):
+        borda_scores[alt] += count * (n_alt - 1 - rank)
+labels = ["A", "B", "C"]
+for label, score in zip(labels, borda_scores):
+    print(f"Borda score of {label}: {score}")
+```
+````
+
+````{solution} strategic_manipulation_and_the_borda_method
+:label: solution:strategic_manipulation_and_the_borda_method
+
+The preference profile is:
+
+- 5 voters: $A \succ B \succ C$
+- 4 voters: $B \succ C \succ A$
+- 3 voters: $C \succ A \succ B$
+
+There are 12 voters in total.
+
+**a. Original Borda scores:**
+
+With three alternatives each voter assigns 2 points to their top choice, 1 to
+second, 0 to last.
+
+- **A:** $5 \times 2 + 4 \times 0 + 3 \times 1 = 10 + 0 + 3 = 13$
+- **B:** $5 \times 1 + 4 \times 2 + 3 \times 0 = 5 + 8 + 0 = 13$
+- **C:** $5 \times 0 + 4 \times 1 + 3 \times 2 = 0 + 4 + 6 = 10$
+
+Borda scores: $A = 13$, $B = 13$, $C = 10$.
+
+The **Borda winner is a tie between $A$ and $B$**.
+
+**b. Manipulation: one voter changes from $B \succ C \succ A$ to $B \succ A \succ C$:**
+
+The new profile is:
+
+- 5 voters: $A \succ B \succ C$
+- 3 voters: $B \succ C \succ A$ (one fewer)
+- 1 voter: $B \succ A \succ C$ (the manipulating voter)
+- 3 voters: $C \succ A \succ B$
+
+New Borda scores:
+
+- **A:** $5 \times 2 + 3 \times 0 + 1 \times 1 + 3 \times 1 = 10 + 0 + 1 + 3 = 14$
+- **B:** $5 \times 1 + 3 \times 2 + 1 \times 2 + 3 \times 0 = 5 + 6 + 2 + 0 = 13$
+- **C:** $5 \times 0 + 3 \times 1 + 1 \times 0 + 3 \times 2 = 0 + 3 + 0 + 6 = 9$
+
+New Borda scores: $A = 14$, $B = 13$, $C = 9$.
+
+**c. Does the outcome change?**
+
+Originally $A$ and $B$ were tied (both at 13). After the manipulation, **$A$
+wins outright with 14 points**, while $B$ drops to 13.
+
+The manipulating voter prefers $B$ to $A$, yet their manipulation caused $A$ to
+win (or more precisely, broke the tie in $A$'s favour, away from $B$). This
+shows that the manipulation was **not profitable for this voter** — it was
+inadvertent harm.
+
+However, the fact that changing a ballot in a way that does not affect the voter's
+stated preference between $B$ and $C$ (they still rank $B$ first) can nonetheless
+change the winner illustrates the Borda method's **vulnerability to strategic
+voting**. A voter who, in a different scenario, wanted to harm $A$ could promote
+$C$ (an irrelevant alternative) to second place — boosting $C$'s score and
+potentially tipping the outcome. This violates the **Independence of Irrelevant
+Alternatives** property and is the mechanism through which manipulation operates.
+
+More broadly, the Borda method is susceptible to strategic manipulation because
+the relative ranking of any two alternatives can be influenced by how a voter
+ranks a third, "irrelevant" alternative. This is precisely what the
+Gibbard-Satterthwaite theorem predicts: any non-dictatorial voting rule over
+three or more alternatives is manipulable.
+
+```{code-cell} python3
+import pref_voting.profiles
+import pref_voting.scoring_methods
+
+# Original profile: A=0, B=1, C=2
+profile_original = pref_voting.profiles.Profile(
+    [[0, 1, 2]] * 5 + [[1, 2, 0]] * 4 + [[2, 0, 1]] * 3
+)
+print("Original Borda winner:", pref_voting.scoring_methods.borda(profile_original))
+```
+
+```{code-cell} python3
+# Manipulated profile: one voter switches from B>C>A to B>A>C
+profile_manipulated = pref_voting.profiles.Profile(
+    [[0, 1, 2]] * 5 + [[1, 2, 0]] * 3 + [[1, 0, 2]] * 1 + [[2, 0, 1]] * 3
+)
+print("Manipulated Borda winner:", pref_voting.scoring_methods.borda(profile_manipulated))
+```
+
+```{code-cell} python3
+# Manual score verification
+def borda_scores(groups, n_alt=3):
+    scores = [0] * n_alt
+    for count, ranking in groups:
+        for rank, alt in enumerate(ranking):
+            scores[alt] += count * (n_alt - 1 - rank)
+    return scores
+
+original = borda_scores([(5,[0,1,2]),(4,[1,2,0]),(3,[2,0,1])])
+manipulated = borda_scores([(5,[0,1,2]),(3,[1,2,0]),(1,[1,0,2]),(3,[2,0,1])])
+labels = ["A","B","C"]
+print("Original scores:", {l:s for l,s in zip(labels, original)})
+print("Manipulated scores:", {l:s for l,s in zip(labels, manipulated)})
+```
+````
+
+````{solution} a_response_to_borda_from_condorcet
+:label: solution:a_response_to_borda_from_condorcet
+
+The preference profile is:
+
+| Number of votes | 1st | 2nd | 3rd |
+|-----------------|-----|-----|-----|
+| 30              | A   | B   | C   |
+| 1               | A   | C   | B   |
+| 29              | B   | A   | C   |
+| 10              | B   | C   | A   |
+| 10              | C   | A   | B   |
+| 1               | C   | B   | A   |
+
+Total voters: $30+1+29+10+10+1 = 81$.
+
+**1. Who is the Condorcet winner?**
+
+We check each pairwise majority contest.
+
+**A vs B:**
+
+Voters preferring $A$ over $B$: groups ranking $A$ above $B$:
+- 30 voters ($A \succ B \succ C$)
+- 1 voter ($A \succ C \succ B$)
+- 10 voters ($C \succ A \succ B$)
+
+Total preferring $A$: $30+1+10=41$.
+
+Voters preferring $B$ over $A$:
+- 29 voters ($B \succ A \succ C$)
+- 10 voters ($B \succ C \succ A$)
+- 1 voter ($C \succ B \succ A$)
+
+Total preferring $B$: $29+10+1=40$.
+
+**$A$ beats $B$ with 41 to 40.**
+
+**A vs C:**
+
+Voters preferring $A$ over $C$:
+- 30 voters ($A \succ B \succ C$)
+- 1 voter ($A \succ C \succ B$)
+- 29 voters ($B \succ A \succ C$)
+
+Total: $30+1+29=60$.
+
+Voters preferring $C$ over $A$:
+- 10 voters ($B \succ C \succ A$)
+- 10 voters ($C \succ A \succ B$)
+- 1 voter ($C \succ B \succ A$)
+
+Total: $10+10+1=21$.
+
+**$A$ beats $C$ with 60 to 21.**
+
+**B vs C:**
+
+Voters preferring $B$ over $C$:
+- 30 voters ($A \succ B \succ C$)
+- 29 voters ($B \succ A \succ C$)
+- 10 voters ($B \succ C \succ A$)
+- 1 voter ($C \succ B \succ A$)
+
+Total: $30+29+10+1=70$. Wait — $C \succ B \succ A$ means $C$ is preferred to $B$.
+
+Correcting:
+- 30 voters ($A \succ B \succ C$): prefer $B$ over $C$.
+- 1 voter ($A \succ C \succ B$): prefer $C$ over $B$.
+- 29 voters ($B \succ A \succ C$): prefer $B$ over $C$.
+- 10 voters ($B \succ C \succ A$): prefer $B$ over $C$.
+- 10 voters ($C \succ A \succ B$): prefer $C$ over $B$.
+- 1 voter ($C \succ B \succ A$): prefer $C$ over $B$.
+
+Total preferring $B$: $30+29+10=69$. Total preferring $C$: $1+10+1=12$.
+
+**$B$ beats $C$ with 69 to 12.**
+
+$A$ beats both $B$ and $C$, so **$A$ is the Condorcet winner**.
+
+**2. Who is the Borda winner?**
+
+With three alternatives, each voter assigns 2 points to their 1st choice,
+1 point to their 2nd choice, 0 to their 3rd choice.
+
+- **A:** $31\times 2 + 29\times 1 + 10\times 1 + 10\times 0 + 0\times 0 + ...$
+
+Let us compute carefully:
+
+| Group (count) | A points | B points | C points |
+|---------------|----------|----------|----------|
+| 30 ($A\succ B\succ C$) | $30\times2=60$ | $30\times1=30$ | $30\times0=0$ |
+| 1 ($A\succ C\succ B$)  | $1\times2=2$  | $1\times0=0$  | $1\times1=1$  |
+| 29 ($B\succ A\succ C$) | $29\times1=29$ | $29\times2=58$ | $29\times0=0$ |
+| 10 ($B\succ C\succ A$) | $10\times0=0$ | $10\times2=20$ | $10\times1=10$ |
+| 10 ($C\succ A\succ B$) | $10\times1=10$ | $10\times0=0$ | $10\times2=20$ |
+| 1 ($C\succ B\succ A$)  | $1\times0=0$  | $1\times1=1$  | $1\times2=2$  |
+
+Total Borda scores:
+
+- **A:** $60+2+29+0+10+0 = 101$
+- **B:** $30+0+58+20+0+1 = 109$
+- **C:** $0+1+0+10+20+2 = 33$
+
+The **Borda winner is $B$** with 109 points.
+
+**3. Why is this a critique of Borda's method?**
+
+$A$ is the Condorcet winner: it beats every other alternative in pairwise
+majority votes (41 to 40 over $B$; 60 to 21 over $C$). A majority of voters
+prefers $A$ to $B$ (41 out of 81).
+
+Yet the Borda method selects $B$ as the winner.
+
+This is Condorcet's critique of the Borda method: **the Borda method can fail to
+elect the Condorcet winner** even when one exists. The method gives weight to the
+intensity of preferences (how far apart alternatives are ranked) rather than
+just pairwise majority relationships. Here, $B$ benefits from being ranked
+second by many voters (the 30 who rank $A$ first and the 10 who rank $C$ first),
+accumulating enough second-place votes to overtake $A$'s lead in direct
+comparisons.
+
+This example showed Condorcet that the Borda method violates the Condorcet
+criterion — a property that many would argue is a minimal requirement of a
+reasonable voting rule.
+
+```{code-cell} python3
+import pref_voting.profiles
+import pref_voting.c1_methods
+import pref_voting.scoring_methods
+
+# A=0, B=1, C=2
+profile = pref_voting.profiles.Profile(
+    [[0, 1, 2]] * 30
+    + [[0, 2, 1]] * 1
+    + [[1, 0, 2]] * 29
+    + [[1, 2, 0]] * 10
+    + [[2, 0, 1]] * 10
+    + [[2, 1, 0]] * 1
+)
+
+print("Condorcet winner:", pref_voting.c1_methods.condorcet(profile))
+print("Borda winner:", pref_voting.scoring_methods.borda(profile))
+```
+
+```{code-cell} python3
+# Manual Borda score verification
+groups = [
+    (30, [0, 1, 2]),
+    (1,  [0, 2, 1]),
+    (29, [1, 0, 2]),
+    (10, [1, 2, 0]),
+    (10, [2, 0, 1]),
+    (1,  [2, 1, 0]),
+]
+scores = [0, 0, 0]
+for count, ranking in groups:
+    for rank, alt in enumerate(ranking):
+        scores[alt] += count * (2 - rank)
+print("Borda scores — A:", scores[0], "B:", scores[1], "C:", scores[2])
+```
+````
