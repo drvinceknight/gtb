@@ -38,7 +38,18 @@ _minted-main/
 
 # Myst output
 _build/
+public/
 .DS_Store
 
+# Jupyter
+.ipynb_checkpoints/
+Untitled*.ipynb
+
+# Python
 env*
 .venv
+__pycache__/
+
+# LaTeX artifacts
+texput.fls
+texput.log
