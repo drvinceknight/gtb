@@ -8,6 +8,11 @@ kernelspec:
 
 # Cooperative Games
 
+When players can form coalitions and make binding agreements, the key question
+shifts from what strategy to play to how to share the resulting surplus fairly.
+This chapter studies cooperative games through the characteristic function and
+develops the Shapley value as a principled allocation scheme.
+
 (motivating_example:dnd_battle)=
 
 ## Motivating Example: Dividing the loot after a D&D battle

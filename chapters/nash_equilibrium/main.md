@@ -8,6 +8,11 @@ kernelspec:
 
 # Nash Equilibrium
 
+When every player's strategy is a best response to every other's, no one has
+an incentive to deviate unilaterally — a configuration called a Nash
+equilibrium. This chapter formalises the concept, establishes its existence,
+and develops a systematic algorithm for computing it.
+
 (sec:motivating_example_nash_equilibrium)=
 
 ### Motivating Example

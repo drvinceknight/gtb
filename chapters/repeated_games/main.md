@@ -8,6 +8,11 @@ kernelspec:
 
 # Repeated Games
 
+When the same game is played repeatedly, players can condition future behaviour
+on past actions, opening the door to cooperation that would be impossible in a
+one-shot interaction. This chapter shows how indefinite repetition can sustain
+cooperative outcomes, culminating in the Folk Theorem.
+
 (example:repeated-contractor-game)=
 
 ## Motivating Example: Construction Contractors

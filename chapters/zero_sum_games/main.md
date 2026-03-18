@@ -8,6 +8,11 @@ kernelspec:
 
 # Zero-Sum Games
 
+In some strategic interactions, every gain for one player comes at an equal
+cost to another. This chapter studies this important special case, showing how
+minimax optimisation and linear programming together characterise optimal play
+when interests are directly opposed.
+
 (sec:motivating_example_zero_sum_games)=
 
 ## Motivating Example

@@ -8,6 +8,11 @@ kernelspec:
 
 # Rationality
 
+A rational player asks what is the best response to the strategies of others,
+and assumes that others reason the same way. This chapter formalises that idea,
+developing dominance, best responses, and iterated elimination to predict what
+rational players will — and will not — do.
+
 ## Motivating Example: Competing Restaurant Locations
 
 Two restaurant chains, **FreshBite** and **UrbanEats**, are expanding into a new

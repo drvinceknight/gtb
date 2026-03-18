@@ -8,6 +8,12 @@ kernelspec:
 
 # Best response polytopes
 
+The set of mixed strategies that best respond to some opponent strategy forms
+a polytope, and Nash equilibria correspond to complementary vertices of a pair
+of such polytopes. This chapter develops this geometric perspective and
+introduces the Lemke–Howson algorithm for finding Nash equilibria in two-player
+games.
+
 (sec:motivating_example_insider_threat_detection)=
 
 ## Motivating Example: Insider Threat Detection

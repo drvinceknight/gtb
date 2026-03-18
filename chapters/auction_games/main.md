@@ -8,6 +8,11 @@ kernelspec:
 
 # Auctions
 
+Auctions allocate goods to the bidders who value them most, without the seller
+needing to know those values. This chapter analyses first- and second-price
+sealed-bid auctions, deriving equilibrium bidding strategies and the
+surprising revenue equivalence between the two formats.
+
 (sec:motivating_example_bidding_for_backstage_passes)=
 
 ## Motivating Example: Bidding for backstage passes

@@ -8,6 +8,11 @@ kernelspec:
 
 # Games
 
+Game theory begins with a precise mathematical language for describing
+strategic interaction. This chapter introduces the two fundamental
+representations — normal form and extensive form — along with the core
+concepts of strategies and utilities that underpin everything that follows.
+
 ## Motivating Example
 
 Consider the following scenario: you would like to meet your **friends** for

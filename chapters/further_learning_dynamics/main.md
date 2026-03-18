@@ -8,6 +8,11 @@ kernelspec:
 
 # Learning and Evolutionary Dynamics
 
+The replicator dynamics and Moran process are just two of many ways a
+population might update its strategies over time. This chapter examines a
+broader family of learning and evolutionary dynamics, exploring how the choice
+of update rule shapes long-run behaviour.
+
 (sec:motivating_example_learning_dynamics)=
 
 ## Motivating Example: Does the Update Rule Matter?

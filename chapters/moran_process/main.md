@@ -8,6 +8,11 @@ kernelspec:
 
 # Moran Process
 
+In finite populations, random drift can overturn selection — a rare mutant
+strategy may take hold by chance even if it offers no advantage. This chapter
+introduces the Moran process to study such fixation events, analysing the
+probability that a single mutant takes over or disappears.
+
 (sec:motivating_example_preprint)=
 
 ## Motivating Example: Everyone’s citing the preprint

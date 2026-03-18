@@ -8,6 +8,11 @@ kernelspec:
 
 # Matching Games
 
+Many allocation problems require pairing agents from two groups such that no
+pair would mutually prefer to be matched to each other instead. This chapter
+develops the theory of stable matchings and the Gale–Shapley algorithm that
+constructs them.
+
 (sec:research_conference_motivating_example)=
 
 ## Motivating Example: Stable peer review assignment at a research conference

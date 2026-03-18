@@ -8,6 +8,11 @@ kernelspec:
 
 # Subgame Perfection
 
+Nash equilibrium can be sustained by threats that would never actually be
+carried out. This chapter introduces subgame perfect equilibrium, which rules
+out such implausible threats by requiring rationality at every point in the
+game tree, not only along the equilibrium path.
+
 (seltens_chain_store_paradox)=
 
 ## Motivating Example

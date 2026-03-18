@@ -8,6 +8,11 @@ kernelspec:
 
 # Replicator Dynamics
 
+When strategies that perform well spread and those that perform poorly shrink,
+populations evolve. This chapter derives the replicator dynamics equation,
+which models this selection process mathematically, and analyses the
+equilibria and long-run behaviour it produces.
+
 (sec:motivating_example)=
 
 ## Motivating Example: Coffee clubs and the common good game

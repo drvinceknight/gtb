@@ -8,6 +8,11 @@ kernelspec:
 
 # The Biological Origins of Evolutionary Game Theory
 
+Evolutionary biology poses questions that look surprisingly like strategic
+games: which traits persist in a population, and why? This chapter traces the
+biological origins of evolutionary game theory, introducing the evolutionarily
+stable strategy and laying the groundwork for the dynamic models that follow.
+
 (sec:motivating_example_stag_antlers)=
 
 ## Motivating Example: Why Don't Stags Have Bigger Antlers?

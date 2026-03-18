@@ -8,6 +8,11 @@ kernelspec:
 
 # Routing Games
 
+Selfish agents choosing routes through a shared network rarely produce the
+socially optimal outcome. This chapter studies routing games and the Price of
+Anarchy, quantifying how much individual optimisation can degrade collective
+performance.
+
 (sec:motivating_example_routing_delivery)=
 
 ## Motivating Example: Competing delivery companies
