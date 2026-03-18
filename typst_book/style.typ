@@ -82,6 +82,41 @@
   })
   show math.equation: set block(spacing: 1em)
 
+  // Fix all numbered references: MyST hardcodes the local counter number in
+  // #link(dest)[text]; this rule replaces it with chapter-prefixed numbers
+  // everywhere (e.g. "(2)" → "(2.2)", "Figure~3" → "Figure~2.3", "Table~1" → "Table~2.1").
+  show link: it => context {
+    let dest = it.dest
+    if type(dest) == label {
+      let ms = query(dest)
+      if ms.len() > 0 {
+        let elem = ms.first()
+        // Use elem.location() so the new link has a `location` destination,
+        // not a `label` — our rule only fires on label destinations, which
+        // breaks the recursion while keeping the PDF hyperlink intact.
+        let loc = elem.location()
+        if elem.func() == math.equation {
+          let chap = counter(heading).at(dest).at(0, default: 0)
+          let eq = counter(math.equation).at(dest).at(0, default: 0)
+          link(loc)[(#chap.#numbering("1)", eq)]
+        } else if elem.func() == figure and elem.kind == "table" {
+          let chap = counter(heading).at(dest).at(0, default: 0)
+          let num = counter(figure.where(kind: "table")).at(dest).at(0, default: 0)
+          link(loc)[Table~#chap.#num]
+        } else if elem.func() == figure and elem.kind == "figure" {
+          let chap = counter(heading).at(dest).at(0, default: 0)
+          let num = counter(figure.where(kind: "figure")).at(dest).at(0, default: 0)
+          link(loc)[Figure~#chap.#num]
+        } else {
+          it
+        }
+      } else {
+        it
+      }
+    } else {
+      it
+    }
+  }
 
   // Configure lists.
   set enum(indent: 10pt, body-indent: 9pt)

@@ -377,7 +377,7 @@ are referred to as **Pure Strategies**.
 
 #### Example: Expected Utility in Matching Pennies
 
-Using the [Matching Pennies game](#matching_pennies) and the strategy profile  
+Using [the Matching Pennies game](#matching_pennies) and the strategy profile  
 $\sigma_1 = (0.2, 0.8)$ and $\sigma_2 = (0.6, 0.4)$, the expected utilities are:
 
 $$
@@ -559,7 +559,7 @@ $$
 ```{exercise}
 :label: structure_of_a_perfect_information_game
 
-Using the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_information_bob_first) and the
+Using [the Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_information_bob_first) and the
 [definition of an Extensive Form Game](#definition_extensive_form_game):
 
 1. What is the finite set of players $\mathcal{N}$?
@@ -574,7 +574,7 @@ Using the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_inform
 ```{exercise}
 :label: structure_of_an_imperfect_information_game
 
-Using the [Coordination Game with imperfect information](#fig:battle_of_the_sexes_imperfect_information) and the
+Using [the Coordination Game with imperfect information](#fig:battle_of_the_sexes_imperfect_information) and the
 [definition of an Extensive Form Game](#definition_extensive_form_game):
 
 1. What is the finite set of players $\mathcal{N}$?
