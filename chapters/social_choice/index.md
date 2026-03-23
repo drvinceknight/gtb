@@ -9,10 +9,10 @@ kernelspec:
 # Social Choice
 
 Combining the preferences of many individuals into a single collective
-decision is surprisingly fraught. This chapter studies social choice theory,
-characterising aggregation procedures and establishing impossibility results —
-most famously Arrow's theorem — that reveal deep constraints on what any fair
-voting rule can achieve.
+decision is far harder than it appears. This chapter studies social choice
+theory, characterising aggregation procedures and establishing impossibility
+results, most famously Arrow's theorem, that reveal deep constraints on what
+any fair voting rule can achieve.
 
 (motivating_example:voting_on_exam_topics)=
 

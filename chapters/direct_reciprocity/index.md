@@ -9,9 +9,9 @@ kernelspec:
 # Direct Reciprocity
 
 Sustained cooperation in repeated games depends on players having memory and
-the right response rules. This chapter studies memory-one strategies — rules
-that condition today's action solely on the previous round's outcome — and
-their role in the evolution of cooperation through direct reciprocity.
+the right response rules. This chapter studies memory-one strategies, which
+condition today's action solely on the previous round's outcome, and their
+role in the evolution of cooperation through direct reciprocity.
 
 (sec:motivating_example_direct_reciprocity)=
 

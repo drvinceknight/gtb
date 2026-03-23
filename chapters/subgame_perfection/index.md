@@ -8,10 +8,10 @@ kernelspec:
 
 # Subgame Perfection
 
-Nash equilibrium can be sustained by threats that would never actually be
-carried out. This chapter introduces subgame perfect equilibrium, which rules
-out such implausible threats by requiring rationality at every point in the
-game tree, not only along the equilibrium path.
+Nash equilibrium can be sustained by off-path promises that would never
+actually be honoured. This chapter introduces subgame perfect equilibrium,
+which rules out such implausible promises by requiring rationality at every
+point in the game tree, not only along the equilibrium path.
 
 (seltens_chain_store_paradox)=
 
@@ -25,7 +25,7 @@ Campus Caffeine, a mobile coffee van, is considering parking near a
 university where Latte Lords, a well-established bricks-and-mortar café,
 has been operating unchallenged. If Campus Caffeine **enters**, Latte Lords
 can slash prices for students (**Fight**) or maintain their premium pricing
-(Accommodate). If Campus Caffeine stays out, Latte Lords keeps
+(**Accommodate**). If Campus Caffeine stays out (**withdraws**), Latte Lords keeps
 enjoying high margins.
 
 There are three outcomes which are shown as an extensive form game in
@@ -47,7 +47,7 @@ There are three outcomes which are shown as an extensive form game in
 The extensive form game between Campus Caffeine and Latte Lords.
 ```
 
-As described in [](#sec:mapping_extensive_form_games_to_normal_form) it is
+As described in the [](#sec:mapping_extensive_form_games_to_normal_form) section it is
 possible to map an extensive form game to a normal form game. In this case we
 have:
 
@@ -175,7 +175,7 @@ Every finite game with perfect information has a Nash equilibrium in pure strate
 
 Recalling the properties of [sequential rationality](#sec:definition_of_sequential_rationality) we see that no player will
 have an incentive to deviate from the strategy profile found through backward induction.
-Secondly every finite game with perfect information can be solved using backward inductions which gives the result.
+Secondly every finite game with perfect information can be solved using backward induction which gives the result.
 
 ---
 
@@ -202,7 +202,7 @@ An extensive form game where all nodes initiate a subgame.
 
 #### Example: a game where all nodes do not initiate subgames
 
-A game **that does not have perfect information** nodes $c$, $f$ and $b$ initiate subgames but all of $b$'s successors do
+A game **that does not have perfect information** nodes $c$, $f$ and $b$ initiate subgames but both of $b$'s successors do
 not is shown in [](#fig:game-with-imperfect-information)
 
 ```{figure} ./images/game-with-imperfect-information/main.png
@@ -293,7 +293,7 @@ We see that the (unique) Nash equilibria for the above game is $(D,X)$.
 Thus the only subgame perfect equilibria of the _entire_ game is $\{AD,X\}$.
 
 ```{note}
-n games with perfect information, the Nash equilibrium obtained through backwards induction is subgame perfect.
+In games with perfect information, the Nash equilibrium obtained through backwards induction is subgame perfect.
 ```
 
 ## Exercises
@@ -355,7 +355,6 @@ Each seller's payoff is the proportion of customers they serve. Assume:
 1. Write the payoff functions of each player.
 2. Derive Player 2’s best response function $x_2^*(x_1)$.
 3. Use backward induction to find the subgame perfect equilibrium.
-4. Compare this to the simultaneous move version of the game.
 
 > _Hint_: Think geometrically about the midpoint between locations.
 ```
@@ -457,37 +456,96 @@ gives a Nash equilibrium—it guarantees a subgame perfect one.
 
 ## Solutions
 
-````{solution} backward_induction_practice
+```{solution} backward_induction_practice
 :label: solution:backward_induction_practice
 
-We apply backward induction to each game by working from the terminal nodes
-backwards, eliminating dominated actions at each decision node.
+**Game 1.**
 
-1. Starting from the final decision nodes, eliminate dominated actions bottom-up.
-   At each internal node the player chooses the action giving them the highest
-   payoff, given what the analysis of downstream nodes implies. The backward
-   induction equilibrium is the unique strategy profile that survives this
-   process.
+Starting at the deepest node, node $e$ (Player 1): $Y$ gives payoff $6 > 2$, so
+Player 1 chooses $Y$, replacing node $e$ with $(6, 4)$.
 
-2. The same procedure applies. At the last mover's node, the optimal action is
-   identified; moving up, the penultimate mover chooses optimally given that
-   prediction, and so on until the root.
+At node $d$ (Player 2): $X$ gives payoff $30 > 4$, so Player 2 chooses $X$,
+replacing node $d$ with $(7, 30)$.
 
-3. In games with multiple branches, backward induction traces every branch to
-   its terminal node, replaces each subtree with the payoff the last mover would
-   choose, and proceeds upward.
+At node $c$ (Player 1): $Z$ gives payoff $70 > 7$, so Player 1 chooses $Z$,
+replacing node $c$ with $(70, 3)$.
 
-4. The process is identical: backward induction yields a unique Nash equilibrium
-   in pure strategies for any finite game of perfect information (guaranteed by
-   the existence theorem). The resulting strategy profile specifies a best
-   response at every information set.
+At node $b$ (Player 2): $C$ gives payoff $6 > 3$, so Player 2 chooses $C$,
+replacing node $b$ with $(1, 6)$.
 
-```{note}
-In all four cases, the Nash equilibrium obtained via backward induction is
-subgame perfect, because the strategy profile constitutes a Nash equilibrium
-in every subgame — including those off the equilibrium path.
+At node $a$ (Player 1): $A$ gives payoff $3 > 1$, so Player 1 chooses $A$.
+
+The Nash equilibrium is $(\mathbf{AZY}, \mathbf{CX})$ with outcome $(3, 2)$.
+
+---
+
+**Game 2.**
+
+At node $d$ (Player 1): $M$ gives $10 > 5$, so Player 1 chooses $M$,
+replacing node $d$ with $(10, 1)$.
+
+At node $e$ (Player 1): $Y$ gives $2 > 1$, so Player 1 chooses $Y$,
+replacing node $e$ with $(2, 3)$.
+
+At node $f$ (Player 1): $L$ gives $5 > 1$, so Player 1 chooses $L$,
+replacing node $f$ with $(5, 10)$.
+
+At node $g$ (Player 1): $L$ gives $6 > 3$, so Player 1 chooses $L$,
+replacing node $g$ with $(6, 7)$.
+
+At node $b$ (Player 2): $C$ gives $3 > 1$, so Player 2 chooses $C$,
+replacing node $b$ with $(2, 3)$.
+
+At node $c$ (Player 2): $A$ gives $10 > 7$, so Player 2 chooses $A$,
+replacing node $c$ with $(5, 10)$.
+
+At node $a$ (Player 1): $W$ gives $5 > 2$, so Player 1 chooses $W$.
+
+The Nash equilibrium is $(\mathbf{WMYLL}, \mathbf{AC})$ with outcome $(5, 10)$.
+
+---
+
+**Game 3.**
+
+This game has imperfect information: Player 2's nodes $b$ and $c$ form one
+information set, and Player 3's nodes $d$ and $e$ form another. Backward
+induction is applied by identifying dominant actions at each information set.
+
+At Player 3's information set $\{d, e\}$: at node $d$, action $B$ gives
+$80 > 50$; at node $e$, action $B$ gives $53 > 2$. So $B$ dominates $A$ for
+Player 3 at both nodes.
+
+With Player 3 playing $B$, node $d$ is replaced by $(20, 50, 80)$ and node $e$
+by $(60, 1, 53)$.
+
+At Player 2's information set $\{b, c\}$: at node $b$, action $B$ gives
+$2 > 1$ (leading to $(3,2,1)$ vs $(60,1,53)$); at node $c$, action $B$ gives
+$50 > 0$ (leading to $(20,50,80)$ vs $(4,0,3)$). So $B$ dominates $A$ for
+Player 2 at both nodes.
+
+With Player 2 playing $B$: node $b$ is replaced by $(3, 2, 1)$ and node $c$
+by $(20, 50, 80)$.
+
+At node $a$ (Player 1): $A$ gives $20 > 3$, so Player 1 chooses $A$.
+
+The Nash equilibrium is $(\mathbf{A}, \mathbf{B}, \mathbf{B})$ with outcome
+$(20, 50, 80)$.
+
+---
+
+**Game 4.**
+
+At node $b$ (Player 1): $A$ gives $3 > 1$, so Player 1 chooses $A$,
+replacing node $b$ with $(3, 2)$.
+
+At node $c$ (Player 2): $C$ gives $3 > 0 = 0$, so Player 2 chooses $C$,
+replacing node $c$ with $(2, 3)$.
+
+At node $a$ (Player 1): $A$ gives $3 > 2$, so Player 1 chooses $A$.
+
+The Nash equilibrium is $(\mathbf{AA}, \mathbf{C})$ with outcome $(3, 2)$.
+
 ```
-````
 
 ````{solution} entry_signals_and_continuous_action
 :label: solution:entry_signals_and_continuous_action
@@ -495,186 +553,176 @@ in every subgame — including those off the equilibrium path.
 We solve by backward induction. Player 1 moves first (choosing $x \geq 0$),
 then both players simultaneously choose $y_1, y_2 \in \mathbb{R}$.
 
-**Step 1: Solve the simultaneous subgame for fixed $x$ and $y_1$.**
+**Step 1: Solve the simultaneous subgame for fixed $x$.**
 
-Player 2 maximises $-(y_1 - 2y_2)^2$. This is maximised when $y_1 - 2y_2 = 0$,
-giving:
-
-$$
-y_2^*(y_1) = \frac{y_1}{2}
-$$
-
-**Step 2: Given Player 2's best response, solve for Player 1's optimal $y_1$.**
-
-Substituting $y_2 = y_1/2$ into Player 1's utility:
+Player 2 maximises $-(y_1 - 2y_2)^2$, which requires $y_1 - 2y_2 = 0$, giving:
 
 $$
-\begin{align*}
-u_1 &= 2y_2 y_1 + x y_1 - y_1^2 - \frac{x^3}{3} \\
-    &= 2 \cdot \frac{y_1}{2} \cdot y_1 + x y_1 - y_1^2 - \frac{x^3}{3} \\
-    &= y_1^2 + x y_1 - y_1^2 - \frac{x^3}{3} \\
-    &= x y_1 - \frac{x^3}{3}
-\end{align*}
+\tilde{y}_2(y_1) = \frac{y_1}{2}
 $$
 
-This is linear in $y_1$. If $x > 0$ then $u_1 \to \infty$ as $y_1 \to \infty$,
-so there is no finite optimum unless we impose additional constraints. Under the
-problem as stated (with $y_1 \in \mathbb{R}$ unconstrained), we instead
-interpret the optimisation by taking the first-order condition with respect to
-$y_1$ before substituting $y_2^*$:
+Player 1 maximises $2y_2 y_1 + xy_1 - y_1^2 - x^3/3$ over $y_1$. The
+first-order condition is:
 
 $$
 \frac{\partial u_1}{\partial y_1} = 2y_2 + x - 2y_1 = 0
-\implies y_1^* = \frac{2y_2 + x}{2}
+\implies \tilde{y}_1(y_2) = \frac{2y_2 + x}{2}
 $$
 
-Substituting $y_2 = y_1/2$ (Player 2's best response):
+Solving the two best responses simultaneously by substituting
+$\tilde{y}_2 = y_1/2$ into $\tilde{y}_1$:
 
 $$
-y_1^* = \frac{2(y_1^*/2) + x}{2} = \frac{y_1^* + x}{2}
-\implies 2y_1^* = y_1^* + x
-\implies y_1^* = x
+y_1 = \frac{2(y_1/2) + x}{2} = \frac{y_1 + x}{2}
+\implies y_1 = x, \qquad y_2 = \frac{x}{2}
 $$
 
-**Step 3: Solve for Player 1's choice of $x$.**
+**Step 2: Optimise Player 1's choice of $x$.**
 
-Substituting $y_1^* = x$ and $y_2^* = x/2$ into $u_1$:
-
-$$
-\begin{align*}
-u_1 &= 2 \cdot \frac{x}{2} \cdot x + x \cdot x - x^2 - \frac{x^3}{3} \\
-    &= x^2 + x^2 - x^2 - \frac{x^3}{3} \\
-    &= x^2 - \frac{x^3}{3}
-\end{align*}
-$$
-
-Taking the first-order condition with respect to $x$:
+Substituting $y_1 = x$ and $y_2 = x/2$ into $u_1$:
 
 $$
-\frac{du_1}{dx} = 2x - x^2 = x(2 - x) = 0
+u_1 = 2 \cdot \frac{x}{2} \cdot x + x \cdot x - x^2 - \frac{x^3}{3} = x^2 - \frac{x^3}{3}
 $$
 
-So $x^* = 0$ or $x^* = 2$. Checking the second-order condition:
-
-$$
-\frac{d^2 u_1}{dx^2} = 2 - 2x
-$$
-
-At $x^* = 2$: $\frac{d^2 u_1}{dx^2} = 2 - 4 = -2 < 0$ (maximum).
-
-At $x^* = 0$: $\frac{d^2 u_1}{dx^2} = 2 > 0$ (minimum).
-
-Thus the interior maximiser is $x^* = 2$.
+The first-order condition $\frac{du_1}{dx} = 2x - x^2 = x(2-x) = 0$ gives
+$x = 0$ or $x = 2$. The second-order condition
+$\frac{d^2u_1}{dx^2} = 2 - 2x$ equals $-2 < 0$ at $x = 2$ (maximum) and
+$2 > 0$ at $x = 0$ (minimum), so $x^* = 2$.
 
 **Subgame perfect equilibrium:**
 
 $$
-x^* = 2,\quad y_1^*(x) = x,\quad y_2^*(y_1) = \frac{y_1}{2}
+(x^*,\ \tilde{y}_1(x),\ \tilde{y}_2(y_1)) = \left(2,\ x,\ \frac{y_1}{2}\right)
 $$
 
 On the equilibrium path: $x^* = 2$, $y_1^* = 2$, $y_2^* = 1$.
 
-The equilibrium payoffs are:
-
-$$
-u_1 = 4 - \frac{8}{3} = \frac{4}{3}, \qquad u_2 = -(2 - 2)^2 = 0
-$$
+Here is some code to verify these calculations:
 
 ```{code-cell} python3
 import sympy as sym
 
 x, y1, y2 = sym.symbols("x y1 y2", real=True)
 
-u1 = 2 * x * y1 - y1**2 - x**3 / 3
+u1 = 2 * y2 * y1 + x * y1 - y1**2 - sym.Rational(1, 3) * x**3
 u2 = -(y1 - 2 * y2)**2
 
-# Player 2's best response
 br2 = sym.solve(sym.diff(u2, y2), y2)[0]
+br1 = sym.solve(sym.diff(u1, y1), y1)[0]
 print("Player 2 BR:", br2)
+print("Player 1 BR:", br1)
 
-# Substitute into Player 1's FOC for y1
-u1_sub = u1.subs(y2, br2)
-br1_eq = sym.solve(sym.diff(u1_sub, y1), y1)[0]
-print("Player 1's optimal y1 given y2*:", br1_eq)
+y1_eq = sym.solve(sym.Eq(y1, br1.subs(y2, br2)), y1)[0]
+y2_eq = br2.subs(y1, y1_eq)
+print("Simultaneous solution: y1 =", y1_eq, ", y2 =", y2_eq)
 
-# Substitute y1* = x into u1 to get Player 1's reduced problem
-u1_reduced = u1_sub.subs(y1, br1_eq)
-u1_simplified = sym.simplify(u1_reduced)
-print("Player 1's reduced utility in x:", u1_simplified)
-
-# Find optimal x
-x_star = sym.solve(sym.diff(u1_simplified, x), x)
+u1_reduced = u1.subs([(y1, y1_eq), (y2, y2_eq)])
+x_star = sym.solve(sym.diff(u1_reduced, x), x)
 print("Optimal x candidates:", x_star)
 ```
-
-```{code-cell} python3
-x_opt = 2
-y1_opt = x_opt
-y2_opt = y1_opt / 2
-
-u1_opt = 2 * y2_opt * y1_opt + x_opt * y1_opt - y1_opt**2 - x_opt**3 / 3
-u2_opt = -(y1_opt - 2 * y2_opt)**2
-
-print(f"Equilibrium: x*={x_opt}, y1*={y1_opt}, y2*={y2_opt}")
-print(f"Payoffs: u1={u1_opt:.4f}, u2={u2_opt:.4f}")
-```
 ````
 
-````{solution} subgame_identification_and_refinement
+```{solution} subgame_identification_and_refinement
 :label: solution:subgame_identification_and_refinement
 
-For each extensive form game we (i) identify all subgames, (ii) derive the
-normal form, (iii) find all Nash equilibria, and (iv) identify which are
-subgame perfect.
+**Game 1.** Nodes $d$ and $e$ are in the same information set, but $d$ has
+action set $\{M, N\}$ while $e$ has action set $\{A, B\}$. This violates the
+requirement that all nodes in an information set share the same action set.
+The game is not well-defined.
 
-Recall the definition: a node $x$ **initiates a subgame** if and only if $x$
-and all its successors lie in information sets that contain only successors of
-$x$.
+**Game 2.** Nodes $b$ and $c$ are in the same information set, but $b$ has
+action set $\{C, D\}$ while $c$ has action set $\{A, B\}$. The game is not
+well-defined for the same reason.
 
-**Game 1**
+**Game 3.**
 
-In a game of perfect information every decision node initiates a subgame.
-Backward induction at the final decision node identifies the last mover's best
-action; this is substituted back, and the process continues to the root.
+**Subgames.** Node $c$ is a singleton and all its successors are terminals, so
+it initiates a subgame. Node $b$ is a singleton and its only non-terminal
+successors, $d$ and $e$, are both in the same information set $\{d,e\}$, which
+lies entirely within the subtree of $b$; so $b$ also initiates a subgame.
 
-- All subgames are the subtrees rooted at each decision node.
-- The normal form is derived by listing each player's complete contingent plan
-  (one action per information set).
-- Nash equilibria are found by inspecting best-response correspondences.
-- Among these, only those in which every player plays optimally at every
-  information set (including off-path ones) are subgame perfect. In perfect
-  information games, backward induction delivers the unique subgame perfect
-  equilibrium.
+**Subgame at $c$.** Player 2 chooses $C \to (10, 10)$ or $D \to (20, 20)$.
+Since $20 > 10$, Player 2 plays $D$.
 
-**Game 2**
+**Subgame at $b$.** Player 2 chooses $H$ (reaching node $e$) or $T$ (reaching
+node $d$). Player 1, unable to distinguish $d$ from $e$, plays a single action
+from $\{H, T\}$ at the information set. With rows as Player 2's actions at $b$
+and columns as Player 1's actions at $\{d,e\}$:
 
-If the game contains an information set grouping multiple nodes (imperfect
-information), then those nodes do not individually initiate subgames. Only
-nodes whose entire subtree — including all successors — lies in singleton
-information sets can initiate subgames.
+$$
+M_r = \begin{pmatrix} -2 & 1 \\ 2 & -1 \end{pmatrix}
+\qquad
+M_c = \begin{pmatrix} 2 & -1 \\ -2 & 1 \end{pmatrix}
+$$ There is no pure Nash equilibrium. For the mixed equilibrium, Player
+1's indifference condition gives:
 
-- Identify which nodes have the subgame-initiation property.
-- Derive the normal form by listing strategies as complete contingent plans.
-- Find Nash equilibria by checking best responses.
-- Eliminate equilibria in which some player's strategy is not optimal in at
-  least one proper subgame; the remainder are subgame perfect.
+$$
+-2q + 2(1-q) = 2q - 2(1-q) \implies q = \tfrac{1}{2}
+$$
 
-**Game 3**
+and Player 2's indifference condition gives:
 
-Apply the same procedure as Game 2. In general, fewer subgames mean weaker
-refinement: Nash equilibria that require non-credible threats in unreached
-information sets may survive as Nash equilibria but fail subgame perfection
-only when those information sets do initiate proper subgames.
+$$
+2p - (1-p) = -2p + (1-p) \implies p = \tfrac{1}{3}
+$$
 
-```{note}
-In any finite game of perfect information, backward induction produces a
-subgame perfect Nash equilibrium. For games with imperfect information, one
-must identify proper subgames explicitly and verify the Nash equilibrium
-condition within each.
+The unique Nash equilibrium of this subgame is Player 2 plays $H$ with
+probability $\tfrac{1}{2}$ and Player 1 plays $H$ with probability $\tfrac{1}{3}$.
+Player 1's expected payoff at this equilibrium is $0$.
+
+**Normal form of the whole game.** The strategy sets are:
+
+$$
+S_1 = \{AH,\ AT,\ BH,\ BT\}, \qquad S_2 = \{HC,\ HD,\ TC,\ TD\}
+$$
+
+where the first letter of each strategy is the action at $a$ (for Player 1) or
+$b$ (for Player 2), and the second is the action at $\{d,e\}$ (for Player 1)
+or $c$ (for Player 2). With rows ordered $(AH, AT, BH, BT)$ and columns
+ordered $(HC, HD, TC, TD)$:
+
+$$
+M_r = \begin{pmatrix}
+2  &  2  & -2 & -2 \\
+-1 & -1  &  1 &  1 \\
+10 & 20  & 10 & 20 \\
+10 & 20  & 10 & 20
+\end{pmatrix}
+\qquad
+M_c = \begin{pmatrix}
+-2 & -2 &  2 &  2 \\
+ 1 &  1 & -1 & -1 \\
+10 & 20 & 10 & 20 \\
+10 & 20 & 10 & 20
+\end{pmatrix}
+$$
+
+**Pure Nash equilibria.** For any Player 2 strategy, Player 1 prefers $BH$ or
+$BT$ (payoff 10 or 20) over any $A$-strategy. Given Player 1 plays $B$, Player
+2 prefers $D$ at $c$ (payoff 20 over 10). There are four pure Nash equilibria:
+$(BH, HD)$, $(BH, TD)$, $(BT, HD)$, $(BT, TD)$.
+
+**Subgame perfection.** Each pure Nash equilibrium fixes a pure strategy for
+Player 2 at $b$ and Player 1 at $\{d,e\}$; none of these pure combinations are
+Nash equilibria in the subgame at $b$ (which has no pure Nash equilibrium), so
+none of the four pure equilibria are subgame perfect.
+
+The unique subgame perfect Nash equilibrium combines the mixed Nash equilibrium
+of the subgame at $b$ with Player 1 choosing $B$ at $a$ (expected payoff $20 >
+0$) and Player 2 choosing $D$ at $c$:
+
+$$
+\sigma_1 = (AH: 0,\ AT: 0,\ BH: \tfrac{1}{3},\ BT: \tfrac{2}{3})
+$$
+
+$$
+\sigma_2 = (HC: 0,\ HD: \tfrac{1}{2},\ TC: 0,\ TD: \tfrac{1}{2})
+$$
+
 ```
-````
 
-````{solution} stackelberg_ice_cream_sellers
+```{solution} stackelberg_ice_cream_sellers
 :label: solution:stackelberg_ice_cream_sellers
 
 **1. Payoff functions**
@@ -748,43 +796,4 @@ $$
 
 Both players locate at the centre and share the market equally, each earning
 $\frac{1}{2}$.
-
-**4. Comparison to the simultaneous-move game**
-
-In the simultaneous-move version, both players choose locations without
-observing the other. It is well known (Hotelling's Law) that the unique Nash
-equilibrium is $x_1 = x_2 = \frac{1}{2}$: both sellers crowd to the centre.
-
-In the sequential (Stackelberg) version, Player 2's best response is to match
-Player 1's location exactly. Player 1, anticipating this, is indifferent over
-all locations on $[0, 1]$ and earns $\frac{1}{2}$ regardless. So the equilibrium
-payoffs are identical: $(1/2, 1/2)$.
-
-The key difference is strategic commitment: Player 1 moves first but cannot
-exploit this because Player 2's best response neutralises any positional
-advantage. This contrasts with Stackelberg quantity competition (Cournot), where
-the leader earns strictly more.
-
-```{code-cell} python3
-import sympy as sym
-
-x1, x2 = sym.symbols("x1 x2", real=True)
-
-# Payoff for player 2 when x2 > x1
-u2_right = 1 - (x1 + x2) / 2
-
-# FOC for player 2 (maximise over x2)
-foc2 = sym.diff(u2_right, x2)
-print("dU2/dx2 (when x2 > x1):", foc2)
-print("Negative of x2 coefficient confirms decreasing in x2 — best response is x2 -> x1 from above.")
-
-# Payoff for player 2 when x2 < x1
-u2_left = (x1 + x2) / 2
-foc2_left = sym.diff(u2_left, x2)
-print("\ndU2/dx2 (when x2 < x1):", foc2_left)
-print("Positive — best response is x2 -> x1 from below.")
-
-print("\nIn both cases the best response converges to x2* = x1.")
-print("Player 1's payoff at any x1 with x2* = x1: u1 = 0.5")
 ```
-````

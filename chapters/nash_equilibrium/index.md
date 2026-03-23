@@ -9,13 +9,13 @@ kernelspec:
 # Nash Equilibrium
 
 When every player's strategy is a best response to every other's, no one has
-an incentive to deviate unilaterally — a configuration called a Nash
+an incentive to deviate unilaterally. This configuration is called a Nash
 equilibrium. This chapter formalises the concept, establishes its existence,
 and develops a systematic algorithm for computing it.
 
 (sec:motivating_example_nash_equilibrium)=
 
-### Motivating Example
+## Motivating Example
 
 In [the coordination Game](#sec:coordination_game) [](#eqn:coordination_game_payoff_matrices), in how many
 situations do neither player have an incentive
@@ -757,9 +757,24 @@ $$
 $$
 
 The middle shot is never played at equilibrium because its scoring probabilities are dominated by the mixing of SL and SR, giving the kicker no strategic advantage from including it.
+This can been seen numerically by plotting the utilities as a function of the $\sigma_2=(y, 1-y)$. At no value of $y$ is the middle shot ever
+a best response.
 
 ```{code-cell} python3
+import matplotlib.pyplot as plt
+
 M_r = np.array([[0.8, 0.15], [0.5, 0.5], [0.2, 0.95]])
+
+plt.plot(M_r[0], label=r"$u_r(\text{SL}, \sigma_2)$")
+plt.plot(M_r[1], label=r"$u_r(\text{SM}, \sigma_2)$")
+plt.plot(M_r[2], label=r"$u_r(\text{SR}, \sigma_2)$")
+plt.xlabel("$y$")
+plt.legend()
+```
+
+Let us confirm the equilibria:
+
+```{code-cell} python3
 M_c = 1 - M_r
 three_action_game = nash.Game(M_r, M_c)
 for eq in three_action_game.support_enumeration():

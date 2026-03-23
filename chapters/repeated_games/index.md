@@ -636,7 +636,7 @@ any history **both** players will act in the same way and no player will have an
 
 ## Exercises
 
-```{exercise} 
+```{exercise}
 :label: constructing_non-stage-equilibrium_repeated_outcomes
 
 
@@ -699,8 +699,7 @@ M_c =
 $$
 ```
 
-
-```{exercise} 
+```{exercise}
 :label: size_of_action_space
 
 For a general stage game with $(M_r, M_c) \in \mathbb{R}^{(m\times n)^2}$
@@ -711,9 +710,7 @@ identify the size of the action space for the repeated game for each player when
 - General $m, n, T$.
 ```
 
-
-
-```{exercise} 
+```{exercise}
 :label: payoffs_and_equilibrium_in_the_infinite_game
 
 
@@ -746,7 +743,6 @@ $$
    - $(2, 6)$
    - $(2, 0)$
 ```
-
 
 ## Programming
 
@@ -854,7 +850,7 @@ provided the players are sufficiently patient.
 
 ## Solutions
 
-````{solution} constructing_non-stage-equilibrium_repeated_outcomes
+```{solution} constructing_non-stage-equilibrium_repeated_outcomes
 :label: solution:constructing_non-stage-equilibrium_repeated_outcomes
 
 Recall that in a finitely repeated game the final stage must be played as a
@@ -889,18 +885,6 @@ unique stage Nash equilibrium, there is no second equilibrium to use as a
 punishment. Thus it is **not possible** to sustain a non-stage-Nash outcome as
 a subgame perfect equilibrium for any finite repetition.
 
-```{code-cell} python3
-import nashpy as nash
-import numpy as np
-
-M_r1 = np.array([[4, 7], [1, 4]])
-M_c1 = np.array([[3, 6], [1, 3]])
-game1 = nash.Game(M_r1, M_c1)
-print("Game 1 Nash equilibria:")
-for eq in game1.support_enumeration():
-    print(eq)
-```
-
 **Game 2**
 
 $$
@@ -928,39 +912,44 @@ So there are (at least) two pure Nash equilibria: $(r_1, c_1)$ with payoffs $(5,
 and $(r_2, c_2)$ with payoffs $(1, 4)$.
 
 With two Nash equilibria we can construct a subgame perfect equilibrium using
-the better equilibrium $(r_1, c_1)$ as a reward and $(r_2, c_2)$ as a punishment.
+$(r_1, c_1)$ as a reward and $(r_2, c_2)$ as a punishment to sustain
+$(r_3, c_1)$ in stage 1.
 
-Consider the outcome $(r_3, c_1)$ in stage 1, yielding $(3, 6)$, followed by
-$(r_1, c_1)$ in stage 2 if no deviation occurred, and $(r_2, c_2)$ otherwise.
+**Incentive constraints.** Row's payoff under cooperation: $3 + 5 = 8$.
+Row's best deviation in stage 1 given column plays $c_1$ is $r_1$, yielding
+$5 + 1 = 6$. Since $8 > 6$, row does not deviate. Column's payoff under
+cooperation: $6 + 4 = 10$. Column's best deviation given row plays $r_3$ is
+$c_2$, yielding $3 + 4 = 7$. Since $10 > 7$, column does not deviate.
 
-**Is $(r_3, c_1)$ achievable in stage 1 under this strategy?**
+The subgame perfect equilibrium is given by the following two strategies:
 
-- Row's payoff under cooperation: $3 + 5 = 8$.
-- Row's best deviation in stage 1 (given column plays $c_1$): play $r_1$ for
-  payoff $5 + 1 = 6$ (punishment in stage 2 is $(r_2, c_2)$ giving row $1$).
-  Since $8 > 6$, row has no incentive to deviate.
+**Row's strategy $s_r$:**
+- Stage 1: play $r_3$.
+- Stage 2: play $r_1$ if the stage 1 outcome was $(r_3, c_1)$; play $r_2$ otherwise.
 
-- Column's payoff under cooperation: $6 + 4 = 10$.
-- Column's best deviation in stage 1 (given row plays $r_3$): play $c_2$ for
-  payoff $3 + 4 = 7$ (punishment in stage 2). Since $10 > 7$, column has no
-  incentive to deviate.
+**Column's strategy $s_c$:**
+- Stage 1: play $c_1$.
+- Stage 2: play $c_1$ if the stage 1 outcome was $(r_3, c_1)$; play $c_2$ otherwise.
 
-Thus the strategy profile:
+This yields total payoffs $(3 + 5,\ 6 + 4) = (8, 10)$, which is not a
+repetition of stage Nash profiles.
 
-> Stage 1: $(r_3, c_1)$. Stage 2: play $(r_1, c_1)$ if stage 1 was $(r_3, c_1)$,
-> otherwise play $(r_2, c_2)$.
+**Verifying neither player has an incentive to deviate.**
 
-is a subgame perfect equilibrium yielding utility vector $(3+5, 6+4) = (8, 10)$,
-which is **not** a repetition of stage Nash profiles.
+In stage 2 both players are prescribed a stage Nash equilibrium, so neither
+can gain by deviating there regardless of the stage 1 history.
 
-```{code-cell} python3
-M_r2 = np.array([[5, 0], [0, 1], [3, 0]])
-M_c2 = np.array([[4, 3], [3, 4], [6, 3]])
-game2 = nash.Game(M_r2, M_c2)
-print("Game 2 Nash equilibria:")
-for eq in game2.support_enumeration():
-    print(eq)
-```
+In stage 1, given the opponent follows $s_c$ (resp. $s_r$):
+
+- Row receives $3 + 5 = 8$ by following $s_r$. The best deviation is $r_1$,
+  which gives $5$ in stage 1 but triggers the punishment $(r_2, c_2)$ in stage
+  2, yielding $5 + 1 = 6 < 8$. Row does not deviate.
+- Column receives $6 + 4 = 10$ by following $s_c$. The best deviation is $c_2$,
+  which gives $3$ in stage 1 but triggers $(r_2, c_2)$ in stage 2, yielding
+  $3 + 4 = 7 < 10$. Column does not deviate.
+
+Therefore $(s_r, s_c)$ is a Nash equilibrium.
+
 
 **Game 3**
 
@@ -979,100 +968,108 @@ $$
 
 Find stage Nash equilibria:
 
-- $(r_1, c_1)$: Row BR to $c_1$: $r_1$ (1>-1). Column BR to $r_1$: $c_2$ (3>2>1). Not NE.
-- $(r_1, c_2)$: Row BR to $c_2$: $r_1$ (0>-1). Column BR to $r_1$: $c_2$ (3>2>1). NE? Column: 3 vs 2 vs 1 — prefers $c_2$. **NE**.
-- $(r_2, c_3)$: Row BR to $c_3$: $r_2$ (0>-1). Column BR to $r_2$: $c_1$ or $c_3$ (both give 1, vs -1 for $c_2$). So $(r_2, c_1)$ and $(r_2, c_3)$ are potential NE. For $(r_2,c_3)$: Column: 1 vs -1 vs 1 — ties between $c_1$ and $c_3$. Row: $c_3$ gives 0, $c_1$ gives -1 — prefers $r_2$ to $c_3$. **NE** (and so is $(r_2, c_1)$).
+- $(r_1, c_2)$: Row BR to $c_2$: $r_1$ ($0 > -1$). Column BR to $r_1$: $c_2$ ($3 > 2 > 1$). **NE**, payoffs $(0, 3)$.
+- $(r_2, c_3)$: Row BR to $c_3$: $r_2$ ($0 > -1$). Column BR to $r_2$: $c_1$ or $c_3$ ($1 > -1$, tie). **NE**, payoffs $(0, 1)$.
 
-We check with code:
+With two stage Nash equilibria we use $(r_1, c_2)$ as a reward (column's
+preferred equilibrium) and $(r_2, c_3)$ as a punishment to sustain $(r_1, c_1)$
+in stage 1.
 
-```{code-cell} python3
-M_r3 = np.array([[1, 0, -1], [-1, -1, 0]])
-M_c3 = np.array([[2, 3, 1], [0, -1, 1]])
-game3 = nash.Game(M_r3, M_c3)
-print("Game 3 Nash equilibria:")
-for eq in game3.support_enumeration():
-    print(eq)
+**Incentive constraints.** Row already plays their best response to $c_1$ in
+stage 1, so row has no incentive to deviate. Column's payoff under cooperation:
+$2 + 3 = 5$. Column's best deviation given row plays $r_1$ is $c_2$, yielding
+$3 + 1 = 4$. Since $5 > 4$, column does not deviate.
+
+The subgame perfect equilibrium is given by the following two strategies:
+
+**Row's strategy $s_r$:**
+- Stage 1: play $r_1$.
+- Stage 2: play $r_1$ if the stage 1 outcome was $(r_1, c_1)$; play $r_2$ otherwise.
+
+**Column's strategy $s_c$:**
+- Stage 1: play $c_1$.
+- Stage 2: play $c_2$ if the stage 1 outcome was $(r_1, c_1)$; play $c_3$ otherwise.
+
+This yields total payoffs $(1 + 0,\ 2 + 3) = (1, 5)$, which is not a
+repetition of stage Nash profiles.
+
+**Verifying neither player has an incentive to deviate.**
+
+In stage 2 both players are prescribed a stage Nash equilibrium, so neither
+can gain by deviating there regardless of the stage 1 history.
+
+In stage 1, given the opponent follows $s_c$ (resp. $s_r$):
+
+- Row is already playing their best response to $c_1$ in stage 1 ($r_1$ gives
+  $1 > -1$), so row has no incentive to deviate regardless of stage 2
+  consequences.
+- Column receives $2 + 3 = 5$ by following $s_c$. The best deviation is $c_2$,
+  which gives $3$ in stage 1 but triggers the punishment $(r_2, c_3)$ in stage
+  2, yielding $3 + 1 = 4 < 5$. Column does not deviate.
+
+Therefore $(s_r, s_c)$ is a Nash equilibrium.
 ```
-
-With multiple stage Nash equilibria, one can construct a subgame perfect
-equilibrium sustaining a non-stage-Nash outcome in stage 1, using the
-best-for-both equilibrium as a reward and the worst as a punishment, provided
-the incentive constraint is satisfied.
-````
-
 
 ````{solution} size_of_action_space
 :label: solution:size_of_action_space
 
 A strategy in a repeated game maps every possible history of play to an action.
-We count the number of distinct strategies for the row player.
-
-**Setup.** In each stage the row player has $m$ actions and the column player
-has $n$ actions, so there are $mn$ possible outcomes per stage.
-
-At stage $t$ the history consists of the $t-1$ outcomes already played, so
-there are $(mn)^{t-1}$ possible histories entering stage $t$.
-
-A strategy specifies one of $m$ actions for each such history, so the number of
-pure strategies for a single stage $t$ (conditional on history) is
-$m^{(mn)^{t-1}}$.
-
-Since each stage is independent and the strategy must specify actions for all
-$T$ stages and all possible histories, the total number of pure strategies for
-the row player is:
-
-$$
-\begin{align*}
-\prod_{t=1}^{T} m^{(mn)^{t-1}} \\
-&= m^{\sum_{t=1}^{T}(mn)^{t-1}} \\
-&= m^{\frac{(mn)^T - 1}{mn - 1}}
-\end{align*}
-$$
+We count the number of pure strategies for the row player in each case, then
+identify the general pattern.
 
 **Case 1: $m = 2,\; n = 2,\; T = 2$.**
 
-$$
-\text{Number of strategies} = 2^{\frac{(4)^2 - 1}{4 - 1}} = 2^{\frac{15}{3}} = 2^5 = 32
-$$
+At stage 1 there is one history (the empty history), and row must choose one of
+$m = 2$ actions: $2$ choices.
 
-We verify: at $T=1$ there are $1$ history (empty) so $2^1=2$ action choices.
-At $T=2$ there are $(2\cdot2)^1=4$ possible stage-1 histories, giving $2^4=16$
-action choices. Total: $2 \times 16 = 32$.
+At stage 2 the history is the single stage-1 outcome. There are $mn = 4$
+possible stage-1 outcomes, so $4$ possible histories, and row must specify an
+action for each: $2^4 = 16$ choices.
+
+The total number of pure strategies is:
+
+$$
+2 \times 2^4 = 2^1 \cdot 2^4 = 2^5 = 32
+$$
 
 **Case 2: General $m, n,\; T = 3$.**
 
-$$
-\text{Number of strategies} = m^{1 + mn + (mn)^2} = m^{\frac{(mn)^3-1}{mn-1}}
-$$
+At stage 1: 1 history, $m$ choices.
 
-At $t=1$: 1 history, $m$ choices. At $t=2$: $mn$ histories, $m^{mn}$ choices.
-At $t=3$: $(mn)^2$ histories, $m^{(mn)^2}$ choices. Product:
+At stage 2: $mn$ possible stage-1 outcomes, so $mn$ histories. Row must specify
+an action for each: $m^{mn}$ choices.
+
+At stage 3: $(mn)^2$ possible two-stage histories. Row must specify an action
+for each: $m^{(mn)^2}$ choices.
+
+The total number of pure strategies is:
 
 $$
-m \cdot m^{mn} \cdot m^{(mn)^2} = m^{1 + mn + (mn)^2}
+m^1 \cdot m^{mn} \cdot m^{(mn)^2} = m^{1 + mn + (mn)^2}
 $$
 
 **Case 3: General $m, n, T$.**
 
+At stage $t$ there are $(mn)^{t-1}$ possible histories, requiring
+$m^{(mn)^{t-1}}$ action choices. The total number of pure strategies is:
+
 $$
-\text{Number of strategies for row player} = m^{\sum_{t=0}^{T-1}(mn)^t} = m^{\frac{(mn)^T-1}{mn-1}}
+\prod_{t=1}^{T} m^{(mn)^{t-1}} = m^{\sum_{t=0}^{T-1}(mn)^t} = m^{\frac{(mn)^T - 1}{mn - 1}}
 $$
 
-By symmetry, the column player's action space has size $n^{\frac{(mn)^T-1}{mn-1}}$.
+By the same reasoning, the column player has $n^{\frac{(mn)^T-1}{mn-1}}$ pure
+strategies.
+
+Here are some scenarios:
 
 ```{code-cell} python3
 import sympy as sym
 
 m, n, T_sym = sym.symbols("m n T", positive=True, integer=True)
 
-# General formula
-exponent = sym.Sum((m * n)**sym.Symbol("t"), (sym.Symbol("t"), 0, T_sym - 1)).doit()
-row_strategies = m**exponent
-print("Row player strategies (general):", row_strategies)
-
 # Specific case m=2, n=2, T=2
 result_22 = int(2 ** ((4**2 - 1) // (4 - 1)))
-print(f"\nm=2, n=2, T=2: row player has {result_22} pure strategies")
+print(f"m=2, n=2, T=2: row player has {result_22} pure strategies")
 
 # m=2, n=2, T=3
 exponent_T3 = 1 + 4 + 16
@@ -1080,7 +1077,6 @@ result_223 = 2**exponent_T3
 print(f"m=2, n=2, T=3: row player has {result_223} pure strategies")
 ```
 ````
-
 
 ````{solution} payoffs_and_equilibrium_in_the_infinite_game
 :label: solution:payoffs_and_equilibrium_in_the_infinite_game
@@ -1238,27 +1234,4 @@ We check each candidate:
 - $(2,\; 0)$: Is $0 > 1$? **No.** This fails individual rationality for the
   column player. **Not supportable.**
 
-```{code-cell} python3
-from scipy.spatial import ConvexHull
-import numpy as np
-
-outcomes = np.array([[-1, 1], [3, -7], [-2, 6], [2, 2]])
-hull = ConvexHull(outcomes)
-
-def in_convex_hull(point, hull):
-    """Test if a point lies within a convex hull."""
-    from scipy.spatial import Delaunay
-    deln = Delaunay(outcomes[hull.vertices])
-    return deln.find_simplex(point) >= 0
-
-candidates = [(1.5, 1.5), (0, 3), (2, 6), (2, 0)]
-nash_payoffs = (-1, 1)
-
-for v1, v2 in candidates:
-    feasible = in_convex_hull(np.array([v1, v2]), hull)
-    ind_rational = (v1 > nash_payoffs[0]) and (v2 > nash_payoffs[1])
-    supportable = feasible and ind_rational
-    print(f"({v1}, {v2}): feasible={feasible}, ind_rational={ind_rational}, "
-          f"folk_theorem_supportable={supportable}")
-```
 ````
