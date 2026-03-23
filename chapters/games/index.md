@@ -232,6 +232,7 @@ The Normal Form Game representation of [](#fig:battle_of_the_sexes_imperfect_inf
 matrices for the row and column players:
 
 $$
+\label{eqn:coordination_game_payoff_matrices}
 M_r = \begin{pmatrix}
 3 & 0 \\
 1 & 2
