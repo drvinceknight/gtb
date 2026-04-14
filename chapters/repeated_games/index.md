@@ -744,6 +744,36 @@ $$
    - $(2, 0)$
 ```
 
+```{exercise}
+:label: repeated_strategies_in_the_prisoners_dilemma
+
+Consider the standard Prisoner's Dilemma:
+
+$$
+M_r =
+\begin{pmatrix}
+3 & 0\\
+5 & 1
+\end{pmatrix}
+\qquad
+M_c =
+\begin{pmatrix}
+3 & 5\\
+0 & 1
+\end{pmatrix}
+$$
+
+Suppose players repeatedly play this game using one of the strategies:
+
+1. **Tit For Tat**: starts by cooperating, then repeats the opponent's previous action.
+2. **Alternator**: starts by cooperating, then alternates between cooperation and defection.
+
+Obtain the normal form representation of the repeated game for the case of an
+infinitely repeated game with discount factor $\delta$.
+
+Determine the Nash equilibria in action space and interpret this result.
+```
+
 ## Programming
 
 ### Using Nashpy to generate repeated games
@@ -1235,3 +1265,148 @@ We check each candidate:
   column player. **Not supportable.**
 
 ````
+
+```{solution} repeated_strategies_in_the_prisoners_dilemma
+:label: solution:repeated_strategies_in_the_prisoners_dilemma
+
+Consider the Prisoner's Dilemma:
+
+$$
+M_r =
+\begin{pmatrix}
+3 & 0\\
+5 & 1
+\end{pmatrix}
+\qquad
+M_c =
+\begin{pmatrix}
+3 & 5\\
+0 & 1
+\end{pmatrix}
+$$
+
+with strategies:
+
+When player 1 using TFT plays against player 2 using Alternator we obtain the following sequence of plays:
+
+1. (C, C) giving utilities: $(3, 3)$
+2. (C, D) giving utilities: $(0, 5)$
+3. (D, C) giving utilities: $(5, 0)$
+4. (C, C) giving utilities: $(0, 5)$
+5. (D, C) giving utilities: $(5, 0)$
+6. (C, C) giving utilities: $(0, 5)$
+7. (D, C) giving utilities: $(5, 0)$
+8. ... and so on
+
+This corresponds to:
+
+utilities:
+
+$$
+\begin{align*}
+U_1 &= \left(3+\sum_{i=1\text{ when }i \text{even}}^{\infty}\delta^{i}5\right)\\
+    &= \left(3+\sum_{i=1}^{\infty}\delta^{2i}5\right)\\
+    &= \left(3+5\sum_{i=1}^{\infty}\delta^{2i}\right)\\
+    &= \left(3+5\sum_{i=1}^{\infty}{\delta^{2}}^i\right)\\
+    &= \left(3+5\frac{\delta ^ 2}{1 - \delta^2}\right)
+\end{align*}
+$$
+
+and equivalently, column player (Alternator) receives $5$ on every odd-indexed round
+(rounds $1, 3, 5, \ldots$ with $\delta$-weights $\delta, \delta^3, \delta^5, \ldots$) plus $3$
+in round $0$:
+
+$$
+\begin{align*}
+U_2 &= \left(3+\sum_{i \text{ odd}\geq 1}^{\infty}\delta^{i}\cdot 5\right)\\
+    &= \left(3+\sum_{i=0}^{\infty}\delta^{2i + 1}\cdot 5\right)\\
+    &= \left(3+5\delta\sum_{i=0}^{\infty}\delta^{2i}\right)\\
+    &= \left(3+\frac{5\delta}{1 - \delta^2}\right)
+\end{align*}
+$$
+
+So the average utilities are:
+
+$$
+\begin{align*}
+\bar U_1 & = (1 - \delta)\left(3+\frac{5\delta^2}{1 - \delta^2}\right) = \frac{3 + 2\delta^2}{1+\delta}\\[4pt]
+\bar U_2 & = (1 - \delta)\left(3+\frac{5\delta}{1 - \delta^2}\right) = \frac{3 + 5\delta - 3\delta^2}{1+\delta}
+\end{align*}
+$$
+
+When two players playing TFT play each other they both cooperate every round and
+obtain average payoff $3$.
+
+When two players playing Alternator play each other they have utility:
+
+1. (C, C) giving utilities: $(3, 3)$
+2. (D, D) giving utilities: $(1, 1)$
+3. (C, C) giving utilities: $(3, 3)$
+4. (D, D) giving utilities: $(1, 1)$
+5. ... and so on
+
+This corresponds to:
+
+$$
+\begin{align*}
+U_1 = U_2 &= \left(\sum_{i \text{ even}\geq 0}^{\infty}\delta^{i}\cdot 3+\sum_{i \text{ odd}\geq 1}^{\infty}\delta^{i}\cdot 1\right)\\
+          &= \left(3\sum_{i=0}^{\infty}\delta^{2i}+\sum_{i=0}^{\infty}\delta^{2i + 1}\right)\\
+          &= \frac{3 + \delta}{1 - \delta^2}
+\end{align*}
+$$
+
+with average utility $(1-\delta)(3+\delta)/(1-\delta^2) = (3+\delta)/(1+\delta)$.
+
+This gives the normal-form payoff matrices (rows and columns ordered TFT, Alternator):
+
+$$
+M_r = \begin{pmatrix}3 & \dfrac{3 + 2\delta^2}{1+\delta}\\[8pt] \dfrac{3 + 5\delta - 3\delta^2}{1+\delta} & \dfrac{3+\delta}{1+\delta}\end{pmatrix} \qquad M_c = M_r^T
+$$
+
+**Analysis of Nash equilibria as a function of $\delta$.**
+
+TFT (row 1) dominates Alternator (row 2) if and only if it earns weakly more in
+every column. We check each column in turn.
+
+*Column 1 (opponent plays TFT).* TFT earns $3$; Alternator earns
+$(3 + 5\delta - 3\delta^2)/(1+\delta)$. TFT does at least as well when:
+
+$$
+3 \geq \frac{3 + 5\delta - 3\delta^2}{1+\delta}
+\Leftrightarrow 3 + 3\delta \geq 3 + 5\delta - 3\delta^2
+\Leftrightarrow 3\delta^2 \geq 2\delta
+\Leftrightarrow \delta \geq \frac{2}{3}
+$$
+
+*Column 2 (opponent plays Alternator).* TFT earns $(3+2\delta^2)/(1+\delta)$;
+Alternator earns $(3+\delta)/(1+\delta)$. TFT does at least as well when:
+
+$$
+\frac{3+2\delta^2}{1+\delta} \geq \frac{3+\delta}{1+\delta}
+\Leftrightarrow 2\delta^2 \geq \delta
+\Leftrightarrow \delta \geq \frac{1}{2}
+$$
+
+Since $2/3 > 1/2$, the binding constraint is the first. Therefore:
+
+- **$\delta > 2/3$**: TFT strictly dominates Alternator. The unique Nash
+  equilibrium is **(TFT, TFT)**, with payoffs $(3, 3)$.
+
+- **$\delta = 2/3$**: TFT weakly dominates; **(TFT, TFT)** remains a Nash
+  equilibrium.
+
+- **$1/2 < \delta < 2/3$**: TFT beats Alternator against an Alternator opponent
+  but not against a TFT opponent. Neither strategy dominates; both **(TFT, TFT)**
+  and **(Alternator, Alternator)** are Nash equilibria.
+
+- **$\delta \leq 1/2$**: Alternator weakly dominates TFT. The unique Nash
+  equilibrium is **(Alternator, Alternator)**, with payoffs
+  $(3+\delta)/(1+\delta) < 3$.
+
+**Interpretation.** Patient players ($\delta > 2/3$) prefer TFT because the
+future cooperative gains outweigh the short-term benefit of alternating
+defection. When $\delta$ is low, players discount the future heavily and
+Alternator's exploitation of TFT in early rounds is attractive. The threshold
+$\delta^* = 2/3$ marks where sustained cooperation via TFT becomes
+self-enforcing.
+```

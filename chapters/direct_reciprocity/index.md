@@ -8,10 +8,11 @@ kernelspec:
 
 # Direct Reciprocity
 
-Sustained cooperation in repeated games depends on players having memory and
-the right response rules. This chapter studies memory-one strategies, which
-condition today's action solely on the previous round's outcome, and their
-role in the evolution of cooperation through direct reciprocity.
+Sustained cooperation over time depends on players remembering past interactions
+and responding to them appropriately. This chapter begins with Axelrod's
+computer tournaments, which identified strategies that succeed in the iterated
+Prisoner's Dilemma, before focusing on reactive strategies: a tractable class
+that conditions only on the opponent's last move.
 
 (sec:motivating_example_direct_reciprocity)=
 
@@ -25,18 +26,22 @@ submitting papers. At each meeting, each can choose to:
 
 The payoff structure is that of a **Prisoner's Dilemma**: mutual sharing is
 best collectively, but each individual has a short-term incentive to withhold.
-The [Folk Theorem](#theorem:folk_theorem) tells us that cooperation *can* be
-sustained in an infinitely repeated game — but it does not say *how*.
+The [Folk Theorem](#theorem:folk_theorem) tells us that cooperation _can_ be
+sustained in an infinitely repeated game: but it does not say _how_.
 
 In practice, Alice and Bob remember only the last meeting. Alice might decide:
 "I'll share if you shared last time, but withhold if you withheld." This
 **memory-one** approach, conditioning solely on the previous round's outcome,
 is both cognitively realistic and mathematically tractable.
 
-This chapter asks: which memory-one strategies actually sustain cooperation?
-And what are their long-run payoffs?
+This chapter asks: which reactive strategies actually sustain cooperation,
+and what are their long-run payoffs?
 
 ## Theory
+
+We start by giving a more general definition of [](#exam:prisoners_dilemma).
+This game captures the fundamental structure of direct reciprocity in a repeated
+game setting.
 
 (def:prisoners-dilemma)=
 
@@ -98,7 +103,7 @@ Prisoner's Dilemma [@axelrod1980effective].
 - Fourteen strategies were submitted.
 - The tournament was a round-robin of 200 iterations, plus a strategy playing
   uniformly at random.
-- Some entries were highly sophisticated — one used a $\chi^2$ test to detect
+- Some entries were highly sophisticated; one used a $\chi^2$ test to detect
   random opponents.
 - The winner was the simplest entry: **Tit For Tat** (TFT), which cooperates
   on the first move then copies the opponent's previous action.
@@ -118,7 +123,7 @@ These results suggested four principles for successful cooperation:
 
 ```{important}
 While influential, these principles have since been challenged by modern
-research — see [](#sec:notable_research_direct_reciprocity).
+research (see [](#sec:notable_research_direct_reciprocity)).
 ```
 
 ### Definition: Reactive Strategy
@@ -138,12 +143,15 @@ prior history.
 
 #### Example: Common Reactive Strategies
 
-| Strategy | $(p, q)$ | Description |
-|---|---|---|
-| Always Cooperate (AllC) | $(1, 1)$ | Cooperates regardless |
-| Always Defect (AllD) | $(0, 0)$ | Defects regardless |
-| Tit For Tat (TFT) | $(1, 0)$ | Copies opponent's last move |
-| Generous TFT (GTFT) | $(1, \epsilon)$ | TFT but occasionally forgives |
+| Strategy                | $(p, q)$        | Description                                             |
+| ----------------------- | --------------- | ------------------------------------------------------- |
+| Always Cooperate (AllC) | $(1, 1)$        | Cooperates regardless of opponent's action              |
+| Always Defect (AllD)    | $(0, 0)$        | Defects regardless of opponent's action                 |
+| Tit For Tat (TFT)       | $(1, 0)$        | Copies opponent's last move exactly                     |
+| Generous TFT (GTFT)     | $(1, \epsilon)$ | TFT but occasionally forgives a defection               |
+| Random                  | $(1/2, 1/2)$    | Cooperates with probability $1/2$ regardless of context |
+| Generous Reciprocator   | $(0.9, 0.3)$    | Strongly reciprocates cooperation; sometimes forgives   |
+| Suspicious Reciprocator | $(0.7, 0.1)$    | Cautiously cooperative; rarely forgives defection       |
 
 ```{note}
 Reactive strategies are a subclass of **memory-one** strategies, which
@@ -151,6 +159,8 @@ condition on the full previous outcome $(a_1, a_2) \in \{C,D\}^2$ rather than
 just the opponent's last action. The zero-determinant strategies discussed in
 [](#sec:notable_research_direct_reciprocity) are memory-one but not reactive.
 ```
+
+(def:markov_chain_of_reactive_strategies)=
 
 ### Definition: Markov Chain of Two Reactive Strategies
 
@@ -165,7 +175,7 @@ The transition matrix $P \in \mathbb{R}^{4 \times 4}$, with rows and columns
 ordered as $(CC, CD, DC, DD)$, is:
 
 $$
-P =
+M =
 \begin{pmatrix}
 pp'      & p(1-p')      & (1-p)p'      & (1-p)(1-p')      \\
 qp'      & q(1-p')      & (1-q)p'      & (1-q)(1-p')      \\
@@ -178,11 +188,13 @@ where rows correspond to the current state and columns to the next state.
 
 ---
 
-The entry $P_{s,s'}$ is the probability of transitioning from state $s$ to
+The entry $M_{ss'}$ is the probability of transitioning from state $s$ to
 state $s'$. For example, from state $CD$ (player 1 cooperated, player 2
 defected): player 1 now cooperates with probability $q$ (their opponent
 defected), while player 2 now cooperates with probability $p'$ (their opponent
 cooperated).
+
+(theorem:long_run_average_payoff_via_stationary_distribution)=
 
 ### Theorem: Long-Run Average Payoffs via Stationary Distribution
 
@@ -193,7 +205,7 @@ If the Markov chain defined by $(p, q)$ and $(p', q')$ is **ergodic** (see
 distribution $\pi = (\pi_{CC}, \pi_{CD}, \pi_{DC}, \pi_{DD})$ satisfying:
 
 $$
-\pi P = \pi \qquad \sum_{s \in \mathcal{S}} \pi_s = 1
+\pi M = \pi \qquad \sum_{s \in \mathcal{S}} \pi_s = 1
 $$
 
 The long-run average payoffs are then:
@@ -214,6 +226,66 @@ strictly interior). For boundary cases such as pure TFT $(p=1, q=0)$, the
 chain may not be ergodic in general; the stationary distribution must be
 verified separately.
 ```
+
+(theorem:steady_state_distribution_for_two_reactive_strategies)=
+
+### Theorem: Steady-State Distribution for Two Reactive Strategies
+
+---
+
+When both players use strictly non-deterministic reactive strategies
+($0 < p, q, p', q' < 1$), the stationary distribution has a closed form.
+Define:
+
+$$
+r_1 = p - q \qquad r_2 = p' - q'
+$$
+
+and:
+
+$$
+s_1 = \frac{q' r_1 + q}{1 - r_1 r_2} \qquad s_2 = \frac{q r_2 + q'}{1 - r_1 r_2}
+$$
+
+Then the unique stationary distribution is:
+
+$$
+\pi = \bigl(s_1 s_2,\; s_1(1-s_2),\; (1-s_1)s_2,\; (1-s_1)(1-s_2)\bigr)
+$$
+
+and the long-run average payoffs are:
+
+$$
+\bar{u}_1 = R\,s_1 s_2 + S\,s_1(1-s_2) + T\,(1-s_1)s_2 + P\,(1-s_1)(1-s_2)
+$$
+
+$$
+\bar{u}_2 = R\,s_1 s_2 + T\,s_1(1-s_2) + S\,(1-s_1)s_2 + P\,(1-s_1)(1-s_2)
+$$
+
+---
+
+The values $s_1$ and $s_2$ are the long-run cooperation probabilities of each
+player. The stationary distribution factorises as a product of marginals, so
+the players' long-run actions are independent despite their strategies being
+correlated round-to-round.
+
+#### Proof
+
+Verify by direct substitution: set
+$\pi = (s_1 s_2,\, s_1(1-s_2),\, (1-s_1)s_2,\, (1-s_1)(1-s_2))$ and confirm
+$\pi M = \pi$ holds with the transition matrix from the definition above:
+
+$$
+\pi M =
+(s_1 s_2,\, s_1(1-s_2),\, (1-s_1)s_2,\, (1-s_1)(1-s_2)) P
+$$
+
+After carrying out the multiplication, each component of $\pi M$ reduces to the
+corresponding component of $\pi$ when $s_1$ and $s_2$ satisfy the given
+expressions. The algebra is routine but lengthy.
+
+(example:long-run-payoffs-for-two-reactive-strategies)=
 
 #### Example: Long-run payoffs for two reactive strategies
 
@@ -250,7 +322,7 @@ $$
 So the full transition matrix is:
 
 $$
-P =
+M =
 \begin{pmatrix}
 0.63 & 0.27 & 0.07 & 0.03 \\
 0.21 & 0.09 & 0.49 & 0.21 \\
@@ -259,20 +331,35 @@ P =
 \end{pmatrix}
 $$
 
-The stationary distribution is found by solving $\pi P = \pi$ with
-$\sum \pi_i = 1$. This is computed numerically in the Programming section,
-giving $\pi \approx (0.246, 0.316, 0.191, 0.246)$ and long-run average payoffs:
+Since all four parameters are strictly interior, we apply the closed-form
+theorem. With $r_1 = 0.9 - 0.3 = 0.6$ and $r_2 = 0.7 - 0.1 = 0.6$:
 
 $$
-\bar{u}_1 \approx 3(0.246) + 0(0.316) + 5(0.191) + 1(0.246) \approx 1.94
+s_1 = \frac{0.1 \times 0.6 + 0.3}{1 - 0.6 \times 0.6} = \frac{0.36}{0.64} = \frac{9}{16}
+\qquad
+s_2 = \frac{0.3 \times 0.6 + 0.1}{0.64} = \frac{0.28}{0.64} = \frac{7}{16}
+$$
+
+The stationary distribution is:
+
+$$
+\pi = \left(\frac{9}{16} \cdot \frac{7}{16},\; \frac{9}{16} \cdot \frac{9}{16},\; \frac{7}{16} \cdot \frac{7}{16},\; \frac{7}{16} \cdot \frac{9}{16}\right)
+= \left(\frac{63}{256},\; \frac{81}{256},\; \frac{49}{256},\; \frac{63}{256}\right)
+$$
+
+Long-run average payoffs:
+
+$$
+\bar{u}_1 = \frac{3 \cdot 63 + 0 \cdot 81 + 5 \cdot 49 + 1 \cdot 63}{256} = \frac{497}{256} \approx 1.94
 $$
 
 $$
-\bar{u}_2 \approx 3(0.246) + 5(0.316) + 0(0.191) + 1(0.246) \approx 2.57
+\bar{u}_2 = \frac{3 \cdot 63 + 5 \cdot 81 + 0 \cdot 49 + 1 \cdot 63}{256} = \frac{657}{256} \approx 2.57
 $$
 
-The Suspicious Reciprocator earns a higher long-run payoff, reflecting greater
-exploitation of the Generous Reciprocator's willingness to forgive.
+The Suspicious Reciprocator earns a higher long-run payoff. Despite cooperating
+less, their lower generosity extracts value from the Generous Reciprocator's
+willingness to forgive defections.
 
 ## Exercises
 
@@ -361,41 +448,55 @@ Consider the Prisoner's Dilemma with $R=3, S=0, T=5, P=1$.
 ```
 
 ```{exercise}
-:label: repeated_strategies_in_the_prisoners_dilemma
+:label: general_reactive_strategy_markov_chains
 
-Consider the standard Prisoner's Dilemma:
+For each of the following pairs of reactive strategies:
 
-$$
-M_r =
-\begin{pmatrix}
-3 & 0\\
-5 & 1
-\end{pmatrix}
-\qquad
-M_c =
-\begin{pmatrix}
-3 & 5\\
-0 & 1
-\end{pmatrix}
-$$
+1. $p=(1/2, 1/2)\qquad p'=(1/2, 1/2)$
+2. $p=(1/4, 1/2)\qquad p'=(1/2, 1/4)$
+3. $p=(1/3, 1/3)\qquad p'=(2/3, 1/4)$
 
-Suppose players repeatedly play this game using one of the following strategies:
+Obtain the Markov chain representation for a match and the utilities for both players as
+a function of $R, S, T, P$.
+```
 
-1. **Tit For Tat**: starts by cooperating, then repeats the opponent's previous action.
-2. **Alternator**: starts by cooperating, then alternates between cooperation and defection.
-3. **75% cooperator**: a random strategy that cooperates 75% of the time.
+```{exercise}
+:label: best_response_to_reactive_strategies
 
-Obtain the normal form representation of the repeated game for each of the
-following scenarios:
+Assuming $p=(x, 1/2)$ and using $R=3, S=0, T=5, P=1$, find the optimal $x$ against the
+following players:
 
-- The game is repeated $T = 100$ times.
-- The game is repeated $T = 99$ times.
-- The game is repeated infinitely with $\delta = \frac{1}{4}$.
+   1. $p'=(1, 0)$
+   2. $p'=(1/2, 1/2)$
 
-For each case, determine the Nash equilibria in action space.
+Interpret these results.
+```
+
+```{exercise}
+:label: three_reactive_strategies
+
+Consider the Prisoner's Dilemma with $R = 3$, $S = 0$, $T = 5$, $P = 1$ and
+the four reactive strategies:
+
+- **AllC**: $(p, q) = (1, 1)$ — always cooperate.
+- **TFT**: $(p, q) = (1, 0)$ — cooperate first, then copy the opponent's last move.
+- **AllD**: $(p, q) = (0, 0)$ — always defect.
+- **SR** (Suspicious Reciprocator): $(p, q) = (7/10, 1/10)$.
+
+Assume both players cooperate on the first move.
+
+1. For each of the ten distinct pairings (every strategy against each of the
+   four, including itself, using symmetry to halve the work), identify the
+   long-run stationary distribution and the average payoffs $(\bar{u}_1,
+   \bar{u}_2)$.
+2. Write the $4 \times 4$ payoff matrix $M_r$ for the repeated game in which
+   AllC, TFT, AllD, and SR are the available actions.
+3. Find all pure Nash equilibria of this game and compare the payoffs they deliver.
 ```
 
 ## Programming
+
+(sec:computing_the_stationary_distribution_of_a_reactive_strategy_pair)=
 
 ### Computing the Stationary Distribution of a Reactive Strategy Pair
 
@@ -411,21 +512,21 @@ def reactive_transition_matrix(p, q, p_prime, q_prime):
     Build the 4x4 transition matrix for reactive strategies (p,q) and (p',q').
     States are ordered: CC, CD, DC, DD.
     """
-    P = np.array([
+    M = np.array([
         [p * p_prime,       p * (1 - p_prime),       (1 - p) * p_prime,       (1 - p) * (1 - p_prime)],
         [q * p_prime,       q * (1 - p_prime),       (1 - q) * p_prime,       (1 - q) * (1 - p_prime)],
         [p * q_prime,       p * (1 - q_prime),       (1 - p) * q_prime,       (1 - p) * (1 - q_prime)],
         [q * q_prime,       q * (1 - q_prime),       (1 - q) * q_prime,       (1 - q) * (1 - q_prime)],
     ])
-    return P
+    return M
 
-def stationary_distribution(P):
+def stationary_distribution(M):
     """
-    Compute the stationary distribution of a transition matrix P.
+    Compute the stationary distribution of a transition matrix M.
     """
-    n = P.shape[0]
-    A = (P.T - np.eye(n))
-    A[-1, :] = 1  # replace last equation with normalisation constraint
+    n = M.shape[0]
+    A = (M.T - np.eye(n))
+    A[-1, :] = 1
     b = np.zeros(n)
     b[-1] = 1
     return np.linalg.solve(A, b)
@@ -434,21 +535,21 @@ def stationary_distribution(P):
 p, q = 0.9, 0.3
 p_prime, q_prime = 0.7, 0.1
 
-P = reactive_transition_matrix(p, q, p_prime, q_prime)
+M = reactive_transition_matrix(p, q, p_prime, q_prime)
 print("Transition matrix:")
-print(np.round(P, 4))
+print(np.round(M, 4))
 
-pi = stationary_distribution(P)
+pi = stationary_distribution(M)
 print("\nStationary distribution (CC, CD, DC, DD):")
 print(np.round(pi, 4))
 ```
 
 ```{code-cell} python3
 # Compute long-run average payoffs
-R, S, T, Pval = 3, 0, 5, 1
+R, S, T, P = 3, 0, 5, 1
 
-u1_bar = R * pi[0] + S * pi[1] + T * pi[2] + Pval * pi[3]
-u2_bar = R * pi[0] + T * pi[1] + S * pi[2] + Pval * pi[3]
+u1_bar = R * pi[0] + S * pi[1] + T * pi[2] + P * pi[3]
+u2_bar = R * pi[0] + T * pi[1] + S * pi[2] + P * pi[3]
 
 print(f"Long-run average payoff for Player 1: {u1_bar:.4f}")
 print(f"Long-run average payoff for Player 2: {u2_bar:.4f}")
@@ -457,27 +558,66 @@ print(f"Long-run average payoff for Player 2: {u2_bar:.4f}")
 ### Using the Axelrod Library
 
 The `axelrod` Python library [@knight2016open] provides over 240 strategies
-and tools to run reproducible tournaments — extending Axelrod's original
+and tools to run reproducible tournaments, extending Axelrod's original
 experiments to much larger and more diverse strategic populations.
+
+#### Studying Reactive Strategies
+
+The Axelrod library provides `axl.ReactivePlayer`, which takes the reactive
+strategy parameters $(p, q)$ directly, matching the notation used throughout
+this chapter.
+
+The following code runs a long match between the Generous Reciprocator
+$(p, q) = (0.9, 0.3)$ and the Suspicious Reciprocator $(p', q') = (0.7, 0.1)$
+from the [example above](#example:long-run-payoffs-for-two-reactive-strategies)
+and compares the result to the closed-form payoffs.
 
 ```{code-cell} python3
 import axelrod as axl
 import numpy as np
 
-players = [axl.TitForTat(), axl.Alternator(), axl.Random(0.75), axl.Grudger()]
-delta = 1 / 4
-prob_end = 1 - delta
-seed = 0
-repetitions = 500
+generous = axl.ReactivePlayer(probabilities=(0.9, 0.3))
+suspicious = axl.ReactivePlayer(probabilities=(0.7, 0.1))
+
+match = axl.Match([generous, suspicious], turns=50000, seed=0)
+match.play()
+u1, u2 = match.final_score_per_turn()
+print(f"Simulated:   Generous={u1:.4f}, Suspicious={u2:.4f}")
+print(f"Theoretical: Generous={497/256:.4f}, Suspicious={657/256:.4f}")
+```
+
+#### Exploring Wider Populations
+
+Reactive strategies are a subclass of **memory-one strategies**, which
+condition on the full previous outcome $(a_1, a_2) \in \{C, D\}^2$ rather than
+just the opponent's last action. The Axelrod library includes many built-in
+memory-one strategies.
+
+```{code-cell} python3
+import axelrod as axl
+import numpy as np
+
+# Some notable memory-one strategies included in the library
+players = [
+    axl.TitForTat(),       # reactive: (p, q) = (1, 0)
+    axl.ZDGTFT2(),         # generous zero-determinant strategy
+    axl.ZDExtortion(),     # extortionate zero-determinant strategy
+    axl.Cooperator(),      # reactive: (p, q) = (1, 1)
+    axl.Defector(),        # reactive: (p, q) = (0, 0)
+]
 
 tournament = axl.Tournament(
-    players=players, prob_end=prob_end, seed=seed, repetitions=repetitions
+    players=players, turns=200, repetitions=200, seed=0
 )
 results = tournament.play(progress_bar=False)
-M_r = np.array(results.payoff_matrix)
-print("Payoff matrix:")
-print(np.round(M_r, 3))
+print("Ranking:")
+for rank, name in enumerate(results.ranked_names):
+    print(f"  {rank + 1}. {name}")
 ```
+
+The Axelrod library documentation includes a tutorial showing how to replicate
+Axelrod's original 1980 tournament, providing a reproducible starting point for
+exploring how strategy performance depends on the composition of the population.
 
 (sec:notable_research_direct_reciprocity)=
 
@@ -515,17 +655,18 @@ adaptability.
 
 ## Conclusion
 
-Direct reciprocity offers a tractable lens through which to study how
-cooperation can emerge in pairwise repeated interactions. By restricting
-attention to memory-one strategies, we obtain a mathematically precise
-framework: the interaction of two reactive strategies defines an ergodic Markov
-chain, and the stationary distribution determines long-run payoffs.
+This chapter examined how cooperation can emerge in pairwise repeated
+interactions. Axelrod's tournaments identified Tit For Tat as the canonical
+cooperative strategy and produced four heuristics for successful play. These
+heuristics have since been challenged: modern computational work, enabled by
+large-scale reproducible tournaments, finds that what succeeds depends heavily
+on the strategic population and game parameters.
 
-This chapter defined the Prisoner's Dilemma, presented Axelrod's foundational
-tournaments, and developed the theory of reactive strategies and their Markov
-chain representation. We saw that Tit For Tat's success in early tournaments
-does not fully generalise, and that modern computational work has refined our
-understanding of what makes a strategy successful.
+The theoretical core of the chapter is the reactive strategy framework.
+When two players use reactive strategies, their interaction defines a Markov
+chain over outcome pairs, and the stationary distribution gives long-run
+average payoffs. This connects the intuitions from Axelrod's tournaments to a
+rigorous mathematical foundation.
 
 [](#tbl:direct_reciprocity_summary) summarises the key concepts.
 
@@ -550,12 +691,10 @@ understanding of what makes a strategy successful.
 ---
 
 ```{attention}
-Direct reciprocity shows that even the simplest memory-one strategies can
-sustain cooperation — or exploit it. The Markov chain framework gives precise
-predictions about long-run payoffs, connecting the intuitions from Axelrod's
-tournaments to a rigorous mathematical foundation. Modern research continues
-to refine our understanding of which strategies thrive across diverse and
-evolving populations.
+Even the simplest reactive strategies can sustain cooperation or undermine it.
+The Markov chain framework gives precise predictions about long-run payoffs, and
+modern research continues to refine our understanding of which strategies thrive
+across diverse and evolving populations.
 ```
 
 ---
@@ -564,158 +703,31 @@ evolving populations.
 
 ## Solutions
 
-````{solution} identifying_prisoners_dilemmas
+```{solution} identifying_prisoners_dilemmas
 :label: solution:identifying_prisoners_dilemmas
 
-Recall the [Prisoner's Dilemma](#def:prisoners-dilemma) requires:
+Game 1:
 
-$$
-T > R > P > S \qquad \text{and} \qquad 2R > T + S
-$$
+This is a Prisoners Dilemma: $(R, S, T, P) = (3, 1, 5, 0)$.
 
-where the row player's matrix is:
+Game 2:
 
-$$
-A = \begin{pmatrix} R & S \\ T & P \end{pmatrix}
-$$
+This is a Prisoners Dilemma: $(R, S, T, P) = (1, -1, 2, 0)$: $2>1>0>-1$ and $2\times 1 > 2 - 1$.
 
-So $R$ is the mutual-cooperation payoff, $T$ the temptation (defect while other
-cooperates), $P$ the mutual-defection payoff, and $S$ the sucker payoff.
+Game 3:
 
-**Game 1**
+This is not a Prisoner's Dilemma $A \ne B ^ T$
 
-$$
-A =
-\begin{pmatrix}
-3 & 0\\
-5 & 1
-\end{pmatrix}
-\qquad
-B =
-\begin{pmatrix}
-3 & 5\\
-0 & 1
-\end{pmatrix}
-$$
+Game 4:
 
-Reading off: $R = 3$, $S = 0$, $T = 5$, $P = 1$.
-
-- $T > R > P > S$: $5 > 3 > 1 > 0$. ✓
-- $2R > T + S$: $6 > 5$. ✓
-
-**Game 1 is a Prisoner's Dilemma.**
-
-**Game 2**
-
-$$
-A =
-\begin{pmatrix}
-1 & -1\\
-2 & 0
-\end{pmatrix}
-\qquad
-B =
-\begin{pmatrix}
-1 & 2\\
--1 & 0
-\end{pmatrix}
-$$
-
-Reading off: $R = 1$, $S = -1$, $T = 2$, $P = 0$.
-
-- $T > R > P > S$: $2 > 1 > 0 > -1$. ✓
-- $2R > T + S$: $2 > 2 - 1 = 1$. ✓
-
-**Game 2 is a Prisoner's Dilemma.**
-
-**Game 3**
-
-$$
-A =
-\begin{pmatrix}
-1 & -1\\
-2 & 0
-\end{pmatrix}
-\qquad
-B =
-\begin{pmatrix}
-3 & 5\\
-0 & 1
-\end{pmatrix}
-$$
-
-The matrices $A$ and $B$ are not transposes of each other ($B \neq A^T$), so
-this is **not a symmetric game**. The Prisoner's Dilemma as defined in
-[](#def:prisoners-dilemma) is a symmetric game with $B = A^T$.
-
-Since $B \neq A^T$ (e.g., $B_{12} = 5 \neq -1 = A_{21}$), **Game 3 is not a
-Prisoner's Dilemma**.
-
-**Game 4**
-
-$$
-A =
-\begin{pmatrix}
-6 & 0\\
-12 & 1
-\end{pmatrix}
-\qquad
-B =
-\begin{pmatrix}
-6 & 12\\
-0 & 0
-\end{pmatrix}
-$$
-
-Check symmetry: $B = A^T$? $A^T = \begin{pmatrix} 6 & 12 \\ 0 & 1\end{pmatrix}$.
-But $B_{22} = 0 \neq 1 = A^T_{22}$. So the game is not symmetric and therefore
-**not a Prisoner's Dilemma** as defined.
-
-Even ignoring symmetry, reading $A$: $R=6$, $S=0$, $T=12$, $P=1$. Checking
-$2R > T+S$: $12 > 12$. This fails (strict inequality required). **Game 4 is not
-a Prisoner's Dilemma**.
-
-```{code-cell} python3
-import numpy as np
-
-games = {
-    "Game 1": (np.array([[3, 0], [5, 1]]), np.array([[3, 5], [0, 1]])),
-    "Game 2": (np.array([[1, -1], [2, 0]]), np.array([[1, 2], [-1, 0]])),
-    "Game 3": (np.array([[1, -1], [2, 0]]), np.array([[3, 5], [0, 1]])),
-    "Game 4": (np.array([[6, 0], [12, 1]]), np.array([[6, 12], [0, 0]])),
-}
-
-for name, (A, B) in games.items():
-    R, S = A[0, 0], A[0, 1]
-    T, P = A[1, 0], A[1, 1]
-    symmetric = np.allclose(B, A.T)
-    cond1 = T > R > P > S
-    cond2 = 2 * R > T + S
-    is_pd = symmetric and cond1 and cond2
-    print(f"{name}: R={R}, S={S}, T={T}, P={P}")
-    print(f"  symmetric={symmetric}, T>R>P>S={cond1}, 2R>T+S: {2*R}>{T+S} => {cond2}")
-    print(f"  Prisoner's Dilemma: {is_pd}\n")
+This is not a Prisoner's Dilemma $A \ne B ^ T$
 ```
-````
-
 
 ````{solution} reactive_strategy_markov_chain
 :label: solution:reactive_strategy_markov_chain
 
-The Prisoner's Dilemma has $R=3$, $S=0$, $T=5$, $P=1$.
-
-Recall the transition matrix for reactive strategies $(p, q)$ versus $(p', q')$,
-with states ordered $(CC, CD, DC, DD)$:
-
-$$
-P =
-\begin{pmatrix}
-pp'      & p(1-p')      & (1-p)p'      & (1-p)(1-p')      \\
-qp'      & q(1-p')      & (1-q)p'      & (1-q)(1-p')      \\
-pq'      & p(1-q')      & (1-p)q'      & (1-p)(1-q')      \\
-qq'      & q(1-q')      & (1-q)q'      & (1-q)(1-q')      \\
-\end{pmatrix}
-$$
+This is a substitution exercise using
+the [](#def:markov_chain_of_reactive_strategies):
 
 **1. TFT $(p=1, q=0)$ vs AllC $(p'=1, q'=1)$.**
 
@@ -723,7 +735,7 @@ Substituting $p=1, q=0, p'=1, q'=1$:
 
 $$
 \begin{align*}
-P &=
+M &=
 \begin{pmatrix}
 1\cdot1 & 1\cdot0 & 0\cdot1 & 0\cdot0 \\
 0\cdot1 & 0\cdot0 & 1\cdot1 & 1\cdot0 \\
@@ -754,7 +766,7 @@ $$
 
 since all paths lead to $CC$ and stay there.
 
-Long-run average payoffs:
+The long-run average payoffs is given by the [](#theorem:long_run_average_payoff_via_stationary_distribution)
 
 $$
 \bar{u}_1 = R \cdot 1 + S \cdot 0 + T \cdot 0 + P \cdot 0 = R = 3
@@ -766,13 +778,25 @@ $$
 
 Both players cooperate in every round, earning $3$ each.
 
+Here is some code to confirm the above calculations using functions written in
+[](#sec:computing_the_stationary_distribution_of_a_reactive_strategy_pair)
+
+```{code-cell} ipython3
+M = reactive_transition_matrix(p=1, q=0, p_prime=1, q_prime=1)
+print(M)
+```
+
+```{code-cell} ipython3
+stationary_distribution(M)
+```
+
 **2. TFT $(p=1, q=0)$ vs AllD $(p'=0, q'=0)$.**
 
 Substituting $p=1, q=0, p'=0, q'=0$:
 
 $$
 \begin{align*}
-P &=
+M &=
 \begin{pmatrix}
 1\cdot0 & 1\cdot1 & 0\cdot0 & 0\cdot1 \\
 0\cdot0 & 0\cdot1 & 1\cdot0 & 1\cdot1 \\
@@ -801,7 +825,7 @@ $$
 The chain is **not ergodic** (absorbing state at $DD$), but it has a unique
 stationary distribution with $\pi_{DD} = 1$.
 
-Long-run average payoffs:
+The long-run average payoffs is given by the [](#theorem:long_run_average_payoff_via_stationary_distribution)
 
 $$
 \bar{u}_1 = R \cdot 0 + S \cdot 0 + T \cdot 0 + P \cdot 1 = P = 1
@@ -813,197 +837,269 @@ $$
 
 Both players end up in perpetual mutual defection, each earning $1$.
 
-**3. Summary.**
 
-Neither chain is ergodic in the strict sense (both have absorbing states).
-However, both have a unique limiting distribution:
 
-| Matchup | Stationary $\pi$ | $\bar{u}_1$ | $\bar{u}_2$ | Ergodic? |
-|---|---|---|---|---|
-| TFT vs AllC | $(1,0,0,0)$ | 3 | 3 | No (absorbing state $CC$) |
-| TFT vs AllD | $(0,0,0,1)$ | 1 | 1 | No (absorbing state $DD$) |
+```{code-cell} ipython3
+M = reactive_transition_matrix(p=1, q=0, p_prime=0, q_prime=0)
+print(M)
+```
 
-```{code-cell} python3
-import numpy as np
-
-def reactive_transition_matrix(p, q, p_prime, q_prime):
-    P = np.array([
-        [p * p_prime, p * (1 - p_prime), (1 - p) * p_prime, (1 - p) * (1 - p_prime)],
-        [q * p_prime, q * (1 - p_prime), (1 - q) * p_prime, (1 - q) * (1 - p_prime)],
-        [p * q_prime, p * (1 - q_prime), (1 - p) * q_prime, (1 - p) * (1 - q_prime)],
-        [q * q_prime, q * (1 - q_prime), (1 - q) * q_prime, (1 - q) * (1 - q_prime)],
-    ])
-    return P
-
-R, S, T, Pval = 3, 0, 5, 1
-
-# TFT vs AllC
-P1 = reactive_transition_matrix(1, 0, 1, 1)
-print("TFT vs AllC transition matrix:")
-print(P1)
-
-# Stationary distribution by matrix power
-pi1 = np.linalg.matrix_power(P1, 100)[0]
-print(f"Stationary distribution: {pi1}")
-u1_1 = R * pi1[0] + S * pi1[1] + T * pi1[2] + Pval * pi1[3]
-u2_1 = R * pi1[0] + T * pi1[1] + S * pi1[2] + Pval * pi1[3]
-print(f"Long-run payoffs: u1={u1_1:.4f}, u2={u2_1:.4f}\n")
-
-# TFT vs AllD
-P2 = reactive_transition_matrix(1, 0, 0, 0)
-print("TFT vs AllD transition matrix:")
-print(P2)
-
-pi2 = np.linalg.matrix_power(P2, 100)[0]
-print(f"Stationary distribution: {pi2}")
-u1_2 = R * pi2[0] + S * pi2[1] + T * pi2[2] + Pval * pi2[3]
-u2_2 = R * pi2[0] + T * pi2[1] + S * pi2[2] + Pval * pi2[3]
-print(f"Long-run payoffs: u1={u1_2:.4f}, u2={u2_2:.4f}")
+```{code-cell} ipython3
+stationary_distribution(M)
 ```
 ````
 
+````{solution} general_reactive_strategy_markov_chains
+:label: solution:general_reactive_strategy_markov_chains
 
-````{solution} repeated_strategies_in_the_prisoners_dilemma
-:label: solution:repeated_strategies_in_the_prisoners_dilemma
+This is a substitution exercise using
+the [](#def:markov_chain_of_reactive_strategies) and
+the [](#theorem:steady_state_distribution_for_two_reactive_strategies):
 
-Consider the Prisoner's Dilemma:
+1. $p=(1/2, 1/2)\qquad q=(1/2, 1/2)$
+
+  $$M = \begin{pmatrix}
+  1/4&1/4&1/4&1/4\\
+  1/4&1/4&1/4&1/4\\
+  1/4&1/4&1/4&1/4\\
+  1/4&1/4&1/4&1/4
+  \end{pmatrix}$$
+
+Long-run average payoffs:
+
+$$
+\bar{u}_1 = \frac{P + R + S + T}{4}
+$$
+
+$$
+\bar{u}_2 = \frac{P + R + S + T}{4}
+$$
+
+2. $p=(1/4, 1/2)\qquad q=(1/2, 1/4)$
+
+$$
+    M =
+        \begin{pmatrix}
+            1/8&1/8&3/8&3/8\\
+            1/4&1/4&1/4&1/4\\
+            1/16&3/16&3/16&9/16\\
+            1/8&3/8&1/8&3/8
+        \end{pmatrix}
+$$
+
+Long-run average payoffs:
+
+$$
+\bar{u}_1 = \frac{110 P + 42 R + 77 S + 60 T}{289}
+$$
+
+$$
+\bar{u}_2 = \frac{110 P + 42 R + 60 S + 77 T}{289}
+$$
+
+3. $p=(1/3, 1/3)\qquad q=(2/3, 1/4)$
+
+$$M = \begin{pmatrix}
+2/9 & 1/9 & 4/9 & 2/9\\
+2/9 & 1/9 & 4/9 & 2/9\\
+1/12 & 1/4 & 1/6 & 1/2\\
+1/12 & 1/4 & 1/6 & 1/2
+\end{pmatrix}$$
+
+$$
+\bar{u}_1 = \frac{22 P + 7 R + 11 S + 14 T}{54}
+$$
+
+$$
+\bar{u}_2 = \frac{22 P + 7 R + 14 S + 11 T}{54}
+$$
+
+Here is some code to verify the above calculations:
+
+```{code-cell} python3
+import sympy as sym
+
+R = sym.Symbol("R")
+S = sym.Symbol("S")
+T = sym.Symbol("T")
+P = sym.Symbol("P")
+
+for (p, q), (p_prime, q_prime) in [
+    ([1 / 2, 1 / 2], [1 / 2, 1 / 2]),
+    ([1 / 4, 1 / 2], [1 / 2, 1 / 4]),
+    ([1 / 3, 1 / 3], [2 / 3, 1 / 4]),
+]:
+    M = reactive_transition_matrix(p, q, p_prime, q_prime)
+    pi = stationary_distribution(M).round(3)
+    u1_bar = R * pi[0] + S * pi[1] + T * pi[2] + P * pi[3]
+    u2_bar = R * pi[0] + T * pi[1] + S * pi[2] + P * pi[3]
+    print("=====")
+    print(f"(p, q)={(p, q)}, (p', q')={(p_prime, q_prime)}")
+    print("gives:")
+    print(M)
+    print(
+        "With utility:",
+        u1_bar,
+        u2_bar,
+    )
+```
+
+````
+
+````{solution} best_response_to_reactive_strategies
+:label: solution:best_response_to_reactive_strategies
+
+
+This is a substitution exercise using
+the [](#theorem:steady_state_distribution_for_two_reactive_strategies):
+
+1. $q=(1, 0)$
+
+  $$u(x)=\frac{(-10x + 4(x - 1)^2 + 13)}{(2x - 3)^2}$$
+
+The derivative of this function is given by:
+
+$$
+\frac{2(6x - 7)}{(2x - 3)^3}
+$$
+
+This derivative has zero for $x=7/6$ which is $>1$. Thus the utility is monotic over the
+interval $[0, 1]$. We have (by substitution):
+
+$$u(0)=17/9\qquad u(1)=3$$
+
+Thus $u(x)$ is an increasing function so the optimal value of $x$ is $1$.
+
+Against a player that is unforgiving (reacts to defection with defection), given that our
+player will play randomly against a defection it is better to always cooperate.
+
+2. $q=(1/2, 1/2)$
+
+  $$u(x)=-3x/4+21/8$$
+
+This is a decreasing function so the optimal value of $x$ is $0$.
+
+Against a random player (who takes no notice of what we do) it is better to defect.
+
+Here is some code to verify our calculations (using a function that implements
+[](#theorem:steady_state_distribution_for_two_reactive_strategies)):
+
+```{code-cell} python3
+def theoretic_steady_state(p, q, p_prime, q_prime):
+
+    r_1 = p - q
+    r_2 = p_prime - q_prime
+    s_1 = (q_prime * r_1 + q) / (1 - r_1 * r_2)
+    s_2 = (q * r_2 + q_prime) / (1 - r_1 * r_2)
+    return np.array([s_1 * s_2, s_1 * (1 - s_2), (1 - s_1) * s_2, (1 - s_1) * (1 - s_2)])
+
+R, S, T, P = sym.Symbol("R"), sym.Symbol("S"), sym.Symbol("T"), sym.Symbol("P"),
+
+def theoretic_utility(p, q, p_prime, q_prime, rstp=np.array([R, S, T, P])):
+    pi = theoretic_steady_state(p, q, p_prime, q_prime)
+    return np.dot(pi, rstp)
+
+x = sym.Symbol("x")
+for (p_prime, q_prime) in [(sym.S(1), sym.S(0)), (sym.S(1) / 2, sym.S(1) / 2)]:
+    print(f"(p', q')={(p_prime, q_prime)}")
+    utility = sym.factor(theoretic_utility(x, sym.S(1) / 2, p_prime, q_prime, rstp=np.array((3, 0, 5, 1))))
+    print(f"    u(x)={utility}")
+    print(f"    u(0)={utility.subs({x:0})}")
+    print(f"    u(1)={utility.subs({x:1})}")
+    print(f"    du(x)/dx={utility.diff(x).simplify()}")
+    print(f"    solution of du(x)/dx=0: {sym.solveset(utility.diff(x), x)}")
+```
+````
+
+```{solution} three_reactive_strategies
+:label: solution:three_reactive_strategies
+
+**Part 1.**
+
+AllC, TFT, and AllD are at the boundary of the parameter space, so we trace
+those chains directly. SR has strictly interior parameters, so the
+[closed-form theorem](#theorem:steady_state_distribution_for_two_reactive_strategies)
+applies whenever SR is one of the players. Since the PD is symmetric,
+$(\bar{u}_1, \bar{u}_2)$ for $A$ vs $B$ equals $(\bar{u}_2, \bar{u}_1)$
+for $B$ vs $A$, halving the number of computations.
+
+**Pairings among AllC, TFT, AllD** (traced directly, starting from $CC$):
+
+- **AllC vs AllC.** Chain stays in $CC$. $\pi = (1,0,0,0)$. Payoffs $(3,3)$.
+- **AllC vs TFT.** AllC cooperates always; TFT sees cooperation and reciprocates. Chain stays in $CC$. $\pi = (1,0,0,0)$. Payoffs $(3,3)$.
+- **AllC vs AllD.** AllC cooperates, AllD defects unconditionally. State $CD$ is absorbing. $\pi = (0,1,0,0)$. Payoffs $(0,5)$.
+- **TFT vs TFT.** Starting from $CC$: both cooperate each round. $\pi = (1,0,0,0)$. Payoffs $(3,3)$.
+- **TFT vs AllD.** $CC \to CD \to DD$; $DD$ absorbing. $\pi = (0,0,0,1)$. Payoffs $(1,1)$.
+- **AllD vs AllD.** $CC \to DD$; $DD$ absorbing. $\pi = (0,0,0,1)$. Payoffs $(1,1)$.
+
+**Pairings involving SR** (closed-form theorem, $r_1 = p - q$, $r_2 = p' - q'$):
+
+Write $\text{SR} = (7/10,\, 1/10)$ so $r_{\text{SR}} = 7/10 - 1/10 = 3/5$.
+
+**SR vs AllC.** $r_1 = 3/5$, $r_2 = 1-1 = 0$. Denominator $= 1$.
+
+$$s_1 = \tfrac{3}{5} \cdot 1 + \tfrac{1}{10} = \tfrac{7}{10}, \qquad s_2 = \tfrac{1}{10} \cdot 0 + 1 = 1$$
+
+$\pi = (7/10,\, 0,\, 3/10,\, 0)$.
+
+$$\bar{u}_1 = 3 \cdot \tfrac{7}{10} + 5 \cdot \tfrac{3}{10} = \tfrac{36}{10} = \tfrac{18}{5}, \qquad \bar{u}_2 = 3 \cdot \tfrac{7}{10} = \tfrac{21}{10}$$
+
+**SR vs TFT.** $r_1 = 3/5$, $r_2 = 1-0 = 1$. Denominator $= 1 - 3/5 = 2/5$.
+
+$$s_1 = \frac{0 \cdot \tfrac{3}{5} + \tfrac{1}{10}}{\tfrac{2}{5}} = \frac{\tfrac{1}{10}}{\tfrac{2}{5}} = \frac{1}{4}, \qquad s_2 = \frac{\tfrac{1}{10} \cdot 1 + 0}{\tfrac{2}{5}} = \frac{1}{4}$$
+
+$\pi = (1/16,\, 3/16,\, 3/16,\, 9/16)$.
+
+$$\bar{u}_1 = \frac{3 + 0 + 15 + 9}{16} = \frac{27}{16}, \qquad \bar{u}_2 = \frac{3 + 15 + 0 + 9}{16} = \frac{27}{16}$$
+
+**SR vs AllD.** $r_1 = 3/5$, $r_2 = 0-0 = 0$. Denominator $= 1$.
+
+$$s_1 = 0 \cdot \tfrac{3}{5} + \tfrac{1}{10} = \tfrac{1}{10}, \qquad s_2 = \tfrac{1}{10} \cdot 0 + 0 = 0$$
+
+$\pi = (0,\, 1/10,\, 0,\, 9/10)$.
+
+$$\bar{u}_1 = 0 \cdot \tfrac{1}{10} + 1 \cdot \tfrac{9}{10} = \tfrac{9}{10}, \qquad \bar{u}_2 = 5 \cdot \tfrac{1}{10} + 1 \cdot \tfrac{9}{10} = \tfrac{7}{5}$$
+
+**SR vs SR.** $r_1 = r_2 = 3/5$. Denominator $= 1 - 9/25 = 16/25$.
+
+$$s_1 = \frac{\tfrac{1}{10} \cdot \tfrac{3}{5} + \tfrac{1}{10}}{\tfrac{16}{25}} = \frac{\tfrac{8}{50}}{\tfrac{16}{25}} = \frac{1}{4}, \qquad s_2 = \frac{1}{4}$$
+
+$\pi = (1/16,\, 3/16,\, 3/16,\, 9/16)$.
+
+$$\bar{u}_1 = \bar{u}_2 = \frac{27}{16}$$
+
+**Part 2.** Reading off the row player's payoff, with rows and columns ordered
+(AllC, TFT, AllD, SR) and symmetric pairs filled in by the PD symmetry:
 
 $$
 M_r =
 \begin{pmatrix}
-3 & 0\\
-5 & 1
-\end{pmatrix}
-\qquad
-M_c =
-\begin{pmatrix}
-3 & 5\\
-0 & 1
+3 & 3 & 0 & \tfrac{21}{10} \\[4pt]
+3 & 3 & 1 & \tfrac{27}{16} \\[4pt]
+5 & 1 & 1 & \tfrac{7}{5}   \\[4pt]
+\tfrac{18}{5} & \tfrac{27}{16} & \tfrac{9}{10} & \tfrac{27}{16}
 \end{pmatrix}
 $$
 
-with strategies:
+Since the PD is symmetric, $M_c = M_r^T$.
 
-1. **TFT**: cooperate first, then copy opponent's previous action.
-2. **Alternator**: cooperate first, then alternate $C, D, C, D, \ldots$
-3. **75% cooperator**: cooperate with probability $0.75$ each round independently.
+**Part 3.** We test each pure strategy pair.
 
-The normal form of the repeated game treats each of these strategies as an
-action. We build the payoff matrix by computing the total (or average) payoff
-for each pair.
+**(AllC, AllC):** Row deviates to AllD: $5 > 3$. **Not a NE.**
 
-**Case: $T = 100$ repetitions.**
+**(TFT, TFT):** Deviating to AllC earns $3 = 3$ (no gain); to AllD earns $1 < 3$;
+to SR earns $27/16 < 3$. **Is a NE.**
 
-We compute the payoff for each strategy pair by simulating the repeated game.
+**(AllD, AllD):** Deviating to AllC earns $0 < 1$; to TFT earns $1 = 1$ (no
+gain); to SR earns $9/10 < 1$. **Is a NE.**
 
-- **TFT vs TFT**: both cooperate every round. Payoff: $(3 \times 100, 3 \times 100) = (300, 300)$.
+**(SR, SR):** Deviating to AllC earns $21/10 = 1.68$ while SR earns $27/16
+\approx 1.69$; to TFT earns $27/16$ (tie); to AllD earns $7/5 = 1.4 < 27/16$.
 
-- **TFT vs Alternator**: TFT starts $C$, Alternator starts $C$. Round 1: $(C,C)$
-  payoffs $(3,3)$. Round 2: Alternator defects; TFT copies so plays $C$ in
-  round 2. Outcome: $(C,D)$ payoffs $(0,5)$. Round 3: TFT copies $D$ from round 2,
-  Alternator cooperates: $(D,C)$ payoffs $(5,0)$. Pattern from round 2 onwards:
-  $(C,D), (D,C), (C,D), \ldots$ alternating every round (99 rounds).
-  Row payoff: $3 + 49\times(0+5) + 0 = 3 + 245 = 248$. Col payoff: $3 + 49\times(5+0) + 5 = 253$.
-  (For $T=100$ there are 99 remaining rounds after round 1, i.e., 49 complete $(CD,DC)$ pairs plus one extra $CD$.)
+Wait — compare $21/10$ and $27/16$: $\,21/10 = 336/160$ and $27/16 = 270/160$,
+so $21/10 > 27/16$. Deviating to AllC is profitable. **Not a NE.**
 
-- **TFT vs 75% cooperator**: varies by the random actions.
-
-- **Alternator vs Alternator**: both alternate $(C, D, C, \ldots)$ in lock-step:
-  Rounds 1,3,5,...: both play $C$, payoff $(3,3)$.
-  Rounds 2,4,6,...: both play $D$, payoff $(1,1)$.
-  50 rounds each: total $= 50 \times 3 + 50 \times 1 = 200$ for each.
-
-- **Alternator vs 75% cooperator** and **75% vs 75%**: expected payoffs depend
-  on probabilities.
-
-Rather than computing all entries analytically, we use simulation via the
-Axelrod library, which computes the normal form payoff matrix for these three
-strategies.
-
-**Normal form representation using average payoffs.**
-
-We use the Axelrod library to obtain payoff matrices for each repetition count
-and discount factor. The Nash equilibria are then identified from the payoff
-matrices.
-
-```{code-cell} python3
-import axelrod as axl
-import numpy as np
-import nashpy as nash
-
-players = [axl.TitForTat(), axl.Alternator(), axl.Random(0.75)]
-player_names = ["TFT", "Alternator", "75%-Coop"]
-
-def run_tournament(players, turns, repetitions=2000, seed=0):
-    tournament = axl.Tournament(
-        players=players, turns=turns, seed=seed, repetitions=repetitions,
-    )
-    results = tournament.play(progress_bar=False)
-    return np.array(results.payoff_matrix)
-
-# T=100
-M_T100 = run_tournament(players, turns=100)
-print("Average payoffs per turn, T=100:")
-print(np.round(M_T100, 3))
-print()
+The two pure Nash equilibria are **(TFT, TFT)** and **(AllD, AllD)**. The
+(TFT, TFT) equilibrium payoff-dominates (AllD, AllD), with both players earning
+$3$ rather than $1$.
 ```
-
-```{code-cell} python3
-# T=99
-M_T99 = run_tournament(players, turns=99)
-print("Average payoffs per turn, T=99:")
-print(np.round(M_T99, 3))
-print()
-```
-
-```{code-cell} python3
-# Infinite game with delta=1/4: prob_end = 1 - delta = 3/4
-players_inf = [axl.TitForTat(), axl.Alternator(), axl.Random(0.75)]
-tournament_inf = axl.Tournament(
-    players=players_inf, prob_end=3/4, seed=0, repetitions=2000,
-)
-results_inf = tournament_inf.play(progress_bar=False)
-M_inf = np.array(results_inf.payoff_matrix)
-print("Average payoffs, infinite game delta=1/4:")
-print(np.round(M_inf, 3))
-```
-
-**Nash equilibria analysis.**
-
-For a symmetric 3-player (strategy) normal form game, we use nashpy to find
-Nash equilibria of the reduced payoff matrix (treating the repeated game as a
-one-shot game over the strategy space).
-
-```{code-cell} python3
-# For T=100, find Nash equilibria
-# The payoff matrix is symmetric (M_c = M_r.T) since the PD is symmetric
-for label, M in [("T=100", M_T100), ("T=99", M_T99), ("delta=1/4", M_inf)]:
-    M_r_rep = np.array(M)
-    M_c_rep = M_r_rep.T
-    game_rep = nash.Game(M_r_rep, M_c_rep)
-    eqs = list(game_rep.support_enumeration())
-    print(f"\n{label} Nash equilibria (strategies: TFT, Alternator, 75%-Coop):")
-    for eq in eqs:
-        print(" ", [np.round(e, 3) for e in eq])
-```
-
-**Key observations:**
-
-- For $T = 100$ (even number of rounds): TFT can be exploited by Alternator in
-  the final stages since both know when the game ends. The Nash equilibrium
-  analysis reveals whether mutual defection dominates.
-
-- For $T = 99$ (odd): the parity of rounds affects the TFT-vs-Alternator
-  interaction, potentially changing Nash equilibria.
-
-- For infinite $\delta = 1/4$: the discount factor is low (players are
-  impatient), so future cooperation is worth little. This is close to the
-  short-horizon case; the Nash equilibrium tends toward mutual defection/low
-  cooperation.
-
-In all three cases, the stage game's dominant strategy (Defect) exerts pressure:
-Nash equilibria in the repeated game tend to involve strategies that defect more
-frequently when the discount factor is low or the game is finite and short. For
-longer horizons and larger $\delta$, cooperative strategies like TFT can be Nash
-equilibria.
-````
