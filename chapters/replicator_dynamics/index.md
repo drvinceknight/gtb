@@ -233,48 +233,12 @@ an infinitesimal amount $\epsilon$.
 
 What is of interest in the field of evolutionary game theory is what happens to the post
 entry population: does this new student change the stability of the system or is
-the system going to go back to all students defecting?
-
-(sec:definition_of_evolutionary_stable_strategy)=
-
-### Definition: Evolutionary Stable Strategy
-
-A strategy $x^*$ is an evolutionarily stable strategy if for all $x_{\epsilon} \neq x^*$ sufficiently close to $x^*$:
-
-$$
-\label{eqn:ess_constraint}
-f(x^*, x^*) > f(x_{\epsilon}, x^*)
-$$
-
-In practice _sufficiently close_ implies that there exists some $\bar\epsilon$ such
-that for all $y \neq x^*$ and for all $0 < \epsilon < \bar\epsilon$ the post entry population $x_{\epsilon} = x + \epsilon(y - x)$
-satisfies [](#eqn:ess_constraint).
-
-#### Example: Are Loners Evolutionarily Stable in the Common Goods Game
-
-For
-the [common good game](#sec:motivating_example) we have seen that a population
-$x^*=(0, 0, 1)$ where everyone is a longer is stable. Let us check if it is
-evolutionarily stable.
-
-We have:
-
-$$
-f(x^*, x^*) = \sigma
-$$
-
-Now to calculate the right hand side of [](#eqn:ess_constraint):
-
-$$
-\begin{align*}
-f(x_{\epsilon}, x^*) &= {x_\epsilon}_{c}f_c(x^*) + {x_\epsilon}_{d}f_d(x^*) + {x_\epsilon}_{l}f_l(x^*)\\
-                     &= {x_\epsilon}_{c}(-1) + {x_\epsilon}_{d}(0) + {x_\epsilon}_{l}\sigma\\
-                     &= {x_\epsilon}_{c}(-1) + {x_\epsilon}_{l}f(x^*, x^*)\\
-\end{align*}
-$$
-
-which is strictly less than $f(x^*, x^*)=\sigma$ unless ${x_{\epsilon}}_c=0$
-which it cannot as $x_{\epsilon}\ne x^*$.
+the system going to go back to all students defecting? This is the question of
+**evolutionary stability**. The evolutionarily stable strategy (ESS), defined
+formally below, captures exactly this: a population is evolutionarily stable if
+residents always outperform any rare mutant. For pairwise interaction games the
+invasion condition reduces to a convenient algebraic characterisation, also
+developed below.
 
 (sec:definition_of_pairwise_interaction_game)=
 
@@ -442,10 +406,40 @@ of both sharers and aggressive types: $x=1/2$. [](#fig:replicator_dynamics_of_ha
 The numerical integration of the differential equation [](#eqn:replicator_dynamics_equation_for_hawk_dove) with two different initial values of $x$.
 ```
 
-This indicates that $x=1/2$ is an evolutionary stable strategy. To confirm this
-we could repeat calculations using the [definition of an evolutionary stable
-strategy](#sec:definition_of_evolutionary_stable_strategy) however for pairwise
-interaction games there is a theoretic result that can be used instead.
+This indicates that $x=1/2$ is an evolutionary stable strategy. To confirm
+this we could apply the definition of an evolutionarily stable strategy
+directly; however, for pairwise interaction games there is a theoretic result
+that can be used instead. We first state the definition formally.
+
+(sec:ess_definition)=
+
+### Definition: Evolutionarily Stable Strategy
+
+---
+
+A strategy $\sigma^*$ is an **evolutionarily stable strategy (ESS)** if there
+exists $\bar\epsilon > 0$ such that for all $\sigma' \neq \sigma^*$ and all
+$0 < \epsilon < \bar\epsilon$,
+
+$$
+f\!\bigl(\sigma^*,\,(1-\epsilon)\sigma^* + \epsilon\sigma'\bigr)
+\;>\;
+f\!\bigl(\sigma',\,(1-\epsilon)\sigma^* + \epsilon\sigma'\bigr)
+$$
+
+where $(1-\epsilon)\sigma^* + \epsilon\sigma'$ is the
+[post-entry population](#sec:definition_post_entry_population): a population
+consisting mostly of residents with a small fraction $\epsilon$ of mutants.
+
+---
+
+The condition says that the resident strategy does strictly better than any
+rare mutant, so selection removes the mutant and the population returns to
+$\sigma^*$. Letting $\epsilon \to 0$ gives
+$f(\sigma^*, \sigma^*) \geq f(\sigma', \sigma^*)$ for all $\sigma'$, the Nash
+condition for symmetric games. Every ESS is therefore a symmetric Nash
+equilibrium, but not every Nash equilibrium is an ESS: ESS is a refinement that
+rules out equilibria vulnerable to invasion.
 
 ### Theorem: Characterisation of ESS in two-player games
 
@@ -880,7 +874,7 @@ $$
 
 4. **Define a post–entry population.**  
 
-5. **Define an evolutionary stable strategy (ESS).**  
+5. **State the definition of an evolutionarily stable strategy (ESS).**  
 
 6. **Give the replicator dynamics equation for this game and obtain all stable populations.**  
 
@@ -1160,17 +1154,19 @@ x_{\epsilon} = x + \epsilon(y - x)
 $$
 
 
-5. From [](#sec:definition_of_evolutionary_stable_strategy):
+5. From [](#sec:ess_definition):
 
-A strategy $x^*$ is an evolutionarily stable strategy if for all $x_{\epsilon} \neq x^*$ sufficiently close to $x^*$:
+A strategy $\sigma^*$ is an evolutionarily stable strategy if there exists
+$\bar\epsilon > 0$ such that for all $\sigma' \neq \sigma^*$ and all
+$0 < \epsilon < \bar\epsilon$,
 
 $$
-f(x^*, x^*) > f(x_{\epsilon}, x^*)
+f\!\bigl(\sigma^*,\,(1-\epsilon)\sigma^* + \epsilon\sigma'\bigr)
+\;>\;
+f\!\bigl(\sigma',\,(1-\epsilon)\sigma^* + \epsilon\sigma'\bigr)
 $$
 
-In practice _sufficiently close_ implies that there exists some $\bar\epsilon$ such
-that for all $y \neq x^*$ and for all $0 < \epsilon < \bar\epsilon$ the post entry population $x_{\epsilon} = x + \epsilon(y - x)$
-satisfies the above inequality.
+where $(1-\epsilon)\sigma^* + \epsilon\sigma'$ is the post-entry population.
 
 
 6. We have

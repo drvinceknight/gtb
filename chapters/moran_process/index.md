@@ -378,6 +378,84 @@ $$
 
 as calculated [](#sec:example_fixation_of_citation_behaviour_as_an_absorbing_markov_chain).
 
+(sec:moran_selection_strength)=
+
+### Selection Strength
+
+The fitness function in the Moran process need not equal the raw game payoff
+directly. A parameter $w \in [0, 1]$, the **intensity of selection** (or
+**selection strength**), controls how strongly payoffs influence reproductive
+success. The fitness of type $i$ under selection intensity $w$ is:
+
+$$f_i = 1 - w + w\,\pi_i$$
+
+where $\pi_i$ is the expected payoff of type $i$ against the current population.
+
+(sec:definition_neutral_drift)=
+
+### Definition: Neutral Drift
+
+---
+
+A Moran process exhibits **neutral drift** when $w = 0$, so that every
+individual has fitness 1 regardless of strategy. The fixation probability of a
+single mutant is:
+
+$$\rho_1^{\text{neutral}} = \frac{1}{N}$$
+
+---
+
+This follows directly from [](#eqn:formula_for_fixation_probabilities): with
+all fitnesses equal, $\gamma_k = 1$ for all $k$, and the formula reduces to
+$1/N$. A mutant fixates with exactly the same probability as any randomly
+chosen individual would be expected to, so chance alone determines the outcome.
+
+(sec:definition_strong_selection)=
+
+### Definition: Strong Selection
+
+---
+
+A Moran process exhibits **strong selection** when $w = 1$, so that the fitness
+of each type equals its raw payoff:
+
+$$f_i = \pi_i$$
+
+---
+
+The outcome depends entirely on which strategy earns higher payoffs against
+the current population composition. Payoff differences are felt at full
+strength at every step of the process.
+
+(sec:definition_weak_selection)=
+
+### Definition: Weak Selection
+
+---
+
+A Moran process operates under **weak selection** when $0 < w \ll 1$, so that
+payoff differences introduce only a small perturbation to the neutral baseline.
+The fixation probability admits a first-order expansion in $w$:
+
+$$\rho_1 = \frac{1}{N} + w \cdot c + O(w^2)$$
+
+for a constant $c$ that depends on the payoff matrix and population size $N$.
+A mutant is **favoured by selection** if $\rho_1 > 1/N$.
+
+---
+
+The weak-selection regime is widely used because it permits analytical results
+for arbitrary games: whether a mutant is favoured reduces to a linear condition
+on the payoff matrix entries alone [@nowak2006evolutionary].
+
+```{note}
+The parameterisation $f_i = 1 - w + w\pi_i$ ensures fitness remains positive
+for small $w$ even when $\pi_i$ can be negative, and reduces continuously to
+neutral drift as $w \to 0$. It is equivalent to the constant-fitness
+formulation $W_A = 1 + w(\pi_A - 1)$, $W_B = 1$, used in the fitness
+recurrence of [](#sec:bio_fitness).
+```
+
 ## Exercises
 
 ```{exercise}
@@ -409,6 +487,31 @@ For the following games, assuming the mutant is of the second type, obtain the f
 
 Consider the game $M=\begin{pmatrix}r & 1 \\ 1 & 1\end{pmatrix}$ for $r>1$ and $N$, assuming the mutant is of the second type,
 obtain $\rho_1$ as a function of $r$. How does $r$ effect the chance of fixation?
+```
+
+```{exercise}
+:label: moran_weak_strong_selection
+
+Consider the constant-fitness Moran process in which a mutant type has fitness
+$f_M = 1 - w + w r$ and the resident has fitness $f_R = 1 - w + w \cdot 1 = 1$,
+where $r > 0$ and $w \in [0, 1]$ is the selection intensity. There are $N$
+individuals in total.
+
+1. Show that $\gamma_k = f_R / f_M$ is independent of $k$, and write down its
+   value as a function of $w$ and $r$.
+
+2. Using [](#eqn:formula_for_fixation_probabilities), derive a closed-form
+   expression for $\rho_1$ in terms of $\gamma$.
+
+3. Show that as $w \to 0$ (neutral drift), $\rho_1 \to 1/N$.
+
+4. For $r > 1$ (the mutant has a higher raw payoff than the resident), show that
+   $\rho_1 > 1/N$ for all $w > 0$: the mutant is favoured by selection at every
+   positive selection intensity.
+
+5. Interpret the two limits $w \to 0$ (weak selection) and $w \to 1$ (strong
+   selection) biologically. In which regime does random drift dominate, and in
+   which does payoff advantage dominate?
 ```
 
 ```{exercise}
@@ -601,6 +704,79 @@ ultimately dominates the population.
 (solutions:moran_process)=
 
 ## Solutions
+
+````{solution} moran_weak_strong_selection
+:label: solution:moran_weak_strong_selection
+
+1. With $f_M = 1 - w + wr$ and $f_R = 1$, the ratio is:
+
+$$\gamma_k = \frac{f_R}{f_M} = \frac{1}{1 - w + wr} = \frac{1}{1 + w(r-1)}$$
+
+which is independent of $k$ (constant-fitness Moran process).
+
+2. Since $\gamma_k = \gamma$ for all $k$, the products simplify:
+$\prod_{k=1}^{j}\gamma_k = \gamma^j$. Thus:
+
+$$\rho_1 = \frac{1}{1 + \sum_{j=1}^{N-1}\gamma^j} = \frac{1}{\sum_{j=0}^{N-1}\gamma^j}$$
+
+For $\gamma \neq 1$ this is a geometric sum:
+
+$$\rho_1 = \frac{1 - \gamma}{1 - \gamma^N}$$
+
+3. As $w \to 0$, $\gamma \to 1$. Applying L'Hôpital's rule (or noting both
+numerator and denominator tend to 0):
+
+$$\lim_{\gamma \to 1}\frac{1 - \gamma}{1 - \gamma^N} = \lim_{\gamma \to 1}\frac{-1}{-N\gamma^{N-1}} = \frac{1}{N}$$
+
+So $\rho_1 \to 1/N$ as $w \to 0$, confirming the neutral drift result.
+
+4. For $r > 1$ and $w > 0$, we have $\gamma = 1/(1 + w(r-1)) < 1$. With
+$\gamma < 1$ the fixation probability is:
+
+$$\rho_1 = \frac{1 - \gamma}{1 - \gamma^N}$$
+
+We need to show $\rho_1 > 1/N$, i.e. $N(1 - \gamma) > 1 - \gamma^N$.
+Define $g(\gamma) = 1 - \gamma^N - N(1 - \gamma)$ for $\gamma \in (0,1)$.
+Then $g(1) = 0$ and $g'(\gamma) = -N\gamma^{N-1} + N = N(1 - \gamma^{N-1}) > 0$
+for $\gamma \in (0,1)$. So $g$ is increasing on $(0,1)$ and $g(\gamma) < g(1) = 0$,
+meaning $1 - \gamma^N < N(1-\gamma)$, i.e. $\rho_1 > 1/N$. $\square$
+
+5. Under **weak selection** ($w \approx 0$) the fitnesses of all individuals
+are nearly equal (all close to 1), so which individual is copied is nearly
+random. Random drift dominates: the mutant may fix or go extinct regardless of
+whether $r > 1$ or $r < 1$, and the fixation probability is close to $1/N$.
+Under **strong selection** ($w = 1$) fitness differences are maximal. If
+$r > 1$, the mutant is substantially fitter than the resident at every
+population state, and the fixation probability is maximised. In the extreme,
+as $r \to \infty$, $\gamma \to 0$ and $\rho_1 \to 1$: the mutant is almost
+certain to take over. Strong selection amplifies the effect of fitness
+differences; weak selection washes them out.
+
+```{code-cell} python3
+import numpy as np
+import matplotlib.pyplot as plt
+
+def rho_1(w, r, N):
+    gamma = 1 / (1 + w * (r - 1))
+    if abs(gamma - 1) < 1e-12:
+        return 1 / N
+    return (1 - gamma) / (1 - gamma ** N)
+
+N = 10
+r_values = [1.5, 2.0, 3.0]
+w_range = np.linspace(0, 1, 200)
+
+plt.figure(figsize=(6, 4))
+for r in r_values:
+    plt.plot(w_range, [rho_1(w, r, N) for w in w_range], label=f"$r = {r}$")
+plt.axhline(1 / N, color="gray", linestyle="--", label=f"Neutral drift $1/N = 1/{N}$")
+plt.xlabel("Selection intensity $w$")
+plt.ylabel(r"Fixation probability $\rho_1$")
+plt.title(f"Fixation probability vs selection intensity ($N={N}$)")
+plt.legend()
+plt.tight_layout()
+```
+````
 
 ````{solution} moran_process:exam_style_1
 :label: solution:moran_process:exam_style_1

@@ -51,7 +51,7 @@ uv run myst clean --execute     # execution cache only
 ### Building the PDF
 
 ```bash
-uv run myst build --pdf
+uv run myst build --typst --execute
 ```
 
 This produces `exports/main.pdf`.

@@ -242,10 +242,14 @@ ax.text(W / 2, rule_y - 0.25, "Theory · Software · Research",
         zorder=10)
 
 # Author
-ax.plot([0.7, W - 0.7], [0.72, 0.72], color=ACCENT, lw=1.5, zorder=6)
-ax.text(W / 2, 0.52, "VINCE KNIGHT",
+ax.plot([0.7, W - 0.7], [0.80, 0.80], color=ACCENT, lw=1.5, zorder=6)
+ax.text(W / 2, 0.58, "VINCE KNIGHT",
         ha="center", va="center",
         fontsize=16, color=TEXT_MAIN, fontweight="bold", fontfamily="serif",
+        zorder=10)
+ax.text(W / 2, 0.28, "Illustrated by James Brown",
+        ha="center", va="center",
+        fontsize=10, color=TEXT_DIM, fontfamily="serif", fontstyle="italic",
         zorder=10)
 
 fig.savefig("cover.png", dpi=DPI)

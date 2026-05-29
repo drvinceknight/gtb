@@ -85,9 +85,9 @@ examines how cooperation can be sustained when players interact
 indefinitely, culminating in the Folk Theorem. [Direct Reciprocity](#chp:direct_reciprocity)
 extends this to memory-one strategies, showing how simple conditional rules
 such as Tit-for-Tat can stabilise cooperation. [Evolutionary Biology](#chp:evolutionary_biology)
-traces the biological origins of evolutionary game theory, introducing the
-concept of an evolutionarily stable strategy and motivating the dynamical
-models that follow. [Replicator Dynamics](#chp:replicator_dynamics)
+provides the wider biological context for evolutionary game theory and
+motivates the dynamical models that follow; it is optional reading for a
+purely mathematical pass through the book. [Replicator Dynamics](#chp:replicator_dynamics)
 models how strategy frequencies evolve in large populations under selection
 pressure. The [Moran Process](#chp:moran_process) studies fixation in finite
 populations. [Further Learning Dynamics](#chp:further_learning_dynamics)
