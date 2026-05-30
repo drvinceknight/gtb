@@ -16,7 +16,7 @@ concepts of strategies and utilities that underpin everything that follows.
 ## Motivating Example
 
 Consider the following scenario: you would like to meet your **friends** for
-coffee. You know the following about their behavior:
+coffee. You know the following about their behaviour:
 
 - With probability 20%, they choose coffee house A.
 - With probability 80%, they choose coffee house B.
@@ -40,7 +40,7 @@ B, offering an 80% chance of meeting your friends.
 However, in many situations, decisions are not made in isolation. Often, one
 party moves first, and others respond after observing that choice. If you were
 able to announce your decision before your friends chose where to go, the
-interaction would become a sequential decision problem — an instance of a
+interaction would become a sequential decision problem, an instance of a
 **game**. [](#fig:consecutive_decision_tree) shows this game.
 
 ```{figure} ./images/consecutive_decision_tree/main.png
@@ -270,7 +270,7 @@ $$
 
 #### Example: Hawk–Dove
 
-> Suppose two birds of prey must share a limited resource. Hawks always fight over the resource — potentially to the death or at great cost — and dominate doves. Doves, on the other hand, avoid conflict and share the resource if paired with another dove.
+> Suppose two birds of prey must share a limited resource. Hawks always fight over the resource, potentially to the death or at great cost, and dominate doves. Doves, on the other hand, avoid conflict and share the resource if paired with another dove.
 
 This interaction is modelled as:
 
@@ -290,7 +290,7 @@ $$
 
 #### Example: Pigs
 
-> Two pigs — one dominant and one subservient — share a pen containing a lever that dispenses food. Pressing the lever takes time, giving the other pig an opportunity to eat. If the dominant pig presses the lever, the subservient pig eats most of the food before being pushed away. If the subservient pig presses the lever, the dominant pig eats all the food. If both pigs press the lever, the subservient pig manages to eat a third of the food.
+> Two pigs, one dominant and one subservient, share a pen containing a lever that dispenses food. Pressing the lever takes time, giving the other pig an opportunity to eat. If the dominant pig presses the lever, the subservient pig eats most of the food before being pushed away. If the subservient pig presses the lever, the dominant pig eats all the food. If both pigs press the lever, the subservient pig manages to eat a third of the food.
 
 The game is represented by:
 
@@ -710,7 +710,7 @@ sigma_c = np.array((0.6, 0.4))
 
 :::{note}
 We use the fact that $M_r = -M_c$ here, which holds because the Matching
-Pennies game happens to be a **zero-sum game** — a topic discussed in a later chapter.
+Pennies game happens to be a **zero-sum game**, a topic discussed in a later chapter.
 % Add reference to zero sum chapter
 :::
 
@@ -822,7 +822,7 @@ game theory is applied across a range of real-world scenarios. We highlight the
 types of situations being modelled rather than focusing on technical details.
 
 In [@lee2016devaluing], the authors develop a game-theoretic model of **rhino
-horn devaluation**—a conservation strategy in which a rhinoceros's horn is
+horn devaluation**, a conservation strategy in which a rhinoceros's horn is
 partially removed to reduce its value to poachers. This work, along with
 follow-up research such as [@glynatsi2018evolutionary], explores the conditions
 under which poachers are deterred from targeting these endangered animals.
@@ -856,8 +856,8 @@ While the above studies are primarily based on **Normal Form Games**,
 [@boyd2023generalized] presents a model in **Extensive Form**. The authors
 consider a water resource management problem where three firms are located
 sequentially along a river basin. The model captures the asymmetric benefits
-faced by upstream versus downstream players. The proposed mechanism—a
-non-cooperative water-release market—enables upstream agents to release water,
+faced by upstream versus downstream players. The proposed mechanism, a
+non-cooperative water-release market, enables upstream agents to release water,
 creating a more equitable outcome for all parties.
 
 ## Conclusion
@@ -1073,7 +1073,7 @@ $$
 
 **Interpretation of utility values:**
 
-A reasonable interpretation is that each player's utility equals the number of the other two friends who choose the same platform. The motivation is that each person gains value from being able to communicate with friends — more shared connections means higher utility.
+A reasonable interpretation is that each player's utility equals the number of the other two friends who choose the same platform. The motivation is that each person gains value from being able to communicate with friends: more shared connections means higher utility.
 
 Under this interpretation:
 - Utility $= 2$ if all three choose the same platform.

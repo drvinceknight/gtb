@@ -616,7 +616,7 @@ of players can form coalitions and share the resulting value. We focused on
 **characteristic function games**, where the value of each coalition is known,
 and explored how to fairly distribute this value using the **Shapley value**.
 
-The four axioms — efficiency, null player, symmetry, and additivity — uniquely determine the Shapley value. We also saw applications to machine learning interpretability.
+The four axioms (efficiency, null player, symmetry, and additivity) uniquely determine the Shapley value. We also saw applications to machine learning interpretability.
 
 [](#tbl:cooperative_games_summary) gives a summary of the concepts of this
 chapter.
@@ -639,7 +639,7 @@ chapter.
 
 ```{important}
 The Shapley value is the only payoff rule that satisfies **efficiency**, **null
-player**, **symmetry**, and **additivity**—making it a principled way to fairly
+player**, **symmetry**, and **additivity**, making it a principled way to fairly
 divide rewards in cooperative settings.
 ```
 
@@ -1124,9 +1124,7 @@ $$
    - $v_a(C\cup\{1\})$: if $C=\emptyset$, $v_a(\{1\})=2$; if $C=\{3\}$, $v_a(\{1,3\})=0$.
    - $v_a(C\cup\{2\})$: if $C=\emptyset$, $v_a(\{2\})=2$; if $C=\{3\}$, $v_a(\{2,3\})=0$.
 
-   Since $v_a(C\cup\{1\})=v_a(C\cup\{2\})$ for all $C\subseteq\{3\}$, players 1 and 2 are symmetric under $v_a$.
-
-   Player 3 is a null player in $v_a$ (it never contributes), so the symmetry property is vacuously satisfied for any pair involving player 3.
+   Since $v_a(C\cup\{1\})=v_a(C\cup\{2\})$ for all $C\subseteq\{3\}$, players 1 and 2 are symmetric under $v_a$. No other pair is symmetric, so players 1 and 2 are the only pair the property constrains.
 
    **$v_a$ satisfies the symmetry property.**
 
@@ -1141,28 +1139,9 @@ $$
 
    **Shapley value of $v_a$**:
 
-   | $\pi$ | $\Delta^{v_a}_\pi(1)$ | $\Delta^{v_a}_\pi(2)$ | $\Delta^{v_a}_\pi(3)$ |
-   |---|---|---|---|
-   | $(1,2,3)$ | $2$ | $0$ | $0$ |
-   | $(1,3,2)$ | $2$ | $0$ | $0$ |
-   | $(2,1,3)$ | $0$ | $2$ | $0$ |
-   | $(2,3,1)$ | $0$ | $2$ | $0$ |
-   | $(3,1,2)$ | $0$ | $0$ | $0$ |
-   | $(3,2,1)$ | $0$ | $0$ | $0$ |
-
-   $$
-   \phi_1(v_a)=\frac{2+2+0+0+0+0}{6}=\frac{2}{3},\quad
-   \phi_2(v_a)=\frac{0+0+2+2+0+0}{6}=\frac{2}{3},\quad
-   \phi_3(v_a)=0
-   $$
-
-   **Check**: $2/3+2/3+0=4/3$, but $v_a(\{1,2,3\})=0$. Wait — the grand coalition has value 0 under $v_a$.
-
-   Indeed $\phi_1+\phi_2+\phi_3$ should equal $v_a(\Omega)=0$. Let us recheck: $v_a(\{1,2\})=0$, not $v_a(\{1\})+v_a(\{2\})$; the grand coalition $v_a(\{1,2,3\})=0$.
-
-   So in permutation $(1,2,3)$: $\Delta(1)=v_a(\{1\})=2$, $\Delta(2)=v_a(\{1,2\})-v_a(\{1\})=0-2=-2$, $\Delta(3)=v_a(\{1,2,3\})-v_a(\{1,2\})=0-0=0$.
-
-   Let us redo the full table for $v_a$:
+   Because $v_a$ is not monotone (the singletons $\{1\}$ and $\{2\}$ are worth
+   $2$, but every larger coalition is worth $0$), the marginal contributions must
+   be computed carefully, term by term:
 
    | $\pi$ | $\Delta^{v_a}_\pi(1)$ | $\Delta^{v_a}_\pi(2)$ | $\Delta^{v_a}_\pi(3)$ |
    |---|---|---|---|
@@ -1329,15 +1308,9 @@ $$
    **Player 3**: Check whether $v(C\cup\{3\})=v(C)$ for all $C$:
 
    - $C=\emptyset$: $v(\{3\})=0=v(\emptyset)=0$ ✓
-   - $C=\{1\}$: $v(\{1,3\})=0\neq 4=v(\{1\})$ ✗
+   - $C=\{1\}$: $v(\{1,3\})=0\neq 4=v(\{1\})$ ✗ (the coalition $\{1,3\}$ is not listed, so its value is $0$).
 
-   Wait — $v(\{1,3\})$ is not explicitly listed, so $v(\{1,3\})=0$ (otherwise). Then $v(\{1,3\})=0\neq 4=v(\{1\})$.
-
-   Player 3 is **not** a null player under the standard definition.
-
-   Let us re-examine: $v(\{1,2,3\})=7=v(\{1,2\})$, so adding player 3 to $\{1,2\}$ does not change the value. Also $v(\{1,3\})=0=v(\{3\})=0$, and $v(\{2,3\})=0=v(\{2\})=0$. But $v(\{1,3\})=0\neq 4=v(\{1\})$.
-
-   So player 3 is not a null player. However, once player 2 has joined, player 3 contributes nothing. Let us proceed to the Shapley value.
+   Player 3 is **not** a null player.
 
 2. **Marginal contributions**
 
@@ -1468,40 +1441,18 @@ $$
 \Delta_\pi^G(i)=v(S\cup\{i,j\})-v(S\cup\{j\})
 $$
 
-In $\pi'$, $i$ has been moved to where $j$ was, so $S_{\pi'}(j)=S$ (the predecessors of $j$ in $\pi'$ are the predecessors of $i$ in $\pi$ that are not $j$, which is $S$). Thus:
+In $\pi'$, $i$ has been moved to where $j$ was, so the predecessors of $j$ in $\pi'$ are the predecessors of $i$ in $\pi$ with $j$ relabelled as $i$, namely $S\cup\{i\}$. Thus:
 
 $$
-\Delta_{\pi'}^G(j)=v(S\cup\{j\})-v(S)
+\Delta_{\pi'}^G(j)=v(S\cup\{i,j\})-v(S\cup\{i\})
 $$
 
-Hmm — this gives a different expression. Let us instead use the following argument directly.
+Since $S\subseteq\Omega\setminus\{i,j\}$, the symmetry assumption gives $v(S\cup\{i\})=v(S\cup\{j\})$, so $\Delta_\pi^G(i)=\Delta_{\pi'}^G(j)$ in this case as well.
 
-Since the map $\pi\mapsto\pi'$ is a bijection on $\Pi_N$:
-
-$$
-\phi_i(G)=\frac{1}{N!}\sum_{\pi\in\Pi_N}\Delta_\pi^G(i)=\frac{1}{N!}\sum_{\pi'\in\Pi_N}\Delta_{\pi'}^G(i)
-$$
-
-For any permutation $\pi'$, consider the marginal contribution of $i$ in $\pi'$:
+In both cases $\Delta_\pi^G(i)=\Delta_{\pi'}^G(j)$. Since $\pi\mapsto\pi'$ is a bijection on $\Pi_N$, summing over all permutations gives:
 
 $$
-\Delta_{\pi'}^G(i)=v(S_{\pi'}(i)\cup\{i\})-v(S_{\pi'}(i))
-$$
-
-We want to relate this to $\Delta_\pi^G(j)$ where $\pi$ is obtained from $\pi'$ by swapping $i$ and $j$.
-
-If $j\not\in S_{\pi'}(i)$: then $S_{\pi'}(i)\subseteq\Omega\setminus\{i,j\}$, and $S_\pi(j)=S_{\pi'}(i)$ (since swapping $i$ and $j$ moves $j$ to where $i$ was). By the symmetry assumption:
-
-$$
-\Delta_{\pi'}^G(i)=v(S_{\pi'}(i)\cup\{i\})-v(S_{\pi'}(i))=v(S_\pi(j)\cup\{j\})-v(S_\pi(j))=\Delta_\pi^G(j)
-$$
-
-If $j\in S_{\pi'}(i)$: then in $\pi$, $i$ is placed where $j$ was, so $i$ now comes before $j$ and $S_\pi(j)∋ i$... by a symmetric argument with $i$ and $j$ exchanged, and using the symmetry condition $v(C\cup\{i\})=v(C\cup\{j\})$ for all $C\subseteq\Omega\setminus\{i,j\}$, one can verify the same equality holds.
-
-Since the swap $\pi\leftrightarrow\pi'$ is a bijection on $\Pi_N$:
-
-$$
-\phi_i(G)=\frac{1}{N!}\sum_{\pi\in\Pi_N}\Delta_\pi^G(j)=\phi_j(G)\qquad\square
+\phi_i(G)=\frac{1}{N!}\sum_{\pi\in\Pi_N}\Delta_\pi^G(i)=\frac{1}{N!}\sum_{\pi\in\Pi_N}\Delta_{\pi'}^G(j)=\frac{1}{N!}\sum_{\pi'\in\Pi_N}\Delta_{\pi'}^G(j)=\phi_j(G)\qquad\square
 $$
 
 ---

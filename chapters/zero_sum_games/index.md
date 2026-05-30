@@ -682,8 +682,8 @@ practical and elegant way to compute optimal strategies.
 
 The central insight of this chapter is the equivalence between solving a
 zero-sum game and solving a pair of dual linear programs. This connection
-allows us to apply tools from optimisation—such as tableau methods and integer
-pivoting—to find equilibrium strategies.
+allows us to apply tools from optimisation, such as tableau methods and integer
+pivoting, to find equilibrium strategies.
 
 [](#tbl:zero_sum_summary) summarises the two central linear programs seen in this chapter.
 

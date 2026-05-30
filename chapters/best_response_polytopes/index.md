@@ -63,7 +63,7 @@ $$
 
 Note that the sum of payoffs in any outcome need not equal 1. This reflects the
 possibility that the attacker fails to exfiltrate and the defender fails to detect
-the attempt — for instance, if the file transfer crashes mid-way and no alert is
+the attempt, for instance, if the file transfer crashes mid-way and no alert is
 triggered.
 
 This point is also important mathematically: the game is **not constant-sum** and
@@ -440,7 +440,7 @@ We apply the algorithm as follows:
 
 1. Start at $(v_0, u_0)$ and choose to drop label $1$ (an arbitrary choice).
 2. Label $1$ is not among the labels of $u_0$, so we move from $v_0$ to an
-   adjacent vertex—$v_1$, $v_2$, $v_3$, $v_4$, $v_6$, or $v_7$—that does not
+   adjacent vertex ($v_1$, $v_2$, $v_3$, $v_4$, $v_6$, or $v_7$) that does not
    carry label $1$ but shares other labels with $v_0$. We select $v_1$. This
    introduces label $6$, which must now be dropped in $\mathcal{P}_c$.
 3. $(v_1, u_0) \to (v_1, u_2)$: the labels are $\{2, 3, 6\}, \{2, 4, 5\}$.
@@ -613,7 +613,7 @@ T_c = \begin{pmatrix}
 \end{pmatrix}
 $$
 
-This tableau has labels $\{1, 2, 3\}$ so we have a fully labeled vertex pair.
+This tableau has labels $\{1, 2, 3\}$ so we have a fully labelled vertex pair.
 
 Setting the non-basic variables to 0 we have the following systems of equations:
 
@@ -736,8 +736,8 @@ appears more than once across a vertex pair. Also assume that, when applying
 the Lemke–Howson algorithm, dropping a label from any fully labelled vertex
 pair always leads to a **distinct** fully labelled vertex pair.
 
-Under these assumptions, prove that the number of fully labelled vertex pairs —
-and hence the number of Nash equilibria — is always **odd**.
+Under these assumptions, prove that the number of fully labelled vertex pairs,
+and hence the number of Nash equilibria, is always **odd**.
 ```
 
 ## Programming
@@ -817,7 +817,7 @@ and Selten in 1994.
 The worst-case complexity of the Lemke–Howson algorithm is analysed in
 [@savani2004exponentially], which demonstrates that the algorithm may require
 exponential time on specific inputs. **Computing Nash equilibria is a
-computationally challenging task** — this intuitive difficulty is formalised in
+computationally challenging task**; this intuitive difficulty is formalised in
 [@chen2006settling, @daskalakis2009complexity], where the problem is shown to be
 PPAD-complete, placing it in a class of problems believed not to admit
 polynomial-time solutions.
@@ -854,7 +854,7 @@ chapter.
 | Best response polytope     | A polyhedron defined by inequalities corresponding to best response conditions. |
 | Binding inequality         | A constraint that holds with equality at a vertex; gives rise to a label.      |
 | Vertex labelling           | A mapping from vertices to labels indicating inactive actions or best responses. |
-| Fully labelled vertex pair | A pair of vertices whose labels cover all $m + n$ actions — corresponds to a Nash equilibrium. |
+| Fully labelled vertex pair | A pair of vertices whose labels cover all $m + n$ actions, corresponds to a Nash equilibrium. |
 | Lemke–Howson algorithm     | A path-following method that constructs equilibria by dropping and replacing labels. |
 | Integer pivoting           | A tableau-based pivoting method used to trace Lemke–Howson paths efficiently.     |
 ```
@@ -864,7 +864,7 @@ In every nondegenerate two-player game, each Nash equilibrium corresponds to a
 fully labelled vertex pair of the best response polytopes.
 
 Crucially, we can find such a vertex pair without explicitly constructing the
-polytopes — using integer pivoting and the Lemke–Howson algorithm.
+polytopes, using integer pivoting and the Lemke–Howson algorithm.
 ```
 
 ---
@@ -1125,13 +1125,13 @@ Algorithm (dropping label 1):
 1. Start at $(v_0, u_0)$ with labels $\{1,2\} \cup \{3,4\} = \{1,2,3,4\}$.
 2. Drop label $1$ from $\mathcal{P}_r$: move from $v_0$ to $v_1$ (drops label 1,
    gains label 4). Now $(v_1, u_0)$ with labels $\{2,4\} \cup \{3,4\}$. Label 4
-   is duplicate — drop label 4 from $\mathcal{P}_c$.
+   is duplicate, so drop label 4 from $\mathcal{P}_c$.
 3. Drop label 4 from $\mathcal{P}_c$: move from $u_0$ to $u_2$ (drops label 4,
    gains label 2). Now $(v_1, u_2)$ with labels $\{2,4\} \cup \{2,3\}$. Label 2
-   is duplicate — drop label 2 from $\mathcal{P}_r$.
+   is duplicate, so drop label 2 from $\mathcal{P}_r$.
 4. Drop label 2 from $\mathcal{P}_r$: move from $v_1$ to $v_3$ (drops label 2,
    gains label 3). Now $(v_3, u_2)$ with labels $\{3,4\} \cup \{2,3\}$. Label 3
-   is duplicate — drop label 3 from $\mathcal{P}_c$.
+   is duplicate, so drop label 3 from $\mathcal{P}_c$.
 5. Drop label 3 from $\mathcal{P}_c$: move from $u_2$ to $u_3$ (drops label 3,
    gains label 1). Now $(v_3, u_3)$ with labels $\{3,4\} \cup \{1,2\} = \{1,2,3,4\}$.
    Fully labelled!
@@ -1292,8 +1292,8 @@ Normalising: $\sigma_r = (3/7, 4/7)$, $\sigma_c = (4/5, 1/5)$.
 
 $$
 T_r = \begin{pmatrix}
-1 & 5 & 1 & 0 & 1\\
-4 & 1 & 0 & 1 & 1
+1 & 4 & 1 & 0 & 1\\
+5 & 1 & 0 & 1 & 1
 \end{pmatrix}
 \qquad
 T_c = \begin{pmatrix}
@@ -1304,20 +1304,20 @@ $$
 
 Drop label 1: pivot column 1 of $T_r$.
 
-Min ratio test: row 1 gives $1/1=1$; row 2 gives $1/4$. Pivot on row 2.
+Min ratio test: row 1 gives $1/1 = 1$; row 2 gives $1/5$. Pivot on row 2.
 
-Row 2: $[4,1,0,1,1]$.
-Row 1: $4 \cdot [1,5,1,0,1] - 1 \cdot [4,1,0,1,1] = [0,19,4,-1,3]$.
+Row 2 (the pivot row) is unchanged: $[5,1,0,1,1]$.
+Row 1: $5 \cdot [1,4,1,0,1] - 1 \cdot [5,1,0,1,1] = [0,19,5,-1,4]$.
 
 $$
-T_r = \begin{pmatrix}0 & 19 & 4 & -1 & 3 \\ 4 & 1 & 0 & 1 & 1\end{pmatrix}
+T_r = \begin{pmatrix}0 & 19 & 5 & -1 & 4 \\ 5 & 1 & 0 & 1 & 1\end{pmatrix}
 $$
 
 Labels of $\mathcal{P}_r$: $\{2,4\}$. Duplicate with $u_0$'s $\{3,4\}$: label 4. Pivot column 4 in $T_c$.
 
-Min ratio test: row 1 gives $1/1=1$; row 2 gives $1/5$. Pivot on row 2.
+Min ratio test: row 1 gives $1/1 = 1$; row 2 gives $1/5$. Pivot on row 2.
 
-Row 2: $[0,1,3,5,1]$.
+Row 2 (the pivot row) is unchanged: $[0,1,3,5,1]$.
 Row 1: $5 \cdot [1,0,4,1,1] - 1 \cdot [0,1,3,5,1] = [5,-1,17,0,4]$.
 
 $$
@@ -1326,20 +1326,20 @@ $$
 
 Labels of $\mathcal{P}_c$: $\{2,3\}$. Duplicate with $\{2,4\}$: label 2. Pivot column 2 in $T_r$.
 
-Min ratio test: row 1 gives $3/19$; row 2 gives $1/1=1$. Pivot on row 1.
+Min ratio test: row 1 gives $4/19$; row 2 gives $1/1 = 1$. Pivot on row 1.
 
-Row 1: $[0,19,4,-1,3]$.
-Row 2: $19 \cdot [4,1,0,1,1] - 1 \cdot [0,19,4,-1,3] = [76,0,-4,20,16]$.
+Row 1 (the pivot row) is unchanged: $[0,19,5,-1,4]$.
+Row 2: $19 \cdot [5,1,0,1,1] - 1 \cdot [0,19,5,-1,4] = [95,0,-5,20,15]$.
 
 $$
-T_r = \begin{pmatrix}0 & 19 & 4 & -1 & 3 \\ 76 & 0 & -4 & 20 & 16\end{pmatrix}
+T_r = \begin{pmatrix}0 & 19 & 5 & -1 & 4 \\ 95 & 0 & -5 & 20 & 15\end{pmatrix}
 $$
 
 Labels of $\mathcal{P}_r$: $\{3,4\}$. Duplicate with $\{2,3\}$: label 3. Pivot column 3 in $T_c$.
 
 Min ratio test: row 1 gives $4/17$; row 2 gives $1/3$. $4/17 \approx 0.235 < 0.333$. Pivot on row 1.
 
-Row 1: $[5,-1,17,0,4]$.
+Row 1 (the pivot row) is unchanged: $[5,-1,17,0,4]$.
 Row 2: $17 \cdot [0,1,3,5,1] - 3 \cdot [5,-1,17,0,4] = [-15,20,0,85,5]$.
 
 $$
@@ -1348,13 +1348,22 @@ $$
 
 Labels of $\mathcal{P}_c$: $\{1,2\}$. $\mathcal{P}_r$ has $\{3,4\}$: union is $\{1,2,3,4\}$. Fully labelled!
 
-From $T_r$: $x_1 = 16/76 = 4/19$... wait, let me re-read: basic column 1 is row 2: $x_1 = 16/76 = 4/19$? No — basic variable 2 is in row 1: $x_2 = 3/19$; basic variable 1 is in row 2: $x_1 = 16/76 = 4/19$.
+Reading off the solution from the basic variables. In $T_r$, column 1 is basic in
+row 2 and column 2 is basic in row 1:
 
-Hmm, let me recheck. Column 1 is basic in row 2 with leading entry 76: $x_1 = 16/76 = 4/19$. Column 2 is basic in row 1 with leading entry 19: $x_2 = 3/19$.
+$$
+x_1 = \frac{15}{95} = \frac{3}{19}, \qquad x_2 = \frac{4}{19},
+$$
 
-So $x = (4/19, 3/19)$... but from the vertex enumeration we expect $v_3 = (3/19, 4/19)$.
+so $x = (3/19, 4/19)$, normalised: $\sigma_r = (3/7, 4/7)$. In $T_c$, column 3 is
+basic in row 1 and column 4 is basic in row 2:
 
-Let me verify: $x_1 + x_2 = 7/19$ and normalised gives $\sigma_r = (4/7, 3/7)$? That does not match. Let me re-examine by using nashpy.
+$$
+y_1 = \frac{4}{17}, \qquad y_2 = \frac{5}{85} = \frac{1}{17},
+$$
+
+so $y = (4/17, 1/17)$, normalised: $\sigma_c = (4/5, 1/5)$. This matches the vertex
+enumeration result.
 
 ```{code-cell} python3
 import nashpy as nash
@@ -1455,13 +1464,10 @@ Both matrices have all positive entries so no shifting is required.
    - Row 2: $1/3$
    - Row 3: $1/1 = 1$
 
-   Minimum is $1/3$ (row 2). Pivot on row 2, column 1:
-
-   After pivoting:
-   - Row 2 is the pivot row.
-   - $\text{row}_1 \leftarrow 3 \cdot \text{row}_1 - 2 \cdot \text{row}_2 = [6-6, 3-4, 15-2, 3-0, 0-2, 0-0, 3-2] = [0,-1,13,3,-2,0,1]$
-   - $\text{row}_2$ stays: $[3,2,1,0,1,0,1]$
-   - $\text{row}_3 \leftarrow 3 \cdot \text{row}_3 - 1 \cdot \text{row}_2 = [3-3,12-2,9-1,0-0,0-1,3-0,3-1] = [0,10,8,0,-1,3,2]$
+   The minimum is $1/3$ (row 2). Pivoting on row 2:
+   - Row 2 (the pivot row) is unchanged: $[3,2,1,0,1,0,1]$.
+   - $\text{row}_1 \leftarrow 3 \cdot \text{row}_1 - 2 \cdot \text{row}_2 = [0,-1,13,3,-2,0,1]$.
+   - $\text{row}_3 \leftarrow 3 \cdot \text{row}_3 - 1 \cdot \text{row}_2 = [0,10,8,0,-1,3,2]$.
 
    $$
    T_r = \begin{pmatrix}
@@ -1471,37 +1477,87 @@ Both matrices have all positive entries so no shifting is required.
    \end{pmatrix}
    $$
 
-   Non-basic columns: 2 ($x_2$ not in basis, label 2), 3 (label 3). Labels of $\mathcal{P}_r$: $\{2,3,6\}$.
+   The non-basic columns are 2, 3, and 5, so the labels of $\mathcal{P}_r$ are
+   $\{2,3,5\}$. The duplicate with $u_0$'s $\{4,5,6\}$ is label 5. Pivot column 5
+   in $T_c$.
 
-   The duplicate label with $u_0$'s $\{4,5,6\}$ is label 6. Pivot column 6 in $T_c$.
+   Minimum ratio test in $T_c$:
+   - Row 1: $1/1 = 1$
+   - Row 2: $1/4$
+   - Row 3: $1/3$
 
-   Min ratio test in $T_c$:
-   - Row 1: $1/2$
-   - Row 2: $1/1 = 1$
-   - Row 3: $1/0$ (undefined — skip)
-
-   Pivot on row 1, column 6:
-   - $\text{row}_1$: $[1,0,0,3,1,2,1]$
-   - $\text{row}_2 \leftarrow 2 \cdot \text{row}_2 - 1 \cdot \text{row}_1 = [2-1,2-0,0-0,4-3,8-1,2-2,2-1] = [-1,2,0,1,7,0,1]$
-
-   Wait — re-doing properly:
-   $\text{row}_2 \leftarrow 2\cdot\text{row}_2 - 1\cdot\text{row}_1$:
-   $[0\cdot2-1, 1\cdot2-0, 0-0, 2\cdot2-3, 4\cdot2-1, 1\cdot2-2, 1\cdot2-1] = [-1,2,0,1,7,0,1]$.
-   $\text{row}_3 \leftarrow 2\cdot\text{row}_3 - 0\cdot\text{row}_1 = [0,0,2,2,6,0,2]$.
+   The minimum is $1/4$ (row 2). Pivoting on row 2:
+   - Row 2 (the pivot row) is unchanged: $[0,1,0,2,4,1,1]$.
+   - $\text{row}_1 \leftarrow 4 \cdot \text{row}_1 - 1 \cdot \text{row}_2 = [4,-1,0,10,0,7,3]$.
+   - $\text{row}_3 \leftarrow 4 \cdot \text{row}_3 - 3 \cdot \text{row}_2 = [0,-3,4,-2,0,-3,1]$.
 
    $$
    T_c = \begin{pmatrix}
-   1 & 0 & 0 & 3 & 1 & 2 & 1\\
-   -1 & 2 & 0 & 1 & 7 & 0 & 1\\
-   0 & 0 & 2 & 2 & 6 & 0 & 2\\
+   4 & -1 & 0 & 10 & 0 & 7 & 3\\
+   0 & 1  & 0 & 2  & 4 & 1 & 1\\
+   0 & -3 & 4 & -2 & 0 & -3& 1\\
    \end{pmatrix}
    $$
 
-   Non-basic columns in $T_c$: 4, 5 (labels 4 and 5). Labels: $\{4,5\}$. But we need 3 labels for a $3\times3$ game. Let me re-examine...
+   The labels of $\mathcal{P}_c$ are $\{2,4,6\}$. The duplicate with $\{2,3,5\}$
+   is label 2. Pivot column 2 in $T_r$.
 
-   For a $3\times3$ game the labels run from 1 to 6. $T_c$ should have 3 non-basic variables from $\{4,5,6\}$ initially (labels of $u_0$). After pivoting column 6, the new labels should be $\{4,5\}$ plus the label that entered. Label 6 was the pivot column; after pivoting row 1 the new non-basic column becomes column 6 (which was basic via $I_3$ row 1, now replaced by the pivot). The non-basic columns are now columns 4, 5, and the column that had a pivot 1 in row 1 (which was column 1 of $I_3$, i.e., the first variable, label... let me use nashpy for clarity.
+   Minimum ratio test (skipping non-positive entries):
+   - Row 2: $1/2$
+   - Row 3: $2/10 = 1/5$
 
-   The Lemke-Howson steps can become intricate by hand for $3\times3$ games; a different starting label choice may yield a shorter path. Let us verify with nashpy.
+   The minimum is $1/5$ (row 3). Pivoting on row 3:
+   - Row 3 (the pivot row) is unchanged: $[0,10,8,0,-1,3,2]$.
+   - $\text{row}_1 \leftarrow 10 \cdot \text{row}_1 + 1 \cdot \text{row}_3 = [0,0,138,30,-21,3,12]$.
+   - $\text{row}_2 \leftarrow 10 \cdot \text{row}_2 - 2 \cdot \text{row}_3 = [30,0,-6,0,12,-6,6]$.
+
+   $$
+   T_r = \begin{pmatrix}
+   0  & 0  & 138 & 30 & -21 & 3  & 12\\
+   30 & 0  & -6  & 0  & 12  & -6 & 6\\
+   0  & 10 & 8   & 0  & -1  & 3  & 2\\
+   \end{pmatrix}
+   $$
+
+   The labels of $\mathcal{P}_r$ are $\{3,5,6\}$. The duplicate with $\{2,4,6\}$
+   is label 6. Pivot column 6 in $T_c$.
+
+   Minimum ratio test (skipping non-positive entries):
+   - Row 1: $3/7$
+   - Row 2: $1/1 = 1$
+
+   The minimum is $3/7$ (row 1). Pivoting on row 1:
+   - Row 1 (the pivot row) is unchanged: $[4,-1,0,10,0,7,3]$.
+   - $\text{row}_2 \leftarrow 7 \cdot \text{row}_2 - 1 \cdot \text{row}_1 = [-4,8,0,4,28,0,4]$.
+   - $\text{row}_3 \leftarrow 7 \cdot \text{row}_3 + 3 \cdot \text{row}_1 = [12,-24,28,16,0,0,16]$.
+
+   $$
+   T_c = \begin{pmatrix}
+   4   & -1  & 0  & 10 & 0  & 7 & 3\\
+   -4  & 8   & 0  & 4  & 28 & 0 & 4\\
+   12  & -24 & 28 & 16 & 0  & 0 & 16\\
+   \end{pmatrix}
+   $$
+
+   The labels of $\mathcal{P}_c$ are $\{1,2,4\}$. Together with $\mathcal{P}_r$'s
+   $\{3,5,6\}$ the union is $\{1,2,3,4,5,6\}$: fully labelled.
+
+   Reading off the basic variables. From $T_r$, column 1 is basic in row 2 and
+   column 2 in row 3:
+
+   $$
+   x_1 = \frac{6}{30} = \frac{1}{5}, \qquad x_2 = \frac{2}{10} = \frac{1}{5},
+   \qquad x_3 = 0,
+   $$
+
+   so $\sigma_r = (1/2, 1/2, 0)$. From $T_c$, column 5 is basic in row 2 and
+   column 6 in row 1:
+
+   $$
+   y_1 = 0, \qquad y_2 = \frac{4}{28} = \frac{1}{7}, \qquad y_3 = \frac{3}{7},
+   $$
+
+   so $\sigma_c = (0, 1/4, 3/4)$. We can confirm this with nashpy.
 
 ```{code-cell} python3
 import nashpy as nash
@@ -1529,29 +1585,25 @@ for label in range(6):
 
 2. **Business strategy interpretation.**
 
-   Suppose the Nash equilibrium found is $(\sigma_r, \sigma_c)$. The mixed
-   strategy equilibrium reflects the following business logic:
+   The algorithm returns $\sigma_r = (1/2, 1/2, 0)$ and $\sigma_c = (0, 1/4, 3/4)$.
+   Café A splits evenly between **Price** and **Quality** and never **Advertises**;
+   Café B never competes on **Price**, playing **Quality** a quarter of the time
+   and **Advertising** the rest.
 
-   - If Café A places significant weight on **Quality** (row 2), it is because
-     quality improvement yields relatively high returns against a rival that
-     mixes strategies. In the payoff matrix, Quality vs Quality gives Café A a
-     payoff of 4, the highest on-diagonal entry for row player.
+   - Café A is indifferent between Price and Quality against $\sigma_c$: both earn
+     an expected payoff of $7/4$, while Advertising earns only $3/4$ and is dropped.
+     Mixing equally between its two best responses is what keeps Café B indifferent
+     in turn.
 
-   - If Café B places significant weight on **Price** (column 1) and
-     **Advertising** (column 3), it is exploiting the off-diagonal asymmetries:
-     the column player's payoff matrix gives high values of 5 when Café B uses
-     Price and Café A uses Advertising (the $(3,1)$ entry of $M_c$).
+   - Café B avoids Price because, against an opponent who never advertises, Price
+     is the weaker option: both Quality and Advertising earn $5/2$ against
+     $\sigma_r$, whereas Price earns only $3/2$.
 
    The equilibrium is mixed, meaning neither café can improve its expected payoff
    by deviating unilaterally. This reflects a market where no single strategy
    dominates across all customer profiles; each café must remain unpredictable
-   to prevent the rival from exploiting a fixed strategy.
-
-   In practice, the equilibrium suggests that a **quality focus** for Café A and
-   a **mixed price-advertising** approach for Café B represent a stable competitive
-   outcome. However, the socially optimal outcome (maximising total payoff) would
-   likely involve both cafés investing in quality, since Quality vs Quality gives
-   payoffs $(4, 2)$ — the highest combined value.
+   across the strategies it does use to prevent the rival from exploiting a fixed
+   choice.
 ````
 
 ````{solution} odd-number-of-equilibria
@@ -1563,261 +1615,44 @@ vertex pair, the number of Nash equilibria is odd.
 
 **Proof:**
 
-Consider the set of all vertex pairs $(x, u)$ in $\mathcal{P}_r \times \mathcal{P}_c$
-that arise during any Lemke-Howson path. We define a graph $\mathcal{G}$ on this
-set of vertex pairs as follows:
+Each vertex of $\mathcal{P}_r$ carries exactly $m$ labels and each vertex of
+$\mathcal{P}_c$ exactly $n$, so a vertex pair $(x, y)$ carries $m + n$ labels
+counted with multiplicity. Call the pair **completely labelled** when these labels
+are all distinct, so that every label in $\{1, \ldots, m + n\}$ appears exactly
+once; this is the fully labelled condition. By nondegeneracy the completely
+labelled pairs are exactly the Nash equilibria together with the artificial pair
+$(0, 0)$, whose labels are $\{1, \ldots, m\}$ (from $x = 0$) and
+$\{m + 1, \ldots, m + n\}$ (from $y = 0$).
 
-- Each fully labelled vertex pair is a **node** of $\mathcal{G}$.
-- Two fully labelled vertex pairs are connected by an edge if there exists a
-  Lemke-Howson path from one to the other (i.e., dropping a label from one pair
-  leads, via the algorithm, to the other pair).
+Fix a label $k \in \{1, \ldots, m + n\}$ and call a pair **$k$-almost completely
+labelled** if every label except possibly $k$ appears. Under nondegeneracy such a
+pair is either completely labelled, or carries every label except $k$ with exactly
+one other label duplicated.
 
-**Step 1: The artificial equilibrium $(0,0)$ has odd degree.**
+Form the graph $H_k$ whose nodes are the $k$-almost completely labelled pairs, with
+an edge joining two pairs that differ by a single Lemke-Howson pivot: dropping the
+duplicated label from one of the two vertices that carry it. The degree of a node
+is then determined by two cases:
 
-The artificial equilibrium $(v_0, u_0) = (0, 0)$ has labels $\{1,\ldots,m\}$ in
-$\mathcal{P}_r$ (from the non-negativity constraints) and $\{m+1,\ldots,m+n\}$ in
-$\mathcal{P}_c$. From $(0,0)$, one can drop any of the $m+n$ labels. Dropping label $k$
-starts a Lemke-Howson path that terminates at a distinct fully labelled vertex pair
-(by the assumption). Each such path corresponds to exactly one other Nash equilibrium.
+- A node that is not completely labelled has exactly one duplicated label, carried
+  by a vertex of $\mathcal{P}_r$ and a vertex of $\mathcal{P}_c$. Dropping it on
+  either side gives a pivot, so the node has **degree 2**.
+- A completely labelled node has no duplicated label, so the only available move is
+  to drop label $k$ itself. It has **degree 1**.
 
-**Step 2: Every Nash equilibrium (other than the trivial) has even degree in $\mathcal{G}$.**
+Every connected component of $H_k$ is therefore a path or a cycle, and the degree-1
+nodes are precisely the completely labelled pairs. In a disjoint union of paths and
+cycles the degree-1 nodes come in pairs, one at each end of every path, so their
+total number is **even**.
 
-At any non-artificial Nash equilibrium $(x^*, y^*)$, the union of labels covers
-$\{1,\ldots,m+n\}$ exactly once. By the nondegeneracy assumption, no label
-appears in both $\mathcal{L}(x^*)$ and $\mathcal{L}(y^*)$ simultaneously — each
-label belongs to exactly one of the two vertices. There are exactly $m + n$ labels,
-$m$ in $\mathcal{L}(x^*)$ and $n$ in $\mathcal{L}(y^*)$ (by the dimension count
-of each polytope).
-
-Dropping any of the $m$ labels from $x^*$ starts a path in $\mathcal{P}_r$; the
-incoming path must have arrived via the unique edge in $\mathcal{P}_r$ that led to
-$x^*$, and the outgoing path departs via the unique other edge of $\mathcal{P}_r$
-adjacent to $x^*$ along that facet. Similarly for the $n$ labels in $y^*$.
-
-More concretely: at a fully labelled vertex pair $(x^*, y^*)$, there are exactly
-2 Lemke-Howson paths passing through it — one arriving and one departing — for
-each label that is the "chosen label to drop." By the nondegeneracy assumption
-(the path from any such pair leads to a distinct pair), each such pair has degree 2
-in $\mathcal{G}$: one edge coming in and one edge going out (they form paths, not
-cycles, due to the pivoting structure).
-
-**Step 3: Counting argument.**
-
-In the graph $\mathcal{G}$:
-
-- The artificial equilibrium $(0,0)$ has degree $m+n$ (any label can be dropped).
-- Every other fully labelled vertex pair (Nash equilibrium) has degree 2.
-
-The sum of degrees in any graph equals twice the number of edges:
+The completely labelled pairs are the Nash equilibria together with the artificial
+pair $(0, 0)$. Hence
 
 $$
-(m+n) + 2 \cdot (\text{number of non-artificial NE}) = 2|\mathcal{E}|
+\bigl|\text{Nash equilibria}\bigr| + 1 \text{ is even},
 $$
 
-Thus the number of non-artificial Nash equilibria satisfies:
-
-$$
-2 \cdot (\text{number of non-artificial NE}) = 2|\mathcal{E}| - (m+n)
-$$
-
-Since $m + n$ has the same parity as $2|\mathcal{E}| - (m+n)$, and because each
-Lemke-Howson path starting from $(0,0)$ ends at a distinct Nash equilibrium by
-assumption, the number of non-artificial Nash equilibria has the same parity as $m+n$, which is even when $m+n$ is even and odd when $m+n$ is odd.
-
-**Refined argument:**
-
-A cleaner way: label each Lemke-Howson path by its starting label $k \in \{1,\ldots,m+n\}$.
-Each path from $(0,0)$ ends at some Nash equilibrium. Each Nash equilibrium is the
-endpoint of exactly 2 such paths (the path starting with label $k_1$ and the path
-starting with label $k_2$, corresponding to the two ways the equilibrium can be
-"entered"). Therefore the $m+n$ starting labels pair up into groups of 2 pointing
-to each Nash equilibrium, with possibly some paths returning to $(0,0)$ (but these
-form the "even" contribution). The number of Nash equilibria to which an odd number
-of paths lead must be odd — and since each non-artificial equilibrium has exactly
-2 paths, the number of such equilibria must be equal to $\frac{m+n - (\text{returning paths})}{2}$.
-
-More precisely, the standard proof (following Lemke-Howson 1964 and Shapley 1974)
-uses the observation that the paths defined by the algorithm form a collection of
-simple paths and circuits in a graph on all "almost-fully-labelled" pairs. The
-endpoints of these paths are precisely the fully labelled pairs (Nash equilibria
-and the artificial equilibrium $(0,0)$). Since every path has exactly two endpoints,
-and $(0,0)$ is an endpoint of every path starting from it (it has degree $m+n$ but
-these are separate paths), the total count of path-endpoints is even ($2 \times$
-number of paths). Each non-artificial Nash equilibrium contributes an even count
-(degree 2), and $(0,0)$ contributes a count of $m+n$ (paths from each label).
-
-Wait, let me state the clean counting argument: the total number of endpoints is
-$2 \times (\text{number of paths})$. The artificial equilibrium is an endpoint of
-exactly one path for each starting label; but since there are $m+n$ paths and
-$(0,0)$ is the fixed starting point, $(0,0)$ contributes $m+n$ to the endpoint
-count. Each non-artificial Nash equilibrium contributes 2 (in-edge and out-edge
-in the graph of paths). So:
-
-$$
-(m+n) + 2k = 2P
-$$
-
-where $k$ is the number of non-artificial Nash equilibria and $P$ is the number
-of paths. This gives $k = P - (m+n)/2$, which requires $m+n$ to be even for $k$
-to be an integer — but in general:
-
-$$
-2k \equiv -(m+n) \equiv m+n \;(\mathrm{mod}\;$$)
-
-Hmm, let me use the standard argument more carefully.
-
-**Standard proof (Shapley 1974):**
-
-Define an undirected graph $H$ whose nodes are all vertex pairs $(v, u) \in \mathcal{P}_r \times \mathcal{P}_c$ that are "almost fully labelled" (have exactly $m+n-1$ distinct labels in their combined label set). By nondegeneracy, each such pair has a unique missing label and a unique duplicate label.
-
-Connect two almost-fully-labelled pairs by an edge if one can be obtained from
-the other by a single pivot step of the Lemke-Howson algorithm.
-
-In this graph $H$:
-
-- Every node has degree exactly 2, except for the artificial equilibrium $(0,0)$
-  (where setting all variables to 0 is always a vertex) and the Nash equilibria.
-- The Nash equilibria and the artificial equilibrium $(0,0)$ appear as **endpoints**
-  (degree-1 nodes) of paths in $H$.
-- $(0,0)$ is an endpoint of exactly $m+n$ components of $H$ (one per label).
-
-Since in any graph with all degrees 1 or 2 the degree-1 nodes come in pairs within
-each connected component (each component is either a path or a cycle; cycles have
-no degree-1 nodes; paths have exactly 2), the total number of degree-1 nodes is
-even. But the artificial equilibrium $(0,0)$ need not be degree-1; actually, the
-artificial node is a node for each starting label, effectively acting as a
-separate endpoint for each of the $m+n$ paths.
-
-The clean statement: the $m+n$ paths starting from $(0,0)$ (one per starting label)
-each end at a Nash equilibrium. Each Nash equilibrium is the endpoint of an **even**
-number of these paths (because every time you arrive at a Nash equilibrium from
-one direction you can also leave in the other direction, producing two paths through it).
-Therefore the number of distinct Nash equilibria that receive an odd number of paths
-from $(0,0)$ has the same parity as the number of paths, which is $m+n$. Since
-each Nash equilibrium has even degree ($=2$) in the full path graph, every Nash
-equilibrium is the endpoint of exactly 2 of the $m+n$ paths (or 0). Thus the
-number of Nash equilibria $k$ satisfies $2k \leq m+n$ and $m+n - 2k \geq 0$, with
-the remaining $m+n - 2k$ paths returning to $(0,0)$.
-
-This gives: $k = \frac{m+n - r}{2}$ where $r$ is the number of paths that return
-to $(0,0)$. Both $m+n$ and $r$ have the same parity (since $k$ must be a non-negative
-integer), so $k$ and $\frac{m+n-r}{2}$... but $r$ can vary.
-
-**Cleaner final statement:**
-
-The number of Nash equilibria (including degenerate) is odd by the following
-argument: In the graph $H$ defined above, the connected components are paths or
-cycles. The degree-1 endpoints are exactly the Nash equilibria (including the
-artificial one). The artificial equilibrium $(0,0)$ has labels $\{1,\ldots,m\}$
-in $\mathcal{P}_r$ and $\{m+1,\ldots,m+n\}$ in $\mathcal{P}_c$, making it the
-unique trivially fully labelled pair. It is the endpoint of **exactly one path** in
-$H$ for each label $k$, but these are all distinct paths from distinct starting
-points. Counting all degree-1 nodes: by assumption, $(0,0)$ is degree-1 in each
-path (not a mid-point), so there is one degree-1 node that is $(0,0)$ per path,
-and each path has a second endpoint which is a distinct Nash equilibrium. The
-total number of degree-1 nodes is $2 \times (\text{number of path components})$,
-which is even. The number of distinct Nash equilibria (excluding $(0,0)$) appearing
-as degree-1 endpoints is therefore **odd** if and only if $(0,0)$ itself contributes
-an odd number to the degree-1 count — and since $(0,0)$ is a single node it
-contributes exactly 1. Hence the number of non-artificial Nash equilibria is odd.
-Since the game has at least one Nash equilibrium (by Nash's theorem), the total
-number is $1 + \text{(odd)} = \text{even}$? No — the artificial equilibrium is
-not a Nash equilibrium.
-
-**Correct concise proof:** The $m+n$ Lemke-Howson paths partition into paths
-between Nash equilibria and paths from $(0,0)$ to Nash equilibria. Paths
-between two Nash equilibria use 2 Nash equilibria as endpoints; paths from $(0,0)$
-to a Nash equilibrium use 1. The total endpoint count across all paths is $2P$.
-Each Nash equilibrium is an endpoint of exactly 2 paths (since its "in-label" and
-"out-label" are distinct), contributing 2 to the count. $(0,0)$ is an endpoint of
-exactly $m+n$ paths, contributing $m+n$ to the count. So:
-
-$$
-m + n + 2k = 2P
-\quad \Rightarrow \quad k = P - \frac{m+n}{2}
-$$
-
-This works when $m + n$ is even. For $m + n$ odd (impossible since we need $k$ to
-be an integer), the argument is different.
-
-Therefore $2P = (m+n) + 2k$, giving the parity result:
-
-$$k = P - \frac{m+n}{2}$$
-
-when $m+n$ is even.
-
-The parity proof:
-
-Each Lemke-Howson path has two endpoints. The endpoints are either the artificial
-equilibrium $(0,0)$ or Nash equilibria. The artificial equilibrium is one specific
-node; all Nash equilibria are the other type of endpoint. There are exactly $m+n$
-paths (one per starting label). Each path has 2 endpoints. So the total number of
-endpoint-incidences is $2(m+n)$. The artificial equilibrium is an endpoint of
-$m+n$ paths (all of them, one per label, by the definition of the algorithm).
-So the Nash equilibria account for $2(m+n) - (m+n) = m+n$ endpoint-incidences.
-Since each Nash equilibrium is an endpoint of exactly 2 paths (the "forward" and
-"backward" directions through it), the number of Nash equilibria is
-$(m+n)/2$... but $m+n$ might be odd.
-
-The resolution: $(0,0)$ can be an endpoint of 0, 1 or 2 paths per connected
-component. For paths from $(0,0)$ to a Nash equilibrium, $(0,0)$ contributes 1
-endpoint. But $(0,0)$ itself has $m+n$ labels and each path corresponds to exactly
-one label; for distinct labels the paths may return to $(0,0)$ (forming a loop)
-or reach a Nash equilibrium. If a path returns to $(0,0)$, that uses 2 incidences
-at $(0,0)$ and 0 at Nash equilibria. Let $r$ = number of paths returning to $(0,0)$
-and $s$ = number of paths reaching a Nash equilibrium. Then $r + s = m+n$ and the
-Nash equilibria account for $s$ endpoint-incidences. Since each Nash equilibrium
-contributes 2, the number of Nash equilibria is $s/2$ only if $s$ is even.
-
-The parity argument: $s = m + n - r$. If $r$ is even, $s$ has the same parity as
-$m+n$. Since Nash equilibria each contribute 2, the number of Nash equilibria is
-$s/2$. For this to be odd, $s \equiv 2 \;(\mathrm{mod}\;i.e.,) $s/2$ is odd. For a
-nondegenerate game, it can be shown that $r$ is always even (the paths that return
-to $(0,0)$ come in pairs by a separate involution argument), so $s$ has the same
-parity as $m+n$. For $2\times 2$ games, $m+n = 4$ (even), so $s$ is even and the
-number of Nash equilibria is $s/2$ which... this argument gives an even number.
-
-The correct, simple version:
-
-**Define the involution:** On the set of all $m+n$ Lemke-Howson paths, define a
-pairing: two paths are paired if they share a Nash equilibrium as an endpoint
-(one path arrives "from the left" and the other departs "to the right" of the
-same Nash equilibrium). This pairs up the paths into groups of 2 for each Nash
-equilibrium, plus possibly some unpaired paths that return to $(0,0)$. By the
-nondegeneracy assumption (dropping a label from any Nash equilibrium leads to a
-distinct Nash equilibrium), no path returns to $(0,0)$ except possibly via the
-zero equilibrium. In fact, by standard arguments, the paths from $(0,0)$ always
-terminate at Nash equilibria (they cannot cycle back), so $r = 0$ and $s = m+n$.
-Hence the number of Nash equilibria is $(m+n)/2$... but this is not always odd.
-
-I will give the standard textbook proof more carefully below.
-
-**Proof (following Shapley's graph-theoretic argument):**
-
-We use the graph $H$ on almost-fully-labelled vertex pairs defined above. Its
-connected components are simple paths and cycles. The **endpoints** of paths in $H$
-(i.e., nodes of degree 1) correspond to:
-
-- Fully labelled vertex pairs, i.e., Nash equilibria (including the artificial one).
-
-The artificial equilibrium $(0,0)$ has the property that it can be an endpoint but
-has a unique structure: it has labels $\{1,\ldots,m\}$ in one vertex and $\{m+1,\ldots,m+n\}$
-in the other, so any single label can be dropped to start a path.
-
-In each path component of $H$, there are exactly **2 endpoints**. By the
-nondegeneracy assumption, **all components are paths** (no cycles, since cycles
-would imply a vertex pair that is entered and exited without reaching a fully
-labelled pair, contradicting nondegeneracy). So the number of fully labelled pairs
-(endpoints) is $2 \times (\text{number of path components})$, which is **even**.
-
-The total number of Nash equilibria plus the artificial equilibrium is even.
-Since the artificial equilibrium $(0,0)$ is exactly 1 of these endpoints:
-
-$$
-1 + |\text{Nash equilibria}| = 2k \quad (\text{even})
-$$
-
-Therefore $|\text{Nash equilibria}| = 2k - 1$, which is **odd**. ◼
+so the number of Nash equilibria is **odd**. $\square$
 
 ```{code-cell} python3
 import nashpy as nash

@@ -1,0 +1,45 @@
+\documentclass[border=6pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc}
+
+\definecolor{alleleA}{HTML}{0072B2}
+\definecolor{allelea}{HTML}{D55E00}
+\definecolor{phen}{HTML}{009E73}
+
+\begin{document}
+\pagecolor{white}
+\begin{tikzpicture}[
+    >=Stealth,
+    font=\sffamily,
+    lab/.style={font=\sffamily\scriptsize, text=black!60, align=center},
+    geno/.style={draw, rounded corners=2pt, line width=0.9pt, minimum width=1.3cm,
+                 minimum height=0.95cm, font=\sffamily\small\bfseries},
+    phenob/.style={draw=phen, rounded corners=3pt, line width=0.9pt, align=center,
+                   minimum width=2.6cm, minimum height=1.0cm, font=\sffamily\small,
+                   text=phen!55!black},
+]
+
+% locus on a chromosome
+\draw[line width=2.4pt, black!50, line cap=round] (-1.7,5) -- (1.7,5);
+\fill[alleleA] (0,5) circle (3.6pt);
+\node[lab, anchor=south] at (0,5.2) {locus};
+\node[lab, anchor=north, text=black!70] at (0,4.78)
+   {two alleles: \textcolor{alleleA}{\textbf{A}} (dominant),
+    \textcolor{allelea}{\textbf{a}} (recessive)};
+
+% diploid genotypes
+\node[lab, anchor=south] at (0,3.55) {diploid genotypes};
+\node[geno, draw=alleleA, text=alleleA] (AA) at (-3,2.7) {AA};
+\node[geno, draw=black!55]               (Aa) at (0,2.7)  {Aa};
+\node[geno, draw=allelea, text=allelea] (aa) at (3,2.7)  {aa};
+
+% phenotypes
+\node[phenob] (P1) at (-1.5,0) {dominant\\ phenotype};
+\node[phenob] (P2) at (3,0)    {recessive\\ phenotype};
+
+\draw[->, line width=0.9pt, black!60] (AA) -- (P1);
+\draw[->, line width=0.9pt, black!60] (Aa) -- (P1);
+\draw[->, line width=0.9pt, black!60] (aa) -- (P2);
+
+\end{tikzpicture}
+\end{document}

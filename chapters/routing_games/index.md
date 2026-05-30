@@ -17,8 +17,8 @@ performance.
 
 ## Motivating Example: Competing delivery companies
 
-In a busy city, two rival delivery companies — **QuickShip** and **TurboExpress**
-— operate daily distribution routes to deliver packages to the central business
+In a busy city, two rival delivery companies, **QuickShip** and **TurboExpress**,
+operate daily distribution routes to deliver packages to the central business
 district.
 
 Each company starts from its own warehouse, located in different suburbs on
@@ -232,7 +232,7 @@ $$3\alpha^2-6/5(1-\alpha)=0$$
 
 which has solutions:
 
-$$\left\{- \frac{1}{5} - \frac{\sqrt{11}}{5}, - \frac{\sqrt{11}}{5} + \frac{1}{5}\right\}$$
+$$\left\{- \frac{1}{5} - \frac{\sqrt{11}}{5}, \; \frac{\sqrt{11}}{5} - \frac{1}{5}\right\}$$
 
 Only one of those is positive satisfying the constraints, substituting it in to
 [](#eqn:beta_as_a_function_of_alpha) gives:
@@ -242,17 +242,17 @@ $$\beta=\frac{12}{25} - \frac{2 \sqrt{11}}{25}$$
 thus the optimal flow is:
 
 $$
-f^* = \left(- \frac{\sqrt{11}}{5} + \frac{1}{5}, \frac{12}{25} - \frac{2 \sqrt{11}}{25}\right)
+f^* = \left(\frac{\sqrt{11}}{5} - \frac{1}{5}, \; \frac{12}{25} - \frac{2 \sqrt{11}}{25}\right)
 $$
 
 If we take a closer look at $f^*$ in our example, we see that traffic from the first commodity travels
 across two paths: $(s_1, t)$ and $(s_1, a, t)$. The cost along the first path is given by:
 
-$$C_{s_1, t}(f^*)=\frac{12}{25} - \frac{2 \sqrt{11}}{25}\approx.2146$$
+$$C_{s_1, t}(f^*)=\frac{12}{25} - \frac{2 \sqrt{11}}{25}\approx 0.2146$$
 
 The cost along the second path is given by:
 
-$$C_{s_1, a, t}(f^*)=\frac{18}{25} - \frac{3 \sqrt{11}}{25}\approx .3220$$
+$$C_{s_1, a, t}(f^*)=\frac{18}{25} - \frac{3 \sqrt{11}}{25}\approx 0.3220$$
 
 Thus traffic going along the second path is experiencing a higher cost. In
 practice, they would deviate some of their traffic from the second path to the
@@ -403,7 +403,7 @@ $\tilde f=(1/2,1/5)$ is a Nash flow for [](#fig:competing_delivery_companies_rou
 Use [](#thrm:optimal_flow_is_a_nash_for_for_marginal_costs) to confirm that
 
 $$
-f=\left(- \frac{\sqrt{11}}{5} + \frac{1}{5}, \frac{12}{25} - \frac{2 \sqrt{11}}{25}\right)
+f=\left(\frac{\sqrt{11}}{5} - \frac{1}{5}, \; \frac{12}{25} - \frac{2 \sqrt{11}}{25}\right)
 $$
 
 is a Nash flow for [](#fig:competing_delivery_companies_routing_game_with_flow_vector).
@@ -803,7 +803,7 @@ print(f"Potential at minimiser: {res.fun:.6f}")
 We wish to confirm that
 
 $$
-f=\left(-\frac{\sqrt{11}}{5}+\frac{1}{5},\;\frac{12}{25}-\frac{2\sqrt{11}}{25}\right)
+f=\left(\frac{\sqrt{11}}{5}-\frac{1}{5},\;\frac{12}{25}-\frac{2\sqrt{11}}{25}\right)
 $$
 
 is a Nash flow for the delivery companies game using the marginal cost formulation.
@@ -828,17 +828,13 @@ $$
 c_{s_1,a}(x)=0\implies c^*_{s_1,a}(x)=0,\qquad c_{s_2,a}(x)=0\implies c^*_{s_2,a}(x)=0
 $$
 
-With $\alpha=1/5-\sqrt{11}/5$ and $\beta=12/25-2\sqrt{11}/25$, the shared edge $a\to t$ carries flow $f_{a,t}=1-\alpha-\beta$.
-
-Let us compute $\alpha$ and $1-\alpha-\beta$ numerically:
+With $\alpha=\frac{\sqrt{11}}{5}-\frac{1}{5}$ and $\beta=\frac{12}{25}-\frac{2\sqrt{11}}{25}$, the shared edge $a\to t$ carries flow $f_{a,t}=1-\alpha-\beta$. The quadratic $5\alpha^2+2\alpha-2=0$ has roots $(-1\pm\sqrt{11})/5$, and we take the positive root. Numerically,
 
 $$
-\alpha\approx\frac{1-\sqrt{11}}{5}\approx\frac{1-3.3166}{5}\approx -0.4633\quad\text{(negative!)}
+\alpha\approx 0.4633,\qquad \beta\approx 0.2147,\qquad 1-\alpha-\beta\approx 0.3220,
 $$
 
-We must take the positive root: $\alpha = (-1+\sqrt{11})/5 \approx (3.3166-1)/5\approx 0.4633/5\approx 0.4633$.
-
-Wait — from the chapter, the positive root is $\alpha^* = -\sqrt{11}/5 + 1/5$. Since $\sqrt{11}\approx 3.317$, this gives $\alpha^*\approx (1-3.317)/5<0$. The chapter states the positive root is taken. Let us re-examine: the two solutions are $\{-1/5-\sqrt{11}/5,\; -\sqrt{11}/5+1/5\}$. Since $\sqrt{11}\approx 3.317$, both are negative. The chapter says "only one of those is positive" — this likely refers to a different parameterisation. Let us proceed numerically.
+so all three flows are positive and the flow is feasible.
 
 To verify $f^*$ is a Nash flow for the marginal cost game, we need to check that all used paths have equal marginal cost. The paths for commodity 1 are $P_{s_1,t}=(s_1,t)$ and $P_{s_1,a,t}=(s_1,a,t)$.
 

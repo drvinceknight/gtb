@@ -181,7 +181,7 @@ $$
 
 1. Use Euler’s method with step size $h = 0.1$ to compute the first 5 steps.
 2. Plot the approximation.
-3. Sketch or describe the qualitative behavior of the true solution.
+3. Sketch or describe the qualitative behaviour of the true solution.
 ```
 
 ```{exercise}

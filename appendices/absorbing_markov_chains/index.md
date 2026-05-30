@@ -20,7 +20,7 @@ do not return. The other rooms are **ordinary**: the student moves between
 them until they reach an exit. Each turn, the student chooses a connected room
 uniformly at random.
 
-Suppose the maze consists of six rooms labeled $1$ through $6$, with rooms $5$
+Suppose the maze consists of six rooms labelled $1$ through $6$, with rooms $5$
 and $6$ being exits. The student starts in one of the other rooms and moves
 randomly along available corridors. The structure of the maze is shown below:
 
@@ -665,7 +665,7 @@ approach appears in [@nowak2004evolutionary].
 Beyond the scope of this book, absorbing Markov chains have been applied to
 many other domains, demonstrating their versatility and theoretical interest:
 
-- The original PageRank algorithm developed by Google has been analyzed through
+- The original PageRank algorithm developed by Google has been analysed through
   the lens of absorbing Markov chains
   [@bianchini_inside_2005; @langville_deeper_2004].
 - In [@palmer_modelling_2018], absorbing chains are used to model deadlock in
@@ -677,7 +677,7 @@ many other domains, demonstrating their versatility and theoretical interest:
 
 ## Conclusion
 
-**Absorbing Markov chains** model systems where eventual absorption is guaranteed — escape processes, games, and evolutionary dynamics.
+**Absorbing Markov chains** model systems where eventual absorption is guaranteed: escape processes, games, and evolutionary dynamics.
 
 The key concepts covered in this chapter are summarised [](#tbl:absorbing_markov_chains_summary).
 

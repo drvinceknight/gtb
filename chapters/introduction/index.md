@@ -35,8 +35,8 @@ early-career researchers seeking a practical understanding of game
 theory.
 
 However, the book aims to be accessible to aspiring game theorists from
-any discipline. A psychologist modeling a specific behavior? A
-conservationist analyzing the conditions under which a policy is likely
+any discipline. A psychologist modelling a specific behaviour? A
+conservationist analysing the conditions under which a policy is likely
 to succeed? An economist studying strategic interactions in competitive
 markets? A computer programmer implementing a game-theoretic algorithm?
 Whatever your background, this book provides the necessary tools to
@@ -66,20 +66,20 @@ theory with confidence.
 
 The book is organised into three broad themes.
 
-**Foundations of strategic interaction** — The opening chapters establish the
+**Foundations of strategic interaction.** The opening chapters establish the
 core language of game theory. The [Games](#chp:games) chapter introduces normal
 and extensive form representations, strategies, and utilities. [Rationalisation](#chp:rationality)
 develops the idea of best responses and iterated elimination of dominated
 strategies. [Zero-Sum Games](#chp:zero_sum_games) shows how minimax optimisation
 and linear programming characterise optimal play when players' interests are
 directly opposed. [Nash Equilibrium](#chp:nash_equilibrium) formalises the
-central solution concept — a strategy profile from which no player wishes to
-deviate unilaterally — and the support enumeration algorithm provides a
+central solution concept, a strategy profile from which no player wishes to
+deviate unilaterally, and the support enumeration algorithm provides a
 systematic way to compute it. [Subgame Perfection](#chp:sub_game_perfection)
 refines Nash equilibrium for extensive form games by requiring rationality at
 every decision node, not just on the equilibrium path.
 
-**Dynamics and long-run behaviour** — The middle chapters study how
+**Dynamics and long-run behaviour.** The middle chapters study how
 equilibria arise and persist over time. [Repeated Games](#chp:repeated_games)
 examines how cooperation can be sustained when players interact
 indefinitely, culminating in the Folk Theorem. [Direct Reciprocity](#chp:direct_reciprocity)
@@ -90,14 +90,14 @@ motivates the dynamical models that follow; it is optional reading for a
 purely mathematical pass through the book. [Replicator Dynamics](#chp:replicator_dynamics)
 models how strategy frequencies evolve in large populations under selection
 pressure. The [Moran Process](#chp:moran_process) studies fixation in finite
-populations. [Further Learning Dynamics](#chp:further_learning_dynamics)
-examines how the choice of update rule — imitation, best response, or
-generational turnover — shapes long-run outcomes across these models.
+populations. [Learning and Evolutionary Dynamics](#chp:further_learning_dynamics)
+examines how the choice of update rule (imitation, best response, or
+generational turnover) shapes long-run outcomes across these models.
 [Best Response Polytopes](#chp:best_response_polytopes)
 introduces the Lemke–Howson algorithm as a geometric method for computing Nash
 equilibria in two-player games.
 
-**Applied models** — The final chapters apply game-theoretic reasoning to
+**Applied models.** The final chapters apply game-theoretic reasoning to
 specific domains. [Routing Games](#chp:routing_games) studies how selfish routing
 decisions lead to inefficiency (the Price of Anarchy). [Matching Games](#chp:matching_games)
 covers the Gale–Shapley algorithm and stable matchings. [Auction Games](#chp:auctions)
@@ -118,7 +118,7 @@ recommended. For a fantastic introduction to the topic aimed at a
 mathematical audience, see [@webb2007game]. The exhaustive
 work [@maschler2020game] offers a vast amount of breadth and depth on
 the subject, while [@roughgarden2010algorithmic] delves into modern
-algorithmic approaches to modeling complex systems at an advanced level.
+algorithmic approaches to modelling complex systems at an advanced level.
 
 Some excellent texts focus on specific subtopics within the domain. For
 example, [@gusfield1989stable] explores matching games,

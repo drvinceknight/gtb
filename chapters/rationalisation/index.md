@@ -167,8 +167,7 @@ $s = ((1, 0),\ (1, 0),\ (0, 1))$,
 indicating that players 1 and 2 choose $A$, and player 3 chooses $B$.
 
 The corresponding incomplete strategy profile for player 2 is:
-$s_{(-2)} = ((1, 0),\ (0, 1))$
-— capturing only the choices of players 1 and 3.
+$s_{(-2)} = ((1, 0),\ (0, 1))$, capturing only the choices of players 1 and 3.
 
 We write $S_{(-i)}$ to denote the set of all such incomplete strategy profiles
 from the perspective of player $i$.
@@ -232,7 +231,7 @@ about one another.
 So far, we have assumed that players behave rationally.
 To justify iterative elimination procedures, we must go further.
 The key idea is that not only are players rational, but they also know that
-others are rational—and that this knowledge is shared recursively.
+others are rational, and that this knowledge is shared recursively.
 
 This leads to the concept of **Common Knowledge of Rationality (CKR)**:
 
@@ -339,7 +338,7 @@ Elimination techniques do not reduce the strategy space,
 and further analysis is required to predict behaviour.
 
 These examples show that **dominance is a helpful tool**,
-but not always sufficient. We need further concepts—such as
+but not always sufficient. We need further concepts, such as
 [**best responses**](#sec:best_responses) to analyse such games.
 Payoff matrices for the row and column players:
 
@@ -864,7 +863,7 @@ In [@nash1950equilibrium], John Nash introduced the foundational concept of
 one per player) where each strategy is a best response to the others. In such a
 setting, no player has an incentive to unilaterally deviate from their choice.
 Nash's landmark result showed that at least one such equilibrium exists in any
-finite game — a result that earned him the Nobel Prize in Economics.
+finite game, a result that earned him the Nobel Prize in Economics.
 
 More recent research explores how often certain types of equilibria occur. For
 instance, [@wiese2022frequency] investigates how frequently **best response
@@ -893,13 +892,13 @@ align hospital decision-making with public health outcomes.
 In this chapter, we introduced fundamental tools for predicting strategic
 behaviour: **dominated strategies**, **best responses**, and the assumption of
 **common knowledge of rationality**. These ideas allowed us to identify
-outcomes that rational players would be unlikely to avoid—such as the
+outcomes that rational players would be unlikely to avoid, such as the
 elimination of actions that never perform best and the selection of strategies
 that respond optimally to others.
 
 **Iterated elimination** and **best response analysis** reveal plausible behaviours in one-shot games, and both extend naturally to **strategies** where probability plays a role.
 
-These concepts (summarised in [](#tbl:rationality_summary)) lay the foundation for understanding **equilibrium**—the central
+These concepts (summarised in [](#tbl:rationality_summary)) lay the foundation for understanding **equilibrium**, the central
 concept where players’ strategies mutually reinforce each other. In the next
 chapter, we formalise this idea, introducing **Nash equilibrium** and
 exploring its existence, interpretation, and implications across different

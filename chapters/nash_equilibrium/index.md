@@ -135,7 +135,7 @@ Nash equilibrium condition.
 
 ```{note}
 This theorem guarantees existence but not uniqueness. As seen in the coordination
-game, multiple Nash equilibria — including mixed strategy equilibria — can coexist.
+game, multiple Nash equilibria, including mixed strategy equilibria, can coexist.
 ```
 
 The following algorithm gives an approach to use the [best response condition](#thrm:best_response_condition)

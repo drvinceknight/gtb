@@ -28,7 +28,7 @@ $$
 
 Unlike the maze from [Appendix A1](#app:absorbing_markov_chain), this chain has
 no absorbing state. The system cycles indefinitely between $S$ and $R$. Yet
-in the long run, the fraction of days that are sunny stabilises — independently
+in the long run, the fraction of days that are sunny stabilises, independently
 of whether today is sunny or rainy.
 
 This appendix develops the theory behind this observation: when does a Markov
@@ -412,7 +412,7 @@ strong form. However, because the chain is irreducible, there is still a
 unique stationary distribution. Solving $\pi P = \pi$ with $\pi_1 + \pi_2 = 1$
 gives $\pi_2 = \pi_1$ and hence $\pi = (1/2, 1/2)$. The long-run time average
 is $(1/2, 1/2)$, but the chain does not converge from an arbitrary starting
-point — it oscillates.
+point; it oscillates.
 
 **2.** $P = \begin{pmatrix}0.5 & 0.5 \\ 0.3 & 0.7\end{pmatrix}$
 
@@ -503,7 +503,7 @@ Let $P = \begin{pmatrix}1-a & a \\ b & 1-b\end{pmatrix}$ with $0 < a, b < 1$.
    \frac{b}{a + b} = \frac{1}{2} \Leftrightarrow 2b = a + b \Leftrightarrow a = b.
    $$
 
-   The stationary distribution is uniform if and only if $a = b$ — the two
+   The stationary distribution is uniform if and only if $a = b$, the two
    transition rates are equal.
 
 ```{code-cell} python3

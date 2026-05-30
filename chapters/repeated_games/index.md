@@ -20,7 +20,7 @@ cooperative outcomes, culminating in the Folk Theorem.
 Consider two local construction firms, **Firm A** and **Firm B**, who
 regularly bid on municipal infrastructure projects.
 
-Each quarter, the city may announce a new contract for firms to bid on — a school,
+Each quarter, the city may announce a new contract for firms to bid on: a school,
 a road, or a public facility. These firms can choose to:
 
 - **Bid High (H)**: maintain high prices and sustain mutual profitability, or
@@ -839,8 +839,8 @@ outcomes that dominate those of stage game equilibria.
 This chapter covered the formal definitions of repeated and infinitely repeated
 games, strategy spaces based on full histories, subgame perfection through
 sequences of Nash profiles, and the pivotal role of discounting. Through
-examples and the Folk Theorem, we saw how cooperation can emerge — even in
-environments like the Prisoner’s Dilemma — when players value the future
+examples and the Folk Theorem, we saw how cooperation can emerge, even in
+environments like the Prisoner’s Dilemma, when players value the future
 sufficiently.
 
 [](#tbl:repeated_games_summary) summarises the key concepts.
@@ -866,7 +866,7 @@ sufficiently.
 ---
 
 ```{attention}
-Repeated games illustrate how cooperation can be rational — even when short-term
+Repeated games illustrate how cooperation can be rational, even when short-term
 incentives push toward defection. Through strategies that condition on history
 and the presence of credible threats, players can build trust and sustain
 mutually beneficial outcomes. The Folk Theorem formalises this by showing that
@@ -934,7 +934,7 @@ $$
 
 Find stage Nash equilibria by checking best responses in action space:
 
-- $(r_1, c_1)$: Row: $5\geq 0\geq 3$? Row prefers $r_1$. Column: $4$ vs $3$ — prefers $c_1$. Is $(r_1, c_1)$ a NE? Row BR to $c_1$: $r_1$ (5>0>3). Column BR to $r_1$: $c_1$ (4>3). **NE**.
+- $(r_1, c_1)$: Row: $5\geq 0\geq 3$? Row prefers $r_1$. Column: $4$ vs $3$, prefers $c_1$. Is $(r_1, c_1)$ a NE? Row BR to $c_1$: $r_1$ (5>0>3). Column BR to $r_1$: $c_1$ (4>3). **NE**.
 - $(r_2, c_2)$: Row BR to $c_2$: $r_2$ (1>0>0). Column BR to $r_2$: $c_2$ (4>3). **NE**.
 - $(r_3, c_1)$: Row BR to $c_1$: $r_1$ (5>0>3). Not NE.
 
@@ -1246,10 +1246,10 @@ We check each candidate:
 
 - $(3/2,\; 3/2)$: Is $3/2 > -1$? Yes. Is $3/2 > 1$? Yes. Is $(3/2, 3/2)$ feasible?
   It lies between $(−1,1)$, $(2,2)$, and $(−2,6)$; it is a convex combination
-  of the corners. **Yes — supportable by the Folk Theorem.**
+  of the corners. **Yes, supportable by the Folk Theorem.**
 
 - $(0,\; 3)$: Is $0 > -1$? Yes. Is $3 > 1$? Yes. Feasibility: $(0,3)$ lies in the
-  convex hull of the four stage payoffs. **Yes — supportable.**
+  convex hull of the four stage payoffs. **Yes, supportable.**
 
 - $(2,\; 6)$: Is $2 > -1$? Yes. Is $6 > 1$? Yes. Feasibility: $(2,6)$ is not
   one of the corner payoffs. It would require column getting 6 (from $r_2,c_1$
@@ -1257,7 +1257,7 @@ We check each candidate:
   stage outcome. Check if $(2,6)$ is in the convex hull:
   The maximum row payoff when column gets 6 is $-2$ (from $(r_2,c_1)$). To get
   row payoff 2 we need stages $(r_2,c_2)$ giving $(2,2)$, but then column gets 2
-  not 6. $(2,6)$ is **not in the convex hull** of feasible payoffs — it requires
+  not 6. $(2,6)$ is **not in the convex hull** of feasible payoffs; it requires
   both players to receive their maximum simultaneously, which is impossible.
   **Not supportable.**
 

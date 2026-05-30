@@ -218,8 +218,8 @@ Condorcet winner when one exists.
 ---
 
 ```{important}
-The Borda and Condorcet methods do not escape Arrow's theorem—both violate
-independence of irrelevant alternatives—but they do represent well-motivated
+The Borda and Condorcet methods do not escape Arrow's theorem, both violate
+independence of irrelevant alternatives, but they do represent well-motivated
 responses to it. By giving up IIA, they retain the other desirable properties
 of fairness, including Pareto efficiency and non-dictatorship. In practice,
 they are widely regarded as reasonable voting rules, especially when full
@@ -342,7 +342,7 @@ preference profile of [](#tbl:condorcet_example).
 
 ## Programming
 
-The `pref_voting` Python library [@HollidayPacuit2025] provides tools for analyzing preferential
+The `pref_voting` Python library [@HollidayPacuit2025] provides tools for analysing preferential
 voting systems. In the following example, we define a preference profile based
 on the classroom voting scenario and use the library to explore two voting
 methods.
@@ -395,7 +395,7 @@ These rules are increasingly relevant in applications such as committee
 selection, participatory budgeting, and recommendation systems.
 
 These developments show that while Arrow’s theorem rules out a perfect solution,
-there are many meaningful and principled ways to **navigate the trade-offs**—especially when
+there are many meaningful and principled ways to **navigate the trade-offs**, especially when
 one considers computation, uncertainty, or broader notions of fairness.
 
 A helpful overview of these developments is provided in [@pacuit2019voting].
@@ -405,7 +405,7 @@ A helpful overview of these developments is provided in [@pacuit2019voting].
 This chapter explored the central challenge of social choice: how to aggregate
 individual preferences into a fair and consistent group decision. Starting from
 a motivating classroom example, we saw how simple majority rule can lead to
-intransitive group preferences—known as Condorcet cycles—even when every
+intransitive group preferences, known as Condorcet cycles, even when every
 individual's ranking is rational.
 
 We then introduced the formal framework of preference functions and social
@@ -494,15 +494,9 @@ Total: $B$ preferred by $3+2=5$ voters, $C$ preferred by $2$ voters.
 - 2 voters prefer $C$ to $A$ (group 2).
 - 2 voters prefer $C$ to $A$ (group 3).
 
-Total: $C$ preferred by $2+2=4$ voters, $A$ preferred by $3$ voters.
-
-**$A$ beats $C$ with 3 votes to 4.**
-
-Wait — let us recount. Group 1 ($A\succ B\succ C$): prefer $A$ to $C$. Group 2
-($B\succ C\succ A$): prefer $C$ to $A$. Group 3 ($C\succ A\succ B$): prefer $C$
-to $A$.
-
-Total preferring $A$: 3. Total preferring $C$: $2+2=4$.
+Group 1 ($A\succ B\succ C$) prefers $A$ to $C$; groups 2 ($B\succ C\succ A$) and
+3 ($C\succ A\succ B$) both prefer $C$ to $A$. Total preferring $A$: 3; total
+preferring $C$: $2+2=4$.
 
 **$C$ beats $A$ with 4 votes to 3.**
 
@@ -703,14 +697,14 @@ wins outright with 14 points**, while $B$ drops to 13.
 
 The manipulating voter prefers $B$ to $A$, yet their manipulation caused $A$ to
 win (or more precisely, broke the tie in $A$'s favour, away from $B$). This
-shows that the manipulation was **not profitable for this voter** — it was
+shows that the manipulation was **not profitable for this voter**; it was
 inadvertent harm.
 
 However, the fact that changing a ballot in a way that does not affect the voter's
 stated preference between $B$ and $C$ (they still rank $B$ first) can nonetheless
 change the winner illustrates the Borda method's **vulnerability to strategic
 voting**. A voter who, in a different scenario, wanted to harm $A$ could promote
-$C$ (an irrelevant alternative) to second place — boosting $C$'s score and
+$C$ (an irrelevant alternative) to second place, boosting $C$'s score and
 potentially tipping the outcome. This violates the **Independence of Irrelevant
 Alternatives** property and is the mechanism through which manipulation operates.
 
@@ -818,17 +812,11 @@ Voters preferring $B$ over $C$:
 - 30 voters ($A \succ B \succ C$)
 - 29 voters ($B \succ A \succ C$)
 - 10 voters ($B \succ C \succ A$)
+
+Voters preferring $C$ over $B$:
+- 1 voter ($A \succ C \succ B$)
+- 10 voters ($C \succ A \succ B$)
 - 1 voter ($C \succ B \succ A$)
-
-Total: $30+29+10+1=70$. Wait — $C \succ B \succ A$ means $C$ is preferred to $B$.
-
-Correcting:
-- 30 voters ($A \succ B \succ C$): prefer $B$ over $C$.
-- 1 voter ($A \succ C \succ B$): prefer $C$ over $B$.
-- 29 voters ($B \succ A \succ C$): prefer $B$ over $C$.
-- 10 voters ($B \succ C \succ A$): prefer $B$ over $C$.
-- 10 voters ($C \succ A \succ B$): prefer $C$ over $B$.
-- 1 voter ($C \succ B \succ A$): prefer $C$ over $B$.
 
 Total preferring $B$: $30+29+10=69$. Total preferring $C$: $1+10+1=12$.
 
@@ -840,10 +828,6 @@ $A$ beats both $B$ and $C$, so **$A$ is the Condorcet winner**.
 
 With three alternatives, each voter assigns 2 points to their 1st choice,
 1 point to their 2nd choice, 0 to their 3rd choice.
-
-- **A:** $31\times 2 + 29\times 1 + 10\times 1 + 10\times 0 + 0\times 0 + ...$
-
-Let us compute carefully:
 
 | Group (count) | A points | B points | C points |
 |---------------|----------|----------|----------|
@@ -879,7 +863,7 @@ accumulating enough second-place votes to overtake $A$'s lead in direct
 comparisons.
 
 This example showed Condorcet that the Borda method violates the Condorcet
-criterion — a property that many would argue is a minimal requirement of a
+criterion, a property that many would argue is a minimal requirement of a
 reasonable voting rule.
 
 ```{code-cell} python3
@@ -915,6 +899,6 @@ scores = [0, 0, 0]
 for count, ranking in groups:
     for rank, alt in enumerate(ranking):
         scores[alt] += count * (2 - rank)
-print("Borda scores — A:", scores[0], "B:", scores[1], "C:", scores[2])
+print("Borda scores. A:", scores[0], "B:", scores[1], "C:", scores[2])
 ```
 ````

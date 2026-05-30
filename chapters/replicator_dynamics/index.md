@@ -23,7 +23,7 @@ topology or the latest student gossip. There are three types of students:
 
 - **Cooperators** always bring a scoop of ground coffee to the club.
 - **Defectors** show up empty-handed but still drink the coffee.
-- **Loners** prefer to skip clubs and enjoy a quiet cup alone — reliable, if
+- **Loners** prefer to skip clubs and enjoy a quiet cup alone, reliable, if
   a bit less exciting.
 
 In each club, all coffee brought is pooled, brewed, and the resulting pot is
@@ -67,19 +67,19 @@ A diagram showing the direction of the derivative as given by [](#eqn:replicator
 
 Strategies that do better than the average will increase in frequency;
 those that do worse will decline. This feedback mechanism drives the
-evolution of behavior in the population — capturing the shifting fortunes
+evolution of behaviour in the population, capturing the shifting fortunes
 of cooperators, defectors, and loners on campus.
 
-As we will see, this system often exhibits **cyclical behavior**: when most
+As we will see, this system often exhibits **cyclical behaviour**: when most
 students cooperate, defectors thrive; when defection becomes too common,
 students prefer to be loners; when clubs are small and rare, cooperation
-becomes appealing again. These cycles — and their stability — are precisely
+becomes appealing again. These cycles, and their stability, are precisely
 what replicator dynamics helps us understand.
 
 ```{note}
 The motivating examples in this chapter use human social populations (coffee
 clubs, student behaviour). The same mathematics applies directly to biological
-populations — strategies spread through differential reproduction rather than
+populations; strategies spread through differential reproduction rather than
 imitation. For the biological interpretation and the connection to natural
 selection, see [Chapter @chp:evolutionary_biology].
 ```
@@ -1015,7 +1015,7 @@ extortionate strategies fail to persist under evolutionary pressure.
 
 A particularly notable extension is found in [@weitz2016oscillating], where the
 game itself changes dynamically depending on the population state. This
-approach is especially relevant in modeling the **tragedy of the commons** and
+approach is especially relevant in modelling the **tragedy of the commons** and
 other environmental feedback systems.
 
 In [@lv2023evolution], a model similar to the one in
@@ -1023,7 +1023,7 @@ In [@lv2023evolution], a model similar to the one in
 replicator dynamics and a **discrete population model**. The latter is explored
 in detail in [Chapter: Moran Process](#chp:moran_process). Remarkably, the
 replicator dynamics equation emerges as the **infinite-population limit** of the
-discrete model—a connection rigorously established in
+discrete model, a connection rigorously established in
 [@traulsen2005coevolutionary].
 
 ## Conclusion
@@ -1064,7 +1064,7 @@ gives a summary of the main concepts of this chapter.
 ```
 
 ```{important}
-A strategy grows when its fitness exceeds the population average — and declines otherwise.
+A strategy grows when its fitness exceeds the population average, and declines otherwise.
 
 This central insight, encoded in the replicator dynamics equation, allows us to
 understand not just what equilibria exist, but how populations evolve

@@ -21,7 +21,7 @@ In a graduate student reading group, everyone cites a well-established
 textbook in their essays. One student, though, starts citing a
 **recent preprint** they found on arXiv.
 
-> "It’s got a better proof of the key result — and it’s open access."
+> "It’s got a better proof of the key result, and it’s open access."
 
 Each week:
 
@@ -36,7 +36,7 @@ traditional text.
 The more students who cite the preprint, the more attractive it becomes to
 others: shared references lead to easier discussion, common assumptions, and
 social reinforcement. In this way, the **fitness** of citing the preprint is
-not fixed — it **depends on the current citation habits** of the group. This
+not fixed; it **depends on the current citation habits** of the group. This
 makes the process **frequency-dependent**, just as in evolutionary game
 dynamics where payoffs arise from interaction with others.
 
@@ -58,7 +58,7 @@ $$
 
 If both students cite the textbook, they align well and receive the highest
 payoff of 3. If both cite the preprint, they still coordinate and get a
-payoff of 2 — slightly lower, but still beneficial.
+payoff of 2, slightly lower, but still beneficial.
 
 If one cites the textbook while the other cites the preprint, there is a
 mismatch: the **preprint-citer** still gets some benefit (payoff 1) from its
@@ -71,7 +71,7 @@ Moran Process a model suited for exactly this purpose.
 
 ```{note}
 The Moran process was originally developed in population genetics to model
-**genetic drift** — the random fluctuation of gene frequencies in small
+**genetic drift**, the random fluctuation of gene frequencies in small
 biological populations. For the biological context and the relationship
 between drift and selection, see [Chapter @chp:evolutionary_biology].
 ```
@@ -650,11 +650,11 @@ individual fitness depends on strategic interactions. This is central to the
 theory of evolutionarily stable strategies [@taylor1978evolutionary]. It has been
 especially influential in studying social dilemmas, such as the evolution of
 cooperation. Traulsen and Nowak [@TraulsenNowak2006] showed how cooperation can
-be favored in finite populations, while Knight [@knight2018evolution] explored
+be favoured in finite populations, while Knight [@knight2018evolution] explored
 how self-recognition algorithms can emerge through such dilemmas under the Moran
 process.
 
-The process is also crucial for analyzing the role of population structure. A
+The process is also crucial for analysing the role of population structure. A
 notable extension is the Moran process on graphs, where individuals interact only
 with their neighbors. This framework was first proposed by Lieberman, Hauert, and
 Nowak [@LiebermanHauertNowak2005] and further refined by Ohtsuki, Pacheco, and
@@ -670,7 +670,7 @@ Moran process converges to the replicator dynamics equation.
 The Moran process offers a foundational framework for understanding how
 strategies evolve in finite populations. Like the [replicator dynamics
 equation](#chp:replicator_dynamics), it links fitness to the growth or decline
-of types over time — but with a critical distinction: it captures the inherent
+of types over time, but with a critical distinction: it captures the inherent
 stochasticity of small populations.
 
 The central result is the fixation probability formula: by mapping the process to an [absorbing Markov chain](#app:absorbing_markov_chain), exact analysis becomes tractable for two-type populations.

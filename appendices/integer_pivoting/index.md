@@ -47,8 +47,7 @@ shown as the convex hull of four points.
 ```
 
 Polytopes can also be equivalently defined as the **intersection of half-
-spaces**—
-that is, bounded regions formed by linear inequalities. This alternate view is
+spaces**, that is, bounded regions formed by linear inequalities. This alternate view is
 illustrated in [](#fig:polytope_as_intersection_of_halfspaces).
 
 ```{figure} ./images/polytope_as_intersection_of_halfspaces/main.png
@@ -84,7 +83,7 @@ and [general games](#chp:best_response_polytopes).
 
 While this example lives in $\mathbb{R}^2$, the techniques extend to
 **higher-dimensional polytopes**. The goal of this chapter is to develop tools
-for moving from **vertex to vertex** in such polytopes—an essential idea in
+for moving from **vertex to vertex** in such polytopes, an essential idea in
 both mathematical optimisation and algorithmic game theory.
 
 ## Theory
@@ -806,7 +805,7 @@ appendix.
 
 ```{important}
 Each tableau corresponds to a vertex of a polytope, and integer pivoting
-lets us move precisely from one vertex to a neighboring one—forming the
+lets us move precisely from one vertex to a neighbouring one, forming the
 algorithmic core of many key results in game theory.
 ```
 
@@ -925,10 +924,10 @@ The columns (from left to right) correspond to variables $x_1, x_2, x_3, x_4$
 column that has exactly one nonzero entry (a unit vector). Inspecting the
 columns:
 
-- Column 1 ($x_1$): $(1, 0)^T$ — unit vector. **Basic.**
-- Column 2 ($x_2$): $(0, 1)^T$ — unit vector. **Basic.**
-- Column 3 ($x_3$): $(5, 4)^T$ — not a unit vector. **Non-basic.**
-- Column 4 ($x_4$): $(1, 9)^T$ — not a unit vector. **Non-basic.**
+- Column 1 ($x_1$): $(1, 0)^T$, a unit vector. **Basic.**
+- Column 2 ($x_2$): $(0, 1)^T$, a unit vector. **Basic.**
+- Column 3 ($x_3$): $(5, 4)^T$, not a unit vector. **Non-basic.**
+- Column 4 ($x_4$): $(1, 9)^T$, not a unit vector. **Non-basic.**
 
 **Basic variables:** $x_1, x_2$.
 **Non-basic variables:** $x_3, x_4$.
@@ -947,10 +946,10 @@ T^{(b)} = \begin{pmatrix}
 \end{pmatrix}
 $$
 
-- Column 1 ($x_1$): $(4, 8)^T$ — not a unit vector. **Non-basic.**
-- Column 2 ($x_2$): $(8, 1)^T$ — not a unit vector. **Non-basic.**
-- Column 3 ($s_1$): $(1, 0)^T$ — unit vector. **Basic.**
-- Column 4 ($s_2$): $(0, 1)^T$ — unit vector. **Basic.**
+- Column 1 ($x_1$): $(4, 8)^T$, not a unit vector. **Non-basic.**
+- Column 2 ($x_2$): $(8, 1)^T$, not a unit vector. **Non-basic.**
+- Column 3 ($s_1$): $(1, 0)^T$, a unit vector. **Basic.**
+- Column 4 ($s_2$): $(0, 1)^T$, a unit vector. **Basic.**
 
 **Basic variables:** $s_1, s_2$.
 **Non-basic variables:** $x_1, x_2$.
@@ -977,20 +976,9 @@ minimum ratio test:
 
 The minimum ratio is $1/5$ in row 1, so we pivot on row 1.
 
-To eliminate $x_3$ from row 2: multiply row 1 by 4 and subtract row 2 times
-5:
-
-$$
-\begin{align*}
-\text{new row 2} &= 4 \times \text{row 1} - 5 \times \text{row 2} \\
-&= 4(1,0,5,1,1) - 5(0,1,4,9,1) = (4, -5, 0, -41, -1).
-\end{align*}
-$$
-
-Wait — the last entry becomes negative. The minimum ratio test ensures
-feasibility, so let us redo more carefully using integer pivoting as defined
-in [](#sec:definition_integer_pivoting): multiply row 2 by 5 and subtract 4
-times row 1 (to zero out column 3 in row 2):
+To eliminate $x_3$ from row 2 by integer pivoting (as defined in
+[](#sec:definition_integer_pivoting)), multiply row 2 by 5 and subtract 4 times
+row 1, zeroing out column 3 in row 2:
 
 $$
 \begin{align*}

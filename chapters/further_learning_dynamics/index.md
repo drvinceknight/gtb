@@ -19,7 +19,7 @@ of update rule shapes long-run behaviour.
 
 Return to the graduate student reading group from
 [](#sec:motivating_example_preprint). The same coordination game governs
-citations — textbook ($T$) versus preprint ($P$) — but now consider three
+citations, textbook ($T$) versus preprint ($P$), but now consider three
 plausible ways students might update their habits:
 
 1. **Imitation**: a student notices a peer doing well and copies them.
@@ -33,10 +33,10 @@ produce different trajectories, different fixation probabilities, and different
 long-run distributions. This raises a fundamental question: **does the update
 rule matter?**
 
-The answer is yes — particularly in small populations, at high selection
+The answer is yes, particularly in small populations, at high selection
 intensity, or when the game has multiple equilibria. This chapter introduces
-three families of update rules — imitation, introspection, and best-response
-— alongside the Wright–Fisher process, and shows how they relate to each
+three families of update rules (imitation, introspection, and best-response)
+alongside the Wright–Fisher process, and shows how they relate to each
 other and to the [replicator dynamics](#chp:replicator_dynamics) and
 [Moran process](#chp:moran_process) studied in previous chapters.
 
@@ -65,7 +65,7 @@ The parameter $\beta$ controls how strongly payoff differences drive
 imitation:
 
 - $\beta = 0$: strategies are copied uniformly at random (neutral drift).
-- $\beta \to \infty$: copying is deterministic — the higher-payoff strategy
+- $\beta \to \infty$: copying is deterministic; the higher-payoff strategy
   is always adopted.
 
 ```{note}
@@ -195,7 +195,7 @@ Unlike the Moran process, which replaces one individual at a time, the
 Wright–Fisher process replaces the entire population simultaneously. This
 makes it the natural model for organisms with discrete, synchronised
 generations (annual plants, insects, some microbes). The biological
-origins of this process — and of the Moran process — are discussed in
+origins of this process, and of the Moran process, are discussed in
 [Chapter @chp:evolutionary_biology].
 
 #### Example: One Generation of the Wright–Fisher Process
@@ -222,8 +222,8 @@ distribution, so for example $P(v_T'=4) \approx 0.731^4 \approx 0.284$.
 
 ---
 
-For all four dynamics — imitation, introspection, best-response, and
-Wright–Fisher — in the limit of large population size $N \to \infty$ and
+For all four dynamics (imitation, introspection, best-response, and
+Wright–Fisher) in the limit of large population size $N \to \infty$ and
 weak selection $\beta \to 0$ (with $\beta N$ held fixed), the expected
 change in strategy frequencies converges to the **replicator equation**
 [@traulsen2005coevolutionary; @hofbauer1998evolutionary]:
@@ -308,112 +308,113 @@ payoff-dominant: $(1,0)$).
 
 ## Programming
 
-### Simulating Imitation Dynamics
+The `ludics` library represents an
+evolutionary game as a finite-population Markov chain and computes fixation
+probabilities and stationary distributions exactly. It implements the Moran
+process, Fermi imitation, and introspection dynamics directly, and its
+transition-matrix builder accepts a custom update rule, which lets us add the
+Wright–Fisher process as well.
 
-The following implements a single step of imitation dynamics and runs many
-steps to trace strategy frequencies over time.
+### Setting up the citation game
+
+We work with the citation coordination game on a population of $N = 4$ students.
+A state records each individual's strategy ($0$ for textbook, $1$ for preprint),
+and the fitness of an individual is its average payoff against the rest of the
+population.
 
 ```{code-cell} python3
 import numpy as np
-import matplotlib.pyplot as plt
+import ludics
 
-def fitness(population, M):
+payoff_matrix = np.array([[3, 0], [1, 2]])  # citation game: T = 0, P = 1
+
+
+def citation_fitness(state, payoff_matrix, **kwargs):
     """Average payoff of each individual against all others."""
-    N = len(population)
-    payoffs = np.zeros(N)
-    for k in range(N):
-        opponents = np.array([population[j] for j in range(N) if j != k])
-        payoffs[k] = np.mean([M[population[k], opp] for opp in opponents])
-    return payoffs
-
-def imitation_step(population, M, beta, rng):
-    """One step of imitation dynamics (Fermi rule)."""
-    N = len(population)
-    i, j = rng.choice(N, size=2, replace=False)
-    pi = fitness(population, M)
-    prob = 1 / (1 + np.exp(-beta * (pi[j] - pi[i])))
-    if rng.random() < prob:
-        population[i] = population[j]
-    return population
-
-M = np.array([[3, 0], [1, 2]])   # citation coordination game
-N = 20
-beta = 1.0
-steps = 2000
-rng = np.random.default_rng(seed=42)
-
-population = np.array([0] * (N // 2) + [1] * (N // 2))
-freq_history = [np.mean(population == 0)]
-
-for _ in range(steps):
-    population = imitation_step(population, M, beta, rng)
-    freq_history.append(np.mean(population == 0))
-
-plt.figure()
-plt.plot(freq_history)
-plt.xlabel("Step")
-plt.ylabel("Frequency of strategy T")
-plt.title("Imitation dynamics — citation coordination game")
-plt.ylim(0, 1);
-```
-
-### Simulating the Wright–Fisher Process
-
-```{code-cell} python3
-def wright_fisher_step(counts, M, beta, rng):
-    """One generation of Wright-Fisher (exponential fitness)."""
-    N = sum(counts)
-    n_strategies = len(counts)
-    population = np.repeat(np.arange(n_strategies), counts)
-    pi = fitness(population, M)
-    strategy_fitness = np.array([
-        np.mean(pi[population == s]) if counts[s] > 0 else 0
-        for s in range(n_strategies)
+    number_of_individuals = len(state)
+    return np.array([
+        np.mean([
+            payoff_matrix[state[individual], state[other]]
+            for other in range(number_of_individuals)
+            if other != individual
+        ])
+        for individual in range(number_of_individuals)
     ])
-    f = np.exp(beta * strategy_fitness)
-    probs = f / f.sum()
-    new_counts = rng.multinomial(N, probs)
-    return new_counts
 
-counts = np.array([N // 2, N // 2])
-generations = 200
-rng = np.random.default_rng(seed=42)
-freq_wf = [counts[0] / N]
 
-for _ in range(generations):
-    counts = wright_fisher_step(counts, M, beta, rng)
-    freq_wf.append(counts[0] / N)
-
-plt.figure()
-plt.plot(freq_wf)
-plt.xlabel("Generation")
-plt.ylabel("Frequency of strategy T")
-plt.title("Wright–Fisher process — citation coordination game")
-plt.ylim(0, 1);
+state_space = ludics.get_state_space(N=4, k=2)
 ```
 
-### Comparing Dynamics
+### Building each dynamic as a Markov chain
+
+Moran, Fermi imitation, and introspection are built in. Wright–Fisher is not,
+but because each of the $N$ offspring of a generation is drawn independently in
+proportion to parental fitness, its transition probability factorises as a
+product over offspring, and `generate_transition_matrix` accepts it as a custom
+rule.
 
 ```{code-cell} python3
-import nashpy as nash
+def wright_fisher_transition_probability(
+    source, target, fitness_function, selection_intensity, **kwargs
+):
+    """Wright–Fisher: each offspring is sampled independently, in proportion
+    to parental fitness (non-overlapping generations)."""
+    fitness = 1 + selection_intensity * fitness_function(source, **kwargs)
+    total_fitness = fitness.sum()
+    probability = 1.0
+    for offspring_type in target:
+        probability *= fitness[source == offspring_type].sum() / total_fitness
+    return probability
 
-# Moran process via Nashpy for comparison
-game = nash.Game(M)
-initial_population = np.array([0] * (N // 2) + [1] * (N // 2))
 
-np.random.seed(42)
-moran_trajectory = list(game.moran_process(initial_population=initial_population))
+moran = ludics.generate_transition_matrix(
+    state_space, citation_fitness, ludics.compute_moran_transition_probability,
+    selection_intensity=1.0, payoff_matrix=payoff_matrix,
+)
+fermi = ludics.generate_transition_matrix(
+    state_space, citation_fitness, ludics.compute_fermi_transition_probability,
+    choice_intensity=1.0, payoff_matrix=payoff_matrix,
+)
+wright_fisher = ludics.generate_transition_matrix(
+    state_space, citation_fitness, wright_fisher_transition_probability,
+    selection_intensity=1.0, payoff_matrix=payoff_matrix,
+)
+introspection = ludics.generate_transition_matrix(
+    state_space, citation_fitness,
+    ludics.compute_introspection_transition_probability,
+    choice_intensity=1.0, number_of_strategies=2, payoff_matrix=payoff_matrix,
+)
+```
 
-moran_freq = [np.mean(pop == 0) for pop in moran_trajectory]
+### Does the update rule matter?
 
-plt.figure()
-plt.plot(freq_history[:len(moran_freq)], label="Imitation", alpha=0.8)
-plt.plot(moran_freq, label="Moran", alpha=0.8)
-plt.xlabel("Step")
-plt.ylabel("Frequency of strategy T")
-plt.title("Imitation vs Moran — citation coordination game")
-plt.legend()
-plt.ylim(0, 1);
+The three absorbing dynamics, Moran, Fermi imitation, and Wright–Fisher, each
+end in fixation: every individual ends up citing either the textbook or the
+preprint. We read off the probability that a single preprint adopter eventually
+takes over, and it differs from one rule to the next, which is the central
+message of this chapter.
+
+```{code-cell} python3
+single_adopter = next(i for i, s in enumerate(state_space) if s.sum() == 1)
+all_preprint = next(i for i, s in enumerate(state_space) if s.sum() == 4)
+
+for name, matrix in [("Moran", moran), ("Fermi imitation", fermi),
+                     ("Wright-Fisher", wright_fisher)]:
+    absorption = ludics.get_absorption_probabilities(matrix, state_space)
+    pairs = np.array(absorption[single_adopter]).reshape(-1, 2)
+    fixation = next(p for index, p in pairs if int(index) == all_preprint)
+    print(f"{name}: fixation probability of one preprint adopter = {fixation:.4f}")
+```
+
+Introspection dynamics, by contrast, is ergodic: it never fixes but visits every
+state indefinitely, so the natural summary is its stationary distribution.
+
+```{code-cell} python3
+stationary = ludics.compute_steady_state(introspection)
+print(
+    "Introspection: stationary probability of all-preprint =",
+    round(float(stationary[all_preprint]), 4),
+)
 ```
 
 (sec:notable_research_learning_dynamics)=
@@ -428,7 +429,7 @@ populations under social learning.
 
 Introspection dynamics is a more recent addition to this family, introduced by
 [@couto2022introspection]. Unlike imitation, introspection does not require
-observing a specific partner's outcome — only reasoning about what *would*
+observing a specific partner's outcome, only reasoning about what *would*
 happen under an alternative strategy. This distinction becomes particularly
 important in asymmetric games and has applications to human behavioural
 experiments where direct comparison is not always possible.
@@ -446,16 +447,16 @@ was established in [@traulsen2005coevolutionary].
 
 ## Conclusion
 
-This chapter surveyed four update rules — imitation, introspection,
-best-response, and Wright–Fisher — as alternatives to the Moran process and
+This chapter surveyed four update rules (imitation, introspection,
+best-response, and Wright–Fisher) as alternatives to the Moran process and
 replicator dynamics covered in preceding chapters. Together they form a
 landscape of evolutionary and learning models that share a common mean-field
 limit (the replicator equation) but differ in their finite-population and
 high-selection behaviour.
 
 The choice of update rule is not merely a mathematical convention. It
-reflects an assumption about how real agents — biological organisms, humans,
-firms — actually change their behaviour: by copying successful peers, by
+reflects an assumption about how real agents (biological organisms, humans,
+firms) actually change their behaviour: by copying successful peers, by
 rational introspection, by best-responding to the current environment, or
 through generational turnover. Understanding when these assumptions differ in
 their predictions is essential for applying evolutionary game theory to
@@ -470,7 +471,7 @@ empirical settings.
 
 | Dynamic | Update mechanism | Finite population? | Mean-field limit |
 |---|---|---|---|
-| Replicator | Continuous frequency change proportional to relative payoff | No (infinite) | — (is the limit) |
+| Replicator | Continuous frequency change proportional to relative payoff | No (infinite) | n/a (is the limit) |
 | Moran | Birth proportional to fitness; death uniform | Yes | Replicator |
 | Imitation | Fermi pairwise copying with selection intensity $\beta$ | Yes | Replicator |
 | Introspection | Counterfactual switching via Fermi rule | Yes | Replicator |
@@ -482,7 +483,7 @@ empirical settings.
 ---
 
 ```{attention}
-All of the dynamics in this chapter — and in the two preceding chapters —
+All of the dynamics in this chapter, and in the two preceding chapters,
 converge to the replicator equation as the population becomes large and
 selection becomes weak. The replicator equation is therefore not just one
 model among many: it is the universal mean-field description of evolutionary
@@ -545,12 +546,12 @@ emerge precisely where this approximation breaks down.
 
 3. As $\beta \to 0$: Both Fermi probabilities converge to $1/2$. The exponential
    term $e^{-\beta \Delta\pi} \to 1$ regardless of the payoff difference $\Delta\pi$,
-   so $P(i \to j) \to 1/(1+1) = 1/2$. Imitation becomes purely random — neutral
+   so $P(i \to j) \to 1/(1+1) = 1/2$. Imitation becomes purely random, neutral
    drift.
 
    As $\beta \to \infty$: The higher-payoff individual is always imitated. Since
    $\pi_D > \pi_C$, we get $P(C \to D) \to 1$ and $P(D \to C) \to 0$. Defectors
-   are always imitated and cooperators never are — the dynamics are deterministic
+   are always imitated and cooperators never are; the dynamics are deterministic
    and defection takes over.
 
 ```{code-cell} python3
@@ -781,14 +782,9 @@ $$
      $\dot{x}_1 = 1 - x_1 = 0 \Rightarrow x_1 = 1$.
    - If $\pi_1 < \pi_2$ (i.e., $x_1 < 2/5$):
      $\dot{x}_1 = 0 - x_1 = 0 \Rightarrow x_1 = 0$.
-   - If $\pi_1 = \pi_2$ (i.e., $x_1 = 2/5$): $\dot{x}_1 = 1/2 - 2/5 = 1/10 \neq 0$.
-
-   Wait — at $x_1 = 2/5$ exactly, both strategies are best responses, so we use
-   the convention $\mathbf{1}[\pi_1 = \max] = 1/2$:
-
-   $$
-   \dot{x}_1 = 1/2 - 2/5 = 1/10 \neq 0
-   $$
+   - If $\pi_1 = \pi_2$ (i.e., $x_1 = 2/5$): both strategies are best responses,
+     so by the convention $\mathbf{1}[\pi_1 = \max] = 1/2$ the target share is
+     $1/2$, giving $\dot{x}_1 = 1/2 - 2/5 = 1/10 \neq 0$.
 
    So $x_1 = 2/5$ is **not** a rest point of the best-response dynamics (in
    continuous time with this convention).
@@ -923,7 +919,7 @@ $$
    Starting from $x_1 = 0.4$ exactly, the system remains at this unstable
    equilibrium in exact arithmetic. In practice, numerical integration will send
    it to one of the two pure states depending on rounding. The dynamics are
-   exquisitely sensitive at this threshold — this is the defining feature of
+   exquisitely sensitive at this threshold; this is the defining feature of
    the mixed Nash equilibrium being unstable under replicator dynamics.
 
 2. **Best-response dynamics: basins of attraction.**

@@ -20,7 +20,7 @@ surprising revenue equivalence between the two formats.
 A popular band, **The Algorithms**, is playing a one-night-only concert in Cardiff.  
 To raise money for charity, the band is auctioning off a single **backstage pass**.
 
-> Three fans — Alex, Casey, and Jordan — are each secretly asked to submit a sealed bid  
+> Three fans (Alex, Casey, and Jordan) are each secretly asked to submit a sealed bid  
 > for how much they are willing to pay for the pass. The highest bidder will win the  
 > auction, but they will only pay **the second-highest bid**.
 
@@ -38,7 +38,7 @@ Suppose the bids submitted are:
 - Casey bids £100
 - Jordan bids £60
 
-Then Alex wins — but only pays £100, the second-highest bid.
+Then Alex wins, but only pays £100, the second-highest bid.
 
 This setup has an interesting strategic property:
 **bidding your true value is a dominant strategy**.
@@ -133,7 +133,7 @@ $$b_i = v_i$$
 
 **Proof**
 
-Let us consider the strategy $b_i(v_i) = v_i$ — that is, player $i$ bids truthfully.
+Let us consider the strategy $b_i(v_i) = v_i$, that is, player $i$ bids truthfully.
 
 We show that this is a **best response** to all other players also bidding truthfully.
 
@@ -406,7 +406,7 @@ mean_utilities
 ## Notable Research
 
 One of the early important publications in this field is [@vickrey1961counterspeculation],
-which not only introduced the second-price auction—often called the Vickrey auction—proving that
+which not only introduced the second-price auction, often called the Vickrey auction, proving that
 truth-telling is optimal, but also discusses the first-price auction. Vickrey was awarded the Nobel
 Prize in Economics in 1996 for this foundational work.
 
@@ -419,7 +419,7 @@ independent private values.
 Auction theory is often described as one of game theory’s most successfully applied branches. A
 striking example is the role of auctions in modern online advertising. This is exemplified in the
 work of Google’s chief economist [@varian2007position], which provides a theoretical model of
-position auctions—the type of auctions used to allocate advertising slots in search engines.
+position auctions, the type of auctions used to allocate advertising slots in search engines.
 
 Further Nobel-recognised contributions to auction theory come from Paul Milgrom and Robert Wilson,
 who were awarded the Nobel Prize in Economics in 2020. Their work extends auction theory to
@@ -468,7 +468,7 @@ well as a list of other auction types.
 ```{important}
 Auction theory assumes that players form beliefs about other players’ valuations.
 To analyse strategic behaviour under uncertainty, we use the concept of
-**Bayesian Nash equilibrium**—an equilibrium defined in expectation.
+**Bayesian Nash equilibrium**, an equilibrium defined in expectation.
 This framework allows auctions to be designed in ways that incentivise truthful bidding.
 ```
 
@@ -739,7 +739,7 @@ $$
 When $\alpha = \frac{N-1}{N}$, the best response of Player $i$ is to bid
 $\frac{N-1}{N}v_i$, which equals $\alpha v_i$. Therefore, the strategy
 $b_i = \frac{N-1}{N}v_i$ is a best response to all other players using the same
-strategy — confirming it is a **Bayesian Nash equilibrium**.
+strategy, confirming it is a **Bayesian Nash equilibrium**.
 
 The second-order condition confirms this is a maximum: the expected utility as a
 function of $\bar{b}$ is a degree-$N$ polynomial in $\bar{b}$ with a negative

@@ -80,35 +80,112 @@ individuals. It is partly inherited. And it affects how many offspring a
 stag leaves (via contest outcomes). Natural selection therefore acts on
 antler size; the only question is in which direction.
 
+(sec:bio_genes_alleles)=
+
+### Genes, Loci, and Alleles
+
+Darwin's three conditions require heritable variation but say nothing about how
+inheritance works. The vocabulary of genetics makes the mechanism precise, and
+the same vocabulary maps cleanly onto the language of strategies.
+
+A **gene** is a stretch of DNA that carries the instructions for some heritable
+feature. The fixed position a gene occupies on a chromosome is its **locus**, and
+the variant forms a gene can take at that locus are its **alleles**. Most animals
+are **diploid**: they carry two copies of each chromosome, and hence two alleles
+at every locus, one inherited from each parent. An individual carrying two copies
+of the same allele is **homozygous** at that locus; one carrying two different
+alleles is **heterozygous**.
+
+When the two alleles differ, one is often **dominant** and masks the effect of the
+other, which is then **recessive**. [](#fig:bio_locus) shows a single locus with
+two alleles, the three diploid genotypes they produce, and the way those genotypes
+map to an observable feature when one allele is dominant.
+
+```{figure} ./images/locus_genotype_phenotype/main.png
+:alt: A single locus with two alleles A and a, the diploid genotypes AA, Aa and aa, and their mapping to dominant and recessive phenotypes.
+:label: fig:bio_locus
+:align: center
+:height: 300px
+
+A single locus carrying two alleles: the dominant **A** and the recessive **a**.
+The three diploid genotypes are **AA**, **Aa**, and **aa**. When **A** is
+dominant, both **AA** and **Aa** produce the dominant phenotype, and only **aa**
+produces the recessive one.
+```
+
+The central bookkeeping quantity of population genetics is the **allele
+frequency**: the proportion of all copies at a locus that are of a given allele.
+At its most basic, natural selection is change in allele frequency from one
+generation to the next. This is the biological counterpart of the strategy
+frequency $x$ that the later chapters track.
+
 (sec:bio_genotype_phenotype)=
 
 ### Genotype and Phenotype
 
-Darwin's three conditions require heritable variation, but say nothing about the
-mechanism of inheritance. Two concepts make this precise.
+The **genotype** of an organism is its inherited genetic constitution: the alleles
+it carries across all relevant loci. The genotype is fixed at conception and is
+what passes, one allele per locus, to each offspring.
 
----
-
-The **genotype** of an organism is its inherited genetic constitution: the set of
-**alleles** (variant forms of genes) it carries across all relevant loci. The
-genotype is what passes from parent to offspring during reproduction.
-
-The **phenotype** is the observable expression of a genotype in a given
+The **phenotype** is the observable expression of that genotype in a given
 environment: the physical structure, physiological properties, and behavioural
 tendencies visible to natural selection. Antler size, plumage colour, and the
 propensity to escalate or retreat in a contest are all phenotypic traits.
 
----
+The map from genotype to phenotype is rarely one-to-one. Most interesting traits
+are **polygenic**, shaped by many loci acting together, and the same genotype can
+yield different phenotypes in different environments. A stag well fed over the
+summer grows larger antlers than a genetically identical stag on poorer ground.
 
-Natural selection acts on phenotypes but changes the frequency of genotypes. A
-stag's genotype specifies its antler-investment programme; the antlers that result
-are the phenotype; contest outcomes determine fitness; and fitness determines how
-many copies of the underlying genotype reach the next generation.
+The crucial asymmetry is this: natural selection acts on phenotypes but changes
+the frequency of genotypes. A stag's genotype specifies its antler-investment
+programme; the antlers that result are the phenotype; contest outcomes determine
+fitness; and fitness determines how many copies of the underlying genotype reach
+the next generation. [](#fig:bio_selection_cycle) shows the loop.
+
+```{figure} ./images/selection_cycle/main.png
+:alt: A cycle in which genotype develops into phenotype, selection acts on the phenotype to determine fitness, differential reproduction changes genotype frequencies in the next generation, and inheritance carries them forward.
+:label: fig:bio_selection_cycle
+:align: center
+:height: 230px
+
+The cycle of selection. The genotype develops into a phenotype; selection acts on
+the phenotype through reproductive success; differential reproduction changes the
+genotype frequencies in the next generation; and inheritance carries those
+genotypes forward. Selection reads the phenotype but rewrites the genotype
+frequencies.
+```
 
 The game-theoretic translation is direct: each distinct genotype (or allele at the
 relevant locus) corresponds to a **strategy**, and the phenotype is the strategy in
-action. What the replicator equation tracks over time is the frequency of genotypes
-in the population.
+action. What the replicator equation tracks over time is the frequency of
+genotypes, that is, of strategies, in the population.
+
+(sec:bio_pleiotropy)=
+
+### Pleiotropy: One Gene, Many Traits
+
+A single gene rarely affects just one trait. **Pleiotropy** is the phenomenon of
+one gene influencing several apparently unrelated phenotypic traits at once.
+[](#fig:bio_pleiotropy) illustrates the idea: a single allele feeds into more than
+one trait, so selection acting on one of those traits inevitably drags the others
+along with it.
+
+```{figure} ./images/pleiotropy/main.png
+:alt: A single allele at one locus with arrows to three separate traits, illustrating pleiotropy.
+:label: fig:bio_pleiotropy
+:align: center
+:height: 250px
+
+Pleiotropy. A single allele at one locus influences several traits at once, so
+the traits cannot evolve independently of one another.
+```
+
+Pleiotropy matters here because it explains why a trait that lowers fitness on one
+axis need not be eliminated. An allele can be costly in one respect and beneficial
+in another, and selection acts on the net effect. This is a recurring theme: a
+strategy that looks individually disadvantageous can persist because of how it is
+tied to everything else going on in the population.
 
 (sec:bio_strategy)=
 
@@ -134,27 +211,22 @@ that is entirely mechanical.
 
 ### Fitness: Reproductive Success as Payoff
 
-The central quantity in evolutionary biology is **fitness**, the expected
-number of surviving offspring an individual leaves. Variants with higher
-fitness increase in frequency; variants with lower fitness decline.
+The central quantity in evolutionary biology is **fitness**, the expected number
+of surviving offspring an individual leaves. Variants with higher fitness leave
+more copies of themselves and so increase in frequency; variants with lower
+fitness decline. Fitness is the biological counterpart of a payoff: it is the
+currency in which natural selection keeps score.
 
-In classical population genetics, fitness is treated as a fixed property
-of a type. If type $A$ produces on average $W_A$ offspring and type $B$
-produces $W_B$, and their current frequencies are $x_A$ and $x_B = 1 - x_A$,
-then after one generation of selection:
+In classical population genetics, fitness is treated as a fixed property of a
+type, a constant attached to each genotype regardless of how common it is. A type
+with above-average fitness then grows in frequency, generation on generation,
+until it dominates the population.
 
-$$
-x_A' = \frac{W_A \, x_A}{W_A \, x_A + W_B \, x_B} = \frac{W_A}{\bar W} \, x_A
-$$
-
-where $\bar W = W_A x_A + W_B x_B$ is the mean fitness of the population.
-Type $A$ increases in frequency whenever $W_A > \bar W$, whenever its
-fitness exceeds the population average.
-
-This is correct when fitnesses are constant. But in the stag example,
-fitnesses are not constant: the payoff to heavy antler investment is high
-when it is rare and low when it is common. Fitness depends on the current
-composition of the population.
+The stag example does not fit this picture. The advantage of heavy antler
+investment is large when such investment is rare and small when it is common, so
+fitness is not a fixed constant: it depends on the current composition of the
+population. Making that dependence precise is the subject of the next section, and
+turning it into a dynamical equation is the work of [](#chp:replicator_dynamics).
 
 (sec:bio_frequency_dependence)=
 
@@ -214,29 +286,36 @@ $$
 \end{array}
 $$
 
-In a population where Hawks make up fraction $x$, the expected fitness of
-each strategy is:
+Each strategy's expected fitness depends on how common Hawks are. Writing $x$ for
+the fraction of Hawks, a Hawk does worse as $x$ rises, since it more often meets
+another Hawk and risks a costly fight, while a Dove does best when Hawks are rare.
+The two fitnesses are equal at a single interior frequency,
 
 $$
-\pi_H(x) = \frac{V-C}{2} \cdot x + V \cdot (1-x) = V - x\frac{V+C}{2}
+x^* = \frac{V}{C},
 $$
 
-$$
-\pi_D(x) = 0 \cdot x + \frac{V}{2}(1-x) = \frac{V(1-x)}{2}
-$$
+which lies strictly between 0 and 1 because $C > V$. The stable outcome is
+therefore a **mixed population**, not fixation of either pure strategy: when Hawks
+are rarer than $x^*$ they do better and spread, and when they are commoner they do
+worse and decline, so the population is driven back to $x^*$ from either side, as
+[](#fig:bio_hawk_dove_fitness) shows. This balance point is a Nash equilibrium of
+the underlying game. The fitnesses are derived in full, and the sense in which
+$x^*$ is evolutionarily stable is made precise, in
+[](#chp:replicator_dynamics).
 
-Setting $\pi_H = \pi_D$ gives the frequency at which neither strategy has
-an advantage:
+```{figure} ./images/hawk_dove_fitness/main.png
+:alt: Expected fitness of Hawk and Dove as functions of the Hawk frequency x, two downward-sloping lines crossing at x* equals V over C.
+:label: fig:bio_hawk_dove_fitness
+:align: center
+:height: 270px
 
-$$
-x^* = \frac{V}{C}
-$$
-
-Since $C > V$, we have $x^* \in (0,1)$: the stable outcome is a
-**mixed population**, not fixation of either pure strategy. For $x < x^*$,
-Hawks do better than Doves and increase; for $x > x^*$, Doves do better
-and Hawks decrease. The equilibrium is stable and corresponds to a Nash
-equilibrium of the underlying game.
+Frequency-dependent fitness in the Hawk–Dove game. Each line gives the expected
+fitness of a strategy as the fraction of Hawks $x$ varies. The lines cross at
+$x^{*}=V/C$: to the left of $x^{*}$ Hawks earn more and increase in frequency, to
+the right Doves earn more and Hawks decline. The population is driven back to
+$x^{*}$ from either side.
+```
 
 ```{note}
 In the stag example, "Hawk" corresponds to heavy antler investment
@@ -399,6 +478,25 @@ Return to the stag antler example from [](#sec:motivating_example_stag_antlers).
 ```
 
 ```{exercise}
+:label: bio_genetics_vocabulary
+
+A species of snail has a single gene controlling shell colour. At that locus the
+allele $B$ (brown) is dominant and the allele $y$ (yellow) is recessive, so the
+genotypes $BB$ and $By$ give brown shells and $yy$ gives a yellow shell.
+
+1. Name the genotype(s) that produce a brown shell and the genotype that produces
+   a yellow shell. Which genotypes are homozygous, and which is heterozygous?
+
+2. Explain, in terms of genotype and phenotype, how two brown-shelled snails can
+   have a yellow-shelled offspring.
+
+3. Suppose the same gene also affects shell thickness, so that the brown allele
+   happens to produce slightly thicker shells. What is this phenomenon called, and
+   why does it mean that selection on shell colour cannot be considered in
+   isolation?
+```
+
+```{exercise}
 :label: bio_frequency_dependence_classify
 
 For each of the following scenarios, state whether fitness is
@@ -554,6 +652,26 @@ becomes a statement about which strategies natural selection will sustain.
    one environment and deleterious in another; what selection optimises is
    reproductive success in the *current* environment, not a fixed objective.
    When the environment changes, the direction of selection can reverse.
+```
+
+```{solution} bio_genetics_vocabulary
+:label: solution:bio_genetics_vocabulary
+
+1. The brown phenotype is produced by $BB$ and $By$; the yellow phenotype only by
+   $yy$. The genotypes $BB$ and $yy$ are homozygous (two copies of the same
+   allele), and $By$ is heterozygous (one copy of each).
+
+2. A brown-shelled snail can be heterozygous, $By$: it shows the brown phenotype
+   because $B$ is dominant, yet it still carries the recessive $y$ allele. If two
+   $By$ snails breed, an offspring can inherit $y$ from each parent and so be
+   $yy$, which is yellow. The phenotype hides the underlying genotype, so the
+   recessive allele persists, unseen, in heterozygotes.
+
+3. This is **pleiotropy**: one gene influencing more than one trait. Because the
+   brown allele affects both colour and thickness, any selection on shell colour
+   automatically shifts the distribution of shell thickness as well. The two
+   traits are tied together through the same allele and cannot respond to
+   selection independently.
 ```
 
 ```{solution} bio_frequency_dependence_classify

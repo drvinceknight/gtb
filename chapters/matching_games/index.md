@@ -187,7 +187,7 @@ This implies that $s'$ has no stable match that is higher in $s'$'s preference l
 than $r'$ (as we have assumed that this is the first rejection).
 
 Thus $s'$ prefers $r'$ to $M'(s')$ so that $(s',r')$ blocks $M'$.
-Each suitor is therefore matched in $M$ with his favorite stable reviewer and since
+Each suitor is therefore matched in $M$ with his favourite stable reviewer and since
 $\alpha$ was arbitrary it follows that all possible executions give the same matching.
 
 #### Example: Application of the Gale-Shapley algorithm to the author reviewer game
@@ -808,7 +808,7 @@ to $s$.
 **Case 1:** $r'$ prefers $s$ to $s'' = M^{-1}(r')$.
 
 Then in matching $M$, the pair $(s, r')$ is a blocking pair: $s$ prefers $r'$
-(since $M'(s)=r'$ and $s$ prefers $r'$ to $r$ — otherwise $s$ would be matched to
+(since $M'(s)=r'$ and $s$ prefers $r'$ to $r$, otherwise $s$ would be matched to
 $r$ in $M'$ as well after running the algorithm) and $r'$ prefers $s$ to its
 current partner $s''$. This contradicts the stability of $M$.
 
@@ -830,7 +830,7 @@ they must coincide.
 
 In the Gale-Shapley algorithm (suitors propose), when suitor $s_i$ proposes to
 reviewer $r$, reviewer $r$ accepts the proposal from whichever of its current
-tentative partner or $s_i$ it prefers — using the shared preference list. Because
+tentative partner or $s_i$ it prefers, using the shared preference list. Because
 all reviewers consult the same ranking, the outcome is fully determined by this
 single ordering: a suitor higher in the common ranking will always displace a
 suitor lower in it. Thus:

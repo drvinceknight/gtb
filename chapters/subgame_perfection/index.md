@@ -89,8 +89,8 @@ between these equilibria.
 
 ## Theory
 
-To identify emergent behaviour in extensive form games we assume that players not only attempt to optimize their
-overall utility but optimize their utility conditional on any information set.
+To identify emergent behaviour in extensive form games we assume that players not only attempt to optimise their
+overall utility but optimise their utility conditional on any information set.
 
 (sec:definition_of_sequential_rationality)=
 
@@ -402,7 +402,7 @@ result.equilibria
 The concept of subgame perfection was first introduced in
 [@selten1965spieltheoretische] and later reformulated in English in
 [@selten1988reexamination], both by Reinhard Selten. The motivating example for
-this chapter—the Chain Store Paradox—appears in [@selten1978chain], where Selten
+this chapter, the Chain Store Paradox, appears in [@selten1978chain], where Selten
 considers multiple sequential market entrants and examines the credibility of
 entry-deterrence strategies.
 
@@ -421,7 +421,7 @@ providing stronger predictions in extensive form games with imperfect informatio
 
 Subgame perfection refines the concept of Nash equilibrium by requiring that
 players' strategies form a Nash equilibrium not just in the game as a whole, but
-in every subgame—including those off the equilibrium path. This refinement
+in every subgame, including those off the equilibrium path. This refinement
 eliminates non-credible threats and ensures sequential rationality at every
 decision point. Table [](#tbl:spe_summary) summaries the main concepts of this
 chapter.
@@ -447,7 +447,7 @@ how subgame perfection rules out the incumbent’s non-credible threat to fight.
 
 ```{attention}
 In games with perfect information, backward induction not only
-gives a Nash equilibrium—it guarantees a subgame perfect one.
+gives a Nash equilibrium; it guarantees a subgame perfect one.
 ```
 
 ---

@@ -16,4 +16,5 @@ dependencies = [
     "matching",
     "nashpy>=0.0.43",
     "numba>=0.64.0",
+    "ludics>=0.3.2",
 ]

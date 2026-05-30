@@ -478,9 +478,9 @@ Interpret these results.
 Consider the Prisoner's Dilemma with $R = 3$, $S = 0$, $T = 5$, $P = 1$ and
 the four reactive strategies:
 
-- **AllC**: $(p, q) = (1, 1)$ — always cooperate.
-- **TFT**: $(p, q) = (1, 0)$ — cooperate first, then copy the opponent's last move.
-- **AllD**: $(p, q) = (0, 0)$ — always defect.
+- **AllC**: $(p, q) = (1, 1)$, always cooperate.
+- **TFT**: $(p, q) = (1, 0)$, cooperate first, then copy the opponent's last move.
+- **AllD**: $(p, q) = (0, 0)$, always defect.
 - **SR** (Suspicious Reciprocator): $(p, q) = (7/10, 1/10)$.
 
 Assume both players cooperate on the first move.
@@ -644,7 +644,7 @@ generalise. The revised empirical findings suggest:
 
 The observation that _being envious_ can be beneficial echoes a landmark
 theoretical result. [@press2012iterated] introduced **zero-determinant
-strategies** — memory-one strategies that can unilaterally enforce linear payoff
+strategies**, memory-one strategies that can unilaterally enforce linear payoff
 relationships, including extortionate dynamics. This paper was described by
 _MIT Technology Review_ as having set "the world of game theory on fire."
 
@@ -1011,7 +1011,7 @@ for (p_prime, q_prime) in [(sym.S(1), sym.S(0)), (sym.S(1) / 2, sym.S(1) / 2)]:
 ```
 ````
 
-```{solution} three_reactive_strategies
+````{solution} three_reactive_strategies
 :label: solution:three_reactive_strategies
 
 **Part 1.**
@@ -1093,13 +1093,53 @@ to SR earns $27/16 < 3$. **Is a NE.**
 **(AllD, AllD):** Deviating to AllC earns $0 < 1$; to TFT earns $1 = 1$ (no
 gain); to SR earns $9/10 < 1$. **Is a NE.**
 
-**(SR, SR):** Deviating to AllC earns $21/10 = 1.68$ while SR earns $27/16
-\approx 1.69$; to TFT earns $27/16$ (tie); to AllD earns $7/5 = 1.4 < 27/16$.
-
-Wait — compare $21/10$ and $27/16$: $\,21/10 = 336/160$ and $27/16 = 270/160$,
-so $21/10 > 27/16$. Deviating to AllC is profitable. **Not a NE.**
+**(SR, SR):** SR earns $27/16 \approx 1.69$. Deviating to AllC earns
+$21/10 = 2.1 > 27/16$ (equivalently $336/160 > 270/160$), so the deviation is
+profitable; to TFT earns $27/16$ (a tie); to AllD earns $7/5 = 1.4 < 27/16$.
+Since deviating to AllC pays, this is **not a NE.**
 
 The two pure Nash equilibria are **(TFT, TFT)** and **(AllD, AllD)**. The
 (TFT, TFT) equilibrium payoff-dominates (AllD, AllD), with both players earning
 $3$ rather than $1$.
+
+We can confirm the payoff matrix, and the resulting equilibria, with the
+`axelrod` library by simulating a long match between each pair of strategies.
+
+```{code-cell} python3
+import axelrod as axl
+import numpy as np
+
+# Reactive parameters (p, q); reactive players cooperate on the first move.
+strategies = {"AllC": (1, 1), "TFT": (1, 0), "AllD": (0, 0), "SR": (0.7, 0.1)}
+order = ["AllC", "TFT", "AllD", "SR"]
+
+
+def long_run_payoff(row, col, turns=200000, seed=1):
+    players = [
+        axl.ReactivePlayer(probabilities=strategies[row]),
+        axl.ReactivePlayer(probabilities=strategies[col]),
+    ]
+    match = axl.Match(players, turns=turns, seed=seed)
+    match.play()
+    return match.final_score_per_turn()[0]
+
+
+payoff_matrix = np.array(
+    [[long_run_payoff(row, col) for col in order] for row in order]
+)
+print("Row-player payoff matrix (AllC, TFT, AllD, SR):")
+print(np.round(payoff_matrix, 3))
 ```
+
+```{code-cell} python3
+# A profile (s, s) is a pure Nash equilibrium when no row deviation beats it.
+for index, strategy in enumerate(order):
+    own = payoff_matrix[index, index]
+    best_deviation = payoff_matrix[:, index].max()
+    print(
+        f"({strategy}, {strategy}): payoff {own:.3f}, "
+        f"best response {best_deviation:.3f}, "
+        f"Nash equilibrium: {own >= best_deviation - 1e-6}"
+    )
+```
+````
