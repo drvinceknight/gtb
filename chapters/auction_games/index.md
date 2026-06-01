@@ -400,7 +400,7 @@ for seed in range(repetitions):
     )
     utilities.append(valuations - allocation * payments)
 mean_utilities = np.mean(utilities, axis=0)
-mean_utilities
+print(f"Mean utility per bidder: {mean_utilities}")
 ```
 
 ## Notable Research

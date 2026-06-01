@@ -791,7 +791,7 @@ M_r = np.array([[3, 0], [5, 1]])
 M_c = M_r.T
 prisoners_dilemma = nash.Game(M_r, M_c)
 repeated_pd = nash.repeated_games.obtain_repeated_game(game=prisoners_dilemma, repetitions=2)
-repeated_pd
+print(repeated_pd)
 ```
 
 ```{warning}
@@ -805,14 +805,14 @@ game as a python generator:
 
 ```{code-cell} python3
 strategies = nash.repeated_games.obtain_strategy_space(A=M_r, repetitions=2)
-len(list(strategies))
+print(f"Number of row player strategies: {len(list(strategies))}")
 ```
 
 To obtain the action space for the columbn player use `A=M_c.T`:
 
 ```{code-cell} python3
 strategies = nash.repeated_games.obtain_strategy_space(A=M_c.T, repetitions=2)
-len(list(strategies))
+print(f"Number of column player strategies: {len(list(strategies))}")
 ```
 
 (sec:notable_research)=

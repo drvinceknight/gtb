@@ -42,7 +42,7 @@
 \node[found] (rationalisation)[right=of games]     {Chapter 2\\Rationalisation};
 \node[found] (zero_sum)       [below=of rationalisation] {Chapter 3\\Zero-Sum Games};
 \node[found] (nash)           [right=of zero_sum]  {Chapter 4\\Nash Equilibrium};
-\node[found] (brp)            [above=of nash]      {Chapter 12\\Best Response\\Polytopes};
+\node[found] (brp)            [above=of nash]      {Chapter 13\\Best Response\\Polytopes};
 \node[found] (subgame)        [right=of brp]       {Chapter 5\\Subgame Perfection};
 
 % ── Dynamic and evolutionary chapters ────────────────────────────────────────
@@ -52,13 +52,15 @@
 \node[dynamic] (moran)        [right=of replicator]{Chapter 10\\Moran Process};
 \node[dynamic] (evol_bio)     [right=of moran]     {Chapter 8\\Evolutionary\\Biology};
 \node[dynamic] (further)      [below=of evol_bio]  {Chapter 11\\Learning and\\Evolutionary\\Dynamics};
+\node[dynamic] (graph)        [right=of further]   {Chapter 12\\Evolutionary\\Dynamics on\\Graphs};
 
 % ── Applied chapters ──────────────────────────────────────────────────────────
-\node[applied] (routing)      [left=of replicator] {Chapter 13\\Routing Games};
-\node[applied] (auction)      [left=of routing]    {Chapter 15\\Auction Games};
-\node[applied] (matching)     [below=of auction]   {Chapter 14\\Matching Games};
-\node[applied] (social)       [below=of matching]  {Chapter 16\\Social Choice};
-\node[applied] (coop)         [right=of social]    {Chapter 17\\Cooperative Games};
+\node[applied] (routing)      [left=of replicator] {Chapter 14\\Routing Games};
+\node[applied] (auction)      [left=of routing]    {Chapter 16\\Auction Games};
+\node[applied] (matching)     [below=of auction]   {Chapter 15\\Matching Games};
+\node[applied] (social)       [below=of matching]  {Chapter 17\\Social Choice};
+\node[applied] (coop)         [right=of social]    {Chapter 18\\Cooperative Games};
+\node[applied] (thecore)      [right=of coop]      {Chapter 19\\The Core};
 
 % ── Appendices ────────────────────────────────────────────────────────────────
 \node[appendix] (numint)   [below=of replicator] {Appendix\\Numerical Integration};
@@ -88,9 +90,12 @@
 \draw (moran)          -- (further);
 \draw (replicator)     -- (further);
 \draw (evol_bio)       -- (further);
+\draw (moran)          -- (graph);
+\draw (further)        -- (graph);
 
 % ── Edges: applied ───────────────────────────────────────────────────────────
 \draw[<->] (matching)  -- (social);
+\draw (coop)           -- (thecore);
 
 % ── Appendix edges (dashed) ──────────────────────────────────────────────────
 \draw[dashed path] (numint)   -- (replicator);

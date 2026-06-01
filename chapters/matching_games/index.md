@@ -417,7 +417,7 @@ R4.set_prefs((A2, A5, A3, A1, A4))
 R5.set_prefs((A5, A3, A4, A1, A2))
 
 game = matching.games.StableMarriage(authors, reviewers)
-game.solve()
+print(f"Stable matching: {game.solve()}")
 ```
 
 ## Notable Research

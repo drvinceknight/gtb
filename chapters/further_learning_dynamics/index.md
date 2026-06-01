@@ -417,6 +417,20 @@ print(
 )
 ```
 
+```{note}
+The `ludics` cells above build the entire Markov chain and extract exact fixation
+probabilities and stationary distributions, whereas the exercises and their
+solutions work directly with the per-step transition probabilities by hand. The
+two approaches describe the same dynamics but adopt different conventions, so
+their numbers need not coincide exactly. In particular, `ludics` parametrises the
+Fermi and introspection rules by a `choice_intensity` (an inverse temperature,
+roughly $1/\beta$) and the Moran process by a fitness of the form
+$1 + \delta\,\pi$, while the worked examples use $\beta$ directly, proportional
+fitness $f = \pi$ for the Moran process, and exponential fitness
+$f = e^{\beta \pi}$ for the Wright–Fisher process. Each is a standard choice, and
+the qualitative comparison between update rules is unaffected.
+```
+
 (sec:notable_research_learning_dynamics)=
 
 ## Notable Research

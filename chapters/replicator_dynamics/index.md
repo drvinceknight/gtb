@@ -929,7 +929,7 @@ We can compute the population trajectory from an initial distribution:
 x0 = np.array([1 / 6, 1 / 6, 2 / 3])
 timepoints = np.linspace(0, 10, 1500)
 xs = game.replicator_dynamics(y0=x0, timepoints=timepoints).T
-xs
+print(xs)
 ```
 
 To visualize the evolution of strategy frequencies over time:
@@ -984,13 +984,13 @@ y0 = np.array([1/3, 1/3, 1/3])
 timepoints = np.linspace(0, 20, 1000)
 
 xs, ys = game.asymmetric_replicator_dynamics(x0=x0, y0=y0, timepoints=timepoints)
-xs
+print(xs)
 ```
 
 The corresponding trajectory for the column player's strategy distribution:
 
 ```{code-cell} python3
-ys
+print(ys)
 ```
 
 ## Notable Research

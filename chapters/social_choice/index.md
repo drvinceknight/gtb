@@ -358,7 +358,7 @@ import pref_voting.c1_methods
 profile = pref_voting.profiles.Profile(
     [[0, 1, 2]] * 18 + [[1, 2, 0]] * 16 + [[2, 0, 1]] * 11
 )
-pref_voting.c1_methods.condorcet(profile)
+print(f"Condorcet winners: {pref_voting.c1_methods.condorcet(profile)}")
 ```
 
 Next, we apply the **Borda count**, which assigns points based on rankings and
@@ -367,7 +367,7 @@ selects the alternative with the highest total score.
 ```{code-cell} python3
 import pref_voting.scoring_methods
 
-pref_voting.scoring_methods.borda(profile)
+print(f"Borda winners: {pref_voting.scoring_methods.borda(profile)}")
 ```
 
 ## Notable Research

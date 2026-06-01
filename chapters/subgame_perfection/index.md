@@ -382,7 +382,7 @@ print(g)
 This creates the extensive form game. To convert it to a normal form:
 
 ```{code-cell} python3
-g.to_arrays(dtype=float)
+print(f"Normal form payoff matrices: {g.to_arrays(dtype=float)}")
 ```
 
 ```{note}
@@ -394,7 +394,7 @@ To compute the pure-strategy Nash equilibria:
 
 ```{code-cell} python3
 result = gbt.nash.enumpure_solve(g)
-result.equilibria
+print(f"Pure-strategy Nash equilibria: {result.equilibria}")
 ```
 
 ## Notable Research

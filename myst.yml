@@ -20,12 +20,14 @@ project:
     - file: chapters/replicator_dynamics/index.md
     - file: chapters/moran_process/index.md
     - file: chapters/further_learning_dynamics/index.md
+    - file: chapters/graph_dynamics/index.md
     - file: chapters/best_response_polytopes/index.md
     - file: chapters/routing_games/index.md
     - file: chapters/matching_games/index.md
     - file: chapters/auction_games/index.md
     - file: chapters/social_choice/index.md
     - file: chapters/cooperative_games/index.md
+    - file: chapters/the_core/index.md
     - file: appendices/numerical_integration/index.md
     - file: appendices/absorbing_markov_chains/index.md
     - file: appendices/ergodic_markov_chains/index.md

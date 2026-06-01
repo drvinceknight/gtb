@@ -608,7 +608,7 @@ Now to run a Moran process, note that we seed the numpy pseudo-random number gen
 ```{code-cell} python3
 np.random.seed(0)
 populations = game.moran_process(initial_population=initial_population)
-list(populations)
+print(list(populations))
 ```
 
 ### Using Nashpy to approximate fixation probabilities
@@ -625,7 +625,10 @@ M = np.array(
 )
 game = nash.Game(M)
 initial_population = np.array((0, 0, 0, 1))
-game.fixation_probabilities(initial_population=initial_population, repetitions=10_000)
+fixation_probabilities = game.fixation_probabilities(
+    initial_population=initial_population, repetitions=10_000
+)
+print(f"Fixation probabilities: {fixation_probabilities}")
 ```
 
 This shows that the final population with only `1`s in it occurs $2/7\approx .22$ of the time.

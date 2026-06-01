@@ -605,20 +605,20 @@ res = scipy.optimize.linprog(
     A_eq=M_eq,
     b_eq=b_eq,
 )
-res
+print(res)
 ```
 
 This returns the full output of the optimisation. The min-max strategy is
 contained in all but the last entry of `res.x`:
 
 ```{code-cell} python3
-res.x[:-1]
+print(f"Min-max strategy: {res.x[:-1]}")
 ```
 
 The last entry of `res.x` gives the value of the game:
 
 ```{code-cell} python3
-res.x[-1]
+print(f"Value of the game: {res.x[-1]}")
 ```
 
 ### Obtain min-max and max-min strategies using Nashpy
@@ -629,7 +629,7 @@ res.x[-1]
 import nashpy as nash
 
 game = nash.Game(M, -M)
-game.linear_program()
+print(game.linear_program())
 ```
 
 ### Obtain min-max and max-min strategies using Gambit
@@ -647,7 +647,7 @@ print(game)
 Now we can solve the underlying linear program:
 
 ```{code-cell} python3
-gbt.nash.lp_solve(game)
+print(gbt.nash.lp_solve(game))
 ```
 
 ## Notable Research

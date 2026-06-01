@@ -454,13 +454,13 @@ B = np.array(
 )
 
 coordination_game = nash.Game(A, B)
-coordination_game
+print(coordination_game)
 ```
 
 Now to use the support enumeration algorithm:
 
 ```{code-cell} python3
-list(coordination_game.support_enumeration())
+print(list(coordination_game.support_enumeration()))
 ```
 
 ```{note}

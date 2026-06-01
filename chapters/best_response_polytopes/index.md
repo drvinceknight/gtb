@@ -765,7 +765,7 @@ M_c = np.array([
 ])
 
 game = nash.Game(M_r, M_c)
-list(game.vertex_enumeration())
+print(list(game.vertex_enumeration()))
 ```
 
 ### Lemke-Howson with Nashpy
@@ -775,13 +775,13 @@ to find a Nash equilibrium.
 
 ```{code-cell} python3
 label_to_drop = 0
-game.lemke_howson(initial_dropped_label=label_to_drop)
+print(f"Nash equilibrium: {game.lemke_howson(initial_dropped_label=label_to_drop)}")
 ```
 
 You can also enumerate all possible dropped labels:
 
 ```{code-cell} python3
-list(game.lemke_howson_enumeration())
+print(list(game.lemke_howson_enumeration()))
 ```
 
 ### Vertex enumeration with Gambit
@@ -792,7 +792,7 @@ Gambit can be used to enumerate all pairs of vertices:
 import pygambit as gbt
 
 game = gbt.Game.from_arrays(M_r, M_c)
-gbt.nash.enummixed_solve(game)
+print(gbt.nash.enummixed_solve(game))
 ```
 
 ### Lemke-Howson with Gambit
@@ -800,7 +800,7 @@ gbt.nash.enummixed_solve(game)
 Gambit can be used to carry out the Lemke-Howson algorithm:
 
 ```{code-cell} python3
-gbt.nash.lcp_solve(game)
+print(gbt.nash.lcp_solve(game))
 ```
 
 ## Notable Research

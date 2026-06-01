@@ -393,15 +393,29 @@ wheels = [
 
 [[package]]
 name = "coopgt"
-version = "0.0.2"
-source = { registry = "https://pypi.org/simple" }
+source = { editable = "../../src/coopgt" }
 dependencies = [
     { name = "more-itertools" },
     { name = "numpy" },
+    { name = "scipy" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/71/63/37df79d917f3b03695a4347527a3c76c91347a0aac5ca39958e79439461f/coopgt-0.0.2.tar.gz", hash = "sha256:79abc118cf9e82f3b86b6f2ee0b0f3391f644db82cc054bb635426384040314e", size = 23767, upload-time = "2024-01-16T16:21:46.452Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/bf/71/f7cad1a1a87df50738aab7d0abc0b17368091fde0a156fd4fd5edc9a54cc/coopgt-0.0.2-py3-none-any.whl", hash = "sha256:59947541547f89e8e35d0617034710deaf5b89f82645ae8d320be5112a1b213e", size = 4340, upload-time = "2024-01-16T16:21:44.483Z" },
+
+[package.metadata]
+requires-dist = [
+    { name = "more-itertools", specifier = ">=10.2.0" },
+    { name = "numpy", specifier = ">=1.26.1" },
+    { name = "scipy", specifier = ">=1.10" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "mkdocstrings-python", specifier = ">=1.0" },
+    { name = "packaging", specifier = ">=23.0" },
+    { name = "pytest", specifier = ">=8.0" },
+    { name = "pytest-cov", specifier = ">=5.0" },
+    { name = "ruff", specifier = ">=0.9" },
+    { name = "ty", specifier = ">=0.0.1a1" },
+    { name = "zensical", specifier = ">=0.0.11" },
 ]
 
 [[package]]
@@ -598,6 +612,7 @@ dependencies = [
     { name = "matplotlib" },
     { name = "mystmd" },
     { name = "nashpy" },
+    { name = "networkx" },
     { name = "numba" },
     { name = "numpy" },
     { name = "pref-voting" },
@@ -609,13 +624,14 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "axelrod" },
-    { name = "coopgt" },
+    { name = "coopgt", editable = "../../src/coopgt" },
     { name = "jupyter" },
     { name = "ludics", specifier = ">=0.3.2" },
     { name = "matching" },
     { name = "matplotlib" },
     { name = "mystmd" },
     { name = "nashpy", specifier = ">=0.0.43" },
+    { name = "networkx", specifier = ">=3.6.1" },
     { name = "numba", specifier = ">=0.64.0" },
     { name = "numpy" },
     { name = "pref-voting" },

@@ -718,13 +718,13 @@ We can now compute the expected utility for the row player using
 [](#eqn:linear_algebraic_formulation_of_expected_utility):
 
 ```{code-cell} python3
-sigma_r @ M_r @ sigma_c
+print(f"Row player expected utility: {sigma_r @ M_r @ sigma_c}")
 ```
 
 The equivalent calculation for the column player is:
 
 ```{code-cell} python3
-sigma_r @ M_c @ sigma_c
+print(f"Column player expected utility: {sigma_r @ M_c @ sigma_c}")
 ```
 
 :::{important}
@@ -741,7 +741,7 @@ We can use it to create the [Matching Pennies game](#matching_pennies):
 import nashpy as nash
 
 matching_pennies = nash.Game(M_r, M_c)
-matching_pennies
+print(matching_pennies)
 ```
 
 :::{note}
@@ -752,7 +752,7 @@ to redefine them.
 To compute the expected utilities of both players:
 
 ```{code-cell} python3
-matching_pennies[sigma_r, sigma_c]
+print(f"Expected utilities (row, column): {matching_pennies[sigma_r, sigma_c]}")
 ```
 
 :::{note}

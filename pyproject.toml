@@ -17,4 +17,8 @@ dependencies = [
     "nashpy>=0.0.43",
     "numba>=0.64.0",
     "ludics>=0.3.2",
+    "networkx>=3.6.1",
 ]
+
+[tool.uv.sources]
+coopgt = { path = "../../src/coopgt", editable = true }

@@ -808,7 +808,7 @@ sigma_2 = np.array((1 / 4, 0, 0, 3 / 4, 0))
 We can now compute the expected utility for each of the row player's actions:
 
 ```{code-cell} python3
-M_r @ sigma_2
+print(f"Expected utility of each action: {M_r @ sigma_2}")
 ```
 
 ### Finding non zero entries of an array with Numpy
@@ -817,7 +817,7 @@ NumPy gives functionality for finding non zero entries of an array:
 
 ```{code-cell} python3
 sigma_1 = np.array((1 / 3, 0, 1 / 3, 1 / 3, 0))
-sigma_1.nonzero()
+print(f"Indices of actions played: {sigma_1.nonzero()}")
 ```
 
 ### Checking the best response condition with Numpy
@@ -827,7 +827,8 @@ location of the non zero values of a strategy with the maximum utility of the
 action set.
 
 ```{code-cell} python3
-(M_r @ sigma_2)[sigma_1.nonzero()] == (M_r @ sigma_2).max()
+played_actions_maximise = (M_r @ sigma_2)[sigma_1.nonzero()] == (M_r @ sigma_2).max()
+print(f"Each played action achieves the maximum utility: {played_actions_maximise}")
 ```
 
 Just as in [](#sec:rock_paper_scissors_lizard_spock) we see that $\sigma_1$ is not
@@ -837,7 +838,8 @@ get a best response:
 
 ```{code-cell} python3
 sigma_1 = np.array((1, 0, 0, 0, 0))
-(M_r @ sigma_2)[sigma_1.nonzero()] == (M_r @ sigma_2).max()
+played_actions_maximise = (M_r @ sigma_2)[sigma_1.nonzero()] == (M_r @ sigma_2).max()
+print(f"Each played action achieves the maximum utility: {played_actions_maximise}")
 ```
 
 ### Checking best response condition with Nashpy
@@ -850,7 +852,8 @@ a best response to each other.
 import nashpy as nash
 
 rpsls = nash.Game(M_r, - M_r)
-rpsls.is_best_response(sigma_r=sigma_1, sigma_c=sigma_2)
+print(f"Best response check (sigma_1, sigma_2): "
+      f"{rpsls.is_best_response(sigma_r=sigma_1, sigma_c=sigma_2)}")
 ```
 
 This confirms that $\sigma_1=(1, 0, 0, 0, 0)$ is a best response to $\sigma_2=(1

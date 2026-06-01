@@ -446,7 +446,7 @@ constraints = [
 ]
 
 res = scipy.optimize.minimize(objective, [0, 0], constraints=constraints)
-res
+print(res)
 ```
 
 ### Notable Research

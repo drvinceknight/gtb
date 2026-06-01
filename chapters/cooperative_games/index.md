@@ -558,24 +558,29 @@ characteristic_function = {
     (2, 3): 600,
     (1, 2, 3): 1000,
 }
-coopgt.characteristic_function_properties.is_valid(characteristic_function=characteristic_function)
+is_valid = coopgt.characteristic_function_properties.is_valid(
+    characteristic_function=characteristic_function
+)
+print(f"Characteristic function valid? {is_valid}")
 ```
 
 Here we can check if it is [monotone](#sec:definition_of_monotone_characteristic_function):
 
 ```{code-cell} python3
-coopgt.characteristic_function_properties.is_monotone(
+is_monotone = coopgt.characteristic_function_properties.is_monotone(
     characteristic_function=characteristic_function
 )
+print(f"Characteristic function monotone? {is_monotone}")
 ```
 
 Here we can check if it is
 [supperadditive](#sec:definition_of_superadditive_characteristic_function):
 
 ```{code-cell} python3
-coopgt.characteristic_function_properties.is_superadditive(
+is_superadditive = coopgt.characteristic_function_properties.is_superadditive(
     characteristic_function=characteristic_function
 )
+print(f"Characteristic function superadditive? {is_superadditive}")
 ```
 
 Let us compute the Shapley value:
@@ -583,7 +588,10 @@ Let us compute the Shapley value:
 ```{code-cell} python3
 import coopgt.shapley_value
 
-coopgt.shapley_value.calculate(characteristic_function=characteristic_function)
+shapley_value = coopgt.shapley_value.calculate(
+    characteristic_function=characteristic_function
+)
+print(f"Shapley value: {shapley_value}")
 ```
 
 ## Notable Research
