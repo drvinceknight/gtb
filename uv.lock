@@ -393,29 +393,16 @@ wheels = [
 
 [[package]]
 name = "coopgt"
-source = { editable = "../../src/coopgt" }
+version = "0.0.3"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "more-itertools" },
     { name = "numpy" },
     { name = "scipy" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "more-itertools", specifier = ">=10.2.0" },
-    { name = "numpy", specifier = ">=1.26.1" },
-    { name = "scipy", specifier = ">=1.10" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "mkdocstrings-python", specifier = ">=1.0" },
-    { name = "packaging", specifier = ">=23.0" },
-    { name = "pytest", specifier = ">=8.0" },
-    { name = "pytest-cov", specifier = ">=5.0" },
-    { name = "ruff", specifier = ">=0.9" },
-    { name = "ty", specifier = ">=0.0.1a1" },
-    { name = "zensical", specifier = ">=0.0.11" },
+sdist = { url = "https://files.pythonhosted.org/packages/53/a4/c6cecee5e3ef43cc329a863c1a12692889b43bedac374b330d8a55f69e4f/coopgt-0.0.3.tar.gz", hash = "sha256:74e679fa92fa1022e05957298a010143c3154182eaa45b763c61e9034d2676b6", size = 63027, upload-time = "2026-06-01T11:41:40.568Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/45/0a/ba8748efb0e40b8220f5fe4e6c1e30feed740b1a78607e7ccc16b4e74f54/coopgt-0.0.3-py3-none-any.whl", hash = "sha256:747ad32d9355d8c8586b3dea09a9d097c29a39bfed3411188202f5ef986e30a8", size = 6064, upload-time = "2026-06-01T11:41:39.491Z" },
 ]
 
 [[package]]
@@ -624,7 +611,8 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "axelrod" },
-    { name = "coopgt", editable = "../../src/coopgt" },
+    { name = "coopgt" },
+    { name = "coopgt", specifier = ">=0.0.3" },
     { name = "jupyter" },
     { name = "ludics", specifier = ">=0.3.2" },
     { name = "matching" },
