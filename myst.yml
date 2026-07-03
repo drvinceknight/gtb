@@ -2,50 +2,74 @@
 version: 1
 project:
   id: 3d13b0be-b828-4e14-b764-15708f326551
-  # title:
-  # description:
-  # keywords: []
-  # authors: []
+  title: Game Theory
+  description: Theory, software, and research — game theory for the real world.
+  keywords: [game theory, nash equilibrium, evolutionary game theory]
   github: https://github.com/drvinceknight/gt
+  license:
+    content: CC-BY-4.0
+    code: MIT
   toc:
     - file: cover.md
-    - file: chapters/introduction/main.md
-    - file: chapters/games/main.md
-    - file: chapters/rationalisation/main.md
-    - file: chapters/zero_sum_games/main.md
-    - file: chapters/nash_equilibrium/main.md
-    - file: chapters/subgame_perfection/main.md
-    - file: chapters/repeated_games/main.md
-    - file: chapters/replicator_dynamics/main.md
-    - file: chapters/moran_process/main.md
-    - file: chapters/best_response_polytopes/main.md
-    - file: chapters/routing_games/main.md
-    - file: chapters/matching_games/main.md
-    - file: chapters/auction_games/main.md
-    - file: chapters/social_choice/main.md
-    - file: chapters/cooperative_games/main.md
-    - file: appendices/numerical_integration/main.md
-    - file: appendices/absorbing_markov_chains/main.md
-    - file: appendices/interior_point_optimisation/main.md
-    - file: appendices/integer_pivoting/main.md
-    - file: appendices/integer_pivoting/main.md
-    - file: solutions/moran_process/main.md
-    - file: solutions/replicator_dynamics/main.md
+    - file: chapters/introduction/index.md
+    - file: chapters/games/index.md
+    - file: chapters/rationalisation/index.md
+    - file: chapters/zero_sum_games/index.md
+    - file: chapters/nash_equilibrium/index.md
+    - file: chapters/subgame_perfection/index.md
+    - file: chapters/repeated_games/index.md
+    - file: chapters/direct_reciprocity/index.md
+    - file: chapters/evolutionary_biology/index.md
+    - file: chapters/replicator_dynamics/index.md
+    - file: chapters/moran_process/index.md
+    - file: chapters/further_learning_dynamics/index.md
+    - file: chapters/best_response_polytopes/index.md
+    - file: chapters/routing_games/index.md
+    - file: chapters/matching_games/index.md
+    - file: chapters/auction_games/index.md
+    - file: chapters/social_choice/index.md
+    - file: chapters/cooperative_games/index.md
+    - file: chapters/the_core/index.md
+    - file: appendices/numerical_integration/index.md
+    - file: appendices/absorbing_markov_chains/index.md
+    - file: appendices/ergodic_markov_chains/index.md
+    - file: appendices/interior_point_optimisation/index.md
+    - file: appendices/integer_pivoting/index.md
+    - file: about_the_authors.md
   bibliography:
     - references.bib
   settings:
     output_matplotlib_strings: remove
-  export:
-    format: pdf
-    template: plain_latex_book
-    output: exports/main.pdf
+  exports:
+    - format: typst
+      template: ./typst_book
+      output: exports/main.pdf
+      options:
+        cover: cover.png
+        coverposition: 3
+        cover_width: 14
+        ToC_depth: 2
+        show_ToC: true
+        papersize: a4
+        fontsize: 11
+        colortheme: "rgb(31, 119, 180)"
+        colorheadings: "rgb(31, 119, 180)"
+        margin_left: 15
+        margin_right: 10
+        margin_top: 2.5
+        margin_bottom: 2.5
+        linespacing: 0.65
+        justification: true
+        show_pagenumber: true
 site:
   template: book-theme
   title: Game Theory
   options:
+    folders: true
     logo_text: Game Theory
     hide_search: True
     outline_maxdepth: 2
     favicon: favicon.ico
+    style: public/custom.css
   # options:
   #   logo: site_logo.png

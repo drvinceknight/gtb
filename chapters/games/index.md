@@ -1,0 +1,1238 @@
+---
+kernelspec:
+  name: python3
+  display_name: "Python 3"
+---
+
+(chp:games)=
+
+# Games
+
+Game theory begins with a precise mathematical language for describing
+strategic interaction. This chapter introduces the two fundamental
+representations, normal form and extensive form, along with the core
+concepts of strategies and utilities that underpin everything that follows.
+
+## Motivating Example
+
+Consider the following scenario: you would like to meet your **friends** for
+coffee. You know the following about their behaviour:
+
+- With probability 20%, they choose coffee house A.
+- With probability 80%, they choose coffee house B.
+
+If your goal is to maximise the probability of meeting them, what should you
+do?
+
+```{figure} ./images/probabilistic_decision_tree/main.png
+:alt: A probabilistic decision tree
+:label: fig:probabilistic_decision_tree
+:height: 250px
+
+A probabilistic decision tree. A square node is used to indicate a decision and
+a circular node is used to indicate a probabilistic event.
+```
+
+As illustrated in [Figure 1](#fig:probabilistic_decision_tree), if you must
+choose your location without communication, the optimal choice is coffee house
+B, offering an 80% chance of meeting your friends.
+
+However, in many situations, decisions are not made in isolation. Often, one
+party moves first, and others respond after observing that choice. If you were
+able to announce your decision before your friends chose where to go, the
+interaction would become a sequential decision problem, an instance of a
+**game**. [](#fig:consecutive_decision_tree) shows this game.
+
+```{figure} ./images/consecutive_decision_tree/main.png
+:alt: An extensive form game
+:label: fig:consecutive_decision_tree
+:height: 250px
+
+Visual representation of the consecutive decisions.
+```
+
+In such games, outcomes depend not only on chance but critically on the
+sequence of actions taken by all players.
+
+## Theory
+
+In game theory, trees such as [](#fig:consecutive_decision_tree) are used to represent a particular type of game known as an **extensive form game**.
+
+(definition_extensive_form_game)=
+
+### Definition: Extensive Form Game
+
+---
+
+An $N$-player extensive form game **with complete information** consists of:
+
+- A finite set of players $\mathcal{N}$ with $|\mathcal{N}| = N$.
+- A tree $G = (V, E, x^0)$ where:
+  - $V$ is the set of vertices,
+  - $E$ is the set of edges, and
+  - $x^0 \in V$ is the root of the tree.
+- A partition $(V_i)_{i \in \mathcal{N}}$ of the non-terminal vertices,
+  assigning each decision node to a player.
+- A set $O$ of possible outcomes.
+- A function $u$ mapping each terminal node (leaf) of $G$ to an element of
+  $O$.
+
+---
+
+(battle_of_the_sexes)=
+
+#### Example: Sequential Coordination Game
+
+Consider the following game, often referred to as the **Battle of the Sexes**.
+
+> Two friends must decide which movie to watch at the cinema.  
+> Bob prefers a comedy, while Celine prefers a sports movie.  
+> However, both would rather attend the cinema together than go separately.
+
+The structure of the game and the utilities for Bob and Celine are shown in
+[](#fig:battle_of_the_sexes_perfect_information_bob_first).
+
+```{figure} ./images/battle_of_the_sexes_perfect_information_bob_first/main.png
+:alt: An extensive form game
+:label: fig:battle_of_the_sexes_perfect_information_bob_first
+:height: 250px
+
+The coordination game with Bob choosing first.
+```
+
+If Bob chooses first, the outcome can be predicted as follows:
+
+1. Bob observes that whatever choice he makes, Celine will prefer to follow
+   and select the same type of movie.
+2. Bob, anticipating this, chooses a comedy to secure the slightly higher
+   utility he prefers.
+
+This reasoning uses a method known as **backward induction**, which we will
+formalise in [](#chp:sub_game_perfection).
+
+Alternatively, we can model the game with Celine moving first, as shown in
+[](#fig:battle_of_the_sexes_perfect_information_celine_first).
+
+```{figure} ./images/battle_of_the_sexes_perfect_information_celine_first/main.png
+:alt: An extensive form game
+:label: fig:battle_of_the_sexes_perfect_information_celine_first
+:height: 250px
+
+The coordination game with Celine choosing first.
+```
+
+In this version:
+
+1. Celine observes that whatever choice she makes, Bob will prefer to follow
+   and select the same type of movie.
+2. Celine, anticipating this, chooses the sports movie to secure her preferred
+   outcome.
+
+In both representations, we assume that players have complete information
+about previous actions when making their decisions. Specifically, we assume
+that the information available at nodes **b** and **c** differs: players know
+precisely where they are in the game. This assumption will later be relaxed
+when we study games with **imperfect information**.
+
+### Definition: Information Set
+
+---
+
+Given a game in extensive
+form $(\mathcal{N}, G, (V_i)_{i \in \mathcal{N}}, O, u)$,  
+the set of information sets $v_i$ for player $i \in \mathcal{N}$ is a partition
+of $V_i$.
+
+Each element of $v_i$ denotes a set of nodes at which the player cannot
+distinguish their exact location when choosing an action.
+
+---
+
+Two nodes of a game tree are said to belong to the same **information set** if
+the player making a decision at that point cannot distinguish between them.
+
+```{attention}
+This implies that:
+
+- Every information set contains vertices for a single player.
+- All vertices in an information set must have the same number of successors
+  (with the same action labels).
+```
+
+We represent nodes that are part of the same information set diagrammatically
+by connecting them with a dashed line, as shown in
+[](#fig:battle_of_the_sexes_imperfect_information).
+
+In our example involving Celine and Bob, if both players must choose a movie
+without knowing the other's choice, nodes **b** and **c** belong to the same
+information set.
+
+```{figure} ./images/battle_of_the_sexes_imperfect_information/main.png
+:alt: An extensive form game with imperfect information.
+:label: fig:battle_of_the_sexes_imperfect_information
+:height: 250px
+
+The coordination game with imperfect information.
+```
+
+In this case, it becomes significantly less trivial to predict the outcome
+of the game.
+
+Another way to represent a game is in **normal form**.
+
+(sec:normal_form_games)=
+
+### Definition: Normal Form Game
+
+---
+
+An $N$-player normal form game consists of:
+
+- A finite set of $N$ players.
+- An action set for the players: $\{\mathcal{A}_1, \mathcal{A}_2, \dots, \mathcal{A}_N\}$.
+- A set of payoff functions for the players: $u_i : \mathcal{A}_1 \times \mathcal{A}_2 \times \dots \times \mathcal{A}_N \to \mathbb{R}$.
+
+---
+
+Unless otherwise stated, we assume throughout this text that all players act
+to maximise their individual payoffs.
+
+#### Bi-Matrix Representation
+
+One common way to represent a two-player normal form game is using a
+**bi-matrix**. Suppose that $N = 2$ and the action sets are: $\mathcal{A}_1 = \{r_i \mid 1 \leq i \leq m \}$ and $\mathcal{A}_2 = \{c_j \mid 1 \leq j \leq n \}$.
+
+A general bi-matrix mapping rows (actions of the first player) and columns
+(actions of the second player) to pairs of payoff values:
+
+$$
+\Gamma=\begin{pmatrix}
+(u_1(r_1,c_1),u_2(r_1,c_1))&(u_1(r_1,c_2),u_2(r_1,c_2))&\dots&(u_1(r_1,c_n),u_2(r_1,c_n))\\
+(u_1(r_2,c_1),u_2(r_2,c_1))&(u_1(r_2,c_2),u_2(r_2,c_2))&\dots&(u_1(r_2,c_n),u_2(r_2,c_n))\\
+\vdots&\dots&\dots&\vdots\\
+(u_1(r_m,c_1),u_2(r_m,c_1))&(u_1(r_m,c_2),u_2(r_m,c_2))&\dots&(u_1(r_m,c_n),u_2(r_m,c_n))\\
+\end{pmatrix}
+$$
+
+An alternative approach is to use two separate matrices: $M_r$ for the row
+player and $M_c$ for the column player, defined as follows:
+
+$$
+\label{eqn:payoff_matrices_definition}
+(M_r)_{ij} = u_1(r_i, c_j) \qquad (M_c)_{ij} = u_2(r_i, c_j)
+$$
+
+This is the preferred representation used in this text.
+
+(sec:coordination_game)=
+
+#### Example: Coordination game
+
+The Normal Form Game representation of [](#fig:battle_of_the_sexes_imperfect_information) has the following payoff
+matrices for the row and column players:
+
+$$
+\label{eqn:coordination_game_payoff_matrices}
+M_r = \begin{pmatrix}
+3 & 1 \\
+0 & 2
+\end{pmatrix}
+\qquad
+M_c = \begin{pmatrix}
+2 & 1 \\
+0 & 3
+\end{pmatrix}
+$$
+
+---
+
+(exam:prisoners_dilemma)=
+
+#### Example: Prisoners’ Dilemma
+
+> Two thieves have been caught by the police and separated for questioning. If both cooperate (remain silent), they each receive a short sentence. If one defects (betrays the other), they are offered a deal while the other receives a long sentence. If both defect, they both receive a medium-length sentence.
+
+```{figure} assets/illustrations/prisoners.png
+:alt: Two suspects held in separate rooms for questioning.
+:label: fig:prisoners_dilemma
+:class: illustration
+:width: 80%
+
+Two suspects, questioned separately, each decide whether to stay silent or
+betray the other. The Prisoners' Dilemma is the canonical example of a game in
+which individually rational play leaves both players worse off.
+```
+
+The normal form of this game is represented by:
+
+$$
+M_r = \begin{pmatrix}
+3 & 0 \\
+5 & 1
+\end{pmatrix}
+\qquad
+M_c = \begin{pmatrix}
+3 & 5 \\
+0 & 1
+\end{pmatrix}
+$$
+
+---
+
+#### Example: Hawk–Dove
+
+> Suppose two birds of prey must share a limited resource. Hawks always fight over the resource, potentially to the death or at great cost, and dominate doves. Doves, on the other hand, avoid conflict and share the resource if paired with another dove.
+
+This interaction is modelled as:
+
+$$
+M_r = \begin{pmatrix}
+0 & 3 \\
+1 & 2
+\end{pmatrix}
+\qquad
+M_c = \begin{pmatrix}
+0 & 1 \\
+3 & 2
+\end{pmatrix}
+$$
+
+---
+
+#### Example: Pigs
+
+> Two pigs, one dominant and one subservient, share a pen containing a lever that dispenses food. Pressing the lever takes time, giving the other pig an opportunity to eat. If the dominant pig presses the lever, the subservient pig eats most of the food before being pushed away. If the subservient pig presses the lever, the dominant pig eats all the food. If both pigs press the lever, the subservient pig manages to eat a third of the food.
+
+The game is represented by:
+
+$$
+M_r = \begin{pmatrix}
+4 & 2 \\
+6 & 0
+\end{pmatrix}
+\qquad
+M_c = \begin{pmatrix}
+2 & 3 \\
+-1 & 0
+\end{pmatrix}
+$$
+
+(matching_pennies)=
+
+#### Example: Matching Pennies
+
+> Two players simultaneously choose to display a coin as either Heads or Tails.  
+> If both players show the same face, player 1 wins.  
+> If the faces differ, player 2 wins.
+
+This zero-sum game is represented as:
+
+$$
+M_r = \begin{pmatrix}
+1 & -1 \\
+-1 & 1
+\end{pmatrix}
+\qquad
+M_c = \begin{pmatrix}
+-1 & 1 \\
+1 & -1
+\end{pmatrix}
+$$
+
+We now discuss how players choose their actions in both normal and extensive
+form games.
+
+### Definition: Strategy in Normal Form Games
+
+---
+
+A strategy for a player with action set $\mathcal{A}$ is a probability
+distribution over the elements of $\mathcal{A}$.
+
+---
+
+Typically, a strategy is denoted by $\sigma \in [0, 1]^{|\mathcal{A}|}_{\mathbb{R}}$, subject to the condition:
+
+$$
+\sum_{i=1}^{|\mathcal{A}|} \sigma_i = 1
+$$
+
+Given an action set $\mathcal{A}$ the set of valid strategies is denoted as $\Delta \mathcal{A}$ so that:
+
+$$\Delta \mathcal{A}=\left\{\sigma \in [0, 1]^{|\mathcal{A}|}_{\mathbb{R}} \left|\sum_{i=1}^{|\mathcal{A}|} \sigma_i = 1 \right.\right\}$$
+
+In the [Matching Pennies game](#matching_pennies), a strategy profile such as  
+$\sigma_1 = (0.2, 0.8)$ and $\sigma_2 = (0.6, 0.4)$ implies that player 1 plays
+Heads with probability 0.2, and player 2 plays Heads with probability 0.6.
+
+We can extend the utility function, which maps from action profiles to
+$\mathbb{R}$, using **expected utility**. For a two-player game, we write:
+
+$$
+\label{eqn:expected_utility}
+u_i(\sigma_1, \sigma_2) =
+\sum_{a_1 \in \mathcal{A}_1} \sum_{a_2 \in \mathcal{A}_2}
+\sigma_1(a_1) \sigma_2(a_2) u_i(a_1, a_2)
+$$
+
+Here, we treat $\sigma_i$ as a function $\sigma_i: \mathcal{A}_i \to [0, 1]$
+so that $\sigma_i(a_i)$ is the probability of choosing action $a_i \in 
+\mathcal{A}_i$.
+
+```{warning}
+In a lot of game theoretic texts strategies in the context of Normal Form games
+are referred to as **Mixed Strategies** and strategies that play a single action
+are referred to as **Pure Strategies**.
+```
+
+(sec:example_expected_utility_in_matching_pennies)=
+
+#### Example: Expected Utility in Matching Pennies
+
+Using [the Matching Pennies game](#matching_pennies) and the strategy profile  
+$\sigma_1 = (0.2, 0.8)$ and $\sigma_2 = (0.6, 0.4)$, the expected utilities are:
+
+$$
+u_1(\sigma_1, \sigma_2) =
+0.2 \cdot 0.6 \cdot 1 +
+0.2 \cdot 0.4 \cdot (-1) +
+0.8 \cdot 0.6 \cdot (-1) +
+0.8 \cdot 0.4 \cdot 1 = -0.12
+$$
+
+$$
+u_2(\sigma_1, \sigma_2) =
+0.2 \cdot 0.6 \cdot (-1) +
+0.2 \cdot 0.4 \cdot 1 +
+0.8 \cdot 0.6 \cdot 1 +
+0.8 \cdot 0.4 \cdot (-1) = 0.12
+$$
+
+Now, suppose player 2 always plays Tails. Then  
+$\sigma_2 = (0, 1)$, and if $\sigma_1 = (x, 1 - x)$, we have:
+
+$$
+u_1(\sigma_1, \sigma_2) =
+x \cdot -1 + (1 - x) \cdot 1 = 1 - 2x
+$$
+
+Similarly, if player 1 always plays Tails, and  
+$\sigma_2 = (y, 1 - y)$, the expected utility for player 2 is:
+
+$$
+u_2(\sigma_1, \sigma_2) =
+x \cdot y \cdot (-1) + x \cdot (1 - y) \cdot 1 +
+(1 - x) \cdot y \cdot 1 + (1 - x) \cdot (1 - y) \cdot (-1)
+$$
+
+If we simplify and assume player 1 always plays Tails, then $x = 0$ and we get:
+
+$$
+u_2(\sigma_1, \sigma_2) = y \cdot 1 + (1 - y) \cdot (-1) = 2y - 1
+$$
+
+We can visualise both of these expected utility functions in [](#fig:expected_utility_in_matching_pennies).
+
+```{figure} ./images/expected_utility_in_matching_pennies/main.png
+:alt: Expected utility functions for Matching Pennies plotted against the probability of playing Heads.
+:label: fig:expected_utility_in_matching_pennies
+:width: 80%
+
+Expected utility for each player as a function of the probability of playing Heads in Matching Pennies.
+```
+
+---
+
+### Definition: Strategy in Extensive Form Games
+
+---
+
+A strategy for a player in an
+[Extensive Form Game](#definition_extensive_form_game) is a mapping from each
+information set to a probability distribution over the available actions at
+that set.
+
+---
+
+#### Example: Strategies in the Sequential Coordination Game
+
+In the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_information_bob_first),
+Bob has a single decision node. His strategy can be represented as:
+
+$$
+a \to (x, 1 - x)
+$$
+
+where $x$ is the probability of choosing "sports".
+
+Celine has two decision nodes, which depend on Bob's choice. Her strategy is:
+
+$$
+\begin{aligned}
+b &\to (x_b, 1 - x_b) \\
+c &\to (x_c, 1 - x_c)
+\end{aligned}
+$$
+
+Here, $x_b$ is the probability of choosing "sports" if Bob chose sports, and
+$x_c$ is the probability of choosing sports if Bob chose comedy.
+
+If Celine is unaware of Bob’s decision, as in the [coordination game with imperfect information](#fig:battle_of_the_sexes_imperfect_information),
+then nodes **b** and **c** form a single information set. Her strategy becomes:
+
+$$
+\{b, c\} \to (x, 1 - x)
+$$
+
+This leads us to a fundamental idea: **every extensive form game corresponds to
+a normal form game**, where strategies describe complete plans of action across
+all information sets.
+
+(sec:mapping_extensive_form_games_to_normal_form)=
+
+### Mapping Extensive Form Games to Normal Form
+
+An extensive form game can be mapped to a normal form game by enumerating all
+possible strategies that specify a single action at each information set. This
+collection of strategies defines the action sets in the corresponding normal
+form game.
+
+These strategies can be thought of as vectors in the Cartesian product of the
+action sets available at each information set. For a player
+$i \in \mathcal{N}$ with information sets
+$v_i = ((v_i)_1, (v_i)_2, \dots, (v_i)_n)$, a
+strategy $s = (s_1, s_2, \dots, s_n)$ prescribes one action at each information set.  
+For example, $s_2$ specifies the action to take at every vertex contained
+within $(v_i)_2$.
+
+#### Example: Strategy Enumeration in the Sequential Coordination Game
+
+Consider the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_information_bob_first).
+We enumerate all strategies for each player by listing single actions
+taken at each information set.
+
+For Bob, who has a single information set, the list of all strategies in the extensive form game that prescribe a
+single action is:
+
+$$
+\bigl\{\; a \to (1, 0),\quad a \to (0, 1) \;\bigr\}
+$$
+
+These correspond to always choosing **Sports** or always choosing **Comedy**.
+The action set in the Normal Form Game is:
+
+$$
+\mathcal{A}_1 = \{\text{Sports},\ \text{Comedy}\}
+$$
+
+For Celine, who has two information sets (after Bob's move), the pure
+strategies in the extensive form are:
+
+$$
+\begin{aligned}
+(b \to (1, 0),\; c \to (1, 0))\\
+(b \to (1, 0),\; c \to (0, 1))\\
+(b \to (0, 1),\; c \to (1, 0))\\
+(b \to (0, 1),\; c \to (0, 1))
+\end{aligned}
+$$
+
+These strategies describe how Celine responds to each of Bob’s possible
+choices. Thinking of these as vectors in the Cartesian product of available
+actions at each information set, we can define Celine’s action set in the
+Normal Form Game as:
+
+$$
+\mathcal{A}_2 = \{
+(\text{Sports}, \text{Sports}),\
+(\text{Sports}, \text{Comedy}),\
+(\text{Comedy}, \text{Sports}),\
+(\text{Comedy}, \text{Comedy})
+\}
+$$
+
+Using these enumerated strategies, the payoff matrices for Bob (the row
+player) and Celine (the column player) are:
+
+$$
+M_r = \begin{pmatrix}
+3 & 3 & 1 & 1 \\
+0 & 2 & 0 & 2 \\
+\end{pmatrix}
+\qquad
+M_c = \begin{pmatrix}
+2 & 2 & 1 & 1 \\
+0 & 3 & 0 & 3 \\
+\end{pmatrix}
+$$
+
+## Exercises
+
+```{exercise}
+:label: structure_of_a_perfect_information_game
+
+Using [the Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_information_bob_first) and the
+[definition of an Extensive Form Game](#definition_extensive_form_game):
+
+1. What is the finite set of players $\mathcal{N}$?
+2. What are the elements of the game tree $G = (V, E, x^0)$?
+3. What is the partition $(V_i)_{i \in \mathcal{N}}$?
+4. What is the set of possible game outcomes $O$?
+5. What is the mapping $u$ from every leaf of $G$ to an element of $O$?
+```
+
+---
+
+```{exercise}
+:label: structure_of_an_imperfect_information_game
+
+Using [the Coordination Game with imperfect information](#fig:battle_of_the_sexes_imperfect_information) and the
+[definition of an Extensive Form Game](#definition_extensive_form_game):
+
+1. What is the finite set of players $\mathcal{N}$?
+2. What are the elements of the game tree $G = (V, E, x^0)$?
+3. What is the partition $(V_i)_{i \in \mathcal{N}}$?
+4. What is the set of possible game outcomes $O$?
+5. What is the mapping $u$ from every leaf of $G$ to an element of $O$?
+```
+
+---
+
+````{exercise}
+:label: identifying_information_sets_from_game_trees
+
+For each of the following games with $\mathcal{N} = \{\text{Alice},\ \text{Bob}\}$,
+assume that decision nodes $A_i$ belong to Alice and $B_i$ belong to Bob.
+Determine all **information sets**.
+
+1.
+
+```{image} ./images/extensive-form-games/main.png
+:alt: Extensive form game
+:width: 500px
+```
+
+2.
+
+```{image} ./images/extensive-form-games-with-imperfect-information/main.png
+:alt: Extensive form game with imperfect information
+:width: 500px
+```
+
+3.
+
+```{image} ./images/extensive-form-game-example-with-perfect-information/main.png
+:alt: Extensive form game example with perfect information
+:width: 500px
+```
+
+4.
+
+```{image} ./images/extensive-form-game-example-with-imperfect-information/main.png
+:alt: Extensive form game example with imperfect information
+:width: 500px
+```
+
+5.
+
+```{image} ./images/extensive-form-game-incoherent-example-with-imperfect-information/main.png
+:alt: Incoherent extensive form game with imperfect information
+:width: 500px
+```
+````
+
+---
+
+```{exercise}
+:label: messaging_platform_coordination
+
+> Alice, Bob, and Celine are childhood friends who want to stay in touch
+> online. Each has a choice between three messaging platforms:
+> **WhatsApp**, **Instagram**, and **Snapchat**.
+
+- Clearly identify the players and their strategy sets.
+- Propose a reasonable interpretation of utility values.
+- Write the normal form representation of the game.
+```
+
+---
+
+```{exercise}
+:label: peace_or_War_a_strategic_dilemma
+
+> Two neighbouring countries possess highly destructive military forces.
+>
+> - If both attack, each suffers **10,000** civilian casualties.
+> - If one attacks while the other remains peaceful, the peaceful country suffers
+>   **15,000** casualties while the attacker suffers **13,000** in retaliation.
+> - If both remain peaceful, there are **no** casualties.
+
+- Clearly state the players and their strategy sets.
+- Plot the expected utility to each country assuming it plays a strategy
+  while the other remains peaceful.
+- Plot the expected utility to each country assuming it plays a strategy
+  while the other attacks.
+```
+
+## Programming
+
+(sec:linear_algebraic_formulation_of_expected_utility)=
+
+### Linear Algebraic Form of Expected Utility
+
+The expected utility calculation defined in [](#eqn:expected_utility)
+corresponds to a matrix formulation using
+linear algebra:
+
+$$
+\label{eqn:linear_algebraic_formulation_of_expected_utility}
+u_i(\sigma_1, \sigma_2) = \sigma_1 M \sigma_2^T
+$$
+
+Here, $M$ is the payoff matrix for player $i$, and $\sigma_1$, $\sigma_2$ are
+row and column player strategies, treated as row vectors.
+
+This linear algebraic form will be important in later chapters,
+and it also enables **efficient numerical computation** in programming
+languages that support vectorized matrix operations.
+
+(sec:using_numpy_for_utility_calculations)=
+
+### Using NumPy to Compute Expected Utilities
+
+Python's numerical library **NumPy** [@harris2020array] provides vectorized operations through
+its `array` class. Below, we define the elements from the
+[earlier Matching Pennies example](#sec:example_expected_utility_in_matching_pennies):
+
+```{code-cell} python3
+import numpy as np
+
+M_r = np.array(
+    (
+        (1, -1),
+        (-1, 1),
+    )
+)
+M_c = -M_r
+
+sigma_r = np.array((0.2, 0.8))
+sigma_c = np.array((0.6, 0.4))
+```
+
+:::{note}
+We use the fact that $M_r = -M_c$ here, which holds because the Matching
+Pennies game happens to be a **zero-sum game**, a topic discussed in the
+[Zero-Sum Games](#chp:zero_sum_games) chapter.
+:::
+
+We can now compute the expected utility for the row player using
+[](#eqn:linear_algebraic_formulation_of_expected_utility):
+
+```{code-cell} python3
+print(f"Row player expected utility: {sigma_r @ M_r @ sigma_c}")
+```
+
+The equivalent calculation for the column player is:
+
+```{code-cell} python3
+print(f"Column player expected utility: {sigma_r @ M_c @ sigma_c}")
+```
+
+:::{important}
+Use `@` for matrix multiplication, not `*`, which performs element-wise
+multiplication.
+:::
+
+### Using Nashpy to Create Games and Compute Utilities
+
+The Python library **Nashpy** [@knight2018nashpy] is specifically designed for two-player normal form games.
+We can use it to create the [Matching Pennies game](#matching_pennies):
+
+```{code-cell} python3
+import nashpy as nash
+
+matching_pennies = nash.Game(M_r, M_c)
+print(matching_pennies)
+```
+
+:::{note}
+We reuse `M_r` and `M_c` from [](#sec:using_numpy_for_utility_calculations) and so do not need
+to redefine them.
+:::
+
+To compute the expected utilities of both players:
+
+```{code-cell} python3
+print(f"Expected utilities (row, column): {matching_pennies[sigma_r, sigma_c]}")
+```
+
+:::{note}
+**Nashpy** is the main Python library used in this text for studying games.
+**Gambit** is another Python library that includes implementation of algorithms
+for games with a larger number of players.
+:::
+
+### Creating a 3 player game using Gambit
+
+Here we create a Normal Form game in Gambit [@savani2024gambit] with 3 players:
+
+```{code-cell} python3
+import pygambit as gbt
+
+g = gbt.Game.new_table([2, 2, 2], title="3 player game")
+p1, p2, p3 = g.players
+```
+
+Now let us write all the utilities of each outcome:
+
+```{code-cell} python3
+
+g[(0, 0, 0)][p1] = 1
+g[(0, 0, 0)][p2] = 1
+g[(0, 0, 0)][p3] = 1
+
+g[(0, 0, 1)][p1] = 2
+g[(0, 0, 1)][p2] = 1
+g[(0, 0, 1)][p3] = -1
+
+g[(0, 1, 0)][p1] = 2
+g[(0, 1, 0)][p2] = 1
+g[(0, 1, 0)][p3] = -1
+
+g[(0, 1, 1)][p1] = 2
+g[(0, 1, 1)][p2] = 1
+g[(0, 1, 1)][p3] = -1
+
+g[(1, 0, 0)][p1] = 2
+g[(1, 0, 0)][p2] = 1
+g[(1, 0, 0)][p3] = -1
+
+g[(1, 0, 1)][p1] = 2
+g[(1, 0, 1)][p2] = 1
+g[(1, 0, 1)][p3] = -1
+
+g[(1, 1, 0)][p1] = 2
+g[(1, 1, 0)][p2] = 1
+g[(1, 1, 0)][p3] = -1
+
+g[(1, 1, 1)][p1] = 1
+g[(1, 1, 1)][p2] = 1
+g[(1, 1, 1)][p3] = 1
+print(g)
+```
+
+## Notable Research
+
+This chapter has introduced the mathematical foundations needed to define games
+and strategic behaviour in interactive decision-making. In later
+chapters, we will analyse **emergent behaviour**, a central focus of much
+contemporary game theory research.
+
+This section presents a brief overview of selected studies that demonstrate how
+game theory is applied across a range of real-world scenarios. We highlight the
+types of situations being modelled rather than focusing on technical details.
+
+In [@lee2016devaluing], the authors develop a game-theoretic model of **rhino
+horn devaluation**, a conservation strategy in which a rhinoceros's horn is
+partially removed to reduce its value to poachers. This work, along with
+follow-up research such as [@glynatsi2018evolutionary], explores the conditions
+under which poachers are deterred from targeting these endangered animals.
+
+Game theory has also been applied to **healthcare systems**. In
+[@knight2017measuring], hospitals are modelled as agents who may strategically
+limit bed availability to meet performance targets. A related study,
+[@panayides2023game], examines the interaction between hospitals and ambulance
+services. Both models use game theory to identify conditions under which
+rational decision-making may benefit patients overall.
+
+In a different health-related setting, [@basanta2008studying] presents a
+game-theoretic model of **cancer progression**, interpreting the dynamics
+between different cell types through the lens of evolutionary games.
+
+In [@jordan2009optimizing], the authors model **play calling in American
+Football**. Their framework incorporates factors such as game stage and risk
+aversion to identify advantageous strategic decisions in a Normal Form setting.
+
+The study [@kwak2020modeling] constructs a game-theoretic version of the
+**Volunteer’s Dilemma**, in which individuals can choose to help or remain
+bystanders. The authors formalise this as a general $N$-player Normal Form Game
+and investigate how helping behaviour varies with the cost of intervention.
+
+A related dilemma is explored in [@weitz2016oscillating], where the focus shifts
+from individual help to shared environmental resources. This model examines how
+agent behaviour affects the environment, which in turn feeds back to influence
+future strategic choices.
+
+While the above studies are primarily based on **Normal Form Games**,
+[@boyd2023generalized] presents a model in **Extensive Form**. The authors
+consider a water resource management problem where three firms are located
+sequentially along a river basin. The model captures the asymmetric benefits
+faced by upstream versus downstream players. The proposed mechanism, a
+non-cooperative water-release market, enables upstream agents to release water,
+creating a more equitable outcome for all parties.
+
+## Conclusion
+
+[](#tbl:game_summary) compares the two representations covered in this chapter.
+
+```{table} The main concepts for Normal Form and Extensive Form Games.
+:label: tbl:game_summary
+:align: center
+:class: table-bordered
+
+| Concept                  | Normal Form Game                              | Extensive Form Game                             |
+|--------------------------|-----------------------------------------------|--------------------------------------------------|
+| Representation           | Payoff Matrices                               | Game tree                                       |
+| Sequence of Moves        | Simultaneous                                  | Sequential (possibly with information sets)     |
+| Players                  | $\mathcal{N}$                                 | $\mathcal{N}$                                   |
+| Actions                  | $\mathcal{A}_i$ per player                    | Specified at each decision node                             |
+| Strategies               | Probability distributions over actions        | Mappings from information sets to probability distributions over actions       |
+| Utilities                | $u_i(\vec{a})$ for action profiles            | $u(x)$ for each terminal node                   |
+| Information              | Perfect (assumes all actions known at once)   | Can be perfect or imperfect (via information sets) |
+
+```
+
+---
+
+```{attention}
+Every extensive form game has an equivalent representation in normal form,
+where strategies specify complete plans of action across all information sets.
+```
+
+---
+
+(solutions:games)=
+
+## Solutions
+
+```{solution} structure_of_a_perfect_information_game
+:label: solution:structure_of_a_perfect_information_game
+
+We refer to the [Sequential Coordination Game](#fig:battle_of_the_sexes_perfect_information_bob_first)
+in which Bob moves first and Celine responds after observing Bob's choice.
+
+1. The finite set of players is:
+
+$$
+\mathcal{N} = \{\text{Bob},\ \text{Celine}\}
+$$
+
+so $|\mathcal{N}| = 2$.
+
+2. The game tree $G = (V, E, x^0)$ consists of:
+
+- **Vertices** $V$: the root node $a$ (Bob's decision),
+  two intermediate nodes $b$ and $c$ (Celine's decisions after Bob
+  plays Sports or Comedy respectively), and four terminal (leaf)
+  nodes corresponding to the four possible outcomes.
+
+- **Edges** $E$: the edge from $a$ to $b$ (labelled Comedy), the edge
+  from $a$ to $c$ (labelled Sports), and the four edges from $b$ and $c$ to the terminal nodes (each labelled Sports or Comedy).
+
+- **Root** $x^0 = a$.
+
+3. The partition $(V_i)_{i \in \mathcal{N}}$ assigns each non-terminal vertex to a player:
+
+$$
+V_{\text{Bob}} = \{a\}, \qquad V_{\text{Celine}} = \{b,\ c\}
+$$
+
+4. The set of possible outcomes $O$ consists of the four terminal leaf payoff pairs:
+
+$$
+O = \{(3,\ 2),\ (1,\ 1),\ (0,\ 0),\ (2,\ 3)\}
+$$
+
+where each pair gives (Bob's utility, Celine's utility).
+
+5. The mapping $u$ from each terminal node to an element of $O$ is:
+
+- Sports–Sports leaf $\mapsto (2,\ 3)$
+- Sports–Comedy leaf $\mapsto (0,\ 0)$
+- Comedy–Sports leaf $\mapsto (1,\ 1)$
+- Comedy–Comedy leaf $\mapsto (3,\ 2)$
+
+```
+
+---
+
+```{solution} structure_of_an_imperfect_information_game
+:label: solution:structure_of_an_imperfect_information_game
+
+We refer to the [Coordination Game with imperfect information](#fig:battle_of_the_sexes_imperfect_information)
+in which neither player observes the other's choice.
+
+1. The finite set of players is:
+
+$$
+\mathcal{N} = \{\text{Bob},\ \text{Celine}\}
+$$
+
+so $|\mathcal{N}| = 2$.
+
+2. The game tree $G = (V, E, x^0)$ consists of:
+
+- **Vertices** $V$: the root node $a$ (Bob's decision), two intermediate nodes $b$ and $c$ (which belong to the same information set for Celine), and four terminal leaf nodes.
+
+- **Edges** $E$: the edge from $a$ to $b$ (Comedy), the edge from $a$ to $c$ (Sports), and four edges from $b$ and $c$ to the terminal nodes (each labelled Sports or Comedy).
+
+- **Root** $x^0 = a$.
+
+3. The partition $(V_i)_{i \in \mathcal{N}}$ is:
+
+$$
+V_{\text{Bob}} = \{a\}, \qquad V_{\text{Celine}} = \{b,\ c\}
+$$
+
+4. The set of possible outcomes $O$ consists of the four terminal leaf payoff pairs:
+
+$$
+O = \{(3,\ 2),\ (1,\ 1),\ (0,\ 0),\ (2,\ 3)\}
+$$
+
+5. The mapping $u$ from each terminal node to an element of $O$ is the same as in the perfect information game:
+
+- Sports–Sports leaf $\mapsto (2,\ 3)$
+- Sports–Comedy leaf $\mapsto (0,\ 0)$
+- Comedy–Sports leaf $\mapsto (1,\ 1)$
+- Comedy–Comedy leaf $\mapsto (3,\ 2)$
+
+The key structural difference from the perfect information game is that nodes $b$ and $c$ belong to
+the **same information set** for Celine, represented by a dashed line connecting them, because Celine cannot observe Bob's choice before making her own.
+
+```
+
+---
+
+```{solution} identifying_information_sets_from_game_trees
+:label: solution:identifying_information_sets_from_game_trees
+
+For each game with $\mathcal{N} = \{\text{Alice},\ \text{Bob}\}$, decision nodes labelled $A_i$ belong to Alice and $B_i$ belong to Bob. Information sets partition each player's decision nodes into groups that player cannot distinguish.
+
+1. **Game 1 (perfect information, Alice moves first):**
+
+The game tree has Alice at the root with a single decision node. Bob has two decision nodes reached after each of Alice's choices, and he can observe Alice's move. Since all information is available at each node, every node forms its own singleton information set:
+
+$$
+v_{\text{Alice}} = \bigl\{\{A\}\bigr\}
+\qquad
+v_{\text{Bob}} = \bigl\{\{B_1\},\ \{B_2\}\bigr\}
+$$
+
+2. **Game 2 (imperfect information):**
+
+Alice moves first. Bob has two decision nodes but cannot distinguish between them (they are connected by a dashed line). Thus Bob's two nodes form a single information set:
+
+$$
+v_{\text{Alice}} = \bigl\{\{A\}\bigr\}
+\qquad
+v_{\text{Bob}} = \bigl\{\{B_1,\ B_2\}\bigr\}
+$$
+
+3. **Game 3 (perfect information, multiple rounds):**
+
+All players observe all previous moves; each node is a singleton information set:
+
+$$
+v_{\text{Alice}} = \bigl\{\{A_1\},\ \{A_2\}\bigr\}
+\qquad
+v_{\text{Bob}} = \bigl\{\{B_1\}, \{B_2\}\bigr\}
+$$
+
+(or whatever the specific structure of the tree implies, with each node forming its own information set since information is perfect).
+
+4. **Game 4 (imperfect information, multiple rounds):**
+
+Alice has a single decision node at the root. Bob has multiple decision nodes that are grouped into information sets according to which of Alice's moves he can observe. If Bob cannot distinguish between two of his nodes (e.g. $B_1$ and $B_2$ are connected by a dashed line), they form one information set:
+
+$$
+v_{\text{Alice}} = \bigl\{\{A_1\}, \{A_2\}\bigr\}
+\qquad
+v_{\text{Bob}} = \bigl\{\{B_1,\ B_2\}\bigr\}
+$$
+
+5. **Game 5 (incoherent imperfect information):**
+
+This game is **incoherent** because nodes grouped into the same information set do not have the same
+number of successors (or the successors have different action labels). This violates the requirement
+that all vertices in an information set must have identical available actions. Therefore, the depicted
+grouping is **not a valid information set structure**: a well-formed extensive form game cannot have an information set where the nodes have different action sets available.
+
+```
+
+---
+
+````{solution} messaging_platform_coordination
+:label: solution:messaging_platform_coordination
+
+We model the three-player messaging platform coordination game.
+
+**Players and strategy sets:**
+
+The players are:
+
+$$
+\mathcal{N} = \{\text{Alice},\ \text{Bob},\ \text{Celine}\}
+$$
+
+Each player has the same action set:
+
+$$
+\mathcal{A}_i = \{\text{WhatsApp},\ \text{Instagram},\ \text{Snapchat}\}
+\qquad \text{for } i \in \mathcal{N}
+$$
+
+**Interpretation of utility values:**
+
+A reasonable interpretation is that each player's utility equals the number of the other two friends who choose the same platform. The motivation is that each person gains value from being able to communicate with friends: more shared connections means higher utility.
+
+Under this interpretation:
+- Utility $= 2$ if all three choose the same platform.
+- Utility $= 1$ if exactly two of the three choose the same platform (and the player is one of the two matching).
+- Utility $= 0$ if the player is alone on their chosen platform.
+
+**Normal form representation:**
+
+Since there are three players, the game cannot be expressed as a single bi-matrix. Instead, for each choice of Celine's action, we write a bi-matrix for Alice (row) and Bob (column):
+
+Using W = WhatsApp, I = Instagram, S = Snapchat, and payoff triples (Alice, Bob, Celine):
+
+**Celine plays W:**
+
+$$
+\begin{array}{l|ccc}
+ & W & I & S \\
+W & (2,2,2) & (1,0,1) & (1,0,1) \\
+I & (0,1,1) & (1,1,0) & (0,0,0) \\
+S & (0,1,1) & (0,0,0) & (1,1,0)
+\end{array}
+$$
+
+**Celine plays I:**
+
+$$
+\begin{array}{l|ccc}
+ & W & I & S \\
+W & (1,1,0) & (0,1,1) & (0,0,0) \\
+I & (1,0,1) & (2,2,2) & (1,0,1) \\
+S & (0,0,0) & (0,1,1) & (1,1,0)
+\end{array}
+$$
+
+**Celine plays S:**
+
+$$
+\begin{array}{l|ccc}
+ & W & I & S \\
+W & (1,1,0) & (0,0,0) & (0,1,1) \\
+I & (0,0,0) & (1,1,0) & (0,1,1) \\
+S & (1,0,1) & (1,0,1) & (2,2,2)
+\end{array}
+$$
+
+Below is code that creates this game using Gambit:
+
+```{code-cell} python3
+import itertools
+import pygambit as gbt
+
+g = gbt.Game.new_table([3, 3, 3])
+p1, p2, p3 = g.players
+
+for i, j, k in itertools.product(range(3), repeat=3):
+    same_as_p1 = (j == i) + (k == i)
+    same_as_p2 = (i == j) + (k == j)
+    same_as_p3 = (i == k) + (j == k)
+    g[(i, j, k)][p1] = same_as_p1
+    g[(i, j, k)][p2] = same_as_p2
+    g[(i, j, k)][p3] = same_as_p3
+
+print(g)
+```
+
+````
+
+---
+
+````{solution} peace_or_War_a_strategic_dilemma
+:label: solution:peace_or_War_a_strategic_dilemma
+
+**Players and strategy sets:**
+
+The players are the two countries, which we call Country 1 (row player) and Country 2 (column player). Each has the action set:
+
+$$
+\mathcal{A}_i = \{\text{Peace},\ \text{Attack}\}
+$$
+
+**Payoff matrices:**
+
+Using utility equal to the negative of casualties, the payoff matrices are:
+
+$$
+M_r = \begin{pmatrix}
+0 & -15000 \\
+-13000 & -10000
+\end{pmatrix}
+\qquad
+M_c = \begin{pmatrix}
+0 & -13000 \\
+-15000 & -10000
+\end{pmatrix}
+$$
+
+where rows correspond to Country 1's actions (Peace, Attack) and columns to Country 2's actions (Peace, Attack).
+
+**Expected utility plots:**
+
+Let $\sigma_1 = (x, 1-x)$ be Country 1's strategy (probability $x$ of playing Peace)
+and $\sigma_2 = (y, 1-y)$ be Country 2's strategy (probability $y$ of playing Peace).
+
+When Country 2 plays Peace ($y = 1$, $\sigma_2 = (1, 0)$):
+
+$$
+u_1(\sigma_1, \text{Peace}) = x \cdot 0 + (1-x) \cdot (-13000) = 13000x - 13000
+$$
+
+When Country 2 plays Attack ($y = 0$, $\sigma_2 = (0, 1)$):
+
+$$
+\begin{aligned}
+u_1(\sigma_1, \text{Attack}) &= x \cdot (-15000) + (1-x) \cdot (-10000)\\
+                             &= -15000x - 10000(1-x)\\
+                             &= -5000x - 10000
+\end{aligned}
+$$
+
+By symmetry the same holds for Country 2 with the roles swapped.
+
+```{code-cell} python3
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 1, 100)
+
+u1_given_peace = -13000 * (1 - x)
+u1_given_attack = -15000 * x - 10000 * (1 - x)
+
+plt.figure(figsize=(7, 3))
+
+plt.subplot(1, 2, 1)
+plt.plot(x, u1_given_peace, label="Opponent plays Peace")
+plt.plot(x, u1_given_attack, label="Opponent plays Attack")
+plt.xlabel("Probability of playing Peace ($x$)")
+plt.ylabel("Expected utility")
+plt.title("Country 1's expected utility")
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(x, u1_given_peace, label="Opponent plays Peace")
+plt.plot(x, u1_given_attack, label="Opponent plays Attack")
+plt.xlabel("Probability of playing Peace ($y$)")
+plt.ylabel("Expected utility")
+plt.title("Country 2's expected utility (symmetric)")
+plt.legend()
+
+plt.tight_layout()
+```
+````

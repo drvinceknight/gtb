@@ -1,7 +1,10 @@
 import ternary
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FormatStrFormatter
+
+mpl.rcParams.update({"figure.facecolor": "white", "axes.facecolor": "white"})
 
 scale = 40  # Higher scale = finer grid
 
@@ -26,6 +29,8 @@ def normalize(v):
 
 fig, tax = ternary.figure(scale=scale)
 fig.set_size_inches(6, 5)
+fig.patch.set_facecolor("white")
+tax.ax.set_facecolor("white")
 tax.boundary()
 tax.gridlines(multiple=5, color="gray", linewidth=0.5)
 
@@ -71,4 +76,10 @@ tax.bottom_axis_label("Cooperators", fontsize=12, offset=axis_label_offset)
 # Remove box around plot
 tax.ax.axis('off')
 plt.tight_layout()
-tax.savefig("main.png", bbox_inches='tight', dpi=300)
+fig.savefig("main.png", bbox_inches="tight", dpi=300)
+# Flatten transparent areas onto white background
+from PIL import Image as _Image
+_img = _Image.open("main.png").convert("RGBA")
+_bg = _Image.new("RGBA", _img.size, (255, 255, 255, 255))
+_bg.paste(_img, mask=_img.split()[3])
+_bg.convert("RGB").save("main.png")
