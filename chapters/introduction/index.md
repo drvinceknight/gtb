@@ -73,6 +73,30 @@ a shared mathematical foundation. Whether your interest is theoretical
 or applied, the goal is to equip you with the tools to explore game
 theory with confidence.
 
+## Licence and access
+
+There will **always be a free online version** of this book, available at
+[vknight.org/gtb](https://vknight.org/gtb/). A PDF version is built alongside the
+site and can be downloaded from
+[vknight.org/gtb/pdf/main.pdf](https://vknight.org/gtb/pdf/main.pdf), and the full
+source is on GitHub at
+[github.com/drvinceknight/gt](https://github.com/drvinceknight/gt), from which the
+site is built and served.
+
+The book brings together material under three sets of terms. The prose, together
+with the figures and diagrams created by the authors, is released under the
+Creative Commons Attribution 4.0 International Licence (CC BY 4.0), so it may be
+shared and adapted with attribution. The source code, including the executable
+code cells and the build tooling, is released under the MIT Licence.
+
+The illustrations are the work of James Brown ([nonzerosum.games](https://nonzerosum.games))
+and are treated differently. They remain the copyright of their creator and are
+included here by permission. They are **not** covered by the CC BY 4.0 licence
+that applies to the rest of the book: James Brown retains full ownership of the
+illustrations, may continue to use them and any variants of them in his own work,
+and any reuse of an illustration outside this book requires his permission. Full
+details are in the `LICENSE` and `ILLUSTRATIONS.md` files in the [repository](https://github.com/drvinceknight/gt).
+
 ## What does this book cover?
 
 The book is organised into three broad themes.
