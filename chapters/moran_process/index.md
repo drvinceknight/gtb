@@ -660,12 +660,12 @@ M = np.array(
 game = nash.Game(M)
 initial_population = np.array((0, 0, 0, 1))
 fixation_probabilities = game.fixation_probabilities(
-    initial_population=initial_population, repetitions=10_000
+    initial_population=initial_population, repetitions=2_000
 )
 print(f"Fixation probabilities: {fixation_probabilities}")
 ```
 
-This shows that the final population with only `1`s in it occurs $2/7\approx .22$ of the time.
+This shows that the final population with only `1`s in it occurs $2/9\approx 0.22$ of the time.
 
 ## Notable Research
 

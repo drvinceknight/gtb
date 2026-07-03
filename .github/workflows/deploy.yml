@@ -29,6 +29,9 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    # A full cold build re-executes every notebook; bound it so a stuck notebook
+    # or Typst compile fails fast rather than hanging.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - name: Setup Pages
@@ -39,8 +42,22 @@ jobs:
         uses: typst-community/setup-typst@v3
       - name: Install dependencies
         run: uv sync
-      - name: Build HTML and PDF
-        run: uv run myst build --execute --html --typst
+      # Persist MyST's notebook execution cache between runs so unchanged
+      # chapters are not re-executed. MyST validates the cache by content hash,
+      # so a restored stale cache only re-runs the notebooks that changed.
+      - name: Restore MyST execution cache
+        uses: actions/cache@v4
+        with:
+          path: _build/execute
+          key: myst-execute-${{ hashFiles('chapters/**/index.md', 'appendices/**/index.md', 'uv.lock') }}
+          restore-keys: |
+            myst-execute-
+      - name: Build HTML site
+        run: uv run myst build --execute --execute-parallel 4 --html
+      # Reuses the execution cache populated by the HTML build, so this only
+      # compiles the Typst PDF and does not re-execute the notebooks.
+      - name: Build PDF
+        run: uv run myst build --execute --typst
       - name: Add the PDF to the site
         run: |
           mkdir -p _build/html/pdf
