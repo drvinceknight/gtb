@@ -1,1 +1,0 @@
-# Best Response Polytopes
