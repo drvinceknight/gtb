@@ -161,6 +161,17 @@ winner**.
 
 ### Theorem: Arrow's Impossibility Theorem
 
+```{figure} assets/illustrations/shifting_centre.png
+:alt: A political centre shifting as opinion moves.
+:label: fig:shifting_centre
+:class: illustration
+:width: 70%
+
+Where the collective 'centre' sits depends on how individual views are weighed
+against one another. Arrow's theorem shows that no aggregation rule can reconcile
+a few reasonable fairness requirements all at once.
+```
+
 The following theorem is given without proof [@arrow1951].
 
 ---

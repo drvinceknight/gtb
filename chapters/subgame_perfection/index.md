@@ -65,7 +65,7 @@ M_1=\begin{pmatrix}
 \end{pmatrix}
 \qquad
 M_2=\begin{pmatrix}
-2& 5\\
+2& 1\\
 0& 1\\
 \end{pmatrix}
 $$
@@ -81,8 +81,8 @@ fact 3 of them:
 
 - $((1, 0), (1, 0))$: the entrant enters the market and the incumbent accommodates.
 - $((0, 1), (0, 1))$: the entrant withdraws and the incumbent fights.
-- $((\frac{3}{4}, \frac{1}{4}), (\frac{1}{4}, \frac{3}{4}))$: a mixture between
-  the two.
+- $((\frac{1}{2}, \frac{1}{2}), (0, 1))$: the incumbent mixes equally between
+  accommodating and fighting while the entrant withdraws.
 
 This chapter will give the mathematical vocabulary to describe the difference
 between these equilibria.
@@ -173,9 +173,25 @@ Every finite game with perfect information has a Nash equilibrium in pure strate
 
 ---
 
-Recalling the properties of [sequential rationality](#sec:definition_of_sequential_rationality) we see that no player will
-have an incentive to deviate from the strategy profile found through backward induction.
-Secondly every finite game with perfect information can be solved using backward induction which gives the result.
+We argue by induction on the number of nodes of the game tree. If the game has a
+single node it is a terminal node, the payoffs are already assigned, and there is
+nothing to choose. Otherwise let $x$ be the root, at which some player $i$ acts.
+Each action of $i$ at $x$ leads to a subtree, and because the game has perfect
+information each subtree is itself a finite perfect-information game with strictly
+fewer nodes. By the induction hypothesis each subtree has a Nash equilibrium in
+pure strategies found by backward induction; fix one, and let $u_i(a)$ be the
+payoff it awards player $i$ after action $a$. Player $i$ chooses an action
+$a^\star$ maximising $u_i(a)$ (ties are broken arbitrarily, each choice giving a
+valid equilibrium), and every other player plays their prescribed subtree
+strategy.
+
+This defines a pure strategy profile for the whole game. To see that it is a Nash
+equilibrium, note that by [sequential rationality](#sec:definition_of_sequential_rationality)
+no player can gain by deviating within any subtree, since the profile restricts to
+an equilibrium of that subtree; and player $i$ cannot gain at the root, since
+$a^\star$ maximises their payoff given the continuation. As no single player has a
+profitable deviation, the profile is a Nash equilibrium, and by construction it is
+obtained by backward induction.
 
 ---
 
@@ -282,7 +298,7 @@ M_1=
 2&-1
 \end{pmatrix}
 \qquad
-M_1=
+M_2=
 \begin{pmatrix}
 2&-1\\
 3&1
@@ -752,46 +768,33 @@ $$
 
 **2. Player 2's best response function**
 
-Player 2 observes $x_1$ and chooses $x_2$ to maximise their share. We consider
-cases:
+Player 2 observes $x_1$ and chooses $x_2$ to maximise their share. The payoff
+function has a discontinuity at $x_2 = x_1$, so we analyse three cases.
 
-- If Player 2 sets $x_2 > x_1$: their payoff is $1 - \frac{x_1+x_2}{2}$, which
-  is decreasing in $x_2$. So Player 2 wants $x_2$ as small as possible, i.e.,
-  just above $x_1$.
+**Case $x_1 < 1/2$.** If $x_2 > x_1$, payoff is $1 - (x_1+x_2)/2$, which is
+decreasing in $x_2$, so Player 2 prefers $x_2$ as small as possible, just
+above $x_1$, obtaining a payoff approaching $1 - x_1 > 1/2$. Setting
+$x_2 = x_1$ gives only $1/2 < 1 - x_1$. So Player 2 can do strictly better
+than $1/2$ and will not choose $x_2 = x_1$.
 
-- If Player 2 sets $x_2 < x_1$: their payoff is $\frac{x_1+x_2}{2}$, increasing
-  in $x_2$. So Player 2 wants $x_2$ as large as possible, i.e., just below
-  $x_1$.
+**Case $x_1 = 1/2$.** Any $x_2 > 1/2$ gives payoff $1-(1/2+x_2)/2 < 1/2$;
+any $x_2 < 1/2$ gives payoff $(1/2+x_2)/2 < 1/2$. Only $x_2 = 1/2$ yields
+$1/2$. The unique best response is $x_2^*(1/2) = 1/2$.
 
-Both cases push $x_2$ towards $x_1$. The limit gives $x_2^* = x_1$, at which
-both players share the market equally: $u_2 = \frac{1}{2}$.
-
-More precisely, for any $x_1 \in [0, 1]$, Player 2 cannot do strictly better
-than $\frac{1}{2}$ by any deviation from $x_2 = x_1$, since:
-
-- Any $x_2 \neq x_1$ results in the "outside" player serving a region of length
-  $< \frac{1}{2}$ or the "inside" player having to share a midpoint that is
-  skewed.
-
-The formal best response is:
-
-$$
-x_2^*(x_1) = x_1
-$$
-
-(any $x_2 = x_1$ yields $u_2 = \frac{1}{2}$; deviation reduces their share).
+**Case $x_1 > 1/2$.** By symmetry, Player 2 prefers $x_2$ just below $x_1$,
+obtaining payoff approaching $x_1 > 1/2$, again strictly better than $1/2$.
 
 **3. Subgame perfect equilibrium via backward induction**
 
-Player 1 anticipates Player 2 will set $x_2^* = x_1$, giving $u_1 = \frac{1}{2}$
-for any $x_1 \in [0, 1]$.
-
-Since Player 1's payoff is $\frac{1}{2}$ regardless of $x_1$, any $x_1 \in [0,1]$
-is a best response. In particular, $x_1^* = \frac{1}{2}$ (centre) supports a
-subgame perfect equilibrium:
+Player 1 anticipates Player 2's response. If $x_1 < 1/2$, Player 2 sets
+$x_2 = x_1 + \varepsilon$, giving Player 1 payoff $(x_1 + x_2)/2 \approx x_1
+< 1/2$. If $x_1 > 1/2$, Player 2 sets $x_2 = x_1 - \varepsilon$, giving
+Player 1 payoff $1 - (x_2+x_1)/2 \approx 1-x_1 < 1/2$. Only $x_1 = 1/2$
+guarantees Player 1 a payoff of $1/2$, with Player 2 best responding at
+$x_2 = 1/2$. The unique subgame perfect equilibrium is:
 
 $$
-x_1^* = \tfrac{1}{2},\quad x_2^*(x_1) = x_1
+x_1^* = \tfrac{1}{2},\quad x_2^* = \tfrac{1}{2}
 $$
 
 Both players locate at the centre and share the market equally, each earning

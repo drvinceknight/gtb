@@ -3,7 +3,7 @@ kernelspec:
   name: python3
   display_name: "Python 3"
 numbering:
-  enumerator: A1.%s
+  enumerator: A5.%s
 ---
 
 (app:integer_pivoting)=
@@ -68,7 +68,7 @@ $$
   x_1 \geq 0 \\
   x_2 \geq 0 \\
   x_1 + 3x_2 \leq 1 \\
-  3x_1 + 3x_2 \leq 1 \\
+  3x_1 + x_2 \leq 1 \\
 \end{array}
 \right\}
 $$
@@ -248,7 +248,7 @@ $$
 \label{eqn:tableau_three}
 T^{(3)} = \begin{pmatrix}
            0 & 8 & 3 & -1 & 2\\
-           24 & 0 & -1 & 9 & 6
+           24 & 0 & -3 & 9 & 6
     \end{pmatrix}
 $$
 
@@ -257,8 +257,8 @@ Multiplying $T^{(3)}$'s row 1 by 9 and adding row 2 gives:
 $$
 \label{eqn:tableau_four}
 T^{(4)} = \begin{pmatrix}
-           24 & 72 & 26 & 0 & 24\\
-           24 & 0 & -1 & 9 & 6
+           24 & 72 & 24 & 0 & 24\\
+           24 & 0 & -3 & 9 & 6
     \end{pmatrix}
 $$
 
@@ -270,7 +270,7 @@ this we need a new definition:
 
 ---
 
-A basic variable of a tableau corresponds a column that
+A basic variable of a tableau corresponds to a column that
 is linearly independent from the others.
 
 ---
@@ -289,7 +289,7 @@ Thus, the non-basic variables for:
 - The tableau [](#eqn:tableau_one) are $x_1$ and $x_2$.
 - The tableau [](#eqn:tableau_two) are $x_2$ and $s_2$.
 - The tableau [](#eqn:tableau_three) are $s_1$ and $s_2$.
-- The tableau [](#eqn:tableau_four) are $s_2$ and $x_2$.
+- The tableau [](#eqn:tableau_four) are $x_1$ and $s_1$.
 
 (sec:equivalence_between_a_tableau_and_a_vertex)=
 
@@ -348,7 +348,7 @@ To obtain a vertex from the tableau:
    $$
         \begin{align*}
             24x_1=6\\
-            8s_1=2
+            8x_2=2
         \end{align*}
    $$
 
@@ -364,12 +364,12 @@ To obtain a vertex from the tableau:
    $$
         \begin{align*}
             72x_2=24\\
-            9s_1=6
+            9s_2=6
         \end{align*}
    $$
 
-   Solving this gives: $(x_1, x_2)=(1/3, 0)$ (the
-   top right vertex of [](#fig:polytope_as_convex_hull)).
+   Solving this gives: $(x_1, x_2)=(0, 1/3)$ (the
+   top left vertex of [](#fig:polytope_as_convex_hull)).
 
 We have recovered all four vertices from the 4 tableaux of
 [](#exmpl:tableaux_for_the_example). Note that in that example
@@ -515,7 +515,7 @@ ratio test.
 ```
 ````
 
-### Example: Moving from $T^{(1)}$ to $T^{(3)}$
+### Example: Moving from $T^{(1)}$ to $T^{(2)}$
 
 Let us start at:
 
@@ -605,7 +605,7 @@ variables:
 
 ### Exercise: Integer Pivoting
 
-For the tableaux in [](#exer:basic_and_non_basic_variables) (insert reference):
+For the tableaux in [](#exer:basic_and_non_basic_variables):
 
 For each **non-basic variable**, perform one step of integer pivoting:
 
@@ -672,7 +672,7 @@ P.intersections
 
 ### Carrying out row operations using NumPy
 
-NumPy's linear array gives allows for straightforward row operations.
+NumPy's array operations allow for straightforward row operations.
 
 ```{code-cell} python3
 T_1 = np.array(
@@ -720,8 +720,8 @@ We can pivot the tableau on a given column and given row:
 T._pivot(column_index=1, pivot_row_index=1)
 ```
 
-This pivoted on the first column returning which non-variable becomes basic as a
-result.
+This pivoted on the second column (index 1) returning which non-basic variable
+becomes basic as a result.
 
 We can look at the tableau:
 
@@ -1008,12 +1008,12 @@ The pivot column entries are $(1, 9)$. Both positive. Minimum ratio test:
 - Row 2: $1/9$
 
 Minimum is $1/9$ in row 2. Pivot on row 2. Eliminate $x_4$ from row 1:
-multiply row 2 by 1 and subtract row 1 times 9 (integer pivoting):
+multiply row 1 by 9 and subtract row 2 (integer pivoting):
 
 $$
 \begin{align*}
-\text{new row 1} &= 9 \times (0,1,4,9,1) - 1 \times (1,0,5,1,1) \\
-&= (0,9,36,81,9) - (1,0,5,1,1) = (-1, 9, 31, 80, 8).
+\text{new row 1} &= 9 \times (1,0,5,1,1) - 1 \times (0,1,4,9,1) \\
+&= (9,0,45,9,9) - (0,1,4,9,1) = (9, -1, 41, 0, 8).
 \end{align*}
 $$
 
@@ -1021,7 +1021,7 @@ The updated tableau is:
 
 $$
 T^{(a'')} = \begin{pmatrix}
--1 & 9 & 31 & 80 & 8 \\
+9 & -1 & 41 & 0 & 8 \\
 0 & 1 & 4 & 9 & 1
 \end{pmatrix}
 $$

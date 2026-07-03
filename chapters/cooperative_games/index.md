@@ -13,6 +13,17 @@ shifts from what strategy to play to how to share the resulting surplus fairly.
 This chapter studies cooperative games through the characteristic function and
 develops the Shapley value as a principled allocation scheme.
 
+```{figure} assets/illustrations/sharing_value.png
+:alt: Two cats dividing a shared pile of value between them.
+:label: fig:sharing_value
+:class: illustration
+:width: 60%
+
+How much value does each player add to a cooperative effort? The marginal contribution
+measures exactly this, and averaging it over every order of joining yields the
+Shapley value, a principled way to share the surplus.
+```
+
 (motivating_example:dnd_battle)=
 
 ## Motivating Example: Dividing the loot after a D&D battle
@@ -301,6 +312,7 @@ individual (Azel) and $3$ corresponds to the third individual $Quinn$.
 
 ### Definition: Marginal Contribution
 
+
 ---
 
 Given a permutation $\pi$ of $[N]$, the **marginal contribution** of player
@@ -358,7 +370,7 @@ entries corresponding to the average of each of the columnts of
 $$
 \begin{align*}
 \phi_1 &= \frac{0 + 0 + 900 + 400 + 400 + 400}{6} = 350\\
-\phi_2 &= \frac{900 + 600 + 0 + 0 + 400 + 600}{6} = 450\\
+\phi_2 &= \frac{900 + 600 + 0 + 0 + 600 + 600}{6} = 450\\
 \phi_3 &= \frac{100 + 400 + 100 + 600 + 0 + 0}{6} = 200\\
 \end{align*}
 $$
@@ -612,7 +624,7 @@ One of the most impactful application areas of the Shapley value in recent years
 has been in **model explainability**. As explored in
 [](#interpreting_linear_models),
 the Shapley value provides a principled way to attribute a model’s output to its
-input features. One of the first papers to formalize this idea was
+input features. One of the first papers to formalise this idea was
 [@strumbelj2010efficient]. This approach has since seen wide application,
 particularly in healthcare, where a comprehensive overview is provided in
 [@jin2022explainable].
@@ -1032,19 +1044,13 @@ print("v4 Shapley:", coopgt.shapley_value.calculate(v4))
 
    | $S$ | weight | $v(S\cup\{x_1\})-v(S)$ |
    |---|---|---|
-   | $\emptyset$ | $1/6$ | $0.122-0=0.122$ |
+   | $\emptyset$ | $2/6$ | $0.122-0=0.122$ |
    | $\{x_2\}$ | $1/6$ | $0.174-0.097=0.077$ |
    | $\{x_3\}$ | $1/6$ | $0.581-0.551=0.030$ |
-   | $\{x_2,x_3\}$ | $1/6$ | $0.623-0.620=0.003$ |
+   | $\{x_2,x_3\}$ | $2/6$ | $0.623-0.620=0.003$ |
 
-   $$
-\begin{align*}
-   \phi_{x_1}&=\frac{1}{6}(2\cdot 0.122+1\cdot 0.077+1\cdot 0.030+2\cdot 0.003) \\
-             &=\frac{0.244+0.077+0.030+0.006}{6}=\frac{0.357}{6}\approx 0.0572
-\end{align*}
-   $$
-
-   (Using weights: $|S|=0$ gets weight $\frac{0!\cdot 2!}{6}=2/6$, $|S|=1$ gets $\frac{1!\cdot 1!}{6}=1/6$, $|S|=2$ gets $\frac{2!\cdot 0!}{6}=2/6$.)
+   Here $|S|=0$ and $|S|=2$ carry weight $\frac{0!\,2!}{6}=\frac{2}{6}$, while
+   $|S|=1$ carries weight $\frac{1!\,1!}{6}=\frac{1}{6}$, giving:
 
    $$
    \phi_{x_1}=\frac{2\cdot 0.122+1\cdot 0.077+1\cdot 0.030+2\cdot 0.003}{6}=\frac{0.357}{6}\approx 0.0595

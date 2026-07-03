@@ -20,3 +20,11 @@ dependencies = [
     "networkx>=3.6.1",
     "coopgt>=0.0.3",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

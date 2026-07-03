@@ -12,8 +12,8 @@ numbering:
 
 ## Motivating Example: Air resistance of a sky diver
 
-An object falling under gravity is often assumed to not be subject air
-resistance. This give:
+An object falling under gravity is often assumed to not be subject to air
+resistance. This gives:
 
 $$
 \label{eqn:dv_dt_with_no_resistance}
@@ -104,7 +104,7 @@ Method approximates the solution curve by connecting short tangent segments.
 At each step, the next point is found by moving forward along the tangent line
 to the curve at the current point.
 
-This can be visualized as constructing a polygonal approximation to the true
+This can be visualised as constructing a polygonal approximation to the true
 solution curve as shown in [](#fig:geometric_interpretation_of_eulers_method).
 
 ```{figure} ./images/geometric_interpretation_of_eulers_method/main.png
@@ -133,21 +133,21 @@ Runge-Kutta methods, which use higher-order derivative information.
 Consider the differential equation:
 
 $$
-\frac{dx}{dt} = x, \qquad y(0) = 1
+\frac{dx}{dt} = x, \qquad x(0) = 1
 $$
 
-The exact solution is $y(t) = e^t$.
+The exact solution is $x(t) = e^t$.
 
 Applying Euler's Method with step size $h$ gives:
 
 $$
-y_{n+1} = y_n + h y_n = y_n(1 + h)
+x_{n+1} = x_n + h x_n = x_n(1 + h)
 $$
 
 which generates the sequence:
 
 $$
-y_n = (1 + h)^n
+x_n = (1 + h)^n
 $$
 
 As $h \to 0$ and $n \to \infty$ with $nh = t$, this approximates $e^t$.
@@ -315,8 +315,8 @@ integration, but it highlights the tradeoff between simplicity, accuracy, and
 stability. Modern applications often involve stiff systems or demand high
 accuracy, where more advanced methods are preferable.
 
-[tbl:numerical_methods_summary] summarizes key properties of several commonly used numerical
-integration methods.
+[](#tbl:numerical_methods_summary) summarises key properties of several commonly
+used numerical integration methods.
 
 ```{table} Summary of numerical methods. Higher-order methods reduce error more quickly with smaller steps. Stiff solvers handle problems where some parts evolve much faster than others.
 :name: tbl:numerical_methods_summary

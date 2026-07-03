@@ -173,7 +173,7 @@ $$
 and
 
 $$
-P_{i \to i-1} = (\text{Prob copy resident})\cdot (\text{Prob copy mutant})
+P_{i \to i-1} = (\text{Prob copy resident})\cdot (\text{Prob remove mutant})
 $$
 
 Finally:
@@ -294,7 +294,7 @@ $$
 where:
 
 $$
-\gamma_k = \frac{f_R(i)}{f_M(i)}
+\gamma_k = \frac{f_R(k)}{f_M(k)}
 $$
 
 ---
@@ -318,8 +318,8 @@ with:
 $$
 \begin{align*}
     \gamma_i &= \frac{p_{i, i - 1}}{p_{i, i + 1}}\\
-             &= \frac{\frac{(N - i)f_R(i)}{if_R(i) + (N - i)f_R(i)}\frac{i}{N}}{\frac{if_M(i)}{if_R(i) + (N - i)f_R(i)}\frac{N-i}{N}}\\
-             &= \frac{(N - i)f_R(i)}{if_R(i) + (N - i)f_R(i)}\frac{i}{N}{\frac{if_R(i) + (N - i)f_R(i)}{if_M(i)}\frac{N}{N-i}}\\
+             &= \frac{\frac{(N - i)f_R(i)}{if_M(i) + (N - i)f_R(i)}\frac{i}{N}}{\frac{if_M(i)}{if_M(i) + (N - i)f_R(i)}\frac{N-i}{N}}\\
+             &= \frac{(N - i)f_R(i)}{if_M(i) + (N - i)f_R(i)}\frac{i}{N}{\frac{if_M(i) + (N - i)f_R(i)}{if_M(i)}\frac{N}{N-i}}\\
              &= \frac{(N - i)f_R(i)i}{if_M(i)(N-i)}\\
              &= \frac{f_R(i)}{f_M(i)}\\
 \end{align*}
@@ -354,7 +354,7 @@ $$\rho_N=1=\left(1+\sum_{j=1}^{N-1}\prod_{k=1}^j\gamma_k\right)\rho_1$$
 For given $N$ the fixation probabilities of [](#sec:motivating_example_preprint) can be found
 directly using [](#eqn:formula_for_fixation_probabilities).
 
-For $N=4$, recalling that $R=T$ and $M=P$, we can write down the values of $\gamma_i$ sing [](#tbl:selection_probabilities):
+For $N=4$, recalling that $R=T$ and $M=P$, we can write down the values of $\gamma_i$ using [](#tbl:selection_probabilities):
 
 $$
 \begin{align*}
@@ -368,8 +368,8 @@ This gives:
 
 $$
 \begin{align*}
-\rho_1 &= \frac{1}{1 + \sum_{j=1}^3\prod{k=1}^{j}\gamma_k} \\
-       &= \frac{1}{1 + \prod{k=1}^{1}\gamma_k + \prod{k=1}^{2}\gamma_k + \prod{k=1}^{3}\gamma_k} \\
+\rho_1 &= \frac{1}{1 + \sum_{j=1}^3\prod_{k=1}^{j}\gamma_k} \\
+       &= \frac{1}{1 + \prod_{k=1}^{1}\gamma_k + \prod_{k=1}^{2}\gamma_k + \prod_{k=1}^{3}\gamma_k} \\
        &= \frac{1}{1 + \gamma_1 + \gamma_1\gamma_2 + \gamma_1\gamma_2\gamma_3} \\
        &= \frac{1}{1 + 2 + \frac{2\cdot 3}{4} + \frac{2\cdot 3 \cdot 0}{4\cdot5}} \\
        &= \frac{1}{1 + 2 + \frac{6}{4}}=\frac{2}{9}\\
@@ -390,6 +390,40 @@ success. The fitness of type $i$ under selection intensity $w$ is:
 $$f_i = 1 - w + w\,\pi_i$$
 
 where $\pi_i$ is the expected payoff of type $i$ against the current population.
+
+(sec:definition_relative_fitness)=
+
+### Definition: Relative fitness and the constant-fitness Moran process
+
+---
+
+A **constant-fitness Moran process** is one in which each type has a fitness
+that does not depend on the composition of the population. With two types, a
+resident of fitness $f_R$ and a mutant of fitness $f_M$, the **relative
+fitness** of the mutant is the ratio:
+
+$$r = \frac{f_M}{f_R}$$
+
+It is conventional to normalise the resident fitness to $f_R = 1$, so that the
+mutant has fitness $f_M = r$ and $r$ measures how much fitter the mutant is than
+the resident. Thus $r > 1$ corresponds to an advantageous mutant, $r < 1$ to a
+disadvantageous one, and $r = 1$ to a neutral mutant.
+
+For a constant-fitness process every ratio
+$\gamma_k = f_R(k) / f_M(k) = r^{-1}$ is the same, so the products in
+[](#eqn:formula_for_fixation_probabilities) become powers of $r^{-1}$ and the
+fixation probability starting from $i$ mutants has the closed form:
+
+$$\rho_i = \frac{1 - r^{-i}}{1 - r^{-N}}, \qquad r \neq 1$$
+
+In particular, a single mutant fixates with probability:
+
+$$\rho_1 = \frac{1 - r^{-1}}{1 - r^{-N}}$$
+
+---
+
+The neutral case $r = 1$ is recovered as a limit below, and gives
+$\rho_1 = 1/N$.
 
 (sec:definition_neutral_drift)=
 
@@ -662,7 +696,7 @@ notable extension is the Moran process on graphs, where individuals interact onl
 with their neighbors. This framework was first proposed by Lieberman, Hauert, and
 Nowak [@LiebermanHauertNowak2005] and further refined by Ohtsuki, Pacheco, and
 Nowak [@OhtsukiPachecoNowak2007]. The `Nashpy` library [@knight2018nashpy] can be
-used to simulate Moran processes on such networks.
+used to simulate Moran processes on such networks. 
 
 A final, and remarkable, result is the one proved by Traulsen, Claussen, and
 Hauert [@traulsen2005coevolutionary]: in the limit of large population size, the
@@ -707,6 +741,165 @@ ultimately dominates the population.
 (solutions:moran_process)=
 
 ## Solutions
+
+````{solution} moran_process_with_neutral_drift
+:label: solution:moran_process_with_neutral_drift
+
+1. Under neutral drift every individual has the same fitness $C$, so selection
+   for copying is uniform. In a state with $i$ mutants and $N - i$ residents a
+   mutant is copied with probability $i/N$ and a resident with probability
+   $(N - i)/N$; removal is uniform, so a resident is removed with probability
+   $(N - i)/N$ and a mutant with probability $i/N$. Hence
+
+   $$
+   P_{i \to i+1} = \frac{i}{N}\cdot\frac{N - i}{N} = \frac{i(N - i)}{N^2},
+   \qquad
+   P_{i \to i-1} = \frac{N - i}{N}\cdot\frac{i}{N} = \frac{i(N - i)}{N^2},
+   $$
+
+   with $P_{i \to i} = 1 - 2i(N - i)/N^2$. The up and down probabilities are
+   equal, so the process is a symmetric random walk on $\{0, 1, \dots, N\}$
+   with the two endpoints absorbing.
+
+2. For $N = 4$ we have $i(N - i)/16$ equal to $3/16$, $4/16 = 1/4$ and $3/16$
+   for $i = 1, 2, 3$. Indexing the states by the number of mutants
+   $i \in \{0, 1, 2, 3, 4\}$,
+
+   $$
+   P = \begin{pmatrix}
+   1 & 0 & 0 & 0 & 0\\
+   3/16 & 5/8 & 3/16 & 0 & 0\\
+   0 & 1/4 & 1/2 & 1/4 & 0\\
+   0 & 0 & 3/16 & 5/8 & 3/16\\
+   0 & 0 & 0 & 0 & 1
+   \end{pmatrix}.
+   $$
+
+3. Since every $\gamma_k = f_R(k)/f_M(k) = C/C = 1$, the products in
+   [](#eqn:formula_for_fixation_probabilities) are all $1$ and
+
+   $$
+   \rho_i = \frac{1 + \sum_{j=1}^{i-1} 1}{1 + \sum_{j=1}^{N-1} 1} = \frac{i}{N},
+   \qquad\text{so}\qquad \rho_1 = \frac{1}{N}.
+   $$
+
+   A single neutral mutant fixates with probability $1/N$, exactly its initial
+   share of the population.
+````
+
+````{solution} specific_fixation_probabilities
+:label: solution:specific_fixation_probabilities
+
+The mutant is the second type, so residents are of the first type. In a state
+with $k$ mutants the fitnesses are
+$f_R(k) = (N - k - 1)M_{11} + k M_{12}$ and
+$f_M(k) = (N - k)M_{21} + (k - 1)M_{22}$, and $\gamma_k = f_R(k)/f_M(k)$. With
+$N = 4$,
+
+$$
+\rho_1 = \frac{1}{1 + \gamma_1 + \gamma_1\gamma_2 + \gamma_1\gamma_2\gamma_3}.
+$$
+
+1. For $M = \begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix}$ every payoff equals
+   $1$, so $f_R(k) = (N - k - 1) + k = N - 1$ and
+   $f_M(k) = (N - k) + (k - 1) = N - 1$. Thus $\gamma_k = 1$ for all $k$: this
+   is neutral drift and $\rho_1 = 1/N = 1/4$.
+
+2. For $M = \begin{pmatrix} 1 & 2 \\ 3 & 1 \end{pmatrix}$ we obtain
+   $f_R(k) = (3 - k) + 2k = 3 + k$ and $f_M(k) = 3(4 - k) + (k - 1) = 11 - 2k$,
+   so $\gamma_k = (3 + k)/(11 - 2k)$. Hence $\gamma_1 = 4/9$, $\gamma_2 = 5/7$
+   and $\gamma_3 = 6/5$, giving
+
+   $$
+   \rho_1 = \frac{1}{1 + \frac{4}{9} + \frac{4}{9}\cdot\frac{5}{7}
+   + \frac{4}{9}\cdot\frac{5}{7}\cdot\frac{6}{5}}
+   = \frac{1}{15/7} = \frac{7}{15}.
+   $$
+
+```{code-cell} python3
+import sympy as sym
+
+def fixation_probability(M, N):
+    resident_fitness = lambda k: (N - k - 1) * M[0][0] + k * M[0][1]
+    mutant_fitness = lambda k: (N - k) * M[1][0] + (k - 1) * M[1][1]
+    gammas = [
+        sym.Rational(resident_fitness(k), mutant_fitness(k)) for k in range(1, N)
+    ]
+    total = 1
+    product = 1
+    for gamma in gammas:
+        product *= gamma
+        total += product
+    return sym.simplify(1 / total)
+
+print(fixation_probability([[1, 1], [1, 1]], 4))
+print(fixation_probability([[1, 2], [3, 1]], 4))
+```
+````
+
+````{solution} the_effect_of_fitness
+:label: solution:the_effect_of_fitness
+
+The mutant is the second type. Since the second row of
+$M = \begin{pmatrix} r & 1 \\ 1 & 1 \end{pmatrix}$ is constant, a mutant always
+earns $1$ against any opponent, while residents earn $r$ against each other and
+$1$ against a mutant. In a state with $k$ mutants,
+
+$$
+f_R(k) = (N - k - 1)r + k, \qquad f_M(k) = (N - k) + (k - 1) = N - 1,
+$$
+
+so
+
+$$
+\gamma_k = \frac{f_R(k)}{f_M(k)} = \frac{r(N - 1 - k) + k}{N - 1}.
+$$
+
+For $r > 1$ and $k < N - 1$ we have $\gamma_k > 1$, while $\gamma_{N-1} = 1$;
+the residents are the fitter type and the products grow with $r$. The fixation
+probability is therefore
+
+$$
+\rho_1 = \frac{1}{1 + \sum_{j=1}^{N-1}\prod_{k=1}^{j}\gamma_k},
+$$
+
+a decreasing function of $r$. Evaluating for small $N$:
+
+- $N = 2$: $\gamma_1 = 1$ and $\rho_1 = 1/2$ for every $r$. With a single
+  resident and a single mutant neither type has yet met its own kind, so the
+  contest is neutral.
+- $N = 3$: $\gamma_1 = (r + 1)/2$ and $\gamma_2 = 1$, giving
+  $\rho_1 = 1/(r + 2)$.
+- $N = 4$: $\gamma_1 = (2r + 1)/3$, $\gamma_2 = (r + 2)/3$ and $\gamma_3 = 1$,
+  giving $\rho_1 = 9 / \bigl(4(r + 2)^2\bigr)$.
+
+As $r \to 1$ each expression returns the neutral value $1/N$, and as
+$r \to \infty$ the fixation probability tends to $0$ for $N \geq 3$: the fitter
+the residents, the less likely a mutant is to take over. Because the mutant's
+fitness is fixed at $N - 1$, the parameter $r$ acts entirely through the
+residents.
+
+```{code-cell} python3
+import sympy as sym
+
+r = sym.Symbol("r", positive=True)
+
+def fixation_probability(M, N):
+    resident_fitness = lambda k: (N - k - 1) * M[0][0] + k * M[0][1]
+    mutant_fitness = lambda k: (N - k) * M[1][0] + (k - 1) * M[1][1]
+    gammas = [resident_fitness(k) / mutant_fitness(k) for k in range(1, N)]
+    total = 1
+    product = 1
+    for gamma in gammas:
+        product *= gamma
+        total += product
+    return sym.simplify(1 / total)
+
+for N in (2, 3, 4):
+    rho_1 = fixation_probability([[r, 1], [1, 1]], N)
+    print(N, rho_1, sym.limit(rho_1, r, sym.oo))
+```
+````
 
 ````{solution} moran_weak_strong_selection
 :label: solution:moran_weak_strong_selection
@@ -794,7 +987,7 @@ M_r =
 \end{pmatrix}
 $$
 
-with $T > R > P > S$ and $2r > T + S$. In this case we have:
+with $T > R > P > S$ and $2R > T + S$. In this case we have:
 
 $$R=3a\qquad T=2a \qquad S=a \qquad P=2$$
 
@@ -915,13 +1108,13 @@ $$
 This gives:
 
 $$
-\gamma_i = \frac{i(2a - 2) + 2}{2ai - 2} = \frac{2ai-2i + 2}{2ai - a}
+\gamma_i = \frac{i(2a - 2) + 2}{2ai - a} = \frac{2ai-2i + 2}{2ai - a}
 $$
 
 This gives:
 
 $$
-\rho_1 = \frac{1}{1 + \gamma_1} = \frac{1}{1 + \frac{2a}{a}}=\frac{1}{1 + 2}=3
+\rho_1 = \frac{1}{1 + \gamma_1} = \frac{1}{1 + \frac{2a}{a}}=\frac{1}{1 + 2}=\frac{1}{3}
 $$
 
 Let us use some code to confirm these calculations:
@@ -1081,6 +1274,6 @@ sym.limit(rho_1_N_4, a, 0)
 sym.limit(rho_1_N_4, a, sym.oo)
 ```
 
-This shows that the amplification of the fitness (the increase of $\alpha$) has
+This shows that the amplification of the fitness (the increase of $a$) has
 a greater effect for larger $N$.
 ````

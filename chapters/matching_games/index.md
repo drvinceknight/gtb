@@ -85,7 +85,7 @@ their current assignments.
 
 ### Definition: Matching Game
 
-A matching game of size $N$ is defined by two disjoint sets $S$ and $R$ or
+A matching game of size $N$ is defined by two disjoint sets $S$ and $R$ of
 proposers and reviewers of size $N$.
 Associated to each element of $S$ and $R$ is a preference map:
 
@@ -166,7 +166,8 @@ Here is the Gale-Shapley algorithm, which gives a stable matching for a matching
 2. Pick some unmatched $s\in S$, let $r$ be the top of $s$'s preference list:
    - If $r$ is unmatched set $M(s)=r$
    - If $r$ is matched:
-     - If $r$ prefers $s$ to $M^{-1}(r)$ then set $M(r)=s$
+     - If $r$ prefers $s$ to $M^{-1}(r)$ then set $M(s)=r$ and unmatch the
+       previous partner $M^{-1}(r)$
      - Otherwise $s$ remains unmatched and remove $r$ from $s$'s preference list.
 3. Repeat step 2 until all $s\in S$ are matched.
 
@@ -177,18 +178,32 @@ in this stable matching every suitor has the best possible partner in any stable
 
 #### Proof
 
-Suppose that an arbitrary execution $\alpha$ of the algorithm gives $M$ and that another
-execution $\beta$ gives $M'$ such that $\exists$ $s\in S$ such that $s$ prefers $r'=M'(s)$ to $r=M(s)$.
+Call a reviewer $r$ a **stable partner** of a suitor $s$ if $M''(s) = r$ in some
+stable matching $M''$. We show that no suitor is ever rejected by a stable
+partner during an execution $\alpha$. Since suitors propose in decreasing order
+of preference, this implies that each suitor ends $\alpha$ matched to their most
+preferred stable partner, so the outcome does not depend on $\alpha$.
 
-Without loss of generality this implies that during $\alpha$ $r'$ must have rejected $s$.
-Suppose, again without loss of generality that this was the first occasion that a rejection occurred
-during $\alpha$ and assume that this rejection occurred because $r'=M(s')$.
-This implies that $s'$ has no stable match that is higher in $s'$'s preference list
-than $r'$ (as we have assumed that this is the first rejection).
+Suppose, for contradiction, that during $\alpha$ some suitor is rejected by a
+stable partner, and consider the **first** such rejection: reviewer $r'$ rejects
+suitor $s$, where $r'$ is a stable partner of $s$, so $M'(s) = r'$ for some
+stable matching $M'$. The reviewer $r'$ rejects $s$ in favour of a suitor $s'$
+whom $r'$ prefers to $s$; that is, at that moment $r'$ holds a proposal from
+$s'$ and prefers $s'$ to $s$.
 
-Thus $s'$ prefers $r'$ to $M'(s')$ so that $(s',r')$ blocks $M'$.
-Each suitor is therefore matched in $M$ with his favourite stable reviewer and since
-$\alpha$ was arbitrary it follows that all possible executions give the same matching.
+Because this is the first rejection by a stable partner, $s'$ has not yet been
+rejected by any stable partner. As suitors propose in order of preference and
+$s'$ is currently proposing to $r'$, the reviewer $r'$ is at least as high in
+$s'$'s list as any reviewer $s'$ has proposed to so far, and in particular at
+least as high as every stable partner of $s'$. Hence $s'$ weakly prefers $r'$ to
+$M'(s')$, and since preferences are strict and $M'(s') \ne r'$ (as $M'(r') = s$),
+$s'$ strictly prefers $r'$ to $M'(s')$.
+
+Then $s'$ prefers $r'$ to $M'(s')$ and $r'$ prefers $s'$ to $s = M'(r')$, so
+$(s', r')$ blocks $M'$, contradicting the stability of $M'$. No suitor is
+therefore rejected by a stable partner, each suitor is matched in $M$ with their
+favourite stable reviewer, and since $\alpha$ was arbitrary all executions give
+the same matching.
 
 #### Example: Application of the Gale-Shapley algorithm to the author reviewer game
 
@@ -196,7 +211,7 @@ We start by assigning $A1, A2, A3, A4, A5$ and $R1, R2, R3, R4, R5$ to be
 unmatched.
 
 We pick $A1$ which has $f(A1)=(R3, R1, R4, R5, R2)$, the top of the preference
-list is $R1$ so we set:
+list is $R3$ so we set:
 
 $$
 \begin{align*}
@@ -227,7 +242,8 @@ $$
 
 We now pick $A4$ which has $f(A4)=(R2, R3, R5, R1, R4)$, the top of the
 preference list is $R2$ but $R2$ is matched ($M(A2)=R2$). We have $g(R2)=(A4,
-A2, A5, A1, A3)$ so $R2$ prefers $A2$ then their current matching. So we set:
+A2, A5, A1, A3)$ so $R2$ prefers $A4$ to their current matching $A2$. So $A2$
+becomes unmatched and we set:
 
 $$
 \begin{align*}
@@ -243,7 +259,7 @@ current matching so we remove it from $A2$'s preference list:
 
 $$f(A2)=(R4, R3, R5, R1)$$
 
-We could pick any unmatched reviewer, we will pick $A2$ again (for the third
+We could pick any unmatched author, we will pick $A2$ again (for the third
 time), $A2$ has preference list $f(A2)=(R4, R3, R5, R1)$, the top of the
 preference list is $R4$ so we set:
 
@@ -256,7 +272,7 @@ $$
 \end{align*}
 $$
 
-We now pick $A5$, the final unmatched reviewer, which has $f(A5)=(R5, R3, R4,
+We now pick $A5$, the final unmatched author, which has $f(A5)=(R5, R3, R4,
 R2, R1)$, the top of the preference list is $R5$ but $R5$ is matched ($M(A3)=R5$). 
 We have $g(R5)=(A5, A3, A4, A1, A2)$ so $R5$ prefers $A5$ to their current
 matching. So we set:
@@ -309,9 +325,13 @@ In a suitor-optimal stable matching each reviewer has the worst possible matchin
 Assume that the result is not true. Let $M_0$ be a suitor-optimal matching
 and assume that there is a stable matching $M'$ such that $\exists$
 $r$ such that $r$ prefers $s=M_0^{-1}(r)$ to $s'=M'^{-1}(r)$.
-This implies that $(r,s)$ blocks $M'$ unless $s$ prefers $M'(s)$
-to $M_0(s)$ which contradicts the fact the $s$ has no stable match that
-they prefer in $M_0$.
+Since preferences are strict and $M'(s) \ne r$, the suitor $s$ either prefers
+$M'(s)$ to $M_0(s) = r$ or prefers $M_0(s) = r$ to $M'(s)$. The former is
+impossible, as suitor-optimality means $s$ has no stable match they prefer to
+$M_0(s)$. Hence $s$ prefers $r$ to $M'(s)$, and as $r$ prefers $s$ to
+$M'(r) = s'$, the pair $(r,s)$ blocks $M'$, contradicting its stability.
+Every reviewer therefore does at least as badly in $M_0$ as in any stable
+matching, so $M_0$ is reviewer-pessimal.
 
 ## Exercises
 
@@ -795,57 +815,26 @@ Let the shared reviewer preference list rank the suitors as
 $s_{\sigma(1)} \succ s_{\sigma(2)} \succ \cdots \succ s_{\sigma(N)}$
 (where $\sigma$ is a permutation of $\{1, \dots, N\}$ giving the common ordering).
 
-Suppose, for contradiction, that there are two distinct stable matchings $M$ and
-$M'$.
+We argue by induction on the number of suitors that the stable matching is
+unique. The base case of a single suitor and reviewer is immediate.
 
-Since $M \ne M'$ and both are bijections from suitors to reviewers, there exists
-some suitor $s$ with $M(s) \ne M'(s)$. Let $r = M(s)$ and $r' = M'(s)$.
+Consider the top-ranked suitor $s_{\sigma(1)}$, whom every reviewer prefers to
+every other suitor. Let $r^\star$ be $s_{\sigma(1)}$'s own most preferred
+reviewer. In **any** stable matching $M$, the suitor $s_{\sigma(1)}$ is matched
+to $r^\star$: if instead $M(s_{\sigma(1)}) \ne r^\star$, then $s_{\sigma(1)}$
+prefers $r^\star$ to $M(s_{\sigma(1)})$, and $r^\star$ prefers $s_{\sigma(1)}$ to
+its own partner $M^{-1}(r^\star)$ (as $r^\star$, like every reviewer, ranks
+$s_{\sigma(1)}$ first), so $(s_{\sigma(1)}, r^\star)$ blocks $M$. Hence every
+stable matching pairs $s_{\sigma(1)}$ with $r^\star$.
 
-Because all reviewers share the same preference list, the reviewer $r'$ (who is
-matched to some $s'' \ne s$ in $M$) either prefers $s$ to $s''$ or prefers $s''$
-to $s$.
-
-**Case 1:** $r'$ prefers $s$ to $s'' = M^{-1}(r')$.
-
-Then in matching $M$, the pair $(s, r')$ is a blocking pair: $s$ prefers $r'$
-(since $M'(s)=r'$ and $s$ prefers $r'$ to $r$, otherwise $s$ would be matched to
-$r$ in $M'$ as well after running the algorithm) and $r'$ prefers $s$ to its
-current partner $s''$. This contradicts the stability of $M$.
-
-**Case 2:** $r'$ prefers $s''$ to $s$.
-
-Since all reviewers share the same preference list, this preference is the same
-for every reviewer. In particular, every reviewer ranks $s''$ above $s$. But then
-in matching $M'$, consider the pair $(s'', M'(s''))$. The suitor $s''$ is matched
-to some reviewer $r''$ in $M'$. Since in $M$, $s''$ is matched to $r'$, and $r'$
-prefers $s''$ to $s$, we can recursively construct a chain. Since $N$ is finite
-this chain must eventually lead to a contradiction.
-
-More precisely, we can argue by a counting/ranking argument: since all reviewers
-have the same preference list, the reviewer-optimal stable matching is unique and
-equals the suitor-pessimal matching. The suitor-optimal matching is also unique
-(by the theorem on unique output of the Gale-Shapley algorithm). If the suitor-
-and reviewer-optimal matchings differ, one could exhibit a blocking pair. We show
-they must coincide.
-
-In the Gale-Shapley algorithm (suitors propose), when suitor $s_i$ proposes to
-reviewer $r$, reviewer $r$ accepts the proposal from whichever of its current
-tentative partner or $s_i$ it prefers, using the shared preference list. Because
-all reviewers consult the same ranking, the outcome is fully determined by this
-single ordering: a suitor higher in the common ranking will always displace a
-suitor lower in it. Thus:
-
-- Each reviewer $r$ ends up matched to the highest-ranked suitor (in the shared
-  list) who ever proposes to it.
-- Since suitors propose in decreasing order of preference and are rejected only
-  when a better (in the shared ranking) suitor proposes, the final matching is
-  entirely determined by the shared ranking.
-
-Any two executions of the algorithm therefore produce the same matching.
-Furthermore, no other stable matching can exist: if $M$ is stable and $M \ne M_S$
-(the Gale-Shapley output), then some reviewer $r$ is matched to a suitor $s$
-ranked lower in the shared list than their partner in $M_S$. But then the pair
-$(M_S^{-1}(r), r)$ is a blocking pair for $M$, contradicting stability.
+Removing $s_{\sigma(1)}$ and $r^\star$ leaves an instance on $N - 1$ suitors in
+which the reviewers still share a common ranking (the restriction of the original
+one). A matching of the full instance is stable if and only if it pairs
+$s_{\sigma(1)}$ with $r^\star$ and restricts to a stable matching of the smaller
+instance: no pair involving $s_{\sigma(1)}$ or $r^\star$ can block, since each has
+its most preferred partner, and any other blocking pair would block the smaller
+instance too. By the induction hypothesis the smaller instance has a unique
+stable matching, so the full instance does as well.
 
 Hence there is exactly one stable matching. ◼
 ````

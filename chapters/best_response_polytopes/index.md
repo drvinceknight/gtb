@@ -14,6 +14,17 @@ of such polytopes. This chapter develops this geometric perspective and
 introduces the Lemke–Howson algorithm for finding Nash equilibria in two-player
 games.
 
+```{figure} assets/illustrations/tetris.png
+:alt: Interlocking geometric blocks, reminiscent of fitting polytope pieces together.
+:label: fig:tetris
+:class: illustration
+:width: 60%
+
+Geometric pieces fitting together. The best responses of each player form a
+polytope, and the Nash equilibria of a game sit at carefully matched vertices
+of a pair of such shapes.
+```
+
 (sec:motivating_example_insider_threat_detection)=
 
 ## Motivating Example: Insider Threat Detection
@@ -96,7 +107,7 @@ The polytope $\mathcal{P}_r$, corresponds to the set of points with an upper bou
 utility of those points when considered as row strategies against which the column player
 plays.
 
-The polytope $\mathcal{Q}_r$, corresponds to the set of points with an upper bound on the
+The polytope $\mathcal{P}_c$, corresponds to the set of points with an upper bound on the
 utility of those points when considered as column strategies against which the row player
 plays.
 
@@ -211,7 +222,7 @@ These are shown in [](#fig:col_player_best_response_polytope).
 :label: fig:col_player_best_response_polytope
 :width: 750px
 
-The three dimensional $\mathcal{P}_r$.
+The three dimensional $\mathcal{P}_c$.
 ```
 
 ```{note}
@@ -264,7 +275,7 @@ $$
 \begin{align*}
 x_1 = 0& \implies \text{\textcircled{1}: the first action is not played by the strategy
 represented by } x\\
-x_2 = 0& \implies \text{\textcircled{2}: the third action is not played by the strategy
+x_2 = 0& \implies \text{\textcircled{2}: the second action is not played by the strategy
 represented by } x\\
 x_3 = 0& \implies \text{\textcircled{3}: the third action is not played by the strategy
 represented by } x\\
@@ -277,7 +288,7 @@ represented by } x\\
 \end{align*}
 $$
 
-Similarly for $Q_r$
+Similarly for $\mathcal{P}_c$
 
 $$
 \begin{align*}
@@ -289,7 +300,7 @@ represented by } y\\
 represented by } y\\
 y_1 = 0& \implies \text{\textcircled{4}: the first action is not played by the strategy
 represented by } y\\
-y_2 = 0& \implies \text{\textcircled{5}: the third action is not played by the strategy
+y_2 = 0& \implies \text{\textcircled{5}: the second action is not played by the strategy
 represented by } y\\
 y_3 = 0& \implies \text{\textcircled{6}: the third action is not played by the strategy
 represented by } y\\
@@ -306,10 +317,10 @@ For $v_4=(160/91, 135/91, 0)$:
 $$
 \begin{align*}
 x_1 = 160/91 \ne 0\\
-x_2 = 135/91 \ne 0
+x_2 = 135/91 \ne 0\\
 x_3 = 0& \implies \text{\textcircled{3}: the third action is not played by the strategy
 represented by } x\\
-(xM_c)_1 = = 475/637\\
+(xM_c)_1 = 475/637\\
 (xM_c)_2 = 1& \implies \text{\textcircled{5}: the second action is a best response to the strategy
 represented by } x\\
 (xM_c)_3 = 1& \implies \text{\textcircled{6}: the third action is a best response to the strategy
@@ -349,15 +360,15 @@ $$
 $$
 
 ```{important}
-We can use labels to identify if pairs of sttrategies are best responses to each
+We can use labels to identify if pairs of strategies are best responses to each
 other.
 ```
 
 If a label is present in either vertex then either of the
-following are true::
+following are true:
 
 - it is indicating that an action is not played (for example label 1 in $\mathcal{P}_r$).
-- is is indicating that the same action is a best response to the strategy represented
+- it is indicating that the same action is a best response to the strategy represented
   by the vector (for example label 1 in $\mathcal{P}_c$).
 
 Looking at $v_5$ and $u_5$ the union of the labels of these vertices gives the
@@ -369,7 +380,7 @@ This leads to the following definition.
 
 ---
 
-A pair of vertices $(x, y) \in \mathcal{P}_r \times \mathcal{P}_C$ is said to be a
+A pair of vertices $(x, y) \in \mathcal{P}_r \times \mathcal{P}_c$ is said to be a
 **fully labelled vertex pair** if the union of their labels covers all possible
 labels:
 
@@ -599,9 +610,9 @@ $$
 This tableau has labels $\{4, 5, 6\}$ so we pivot column 4 in $T_c$. The minimum
 ratio test:
 
-1. The ratio for the first row: $\frac{7/188}{71/320} = 70/639$
-2. The ratio for the second row: $\frac{7/40}{4/5} = 7/32$
-3. The ratio for the third row: $\frac{45/71}{-200/71} < 0$
+1. The ratio for the first row: $\frac{7/288}{469/7200} = 25/67$
+2. The ratio for the second row: $\frac{7/40}{37/200} = 35/37$
+3. The ratio for the third row: $\frac{45/71}{7/71} = 45/7$
 
 We pivot on the first row giving:
 
@@ -621,7 +632,7 @@ $$
 \begin{align*}
     64051 / 18225000 x_1 & = 4277/911250\\
     4927/283500x_2 & = 31 / 2100\\
-    x_3 & = 5832 / 4972\\
+    x_3 & = 5832 / 4927\\
 \end{align*}
 $$
 
@@ -635,7 +646,7 @@ $$
 \end{align*}
 $$
 
-Giving: $x = (6580/4927, 4185/4927, 5832/4972)$ and $y = (25/67, 40/67, 28/67)$ which when normalised [](#eqn:normalisation_of_v_5) - [](#eqn:normalisation_of_u_5) gives:
+Giving: $x = (6580/4927, 4185/4927, 5832/4927)$ and $y = (25/67, 40/67, 28/67)$ which when normalised [](#eqn:normalisation_of_v_5) - [](#eqn:normalisation_of_u_5) gives:
 
 $$
 \sigma_r = (940/2371, 4185/16597, 5832/16597)

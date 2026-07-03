@@ -6,6 +6,17 @@ kernelspec:
 
 # Introduction
 
+```{figure} assets/illustrations/hercules_beetles.png
+:alt: Two Hercules beetles squaring up, each admitting they would rather not fight.
+:label: fig:hercules_beetles
+:class: illustration
+:width: 80%
+
+Two Hercules beetles weigh up a contest that neither truly wants. The escalation
+of conflict, and the conditions under which it is or is not worth it, is a
+recurring theme in game theory.
+```
+
 ## What is Game Theory?
 
 A common definition of the subject is:
@@ -42,7 +53,7 @@ markets? A computer programmer implementing a game-theoretic algorithm?
 Whatever your background, this book provides the necessary tools to
 engage with game theory in a meaningful way.
 
-The book includes four appendices that introduce mathematical theory
+The book includes appendices that introduce mathematical theory
 independently of game theory. For some readers, these may serve as a
 review of familiar topics, while for others, they offer a first
 introduction to key techniques needed to apply game-theoretic ideas
@@ -111,6 +122,17 @@ Five **appendices** provide self-contained mathematical background: numerical
 integration, absorbing Markov chains, ergodic Markov chains, interior point
 optimisation (KKT conditions), and integer pivoting.
 
+Throughout, the emphasis is on games of complete information, in which the
+players, their available actions, and their payoffs are common knowledge. This is
+the classical setting in which the core solution concepts are cleanest to state
+and compute. Games of incomplete information, where players hold private
+information about their own payoffs, enter only in the [Auction Games](#chp:auctions)
+chapter, through the notion of a Bayesian Nash equilibrium among bidders with
+private valuations. A systematic treatment of Bayesian games, mechanism design,
+and signalling lies beyond the scope of this book, and is a natural direction for
+further study; the auctions chapter is intended as a first point of contact with
+these ideas rather than a complete account of them.
+
 ## How is this book different from similar books?
 
 There are a number of excellent books on game theory that are highly
@@ -142,7 +164,7 @@ foundation, serving as a springboard for deeper theoretical analysis.
 Each chapter in this book follows a structured format:
 
 1.  **A motivating case study:** a running example throughout the
-    chapter to illustrate and contextualize the theory, often drawing
+    chapter to illustrate and contextualise the theory, often drawing
     from real-world scenarios.
 
 2.  **Relevant definitions and theory:** providing a rigorous

@@ -1,22 +1,23 @@
 /*
- * Dark-mode fix for figures (matplotlib cell outputs + tikz PNGs).
- *
- * All images are saved with white backgrounds. This rule inverts them in
- * dark mode so they blend with the dark page (white → near-black), while
- * hue-rotate(180deg) restores the original colours after inversion
- * (blue stays blue, red stays red, etc.).
- *
- * Selectors cover:
- *   .cell_output img    — inline matplotlib outputs from executed code cells
- *   figure img          — {figure} directive outputs (tikz PNGs, pre-generated plots)
- *   .content img        — any img inside the main content area (fallback)
- * SVGs are excluded since they respond to the page's CSS colour scheme directly.
+ * James Brown's line-art illustrations are drawn with full blacks and full
+ * whites and are designed to sit on a half-tone background. The grey card
+ * (#c3c3c3) is baked into each illustration's PNG, so no extra styling is
+ * needed here; we only need to exclude them from the white-card rule below.
  */
-@media (prefers-color-scheme: dark) {
-  .cell_output img,
-  figure img:not([src$=".svg"]),
-  .content img:not([src$=".svg"]),
-  article img:not([src$=".svg"]) {
-    filter: invert(1) hue-rotate(180deg);
-  }
+
+/*
+ * Other figures (matplotlib plots and tikz diagrams) have white backgrounds
+ * and become hard to read in dark mode. MyST's book-theme toggles dark mode
+ * with a `dark` class on the root element (Tailwind's class strategy),
+ * independently of the operating system's prefers-color-scheme, so we key off
+ * the `.dark` class rather than a media query. We sit each such figure on a
+ * white card so its colours are preserved exactly. SVGs are excluded since
+ * they adapt to the page colour scheme directly, and illustrations are
+ * excluded since they have their own grey card above.
+ */
+.dark .cell_output img,
+.dark figure:not(.illustration) img:not([src$=".svg"]) {
+  background: #ffffff;
+  border-radius: 0.5rem;
+  padding: 0.6rem;
 }

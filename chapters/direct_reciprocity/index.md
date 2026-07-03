@@ -14,6 +14,17 @@ computer tournaments, which identified strategies that succeed in the iterated
 Prisoner's Dilemma, before focusing on reactive strategies: a tractable class
 that conditions only on the opponent's last move.
 
+```{figure} assets/illustrations/cooperation_buttons.png
+:alt: A choice between a cooperate button and a defect button.
+:label: fig:cooperation_buttons
+:class: illustration
+:width: 70%
+
+Cooperate or defect: in a repeated encounter each player presses one button at
+a time, with an eye on how the other has played before. Direct reciprocity
+studies how such conditional responses sustain cooperation.
+```
+
 (sec:motivating_example_direct_reciprocity)=
 
 ## Motivating Example: Research Collaboration
@@ -201,7 +212,7 @@ cooperated).
 ---
 
 If the Markov chain defined by $(p, q)$ and $(p', q')$ is **ergodic** (see
-[Appendix A2](#app:ergodic_markov_chain)), it has a unique stationary
+[Appendix A3](#app:ergodic_markov_chain)), it has a unique stationary
 distribution $\pi = (\pi_{CC}, \pi_{CD}, \pi_{DC}, \pi_{DD})$ satisfying:
 
 $$
@@ -708,7 +719,7 @@ across diverse and evolving populations.
 
 Game 1:
 
-This is a Prisoners Dilemma: $(R, S, T, P) = (3, 1, 5, 0)$.
+This is a Prisoners Dilemma: $(R, S, T, P) = (3, 0, 5, 1)$.
 
 Game 2:
 
@@ -781,12 +792,12 @@ Both players cooperate in every round, earning $3$ each.
 Here is some code to confirm the above calculations using functions written in
 [](#sec:computing_the_stationary_distribution_of_a_reactive_strategy_pair)
 
-```{code-cell} ipython3
+```{code-cell} python3
 M = reactive_transition_matrix(p=1, q=0, p_prime=1, q_prime=1)
 print(M)
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 stationary_distribution(M)
 ```
 
@@ -839,12 +850,12 @@ Both players end up in perpetual mutual defection, each earning $1$.
 
 
 
-```{code-cell} ipython3
+```{code-cell} python3
 M = reactive_transition_matrix(p=1, q=0, p_prime=0, q_prime=0)
 print(M)
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 stationary_distribution(M)
 ```
 ````
@@ -856,7 +867,7 @@ This is a substitution exercise using
 the [](#def:markov_chain_of_reactive_strategies) and
 the [](#theorem:steady_state_distribution_for_two_reactive_strategies):
 
-1. $p=(1/2, 1/2)\qquad q=(1/2, 1/2)$
+1. $p=(1/2, 1/2)\qquad p'=(1/2, 1/2)$
 
   $$M = \begin{pmatrix}
   1/4&1/4&1/4&1/4\\
@@ -875,7 +886,7 @@ $$
 \bar{u}_2 = \frac{P + R + S + T}{4}
 $$
 
-2. $p=(1/4, 1/2)\qquad q=(1/2, 1/4)$
+2. $p=(1/4, 1/2)\qquad p'=(1/2, 1/4)$
 
 $$
     M =
@@ -897,7 +908,7 @@ $$
 \bar{u}_2 = \frac{110 P + 42 R + 60 S + 77 T}{289}
 $$
 
-3. $p=(1/3, 1/3)\qquad q=(2/3, 1/4)$
+3. $p=(1/3, 1/3)\qquad p'=(2/3, 1/4)$
 
 $$M = \begin{pmatrix}
 2/9 & 1/9 & 4/9 & 2/9\\
@@ -953,7 +964,7 @@ for (p, q), (p_prime, q_prime) in [
 This is a substitution exercise using
 the [](#theorem:steady_state_distribution_for_two_reactive_strategies):
 
-1. $q=(1, 0)$
+1. $p'=(1, 0)$
 
   $$u(x)=\frac{(-10x + 4(x - 1)^2 + 13)}{(2x - 3)^2}$$
 
@@ -963,7 +974,7 @@ $$
 \frac{2(6x - 7)}{(2x - 3)^3}
 $$
 
-This derivative has zero for $x=7/6$ which is $>1$. Thus the utility is monotic over the
+This derivative has zero for $x=7/6$ which is $>1$. Thus the utility is monotonic over the
 interval $[0, 1]$. We have (by substitution):
 
 $$u(0)=17/9\qquad u(1)=3$$
@@ -973,7 +984,7 @@ Thus $u(x)$ is an increasing function so the optimal value of $x$ is $1$.
 Against a player that is unforgiving (reacts to defection with defection), given that our
 player will play randomly against a defection it is better to always cooperate.
 
-2. $q=(1/2, 1/2)$
+2. $p'=(1/2, 1/2)$
 
   $$u(x)=-3x/4+21/8$$
 

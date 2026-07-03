@@ -3,7 +3,7 @@ kernelspec:
   name: python3
   display_name: "Python 3"
 numbering:
-  enumerator: A2.%s
+  enumerator: A3.%s
 ---
 
 (app:ergodic_markov_chain)=
@@ -26,7 +26,7 @@ P = \begin{pmatrix}
 \end{pmatrix}
 $$
 
-Unlike the maze from [Appendix A1](#app:absorbing_markov_chain), this chain has
+Unlike the maze from [Appendix A2](#app:absorbing_markov_chain), this chain has
 no absorbing state. The system cycles indefinitely between $S$ and $R$. Yet
 in the long run, the fraction of days that are sunny stabilises, independently
 of whether today is sunny or rainy.
@@ -162,8 +162,8 @@ $$
 $$
 P^2 = P \cdot P = \begin{pmatrix}
 0.38 & 0.20 & 0.42 \\
-0.44 & 0.53 & 0.03 \\
-...
+0.35 & 0.53 & 0.12 \\
+0.15 & 0.30 & 0.55
 \end{pmatrix}
 $$
 
@@ -200,7 +200,8 @@ Replace the third equation with $\pi_1 + \pi_2 + \pi_3 = 1$ and solve to
 obtain:
 
 $$
-\pi \approx (0.272,\; 0.394,\; 0.334).
+\pi = \left(\frac{65}{227},\; \frac{80}{227},\; \frac{82}{227}\right)
+\approx (0.286,\; 0.352,\; 0.361).
 $$
 
 ## Exercises

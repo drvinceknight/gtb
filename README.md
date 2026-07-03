@@ -55,3 +55,26 @@ uv run myst build --typst --execute
 ```
 
 This produces `exports/main.pdf`.
+
+## Testing
+
+The `tests/` directory holds a `pytest` suite that independently reproduces the
+computational claims made in the worked examples and solutions. Each test
+recomputes a numeric result using the same library the relevant chapter uses,
+`nashpy`, `coopgt`, `matching`, `pref_voting` or `scipy`, and falls back to
+`sympy`/`numpy` where no such library exists. Every test docstring points at the
+chapter file and the section, exercise or solution it checks, so a failing test
+identifies the exact passage to revisit. A library that is not installed causes
+only its own tests to be skipped, so the suite can be run in a partial
+environment.
+
+`pytest` lives in the `dev` dependency group. We install it and run the suite
+with:
+
+```bash
+uv sync --group dev
+uv run pytest
+```
+
+The suite also runs automatically on every pull request and on pushes to `main`
+through the `Tests` GitHub Actions workflow.

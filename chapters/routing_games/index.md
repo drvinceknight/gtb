@@ -13,6 +13,17 @@ socially optimal outcome. This chapter studies routing games and the Price of
 Anarchy, quantifying how much individual optimisation can degrade collective
 performance.
 
+```{figure} assets/illustrations/long_cut.png
+:alt: A driver spotting a tempting shortcut on a map.
+:label: fig:long_cut
+:class: illustration
+:width: 50%
+
+A route only stays quick for as long as few people take it. Once every driver
+spots the same shortcut and switches onto it, the shortcut is no quicker than
+the road it replaced. 
+```
+
 (sec:motivating_example_routing_delivery)=
 
 ## Motivating Example: Competing delivery companies
@@ -260,6 +271,7 @@ first.
 
 This leads to the definition of a Nash flow.
 
+
 ### Definition: Nash Flow
 
 For a routing game $(G,r,c)$ a flow $\tilde f$ is called a **Nash flow**
@@ -286,7 +298,7 @@ Solving this gives: $\beta=\frac{2}{5}(1-\alpha)$ $\Rightarrow$ $x^{2} + \frac{3
 this gives
 
 $$
-\left\{- \frac{3}{10} - \frac{\sqrt{69}}{10}, - \frac{\sqrt{69}}{10} + \frac{3}{10}\right\}
+\left\{- \frac{3}{10} - \frac{\sqrt{69}}{10}, - \frac{3}{10} + \frac{\sqrt{69}}{10}\right\}
 $$
 
 Neither of these two values are within our region thus there is no Nash flow
@@ -308,9 +320,9 @@ $$
 \left\{- \frac{1}{2} + \frac{\sqrt{3}}{2}, - \frac{\sqrt{3}}{2} - \frac{1}{2}\right\}
 $$
 
-Taking the second value for $\alpha$ which does lie in the feasible region.
-The cost of the path $P_{s_2, a, t}$ is then approximately $.134$ however the cost of the path $P_{s_2, t}$
-is approximately $.75$ thus the second commodity should deviate.
+Taking the first value for $\alpha$ which does lie in the feasible region.
+The cost of the path $P_{s_2, a, t}$ is then approximately $0.134$ however the cost of the path $P_{s_2, t}$
+is approximately $0.75$ thus the second commodity should deviate.
 We can carry out these same checks with all other possibilities to verify that $\tilde f=(1/2,1/5)$ is a Nash flow.
 
 ### Definition: Potential Function
@@ -336,11 +348,17 @@ $$
 
 A feasible flow $\tilde f$ is a Nash flow for the routing game $(G,r,c)$ if and only if it is a minima for $\Phi(f)$.
 
+We state this result without proof. It follows from the first-order (KKT)
+optimality conditions for minimising the potential $\Phi$, which for the
+non-atomic routing game coincide with the equal-cost condition defining a Nash
+flow. The [KKT conditions](#app:kkt_conditions) are the tool used to check
+particular flows in the exercises below.
+
 ### Definition: Marginal Cost
 
 If $c$ is a differentiable cost function then we define the **marginal cost** function $c^*$ as:
 
-$$c^*=\frac{d}{dx}(xc(x)$$
+$$c^* = \frac{d}{dx}\left(x c(x)\right)$$
 
 #### Example: The marginal costs for the delivery company game
 
@@ -364,6 +382,12 @@ of costs.
 ### Theorem: Optimal Flow is a Nash Flow for Marginal Costs
 
 A feasible flow $f^*$ is an optimal flow for $(G,r,c)$ if and only if $f^*$ is a Nash flow for $(G,r,c^*)$.
+
+We state this result without proof. It follows on comparing the optimality
+conditions for the two problems: the optimal flow minimises the total cost
+$C(f) = \sum_e f_e c_e(f_e)$, whose first-order conditions equate the marginal
+costs $c^*_e = \tfrac{d}{dx}(x c_e(x))$ across used paths, and these are exactly
+the equal-cost conditions for a Nash flow of the game with costs $c^*$.
 
 ## Exercises
 

@@ -6,6 +6,9 @@ project:
   description: Theory, software, and research — game theory for the real world.
   keywords: [game theory, nash equilibrium, evolutionary game theory]
   github: https://github.com/drvinceknight/gt
+  license:
+    content: CC-BY-4.0
+    code: MIT
   toc:
     - file: cover.md
     - file: chapters/introduction/index.md
@@ -20,7 +23,6 @@ project:
     - file: chapters/replicator_dynamics/index.md
     - file: chapters/moran_process/index.md
     - file: chapters/further_learning_dynamics/index.md
-    - file: chapters/graph_dynamics/index.md
     - file: chapters/best_response_polytopes/index.md
     - file: chapters/routing_games/index.md
     - file: chapters/matching_games/index.md
@@ -33,6 +35,7 @@ project:
     - file: appendices/ergodic_markov_chains/index.md
     - file: appendices/interior_point_optimisation/index.md
     - file: appendices/integer_pivoting/index.md
+    - file: about_the_authors.md
   bibliography:
     - references.bib
   settings:
@@ -67,7 +70,6 @@ site:
     hide_search: True
     outline_maxdepth: 2
     favicon: favicon.ico
-    html_css_files:
-      - custom.css
+    style: public/custom.css
   # options:
   #   logo: site_logo.png

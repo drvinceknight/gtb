@@ -16,6 +16,17 @@ rather than mathematical machinery: a reader following a purely mathematical
 path through the book can skip ahead to [](#chp:replicator_dynamics) without
 loss of continuity.
 
+```{figure} assets/illustrations/peacock.png
+:alt: A peacock displaying its costly, extravagant tail.
+:label: fig:peacock
+:class: illustration
+:width: 70%
+
+A peacock's tail is extravagant and costly to carry, yet it persists. Such
+apparently wasteful traits are a puzzle that evolutionary game theory helps to
+explain, much as it does the stag's antlers in the example that follows.
+```
+
 (sec:motivating_example_stag_antlers)=
 
 ## Motivating Example: Why Don't Stags Have Bigger Antlers?
@@ -35,9 +46,9 @@ A stag that allocates slightly less energy to antler growth may survive more win
 have more breeding opportunities, and ultimately achieve higher reproductive success
 than its heavily armed competitors [@enquist1987evolution].
 
-Thus, selection favours heavier antlers when they are rare, but this advantage diminishes
-as they become common. The fitness of any given antler size depends on what the rest of
-the population is doing: it is a game [@smith1973logic].
+Thus, selection favours heavier antlers when they are rare, but this advantage
+diminishes as they become common. The fitness of any given antler size depends
+on what the rest of the population is doing: it is a game [@smith1973logic].
 
 Why the stable antler size is not simply "as large as possible" cannot be answered by
 classical genetics alone; it requires the framework of evolutionary game theory,
@@ -63,8 +74,8 @@ observable facts about populations are sufficient:
 3. **Differential reproduction.** Some individuals, by virtue of their
    traits, survive longer or leave more offspring than others.
 
-When these three conditions hold, the composition of a population _must_
-change over time. Traits that help their bearers reproduce become more
+When these three conditions hold, the composition of a population changes
+over time. Traits that help their bearers reproduce become more
 common in the next generation; traits that hinder reproduction fade away.
 Darwin called this process **natural selection**.
 
@@ -211,6 +222,19 @@ that is entirely mechanical.
 
 ### Fitness: Reproductive Success as Payoff
 
+```{figure} assets/illustrations/puddles_of_the_fittest.png
+:alt: Two puddles, each remarking that their environment fits them perfectly.
+:label: fig:puddles_of_the_fittest
+:class: illustration
+:width: 60%
+
+"Survival of the fittest" is often misread as a contest, when it is really a
+statement of fit. A puddle is not in competition with the hole it sits in: it
+simply takes the shape that the hole allows. Fitness works the same way, it is
+not how strong or clever a type is in the abstract, but how well its traits
+match the environment it happens to occupy.
+```
+
 The central quantity in evolutionary biology is **fitness**, the expected number
 of surviving offspring an individual leaves. Variants with higher fitness leave
 more copies of themselves and so increase in frequency; variants with lower
@@ -232,6 +256,17 @@ turning it into a dynamical equation is the work of [](#chp:replicator_dynamics)
 
 ### Frequency-Dependent Selection
 
+```{figure} assets/illustrations/hedgehog_and_crab.png
+:alt: A hedgehog and a crab cooperating across species.
+:label: fig:hedgehog_and_crab
+:class: illustration
+:width: 60%
+
+Cooperation between very different creatures. Whether such behaviour pays off
+depends on how common it is in the population, an idea made precise by
+frequency-dependent selection.
+```
+
 Selection is **frequency-dependent** when the fitness of a type depends on
 the current composition of the population, not just on its own properties
 in isolation.
@@ -252,9 +287,9 @@ canonical instance, but the phenomenon is ubiquitous:
 In all these cases, what makes a strategy "good" depends on what the rest of
 the population is doing.
 
-**Fisher's sex ratio.** A classical example precedes Maynard Smith and Price by
-decades. Fisher's argument for the 1:1 sex ratio [@Fisher1930] is a
-frequency-dependent argument in disguise: if either sex becomes rare, the
+A classical example of frequency-dependent selection predates Maynard Smith
+and Price by decades. Fisher's argument for the 1:1 sex ratio [@Fisher1930]
+is a frequency-dependent argument in disguise: if either sex becomes rare, the
 per-capita reproductive success of producing offspring of that sex rises, so
 parents who invest in the rarer sex leave more grandchildren. The stable
 investment ratio is the one at which neither sex offers an advantage. This is
@@ -325,9 +360,9 @@ resource value to the cost of escalation. Real stag populations show
 exactly this kind of stable polymorphism in investment strategies.
 ```
 
-**Monomorphic and polymorphic populations.** Two biological terms are worth
-noting at this point. A population is **monomorphic** if every individual plays
-the same strategy, and **polymorphic** if more than one strategy is present.
+Two biological terms are worth noting at this point. A population is
+**monomorphic** if every individual plays the same strategy, and **polymorphic**
+if more than one strategy is present.
 The Hawk–Dove equilibrium admits both readings: as a polymorphic population in
 which a fraction $V/C$ of individuals are pure Hawks and the rest pure Doves,
 or as a monomorphic population in which every individual plays the mixed
@@ -373,7 +408,7 @@ $$
 $$
 
 where $M_{ij}$ is the payoff to strategy $i$ when meeting strategy $j$.
-The payoff matrix $M$ _is_ the fitness matrix. Strategies with above-average
+The payoff matrix $M$ is the fitness matrix. Strategies with above-average
 fitness increase in frequency; strategies with below-average fitness decline.
 
 ```{table} The correspondence between population genetics and evolutionary game theory
@@ -412,23 +447,34 @@ event at a time.
 
 ### What the Following Chapters Formalise
 
-**[Replicator Dynamics](#chp:replicator_dynamics)** takes the limit of a
-very large, well-mixed population and asks: how do strategy frequencies
-change continuously over time? The answer is the replicator equation
-$\dot x_i = x_i(\pi_i - \bar\pi)$. This is the continuous-time mathematical
-form of natural selection under frequency-dependent fitness.
+```{figure} assets/illustrations/polyp.png
+:alt: A coral polyp, a simple organism living as part of a larger colony.
+:label: fig:polyp
+:class: illustration
+:width: 60%
 
-**[The Moran Process](#chp:moran_process)** takes a small, finite population
+A single polyp is a simple creature, yet colonies of them build reefs. Much of
+what follows asks how the behaviour of many simple individuals aggregates into
+the dynamics of a whole population.
+```
+
+The [replicator dynamics](#chp:replicator_dynamics) takes the limit of a
+very large, well-mixed population and asks how strategy frequencies change
+continuously over time. The answer is the replicator equation
+$\dot x_i = x_i(\pi_i - \bar\pi)$, the continuous-time mathematical form of
+natural selection under frequency-dependent fitness.
+
+The [Moran process](#chp:moran_process) takes a small, finite population
 seriously. In a small population, chance matters: even a fitter strategy can
 be lost by bad luck before it spreads. The Moran process models one individual
 being copied at each time step, and the key question is the _fixation
 probability_, the chance that a single mutant takes over rather than dying
 out.
 
-**[Learning and Evolutionary Dynamics](#chp:further_learning_dynamics)**
-asks what happens when individuals update strategies by imitation, rational
-introspection, or best-response. These social-learning mechanisms produce
-the same large-population limit as biological evolution, but differ in
+The [learning and evolutionary dynamics](#chp:further_learning_dynamics)
+chapter asks what happens when individuals update strategies by imitation,
+rational introspection, or best-response. These social-learning mechanisms
+produce the same large-population limit as biological evolution, but differ in
 important ways in small populations.
 
 Together these chapters show that the replicator equation is the
@@ -600,6 +646,26 @@ becomes a statement about which strategies natural selection will sustain.
 
 ## Solutions
 
+```{solution} bio_selection_recurrence
+:label: solution:bio_selection_recurrence
+
+1. The cryptic frequency rises monotonically from $x_C = 0.2$ toward fixation,
+   levelling off near $x_C = 1$. With cryptic beetles always reproducing above
+   the population average, their share grows in every generation, slowly at
+   first while they are rare, then more rapidly, then slowing again as they
+   approach fixation.
+
+2. The roles reverse. Against a pale, open background it is now the
+   conspicuous morph that blends in, so it has the higher fitness. Starting
+   from $x_C = 0.2$, the cryptic frequency falls toward zero and the
+   conspicuous morph fixes.
+
+3. There is no universally fitter type. The same colour is advantageous in
+   one environment and deleterious in another; what selection optimises is
+   reproductive success in the *current* environment, not a fixed objective.
+   When the environment changes, the direction of selection can reverse.
+```
+
 ```{solution} bio_darwin_conditions
 :label: solution:bio_darwin_conditions
 
@@ -632,26 +698,6 @@ becomes a statement about which strategies natural selection will sustain.
    But it is the genotype that is copied into the next generation, so selection
    on the phenotype translates into a change in the frequency of genotypes in the
    population.
-```
-
-```{solution} bio_selection_recurrence
-:label: solution:bio_selection_recurrence
-
-1. The cryptic frequency rises monotonically from $x_C = 0.2$ toward fixation,
-   levelling off near $x_C = 1$. With cryptic beetles always reproducing above
-   the population average, their share grows in every generation, slowly at
-   first while they are rare, then more rapidly, then slowing again as they
-   approach fixation.
-
-2. The roles reverse. Against a pale, open background it is now the
-   conspicuous morph that blends in, so it has the higher fitness. Starting
-   from $x_C = 0.2$, the cryptic frequency falls toward zero and the
-   conspicuous morph fixes.
-
-3. There is no universally fitter type. The same colour is advantageous in
-   one environment and deleterious in another; what selection optimises is
-   reproductive success in the *current* environment, not a fixed objective.
-   When the environment changes, the direction of selection can reverse.
 ```
 
 ```{solution} bio_genetics_vocabulary

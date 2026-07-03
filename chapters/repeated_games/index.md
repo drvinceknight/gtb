@@ -13,6 +13,17 @@ on past actions, opening the door to cooperation that would be impossible in a
 one-shot interaction. This chapter shows how indefinite repetition can sustain
 cooperative outcomes, culminating in the Folk Theorem.
 
+```{figure} assets/illustrations/chickens.png
+:alt: Two chickens facing off in a game of brinkmanship.
+:label: fig:chickens
+:class: illustration
+:width: 70%
+
+Two players square up in a contest of nerve. When such confrontations are
+repeated rather than played once, the prospect of meeting again changes what it
+is rational to do today.
+```
+
 (example:repeated-contractor-game)=
 
 ## Motivating Example: Construction Contractors
@@ -236,17 +247,23 @@ Where by stage Nash profile we refer to a strategy profile that is a Nash Equili
 
 ---
 
-If we consider the strategy given by:
+Fix a stage Nash profile for each period: in period $k$ every player $i$ plays
+the action $\tilde s^{(k)}_i$ of some Nash equilibrium of the stage game,
+regardless of the history of play. This is a well-defined strategy profile for
+the repeated game, and it is history-independent, so it prescribes a stage Nash
+profile in every subgame.
 
-> "Player $i$ should play strategy $\tilde s^{(k)}_i$ regardless of the play of any previous strategy profiles."
-
-where $\tilde s^{(k)}_i$ is the strategy played by player $i$ in any stage Nash profile.
-The $k$ is used to indicate that all players play strategies from the same stage Nash profile.
-
-Using backwards induction we see that this strategy is a Nash equilibrium.
-Furthermore it is a stage Nash profile so it is a Nash equilibria for the
-last stage game which is the last subgame.
-If we consider (in an inductive way) each subsequent subgame the result holds.
+We show it is subgame perfect by backward induction on the period. Total payoffs
+are the (discounted) sum of the stage payoffs, so in the final period $T$ each
+player faces exactly the stage game; since $\tilde s^{(T)}$ is a stage Nash
+profile, no player can gain by deviating in period $T$. Suppose the prescribed
+continuation from period $k+1$ onwards is a Nash equilibrium of every subgame it
+initiates. In period $k$ a player's total payoff is their period-$k$ stage payoff
+plus a continuation payoff that, because the strategies ignore history, does not
+depend on the period-$k$ action. Optimising therefore reduces to the stage game,
+in which $\tilde s^{(k)}$ is a Nash profile, so again no player can gain by
+deviating. By the one-shot deviation principle no player has any profitable
+deviation in any subgame, and the profile is subgame perfect.
 
 ---
 
@@ -365,6 +382,17 @@ can be built and cooperation can emerge from complex dynamics.
 
 ### Definition: Infinitely Repeated Game with Discounting
 
+```{figure} assets/illustrations/bird_in_the_hand.png
+:alt: A bird in the hand, illustrating a preference for present over future reward.
+:label: fig:bird_in_the_hand
+:class: illustration
+:width: 60%
+
+A bird in the hand is worth two in the bush. The discount factor $\delta$
+captures exactly this preference for payoffs received now over those promised
+later.
+```
+
 ---
 
 Given a two player game $(A,B)\in\mathbb{R}^{{m\times n}^2}$, referred to as a
@@ -383,7 +411,7 @@ and $s_c$ at stage $i$.
 ---
 
 ```{note}
-The interpretation of $\delta$ can be twofold. Firsly it can be thought of as a
+The interpretation of $\delta$ can be twofold. Firstly it can be thought of as a
 common economic tool to reduce value of future gains. Secondly it can be thought
 of as a probability of the game ending.
 ```
@@ -552,6 +580,8 @@ fact a theorem that holds in the general case.
 
 We need one final definition to describe what we imply:
 
+(sec:definition_of_individually_rational_payoffs)=
+
 ### Definition of individually rational payoffs
 
 ---
@@ -621,10 +651,16 @@ u_1(\sigma_1',\bar\sigma_2)-v_1&\leq \delta(u_1(\sigma_1',\bar\sigma_2)-u_1^*)\\
 \end{aligned}
 $$
 
-as $u_1(\sigma_1',\bar \sigma_2)>v_1>u_1^*$, taking
-$\bar\delta=\frac{u_1(\sigma_1',\bar\sigma_2)-v_1}{u_1(\sigma_1',\bar\sigma_2)-u_1^*}$ gives the
-required required result for player 1 and repeating the argument for player 2 completes the
-proof of the fact that the prescribed strategy is a Nash equilibrium.
+The most profitable one-stage deviation is the stage best response, so write
+$\hat u_1 = \max_{\sigma_1'} u_1(\sigma_1', \bar\sigma_2)$ for its payoff. As
+$(v_1, v_2)$ is individually rational we have $v_1 > u_1^*$, and the map
+$x \mapsto \tfrac{x - v_1}{x - u_1^*}$ is increasing for $x > v_1 > u_1^*$, so the
+binding threshold is the one for the best deviation. Taking
+$\bar\delta_1 = \frac{\hat u_1 - v_1}{\hat u_1 - u_1^*} \in (0, 1)$ ensures player
+1 has no profitable deviation whenever $\delta > \bar\delta_1$. Repeating the
+argument for player 2 gives $\bar\delta_2$, and setting
+$\bar\delta = \max(\bar\delta_1, \bar\delta_2)$ shows that the prescribed strategy
+is a Nash equilibrium for all $\delta > \bar\delta$.
 
 By construction this strategy is also a subgame perfect Nash equilibrium. Given
 any history **both** players will act in the same way and no player will have an incentive to deviate:
@@ -633,6 +669,19 @@ any history **both** players will act in the same way and no player will have an
   $\bar\sigma_i$ then both players use $\sigma_i^*$.
 - If we consider a subgame just after no player has deviated from
   $\bar\sigma_i$ then both players continue to use $\bar\sigma_i$.
+
+```{note}
+The punishment used here is reversion to a stage Nash equilibrium, so the payoffs
+that can be sustained are those that strictly beat a Nash payoff of the stage
+game; this is the sense in which we use
+[individually rational](#sec:definition_of_individually_rational_payoffs) in this
+chapter. A stronger version of the Folk Theorem, due to Fudenberg and Maskin
+[@fudenberg1986folk], punishes a deviator with their **minmax** value rather than
+a Nash payoff. Since the minmax value is never larger than a Nash payoff, this
+sustains every payoff above the minmax, a larger region. That version requires
+more elaborate punishment strategies and is a natural extension of the treatment
+here.
+```
 
 ## Exercises
 
@@ -797,7 +846,7 @@ print(repeated_pd)
 ```{warning}
 The action space for repeated games can become incredibly large even for low
 values of repetitions. This might result in games that cannot be generated
-computationaly.
+computationally.
 ```
 
 We can directly obtain the action space of the row player for a given repeated
@@ -808,7 +857,7 @@ strategies = nash.repeated_games.obtain_strategy_space(A=M_r, repetitions=2)
 print(f"Number of row player strategies: {len(list(strategies))}")
 ```
 
-To obtain the action space for the columbn player use `A=M_c.T`:
+To obtain the action space for the column player use `A=M_c.T`:
 
 ```{code-cell} python3
 strategies = nash.repeated_games.obtain_strategy_space(A=M_c.T, repetitions=2)
@@ -1145,11 +1194,11 @@ $$
 \bar U_r(S_C, S_C) = (1-\delta)\frac{2}{1-\delta} = 2, \qquad \bar U_c(S_C, S_C) = 2
 $$
 
-If row plays $S_D$ and column plays $S_C$ (column always plays $c_1$, row always plays $r_1$):
-Stage payoff is $(-1, 1)$:
+If row plays $S_D$ and column plays $S_C$ (row always plays $r_1$, column always plays $c_2$):
+Stage payoff is $(3, -7)$:
 
 $$
-\bar U_r(S_D, S_C) = -1, \qquad \bar U_c(S_D, S_C) = 1
+\bar U_r(S_D, S_C) = 3, \qquad \bar U_c(S_D, S_C) = -7
 $$
 
 If row plays $S_C$ and column plays $S_D$:
@@ -1183,7 +1232,7 @@ delta = 1 / 3
 print(f"delta = {delta}")
 print(f"Average payoff (S_D, S_D): row={-1}, col={1}")
 print(f"Average payoff (S_C, S_C): row={2}, col={2}")
-print(f"Average payoff (S_D, S_C): row={-1}, col={1}")
+print(f"Average payoff (S_D, S_C): row={3}, col={-7}")
 print(f"Average payoff (S_C, S_D): row={-2}, col={6}")
 ```
 
@@ -1292,9 +1341,9 @@ When player 1 using TFT plays against player 2 using Alternator we obtain the fo
 1. (C, C) giving utilities: $(3, 3)$
 2. (C, D) giving utilities: $(0, 5)$
 3. (D, C) giving utilities: $(5, 0)$
-4. (C, C) giving utilities: $(0, 5)$
+4. (C, D) giving utilities: $(0, 5)$
 5. (D, C) giving utilities: $(5, 0)$
-6. (C, C) giving utilities: $(0, 5)$
+6. (C, D) giving utilities: $(0, 5)$
 7. (D, C) giving utilities: $(5, 0)$
 8. ... and so on
 
@@ -1396,8 +1445,9 @@ Since $2/3 > 1/2$, the binding constraint is the first. Therefore:
   equilibrium.
 
 - **$1/2 < \delta < 2/3$**: TFT beats Alternator against an Alternator opponent
-  but not against a TFT opponent. Neither strategy dominates; both **(TFT, TFT)**
-  and **(Alternator, Alternator)** are Nash equilibria.
+  ($b > d$) but Alternator beats TFT against a TFT opponent ($c > a$). Neither
+  pure strategy profile is a Nash equilibrium in this range; a mixed equilibrium
+  exists.
 
 - **$\delta \leq 1/2$**: Alternator weakly dominates TFT. The unique Nash
   equilibrium is **(Alternator, Alternator)**, with payoffs

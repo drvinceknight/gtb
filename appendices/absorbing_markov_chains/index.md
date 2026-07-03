@@ -3,7 +3,7 @@ kernelspec:
   name: python3
   display_name: "Python 3"
 numbering:
-  enumerator: A1.%s
+  enumerator: A2.%s
 ---
 
 (app:absorbing_markov_chain)=
@@ -74,7 +74,7 @@ with $\sum_{j=1}^nP_{ij}=1$ for all $1\leq i \leq n$.
 ---
 
 A state of the Markov chain can be described by a probability distribution
-vector $\pi\in\mathbb{R}_[0, 1]^1$ such that $\sum_{i=1}^n \pi_i=1$.
+vector $\pi\in[0, 1]^n$ such that $\sum_{i=1}^n \pi_i=1$.
 
 This gives:
 
@@ -86,7 +86,7 @@ $$\pi^{(t)} = \pi ^{(0)} P ^ t$$
 
 ### Example: Escaping the Maze
 
-Let us assume that students are known to start in one of the room with equal
+Let us assume that students are known to start in one of the rooms with equal
 probability. This implies that:
 
 $$\pi ^{(0)}=\begin{pmatrix}1/4&1/4&1/4&1/4&0&0\end{pmatrix}$$
@@ -109,7 +109,7 @@ $$\pi ^{(0)}=\begin{pmatrix}1/4&1/4&1/4&1/4&0&0\end{pmatrix}$$
 
    What is the likely location of a student after 1000 time steps?
 
-4. We have:
+1. We have:
 
 $$
 \begin{align*}
@@ -124,7 +124,7 @@ $$
 $$
 \begin{align*}
 \pi ^{(2)} &= \pi ^{(1)} P\\
-           &= (5/24\cdot 1/2 + 5\cdot 1/3, 5/24\cdot 1/2 + 5\cdot 1/3, 5/24\cdot 1/2 + 5\cdot 1/3, 5/24\cdot 1/2 + 5\cdot 1/3, 5/24\cdot1/3+1/2, 5/24\cdot1/3+1/2)
+           &= (5/24\cdot 1/2 + 5/24\cdot 1/3, 5/24\cdot 1/2 + 5/24\cdot 1/3, 5/24\cdot 1/2 + 5/24\cdot 1/3, 5/24\cdot 1/2 + 5/24\cdot 1/3, 5/24\cdot1/3+1/12, 5/24\cdot1/3+1/12)\\
            &= (25/144, 25/144, 25/144, 25/144, 11/72, 11/72)
 \end{align*}
 $$
@@ -534,7 +534,7 @@ In this section, we demonstrate two Python libraries that support this: one for
 **numerical** computation and one for **symbolic** computation. These operate in
 different number systems, allowing both approximate and exact linear algebra.
 
-(sec:using_numby_to_carry_out_numeric_matrix_calculations)=
+(sec:using_numpy_to_carry_out_numeric_matrix_calculations)=
 
 ### Using Numpy for Numeric Matrix Calculations
 
@@ -679,7 +679,8 @@ many other domains, demonstrating their versatility and theoretical interest:
 
 **Absorbing Markov chains** model systems where eventual absorption is guaranteed: escape processes, games, and evolutionary dynamics.
 
-The key concepts covered in this chapter are summarised [](#tbl:absorbing_markov_chains_summary).
+The key concepts covered in this chapter are summarised in
+[](#tbl:absorbing_markov_chains_summary).
 
 ```{table} Summary of absorbing Markov chains
 :name: tbl:absorbing_markov_chains_summary
@@ -759,9 +760,9 @@ dynamics are encoded in matrix form, linear algebra allows exact computation of 
 
    $$
    N = (I - Q)^{-1} = \begin{pmatrix}
-   4 & 4 & 2 \\
-   2 & 6 & 3 \\
-   1 & 3 & 4
+   6 & 8 & 4 \\
+   4 & 8 & 4 \\
+   2 & 4 & 4
    \end{pmatrix}
    $$
 
@@ -788,13 +789,13 @@ dynamics are encoded in matrix form, linear algebra allows exact computation of 
 
    $$
 \begin{align*}
-   t &= N \mathbf{1} = \begin{pmatrix} 4+4+2 \\ 2+6+3 \\ 1+3+4 \end{pmatrix} \\
-   &= \begin{pmatrix} 10 \\ 11 \\ 8 \end{pmatrix}
+   t &= N \mathbf{1} = \begin{pmatrix} 6+8+4 \\ 4+8+4 \\ 2+4+4 \end{pmatrix} \\
+   &= \begin{pmatrix} 18 \\ 16 \\ 10 \end{pmatrix}
 \end{align*}
    $$
 
-   So starting from state 1 the expected absorption time is 10 steps, from
-   state 2 it is 11 steps, and from state 3 it is 8 steps.
+   So starting from state 1 the expected absorption time is 18 steps, from
+   state 2 it is 16 steps, and from state 3 it is 10 steps.
 
    ```{code-cell} python3
    t = N @ np.ones(3)

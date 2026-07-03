@@ -127,10 +127,10 @@ where:
 $$
 \begin{align*}
 \phi &= x_c \left(\frac{rx_c}{x_c + x_d} - 1\right) + x_d \left(\frac{rx_c}{x_c + x_d}\right) + x_l\sigma\\
-     &= \frac{rx_c^2}{x_c + c_d} - x_c + \frac{rx_cx_d}{x_c + x_d} + x_l\sigma\\
-     &= \frac{rx_c^2 - x_c(x_c+x_d) + rx_cx_d + x_l\sigma(x_c + x_d)}{x_c + c_d}\\
-     &= \frac{rx_c(x_c + x_d) - x_c(x_c+x_d) + x_l\sigma(x_c + x_d)}{x_c + c_d}\\
-     &= \frac{(x_c + x_d)\left(rx_c - x_c + x_l\sigma\right)}{x_c + c_d}\\
+     &= \frac{rx_c^2}{x_c + x_d} - x_c + \frac{rx_cx_d}{x_c + x_d} + x_l\sigma\\
+     &= \frac{rx_c^2 - x_c(x_c+x_d) + rx_cx_d + x_l\sigma(x_c + x_d)}{x_c + x_d}\\
+     &= \frac{rx_c(x_c + x_d) - x_c(x_c+x_d) + x_l\sigma(x_c + x_d)}{x_c + x_d}\\
+     &= \frac{(x_c + x_d)\left(rx_c - x_c + x_l\sigma\right)}{x_c + x_d}\\
      &= x_c(r - 1) + x_l\sigma
 \end{align*}
 $$
@@ -163,10 +163,10 @@ immediate stable populations:
 
 - $x=(x_c, x_d, x_l) = (0, 0, 1)$: indeed $\dot x_c = \dot x_d = 0$ so that
   $\phi=\sigma$ and so $\dot x_l = 0$.
-- $x=(x_c, x_d, x_l) = (0, 1, 0)$: indeed $\dot x_d = \dot x_l = 0$ so that
+- $x=(x_c, x_d, x_l) = (0, 1, 0)$: indeed $\dot x_c = \dot x_l = 0$ so that
   $\phi=f_d(x)=0$ and so $\dot x_d = 0$.
 - $x=(x_c, x_d, x_l) = (1, 0, 0)$: indeed $\dot x_d = \dot x_l = 0$ so that
-  $\phi=f_c(x)=0$ and so $\dot x_c = 0$.
+  $\phi=f_c(x)=r-1$ and so $\dot x_c = 0$.
 
 A question remains, is there a point in the interior of the simplex of [](#fig:replicator_dynamics_of_common_good_game) that is stable?
 Such a point has $x_c>0$, $x_d>0$ and $x_l > 0$ which implies:
@@ -197,8 +197,8 @@ assume that a new student enters planning to cooperate 50% of the time and
 defect 50% of the time, their fitness is given by:
 
 $$
-f((1/2, 1/2, 0), (0, 1, 0)) = 1/2 f_c(0, 1, 0) + 1/2f_d(0, 1, 0) = 1/2(1/2 - 1)
-+ 1/2\dot1/2 = 0
+f((1/2, 1/2, 0), (0, 1, 0)) = 1/2 f_c(0, 1, 0) + 1/2f_d(0, 1, 0)
+= 1/2 \cdot (-1) + 1/2 \cdot 0 = -1/2
 $$
 
 (sec:definition_post_entry_population)=
@@ -344,7 +344,7 @@ This differential equation can then be
 solved numerically, for example using [Euler's Method](#app:numerical_integration)
 to show the evolution of
 
-Let us do this with a step size $h=.05$ and an initial population of $x=3/5$:
+Let us do this with a step size $h=.1$ and an initial population of $x=3/5$:
 
 Recall, we use the update rule:
 
@@ -614,7 +614,7 @@ $$
 #### Example: The Replicator Mutator Dynamics Equation for the Hawk Dove Game
 
 Let there be
-a 10% change that
+a 10% chance that
 aggressive individuals will produce sharing ones in which case the matrix $Q$ is given
 by:
 
@@ -710,7 +710,7 @@ M_r =
 $$
 
 $$
-M_r =
+M_c =
 \begin{pmatrix}
 1 & 3 & 2 \\
 0 & 2 & 4
@@ -1077,6 +1077,167 @@ toward them (or cycle away from them) over time.
 
 ## Solutions
 
+````{solution} stability_from_fitness_functions
+:label: solution:stability_from_fitness_functions
+
+For a population with two types the replicator dynamics reduce to a single
+equation. Writing $x = x_1$ and $x_2 = 1 - x$,
+
+$$
+\dot x = x\bigl(f_1(x) - \phi\bigr), \qquad
+\phi = x f_1(x) + (1 - x) f_2(x),
+$$
+
+so that
+
+$$
+\dot x = x(1 - x)\bigl(f_1(x) - f_2(x)\bigr).
+$$
+
+A population is stable when $\dot x = 0$, that is when $x = 0$, $x = 1$, or
+$f_1(x) = f_2(x)$. The two monomorphic populations $x = 0$ and $x = 1$ are
+always stable; any interior stable population solves $f_1(x) = f_2(x)$.
+
+1. Here $f_1 - f_2 = (x_1 - x_2) - (x_2 - 2x_1) = 5x - 2$, which vanishes at
+   $x = 2/5$. The stable populations are $x \in \{0,\, 2/5,\, 1\}$. Since
+   $f_1 - f_2 < 0$ for $x < 2/5$ and $f_1 - f_2 > 0$ for $x > 2/5$, the flow
+   moves away from $2/5$ towards the nearer endpoint: the interior population
+   is unstable and the two monomorphic populations are evolutionarily stable.
+
+2. Here $f_1 = x_2(x_1 - 1) = -(1 - x)^2$ and $f_2 = 3/2 - 2x$, so
+   $f_1 - f_2 = -x^2 + 4x - 5/2$. The only root in $[0, 1]$ is
+   $x = 2 - \sqrt{6}/2 \approx 0.775$ (the other root exceeds 1). The stable
+   populations are $x \in \{0,\, 2 - \sqrt{6}/2,\, 1\}$. The interior root is
+   again unstable, since $f_1 - f_2$ increases through zero there and nearby
+   states are pushed to an endpoint.
+
+3. Here $f_1 - f_2 = x_1^2 - x_2^2 = x_1 - x_2 = 2x - 1$, which vanishes at
+   $x = 1/2$. The stable populations are $x \in \{0,\, 1/2,\, 1\}$, with the
+   interior mixed population unstable and the two monomorphic populations
+   stable.
+
+In every case the interior stable population is a repellor and only the
+monomorphic populations survive perturbation. We confirm this by integrating
+the replicator dynamics from post-entry states either side of each interior
+population.
+
+```{code-cell} python3
+import numpy as np
+
+def replicator_trajectory(f_1, f_2, initial_x, step_size=0.01, steps=2000):
+    trajectory = [initial_x]
+    x = initial_x
+    for _ in range(steps):
+        average_fitness = x * f_1(x) + (1 - x) * f_2(x)
+        x = x + step_size * x * (f_1(x) - average_fitness)
+        trajectory.append(x)
+    return np.array(trajectory)
+
+fitness_pairs = {
+    1: (lambda x: x - (1 - x), lambda x: (1 - x) - 2 * x),
+    2: (lambda x: x * (1 - x) - (1 - x), lambda x: (1 - x) - x + 1 / 2),
+    3: (lambda x: x ** 2, lambda x: (1 - x) ** 2),
+}
+interior_population = {1: 2 / 5, 2: 2 - np.sqrt(6) / 2, 3: 1 / 2}
+for part, (f_1, f_2) in fitness_pairs.items():
+    from_below = replicator_trajectory(f_1, f_2, interior_population[part] - 0.02)[-1]
+    from_above = replicator_trajectory(f_1, f_2, interior_population[part] + 0.02)[-1]
+    print(f"part {part}: from below -> {from_below:.3f}, from above -> {from_above:.3f}")
+```
+````
+
+````{solution} stable_populations_from_payoff_matrices
+:label: solution:stable_populations_from_payoff_matrices
+
+For a [pairwise interaction game](#sec:definition_of_pairwise_interaction_game)
+with two types the fitness functions are $f_1(x) = A_{11}x_1 + A_{12}x_2$ and
+$f_2(x) = A_{21}x_1 + A_{22}x_2$. As in the previous solution the dynamics
+reduce to $\dot x = x(1 - x)(f_1 - f_2)$ with $x = x_1$ and
+
+$$
+f_1 - f_2 = (A_{11} - A_{21})x + (A_{12} - A_{22})(1 - x).
+$$
+
+1. For $A = \begin{pmatrix} 2 & 4 \\ 5 & 3 \end{pmatrix}$ we obtain
+   $f_1 - f_2 = -3x + (1 - x) = 1 - 4x$, which vanishes at $x = 1/4$. The
+   stable populations are $x \in \{0,\, 1/4,\, 1\}$. Here $f_1 - f_2 > 0$ for
+   $x < 1/4$ and $f_1 - f_2 < 0$ for $x > 1/4$, so the flow moves towards the
+   interior population: $x = 1/4$ is stable and the two monomorphic
+   populations are unstable. This is an anti-coordination (Hawk-Dove) game.
+
+2. For $A = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ we obtain
+   $f_1 - f_2 = x - (1 - x) = 2x - 1$, which vanishes at $x = 1/2$. The stable
+   populations are $x \in \{0,\, 1/2,\, 1\}$. This is a coordination game: the
+   interior population is unstable and the two monomorphic populations are
+   stable.
+````
+
+````{solution} evolutionarily_stable_strategies_in_symmetric_games
+:label: solution:evolutionarily_stable_strategies_in_symmetric_games
+
+We apply the characterisation of ESS for symmetric two-player games. In each
+case we identify the symmetric Nash equilibria and test the two conditions.
+
+1. Here $A = \begin{pmatrix} 2 & 4 \\ 5 & 1 \end{pmatrix}$. Neither pure
+   strategy is a symmetric equilibrium: against residents playing the first
+   strategy a mutant playing the second earns $5 > 2$, and against residents
+   playing the second a mutant playing the first earns $4 > 1$. The only
+   symmetric equilibrium is the fully mixed $\sigma^* = (1/2, 1/2)$, obtained
+   from $f_1 - f_2 = (2 - 5)x + (4 - 1)(1 - x) = 3 - 6x = 0$. Because
+   $\sigma^*$ is fully mixed, $f(\sigma^*, \sigma^*) = f(\sigma, \sigma^*)$ for
+   every $\sigma$, so the first condition never holds and we test the second.
+   A direct calculation gives
+   $f(\sigma^*, \sigma) - f(\sigma, \sigma) = \tfrac{3}{2}(2x - 1)^2 > 0$ for
+   all $\sigma \neq \sigma^*$, so $\sigma^* = (1/2, 1/2)$ is the unique ESS.
+   This is an anti-coordination game and $\sigma^*$ is the attractor of the
+   replicator dynamics.
+
+2. Here $A = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ is a coordination
+   game. Both pure strategies are strict symmetric equilibria: against
+   residents playing the first strategy a mutant playing the second earns
+   $0 < 1$, so the first condition holds strictly and $e_1 = (1, 0)$ is an
+   ESS; by symmetry $e_2 = (0, 1)$ is an ESS. The mixed equilibrium
+   $\sigma^* = (1/2, 1/2)$, from $2x - 1 = 0$, is not an ESS: here
+   $f(\sigma^*, \sigma) - f(\sigma, \sigma) = -\tfrac{1}{2}(2x - 1)^2 < 0$, so
+   a mutant does strictly better against the perturbed population and invades.
+   The evolutionarily stable strategies are the two pure conventions.
+````
+
+````{solution} typesetting_conventions_in_a_mathematics_department
+:label: solution:typesetting_conventions_in_a_mathematics_department
+
+Write $x$ for the proportion $\mu$ of LaTeX users, so the two fitness functions
+are $f_L(x) = \alpha + 2x$ and $f_W(x) = 1 + 2(1 - x)$. The replicator dynamics
+for two types reduce to
+
+$$
+\dot x = x(1 - x)\bigl(f_L(x) - f_W(x)\bigr)
+       = x(1 - x)\bigl(\alpha - 3 + 4x\bigr).
+$$
+
+The fixed points are $x = 0$ (everyone uses Word), $x = 1$ (everyone uses
+LaTeX), and the interior point $x^* = (3 - \alpha)/4$, which lies in $(0, 1)$
+precisely when $1 < \alpha < 3$.
+
+The coefficient of $x$ inside the bracket is positive, so $f_L - f_W$ is
+increasing: this is a coordination game and any interior fixed point is a
+repellor. Checking the endpoints:
+
+- all-LaTeX ($x = 1$): a lone Word user among LaTeX users earns $f_W(1) = 1$
+  against $f_L(1) = \alpha + 2 > 1$, so $x = 1$ is a strict equilibrium and an
+  ESS for every $\alpha > 1$;
+- all-Word ($x = 0$): a lone LaTeX user among Word users earns
+  $f_L(0) = \alpha$ against $f_W(0) = 3$, so $x = 0$ is a strict equilibrium,
+  and hence an ESS, if and only if $\alpha < 3$.
+
+Therefore, if $1 < \alpha < 3$ both conventions are evolutionarily stable and
+the department locks in to whichever system already predominates; the interior
+mixture $x^* = (3 - \alpha)/4$ is unstable and separates the two basins of
+attraction. If $\alpha \geq 3$ the intrinsic advantage of LaTeX is large enough
+that all-Word ceases to be stable and LaTeX is the only evolutionarily stable
+convention.
+````
+
 ````{solution} replicator_dynamics:exam_style_1
 :label: solution:replicator_dynamics:exam_style_1
 
@@ -1206,7 +1367,7 @@ x_1 \in \{0,\tfrac12,1\}.
 $$
 
 
-The above answers the question, below is some code to cofirm:
+The above answers the question, below is some code to confirm:
 
 ```{code-cell} python3
 import sympy as sym
@@ -1363,7 +1524,7 @@ Overall, the dynamics push the population towards one of the two pure
 coordination states, and away from the mixed state.
 
 
-7. We now let the strength of the coordination benefit be a parameter $a\neq 0$:
+8. We now let the strength of the coordination benefit be a parameter $a\neq 0$:
 $$
 f_A(x)=1+a x_1,
 \qquad
@@ -1438,26 +1599,26 @@ Now let us consider the case $a<0$:
 - For $0<x_1<\tfrac12$:  
   $x_1>0$, $2x_1-1<0$, $x_1-1<0$ so  
   $-ax_1(2x_1-1)(x_1-1)>0$.  
-  Thus for the post entry population $x_1=1/2-\epsilon$ $x_1(t)$ increases and the flow moves towards from $x_1=\tfrac12$.
+  Thus for the post entry population $x_1=1/2-\epsilon$ $x_1(t)$ increases and the flow moves towards $x_1=\tfrac12$.
 
 - For $\tfrac12<x_1<1$:  
   $x_1>0$, $2x_1-1>0$, $x_1-1<0$ so  
   $-ax_1(2x_1-1)(x_1-1)<0$.  
-  Thus for the post entry population $x_1=1/2+\epsilon$ $x_1(t)$ decreases and the flow moves towards from $x_1=\tfrac12$.
+  Thus for the post entry population $x_1=1/2+\epsilon$ $x_1(t)$ decreases and the flow moves towards $x_1=\tfrac12$.
 
 If $a=0$ the derivative is 0 and thus all populations are stable.
 
 Hence:
 
 - $x_1=\tfrac12$ is **evolutionary stable**;
-- $x_1=0$ and $x_1=1$ are **stable**.
+- $x_1=0$ and $x_1=1$ are **unstable**.
 
 
 So $x^*=(1/2, 1/2)$ is an evolutionary stable strategy if and only if $a<0$: the
 network effect is bad. There will only ever be an emergent population using both
 apps when the network effect is in fact negative.
 
-The above answer the question. Here is some code to confirm the calculations and
+The above answers the question. Here is some code to confirm the calculations and
 illustrate the sign of the derivative.
 
 ```{code-cell} python3

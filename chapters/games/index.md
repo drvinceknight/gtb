@@ -108,7 +108,7 @@ If Bob chooses first, the outcome can be predicted as follows:
    utility he prefers.
 
 This reasoning uses a method known as **backward induction**, which we will
-formalize in [](#chp:sub_game_perfection).
+formalise in [](#chp:sub_game_perfection).
 
 Alternatively, we can model the game with Celine moving first, as shown in
 [](#fig:battle_of_the_sexes_perfect_information_celine_first).
@@ -234,13 +234,13 @@ matrices for the row and column players:
 $$
 \label{eqn:coordination_game_payoff_matrices}
 M_r = \begin{pmatrix}
-3 & 0 \\
-1 & 2
+3 & 1 \\
+0 & 2
 \end{pmatrix}
 \qquad
 M_c = \begin{pmatrix}
-2 & 0 \\
-1 & 3
+2 & 1 \\
+0 & 3
 \end{pmatrix}
 $$
 
@@ -251,6 +251,17 @@ $$
 #### Example: Prisoners’ Dilemma
 
 > Two thieves have been caught by the police and separated for questioning. If both cooperate (remain silent), they each receive a short sentence. If one defects (betrays the other), they are offered a deal while the other receives a long sentence. If both defect, they both receive a medium-length sentence.
+
+```{figure} assets/illustrations/prisoners.png
+:alt: Two suspects held in separate rooms for questioning.
+:label: fig:prisoners_dilemma
+:class: illustration
+:width: 80%
+
+Two suspects, questioned separately, each decide whether to stay silent or
+betray the other. The Prisoners' Dilemma is the canonical example of a game in
+which individually rational play leaves both players worse off.
+```
 
 The normal form of this game is represented by:
 
@@ -710,8 +721,8 @@ sigma_c = np.array((0.6, 0.4))
 
 :::{note}
 We use the fact that $M_r = -M_c$ here, which holds because the Matching
-Pennies game happens to be a **zero-sum game**, a topic discussed in a later chapter.
-% Add reference to zero sum chapter
+Pennies game happens to be a **zero-sum game**, a topic discussed in the
+[Zero-Sum Games](#chp:zero_sum_games) chapter.
 :::
 
 We can now compute the expected utility for the row player using
@@ -937,8 +948,8 @@ where each pair gives (Bob's utility, Celine's utility).
 5. The mapping $u$ from each terminal node to an element of $O$ is:
 
 - Sports–Sports leaf $\mapsto (2,\ 3)$
-- Sports–Comedy leaf $\mapsto (1,\ 1)$
-- Comedy–Sports leaf $\mapsto (0,\ 0)$
+- Sports–Comedy leaf $\mapsto (0,\ 0)$
+- Comedy–Sports leaf $\mapsto (1,\ 1)$
 - Comedy–Comedy leaf $\mapsto (3,\ 2)$
 
 ```
@@ -982,8 +993,8 @@ $$
 5. The mapping $u$ from each terminal node to an element of $O$ is the same as in the perfect information game:
 
 - Sports–Sports leaf $\mapsto (2,\ 3)$
-- Sports–Comedy leaf $\mapsto (1,\ 1)$
-- Comedy–Sports leaf $\mapsto (0,\ 0)$
+- Sports–Comedy leaf $\mapsto (0,\ 0)$
+- Comedy–Sports leaf $\mapsto (1,\ 1)$
 - Comedy–Comedy leaf $\mapsto (3,\ 2)$
 
 The key structural difference from the perfect information game is that nodes $b$ and $c$ belong to
@@ -1102,9 +1113,9 @@ $$
 $$
 \begin{array}{l|ccc}
  & W & I & S \\
-W & (1,1,0) & (0,0,0) & (0,0,0) \\
-I & (0,0,1) & (2,2,2) & (1,0,1) \\
-S & (0,0,1) & (1,0,1) & (1,1,0)
+W & (1,1,0) & (0,1,1) & (0,0,0) \\
+I & (1,0,1) & (2,2,2) & (1,0,1) \\
+S & (0,0,0) & (0,1,1) & (1,1,0)
 \end{array}
 $$
 
@@ -1113,9 +1124,9 @@ $$
 $$
 \begin{array}{l|ccc}
  & W & I & S \\
-W & (1,1,0) & (0,0,0) & (0,0,0) \\
-I & (0,0,0) & (1,1,0) & (0,0,0) \\
-S & (0,0,1) & (0,0,1) & (2,2,2)
+W & (1,1,0) & (0,0,0) & (0,1,1) \\
+I & (0,0,0) & (1,1,0) & (0,1,1) \\
+S & (1,0,1) & (1,0,1) & (2,2,2)
 \end{array}
 $$
 

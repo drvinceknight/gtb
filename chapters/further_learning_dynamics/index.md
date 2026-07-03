@@ -13,6 +13,17 @@ population might update its strategies over time. This chapter examines a
 broader family of learning and evolutionary dynamics, exploring how the choice
 of update rule shapes long-run behaviour.
 
+```{figure} assets/illustrations/memes.png
+:alt: Ideas spreading through a population as individuals copy them.
+:label: fig:memes
+:class: illustration
+:width: 60%
+
+Ideas spread through a population as individuals copy what appears to be
+working. A number of population update mechanisms exist that model this spread
+in different ways.
+```
+
 (sec:motivating_example_learning_dynamics)=
 
 ## Motivating Example: Does the Update Rule Matter?
@@ -216,7 +227,7 @@ p_T = \frac{7.39}{7.39 + 2.72} \approx 0.731
 $$
 
 The next generation $(v_T', v_P')$ follows a Binomial$(4,\ 0.731)$
-distribution, so for example $P(v_T'=4) \approx 0.731^4 \approx 0.284$.
+distribution, so for example $P(v_T'=4) \approx 0.731^4 \approx 0.286$.
 
 ### Theorem: Mean-Field Limit
 

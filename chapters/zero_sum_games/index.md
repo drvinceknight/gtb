@@ -13,6 +13,17 @@ cost to another. This chapter studies this important special case, showing how
 minimax optimisation and linear programming together characterise optimal play
 when interests are directly opposed.
 
+```{figure} assets/illustrations/rock_paper_scissors.png
+:alt: Rock, Paper, and Scissors arranged in a cycle, each beating the next.
+:label: fig:rock_paper_scissors
+:class: illustration
+:width: 70%
+
+Rock, Paper, and Scissors chase one another in a cycle, with no single action
+dominant. Such cyclic advantage is characteristic of zero-sum games, where one
+player's gain is exactly the other player's loss.
+```
+
 (sec:motivating_example_zero_sum_games)=
 
 ## Motivating Example
@@ -378,7 +389,7 @@ M_{\text{ub}} &=
 \end{pmatrix} \\
 b_{\text{ub}} &=
 \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix} \\
-M_{\text{eq}} &= (1, 1, 1, 1, 0) \\
+M_{\text{eq}} &= (1, 1, 1, 0) \\
 b_{\text{eq}} &= 1
 \end{aligned}
 $$

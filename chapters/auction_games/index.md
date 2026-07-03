@@ -13,6 +13,15 @@ needing to know those values. This chapter analyses first- and second-price
 sealed-bid auctions, deriving equilibrium bidding strategies and the
 surprising revenue equivalence between the two formats.
 
+This is the one chapter in which players hold private information, here each
+bidder's own valuation, so the games are games of **incomplete information**. The
+appropriate solution concept is then the Bayesian Nash equilibrium, in which each
+bidder best responds in expectation over the others' unknown valuations. The rest
+of the book works with complete information, where payoffs are common knowledge.
+A fuller treatment of Bayesian games and mechanism design is beyond our scope; we
+use auctions as a first, self-contained encounter with strategic reasoning under
+private information.
+
 (sec:motivating_example_bidding_for_backstage_passes)=
 
 ## Motivating Example: Bidding for backstage passes
@@ -58,7 +67,7 @@ An **auction game** with $N$ players (or bidders) is defined by:
 - A set of random variables $V_i$, for $1 \leq i \leq N$, from which each player’s  
   private valuation $v_i$ for the good is drawn.
 - A set of possible bids $b_i \in B_i$, where $b_i$ is typically the output of a  
-  bidding strategy $\mathcal{b}_i: V_i \to B_i$ that maps valuations to bids.
+  bidding strategy $s_i: V_i \to B_i$ that maps valuations to bids.
 - An **allocation rule**  
   $q: B_1 \times B_2 \times \dots \times B_N \to [0,1]^N$,  
   which determines the probability with which each player receives the good.  
@@ -120,7 +129,7 @@ tools that can model beliefs and stochastic reasoning.
 ### Definition: Bayesian Nash Equilibrium
 
 A **Bayesian Nash equilibrium** is a strategy profile in a game with incomplete  
-information such that, given their own type, each player's strategy maximizes  
+information such that, given their own type, each player's strategy maximises  
 their expected utility assuming the strategies of the other players are fixed  
 and that beliefs about types are correct.
 
@@ -138,40 +147,53 @@ Let us consider the strategy $b_i(v_i) = v_i$, that is, player $i$ bids truthful
 We show that this is a **best response** to all other players also bidding truthfully.
 
 Fix a valuation $v_i$ for player $i$. Let $b_i$ denote the bid player $i$ chooses  
-(possibly different from $v_i$). Let $b_{(1)}^{(-i)}$ and $b_{(2)}^{(-i)}$ denote  
-the highest and second-highest bids among the other players.
-
-We compute the **expected utility** of deviating from $b_i=v_i$ to $b_i\ne v_i$:
+(possibly different from $v_i$). Let $h = b_{(1)}^{(-i)}$ denote the highest bid  
+among the other players. Since the game is a second-price auction, if player $i$  
+wins they pay the highest of the remaining bids, which is exactly $h$. Player  
+$i$'s utility is therefore:
 
 $$
-\mathbb{E}[u_i] = \text{prob}(\text{Win})(v_i - b_{(2)}^{-1})
+u_i =
+\begin{cases}
+v_i - h & \text{if } b_i > h \text{ (player } i \text{ wins and pays } h\text{)} \\
+0       & \text{if } b_i < h \text{ (player } i \text{ loses)}
+\end{cases}
 $$
 
-Let us distinguish two cases:
+Ties ($b_i = h$) occur with probability zero and are broken arbitrarily. Bidding  
+$b_i = v_i$ gives utility $v_i - h > 0$ when $v_i > h$ and $0$ when $v_i < h$. We  
+compare this with the two possible deviations.
 
 ---
 
 **Case 1:** $b_i < v_i$ (the deviation is to a lower bid than the value)
-This deviation will cause $\text{prob}(\text{Win})$ to either:
 
-- remain the same in which case $b_{(2)}^{-1}$ also remains the same. There is no
-  change in utility.
-- become 0, the utility does not increase.
+- If $h < b_i$, then $b_i > h$ still holds: player $i$ still wins and still pays
+  $h$, so the utility $v_i - h$ is unchanged.
+- If $b_i < h < v_i$, then player $i$ now loses an auction that truthful bidding
+  would have won at a positive surplus $v_i - h > 0$, so the utility falls to $0$.
+- If $h > v_i$, then player $i$ loses either way and the utility stays at $0$.
 
-This causes a loss in expected utility compared to bidding $v_i$.
+Underbidding therefore never increases the utility.
 
 ---
 
 **Case 2:** $b_i > v_i$ (the deviation is to a higher bid than the value)
 
-This deviation cases no change in $\text{prob}(\text{Win})$ and no change in the
-overall utility.
+- If $v_i > h$, then $b_i > h$ still holds: player $i$ still wins and still pays
+  $h$, so the utility $v_i - h$ is unchanged.
+- If $b_i < h$, then player $i$ loses either way and the utility stays at $0$.
+- If $v_i < h < b_i$, then player $i$ now wins an auction that truthful bidding
+  would have lost, paying $h > v_i$ for a negative surplus $v_i - h < 0$, so the
+  utility falls below the $0$ obtained by bidding truthfully.
+
+Overbidding therefore never increases the utility.
 
 ---
 
-Thus, **bidding anything other than $v_i$ weakly decreases expected utility**,  
-Hence, bidding truthfully maximizes expected utility **for all $v_i$**, given  
-that others bid truthfully.
+In both cases, deviating from $b_i = v_i$ leaves the utility unchanged or  
+decreases it, whatever the value of $h$. Hence bidding truthfully maximises  
+utility for every $v_i$, and truthful bidding is a (weakly) dominant strategy.
 
 Therefore, truthful bidding is a **Bayesian Nash equilibrium**.
 
@@ -255,7 +277,20 @@ $$
 \end{aligned}
 $$
 
-Thus, any deviation $\bar{b} \ne \frac{N - 1}{N}v_i$ does not improve utility.
+It remains to confirm that this stationary point is the global maximum. Player
+$i$ never bids above $v_i$, since winning at a price $\bar{b} > v_i$ gives a
+negative surplus $v_i - \bar{b} < 0$, and never below $0$, so we may restrict to
+$\bar{b} \in [0, v_i]$. On this interval $\bar{b} < \tfrac{N-1}{N} < 1$, so the
+argument $\tfrac{N}{N-1}\bar{b}$ of the uniform CDF stays in $[0, 1]$ and the
+expression for $\mathbb{E}[u_i]$ above is valid throughout. The expected utility
+$\left(\tfrac{N}{N-1}\right)^{N-1} \bar{b}^{N-1}(v_i - \bar{b})$ is zero at both
+endpoints $\bar{b} = 0$ and $\bar{b} = v_i$ and strictly positive in between, so
+its unique interior stationary point $\bar{b} = \tfrac{N-1}{N} v_i$ is the global
+maximum on $[0, v_i]$.
+
+Thus, any deviation $\bar{b} \ne \frac{N - 1}{N}v_i$ does not improve utility,
+and the symmetric profile in which every player bids $\tfrac{N-1}{N} v_i$ is a
+Bayesian Nash equilibrium.
 
 ---
 
@@ -351,7 +386,7 @@ $$
 $$
 
 _Hint:_  
-In $\text{Unif}[0, 1]$, the expected value of the $k$-th order statistic (i.e., the $k$-th highest value) is:
+In $\text{Unif}[0, 1]$, the expected value of the $k$-th order statistic (i.e., the $k$-th smallest value) is:
 
 $$
 \mathbb{E}[v_{(k)}] = \frac{k}{N + 1}
@@ -541,8 +576,7 @@ v1, v2 = 0.8, 0.6
 b1, b2 = v1, v2  # truthful bids
 
 winner = 1 if b1 > b2 else 2
-price = min(b1, b2) if b1 > b2 else max(b1, b2)  # second-highest bid
-price = b2 if winner == 1 else b1
+price = b2 if winner == 1 else b1  # second-highest bid
 
 u1 = (v1 - price) if winner == 1 else 0
 u2 = (v2 - price) if winner == 2 else 0

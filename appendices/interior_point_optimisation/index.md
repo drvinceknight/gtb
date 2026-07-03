@@ -3,7 +3,7 @@ kernelspec:
   name: python3
   display_name: "Python 3"
 numbering:
-  enumerator: A1.%s
+  enumerator: A4.%s
 ---
 
 (app:kkt_conditions)=
@@ -15,10 +15,10 @@ numbering:
 ## Motivating Example: Optimising doughnut distribution at a research retreat
 
 At the annual **Mathematical Modelling Retreat**, a catering mix-up leaves the
-organisers with a limited supply of **12 gourmet donuts** and **8 litres of
+organisers with a limited supply of **12 gourmet doughnuts** and **8 litres of
 coffee**.
 
-To ensure everyone gets a share, the organisers plan to slice the donuts into
+To ensure everyone gets a share, the organisers plan to slice the doughnuts into
 small portions and pour the coffee into individual cups of varying sizes.
 
 The participants are divided into two groups:
@@ -30,12 +30,12 @@ The participants are divided into two groups:
 
 Let:
 
-- $x_1$ represent the number of _donut portions_ allocated to the theorists
+- $x_1$ represent the number of _doughnut portions_ allocated to the theorists
 - $x_2$ represent the amount of _coffee (in litres)_ allocated to the theorists
 
 The applied group receives the remaining quantities:
 
-- $(12 - x_1)$ donut portions
+- $(12 - x_1)$ doughnut portions
 - $(8 - x_2)$ litres of coffee
 
 The **total enjoyment** of the retreat is modelled as the sum of group
@@ -52,7 +52,7 @@ $$
 $$
 
 The problem is now a continuous **convex optimisation problem**: although
-donuts and coffee are discrete in reality, the organisers can approximate an
+doughnuts and coffee are discrete in reality, the organisers can approximate an
 optimal allocation by dividing portions finely, making fractional allocations
 meaningful.
 

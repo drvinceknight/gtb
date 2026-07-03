@@ -196,7 +196,8 @@ The core of $G = (N, v)$ is non-empty if and only if the game is balanced.
 
 ---
 
-We state the theorem, due independently to Bondareva and Shapley, without proof.
+We state the theorem, due independently to Bondareva [@bondareva1963theory]
+and Shapley [@shapley1967balanced], without proof.
 Its practical content is that core non-emptiness is a **linear programming**
 question. The core is non-empty precisely when the linear program
 

@@ -13,6 +13,19 @@ an incentive to deviate unilaterally. This configuration is called a Nash
 equilibrium. This chapter formalises the concept, establishes its existence,
 and develops a systematic algorithm for computing it.
 
+```{figure} assets/illustrations/best_response_peaks.png
+:alt: Two creatures, each sitting at the peak of their own best response landscape.
+:label: fig:best_response_peaks
+:class: illustration
+:width: 60%
+
+Each player climbs their own landscape of strategies, one shaped by what the
+other player does. At a Nash equilibrium both have reached the top of their
+respective hill: each is already standing on its best response to where the
+other stands, so neither has anywhere better to go.
+```
+
+
 (sec:motivating_example_nash_equilibrium)=
 
 ## Motivating Example
@@ -217,11 +230,11 @@ For $|I|\neq |J|$ we can omit steps 2, 3 and 4 as there is a single given best r
 action in each action space. For example, we do not need to consider
 specifically if there is a Nash equilibrium when the row player plays the first
 row and the column player plays both the first and the second column (since the
-utility for those two columns is not the same. This will be tackled formaly
+utility for those two columns is not the same. This will be tackled formally
 [in the definition of degenerate games](#def:degenerate_games).
 ```
 
-The final pair of actions to consider is when $I=(r_1, r_2)$ and $J=(c_1, c_2$.
+The final pair of actions to consider is when $I=(r_1, r_2)$ and $J=(c_1, c_2)$.
 In this case let:
 
 $$\sigma_1=(x, 1 - x)\qquad \sigma_2=(y,1-y)$$

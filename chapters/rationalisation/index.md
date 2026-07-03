@@ -464,13 +464,13 @@ Recalling the [Payoff matrices for the row and column players](#sec:coordination
 
 $$
 M_r = \begin{pmatrix}
-3 & 0 \\
-1 & 2
+3 & 1 \\
+0 & 2
 \end{pmatrix}
 \qquad
 M_c = \begin{pmatrix}
-2 & 0 \\
-1 & 3
+2 & 1 \\
+0 & 3
 \end{pmatrix}
 $$
 
@@ -478,9 +478,9 @@ Assume that player 1 plays a strategy
 $\sigma_1 = (x,\ 1 - x)$. Then player 2’s expected utilities are:
 
 $$
-u_1(r_1,\ \sigma_2) = 2x + (1 - x) = x + 1
+u_2(c_1,\ \sigma_1) = 2x + 0(1 - x) = 2x
 \qquad \text{and} \qquad
-u_1(r_2,\ \sigma_2) = 3(1 - x) = 3 - 3 x
+u_2(c_2,\ \sigma_1) = 1x + 3(1 - x) = 3 - 2 x
 $$
 
 These two utilities are shown in [](#fig:column_player_best_response_coordination).
@@ -493,11 +493,11 @@ These two utilities are shown in [](#fig:column_player_best_response_coordinatio
 Column player's expected utility for each action as a function of the probability $x$ that the row player plays $r_1$ in the Coordination Game.
 ```
 
-We can now determine the best response for player 1 based on the value of $x$:
+We can now determine the best response for player 2 based on the value of $x$:
 
-1. If $x < \frac{1}{2}$, then $c_1$ is a best response.
-2. If $x > \frac{1}{2}$, then $c_2$ is a best response.
-3. If $x = \frac{1}{2}$, then player 1 is **indifferent** between $c_1$ and $c_2$.
+1. If $x > \frac{3}{4}$, then $c_1$ is a best response.
+2. If $x < \frac{3}{4}$, then $c_2$ is a best response.
+3. If $x = \frac{3}{4}$, then player 2 is **indifferent** between $c_1$ and $c_2$.
 
 This example shows how best responses depend continuously on
 the opponent’s strategy, and that indifference can arise at precise
@@ -567,7 +567,7 @@ The classic Rock Paper Scissors game can be extended to
 - Scissors decapitates Lizard
 - Lizard eats Paper
 - Paper disproves Spock
-- Spock vaporizes Rock
+- Spock vaporises Rock
 - Rock crushes Scissors
 
 This results in the following payoff matrices:
@@ -594,7 +594,7 @@ We can now use the [Best Response Condition Theorem](#thrm:best_response_conditi
 to check whether the strategy
 $\sigma_1 = \left(\frac{1}{3},\ 0,\ \frac{1}{3},\ \frac{1}{3},\ 0\right)$
 is a best response to
-$\sigma_2 = \left(0,\ \frac{1}{4},\ 0,\ 0,\ \frac{3}{4}\right)$.
+$\sigma_2 = \left(\frac{1}{4},\ 0,\ 0,\ \frac{3}{4},\ 0\right)$.
 
 We begin by computing the expected utilities for each of player 1’s actions:
 
@@ -951,11 +951,13 @@ $$
 **Step 1 (Column player):** Compare $c_1 = (1, 1)$ and $c_2 = (1, 3)$. We see
 that $c_2$ weakly dominates $c_1$.
 
-**Step 2 (Row player):** With only $c_2$ remaining, the
-row player compares $r_1$ (payoff $2$) and $r_2$ (payoff $1$). So $r_1$
-dominates $r_2$.
+**Step 2 (Row player):** With only $c_2$ remaining, both $r_1$ and $r_2$ give
+the row player a payoff of $1$ against $c_2$. Neither row is dominated, so
+the elimination process terminates here.
 
-**Predicted outcome:** The prediction is $(r_1, c_2)$.
+**Predicted outcome:** The process eliminates $c_1$, predicting that the
+column player plays $c_2$. Both $r_1$ and $r_2$ are consistent with iterated
+elimination.
 
 ---
 
