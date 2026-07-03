@@ -40,11 +40,16 @@ jobs:
         uses: astral-sh/setup-uv@v6
       - name: Install Typst
         uses: typst-community/setup-typst@v3
+      # Fail early and clearly if Typst is not actually on the PATH: without it
+      # MyST exports the .typ but skips the PDF render and still exits 0.
+      - name: Verify Typst is available
+        run: typst --version
       - name: Install dependencies
         run: uv sync
       # Persist MyST's notebook execution cache between runs so unchanged
       # chapters are not re-executed. MyST validates the cache by content hash,
-      # so a restored stale cache only re-runs the notebooks that changed.
+      # so a restored stale cache only re-runs the notebooks that changed. The
+      # cache is only saved when the job succeeds, so the build must not fail.
       - name: Restore MyST execution cache
         uses: actions/cache@v4
         with:
@@ -52,12 +57,19 @@ jobs:
           key: myst-execute-${{ hashFiles('chapters/**/index.md', 'appendices/**/index.md', 'uv.lock') }}
           restore-keys: |
             myst-execute-
-      - name: Build HTML site
-        run: uv run myst build --execute --execute-parallel 4 --html
-      # Reuses the execution cache populated by the HTML build, so this only
-      # compiles the Typst PDF and does not re-execute the notebooks.
-      - name: Build PDF
-        run: uv run myst build --execute --typst
+      # Build the HTML site and the Typst PDF in a single pass: MyST executes
+      # each notebook once and renders the PDF to exports/main.pdf. We then
+      # assert the PDF exists so a skipped render fails here, with diagnostics,
+      # rather than silently later.
+      - name: Build HTML site and PDF
+        run: |
+          uv run myst build --execute --execute-parallel 4 --html --typst
+          if [ ! -f exports/main.pdf ]; then
+            echo "::error::Typst PDF was not produced at exports/main.pdf"
+            echo "Contents of exports/:"; ls -la exports/ 2>&1 || true
+            echo "Embedded site PDFs:"; ls -la _build/html/build/*.pdf 2>&1 || true
+            exit 1
+          fi
       - name: Add the PDF to the site
         run: |
           mkdir -p _build/html/pdf
