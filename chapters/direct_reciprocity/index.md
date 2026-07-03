@@ -590,7 +590,7 @@ import numpy as np
 generous = axl.ReactivePlayer(probabilities=(0.9, 0.3))
 suspicious = axl.ReactivePlayer(probabilities=(0.7, 0.1))
 
-match = axl.Match([generous, suspicious], turns=50000, seed=0)
+match = axl.Match([generous, suspicious], turns=10000, seed=0)
 match.play()
 u1, u2 = match.final_score_per_turn()
 print(f"Simulated:   Generous={u1:.4f}, Suspicious={u2:.4f}")
@@ -618,7 +618,7 @@ players = [
 ]
 
 tournament = axl.Tournament(
-    players=players, turns=200, repetitions=200, seed=0
+    players=players, turns=200, repetitions=20, seed=0
 )
 results = tournament.play(progress_bar=False)
 print("Ranking:")
@@ -1125,7 +1125,7 @@ strategies = {"AllC": (1, 1), "TFT": (1, 0), "AllD": (0, 0), "SR": (0.7, 0.1)}
 order = ["AllC", "TFT", "AllD", "SR"]
 
 
-def long_run_payoff(row, col, turns=200000, seed=1):
+def long_run_payoff(row, col, turns=5000, seed=1):
     players = [
         axl.ReactivePlayer(probabilities=strategies[row]),
         axl.ReactivePlayer(probabilities=strategies[col]),
