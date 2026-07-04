@@ -1,0 +1,60 @@
+name: Build
+
+# Build the HTML site and the Typst PDF on every pull request, so a broken
+# notebook, a math error, or a Typst compile failure is caught before merge.
+# This mirrors the build in deploy.yml but publishes nothing; it uploads the
+# PDF and the rendered site as artifacts for reviewers to preview.
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # A full cold build re-executes every notebook; bound it so a stuck
+    # notebook or Typst compile fails fast rather than hanging.
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+      - name: Install Typst
+        uses: typst-community/setup-typst@v3
+      # Fail early and clearly if Typst is not actually on the PATH: without it
+      # MyST exports the .typ but skips the PDF render and still exits 0.
+      - name: Verify Typst is available
+        run: typst --version
+      - name: Install dependencies
+        run: uv sync
+      # Reuse MyST's notebook execution cache, restoring from the cache built
+      # on main so a pull request only re-executes the notebooks it changes.
+      - name: Restore MyST execution cache
+        uses: actions/cache@v4
+        with:
+          path: _build/execute
+          key: myst-execute-${{ hashFiles('chapters/**/index.md', 'appendices/**/index.md', 'uv.lock') }}
+          restore-keys: |
+            myst-execute-
+      # Build the HTML site and the Typst PDF in a single pass: MyST executes
+      # each notebook once and renders the PDF to exports/main.pdf. We assert
+      # the PDF exists so a skipped render fails here, with diagnostics.
+      - name: Build HTML site and PDF
+        run: |
+          uv run myst build --execute --execute-parallel 4 --html --typst
+          if [ ! -f exports/main.pdf ]; then
+            echo "::error::Typst PDF was not produced at exports/main.pdf"
+            echo "Contents of exports/:"; ls -la exports/ 2>&1 || true
+            echo "Embedded site PDFs:"; ls -la _build/html/build/*.pdf 2>&1 || true
+            exit 1
+          fi
+      - name: Upload the PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-pdf
+          path: exports/main.pdf
+      - name: Upload the HTML site
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-site
+          path: _build/html
