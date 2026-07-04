@@ -2,8 +2,8 @@ name: Build
 
 # Build the HTML site and the Typst PDF on every pull request, so a broken
 # notebook, a math error, or a Typst compile failure is caught before merge.
-# This mirrors the build in deploy.yml but publishes nothing; it uploads the
-# PDF and the rendered site as artifacts for reviewers to preview.
+# This mirrors the build in deploy.yml but publishes nothing; deployment to
+# GitHub Pages happens only on push to main via deploy.yml.
 on:
   pull_request:
     branches:
@@ -48,13 +48,3 @@ jobs:
             echo "Embedded site PDFs:"; ls -la _build/html/build/*.pdf 2>&1 || true
             exit 1
           fi
-      - name: Upload the PDF
-        uses: actions/upload-artifact@v4
-        with:
-          name: main-pdf
-          path: exports/main.pdf
-      - name: Upload the HTML site
-        uses: actions/upload-artifact@v4
-        with:
-          name: html-site
-          path: _build/html
