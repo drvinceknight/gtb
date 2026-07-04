@@ -38,6 +38,13 @@ project:
     - file: about_the_authors.md
   bibliography:
     - references.bib
+  # Typst 0.15 removed the deprecated `diff` and `sect` symbols that MyST
+  # emits for \partial and \cap. Defining these macros makes MyST write a
+  # `#let diff = $∂$` / `#let sect = $∩$` shim into the Typst export, so the
+  # source keeps using \partial and \cap while the PDF compiles under 0.15.
+  math:
+    '\partial': '∂'
+    '\cap': '∩'
   settings:
     output_matplotlib_strings: remove
   exports:
