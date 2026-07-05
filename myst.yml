@@ -6,9 +6,6 @@ project:
   description: Theory, software, and research — game theory for the real world.
   keywords: [game theory, nash equilibrium, evolutionary game theory]
   github: https://github.com/drvinceknight/gt
-  license:
-    content: CC-BY-4.0
-    code: MIT
   toc:
     - file: cover.md
     - file: chapters/introduction/index.md
