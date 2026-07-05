@@ -23,11 +23,13 @@ permissions:
 concurrency:
   group: "pages"
   cancel-in-progress: false
+# The build and deploy are split into two jobs: the build job uploads the
+# `github-pages` artifact once, and the deploy job only deploys it. This keeps
+# the artifact upload out of the deploy job, so re-running a failed deploy does
+# not upload a second `github-pages` artifact (which would make deploy-pages
+# fail with "Multiple artifacts named github-pages ... count is 2").
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     # A full cold build re-executes every notebook; bound it so a stuck notebook
     # or Typst compile fails fast rather than hanging.
@@ -78,6 +80,14 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./_build/html"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
