@@ -132,8 +132,9 @@ generational turnover) shapes long-run outcomes across these models.
 introduces the Lemke–Howson algorithm as a geometric method for computing Nash
 equilibria in two-player games.
 
-**Applied models.** The final chapters apply game-theoretic reasoning to
-specific domains. [Routing Games](#chp:routing_games) studies how selfish routing
+**Allocation and collective choice.** The final chapters apply
+game-theoretic reasoning to settings where resources, partners, or
+decisions must be shared. [Routing Games](#chp:routing_games) studies how selfish routing
 decisions lead to inefficiency (the Price of Anarchy). [Matching Games](#chp:matching_games)
 covers the Gale–Shapley algorithm and stable matchings. [Auction Games](#chp:auctions)
 analyses first- and second-price auctions and Bayesian equilibrium bidding
@@ -216,7 +217,6 @@ how the various chapters link together.
 ```{figure} assets/chapter_relationship_diagram/main.png
 :alt: A flow diagram between the chapters.
 :label: fig:structure
-:height: 300px
 
 Visual representation of the relationships and flow between chapters.
 ```
