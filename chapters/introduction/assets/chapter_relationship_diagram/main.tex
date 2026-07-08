@@ -5,13 +5,12 @@
 \begin{document}
 \begin{tikzpicture}[
     font=\sffamily,
-    node distance=1.8cm and 3.8cm,
     every node/.style={
         draw,
         thick,
         rounded corners=4pt,
-        minimum width=3cm,
-        minimum height=1.2cm,
+        minimum width=2.6cm,
+        minimum height=1.1cm,
         align=center
     },
     base/.style={draw=black, fill=white},
@@ -23,88 +22,122 @@
     dashed path/.style={thick, draw=black!40, dashed, ->, >=latex}
 ]
 
-% Legend in top-left corner
-\node[anchor=west, draw=none] at (-10, 5) {\textbf{Legend}};
-\draw[found] (-10, 4.3) rectangle ++(0.5, 0.5);
-\node[draw=none] at (-8.3, 4.55) {Core concepts};
+% Legend as a single horizontal key row across the top of the diagram
+\tikzset{legendlabel/.style={draw=none, anchor=west,
+    minimum width=0cm, minimum height=0cm, inner sep=2pt}}
+\draw[found] (-1.3, 4.5) rectangle ++(0.45, 0.45);
+\node[legendlabel] at (-0.75, 4.725) {Core concepts};
 
-\draw[dynamic] (-10, 3.5) rectangle ++(0.5, 0.5);
-\node[draw=none] at (-7.6, 3.75) {Dynamic / evolutionary};
+\draw[dynamic] (2.6, 4.5) rectangle ++(0.45, 0.45);
+\node[legendlabel] at (3.15, 4.725) {Dynamic / evolutionary};
 
-\draw[applied] (-10, 2.7) rectangle ++(0.5, 0.5);
-\node[draw=none] at (-7.9, 2.95) {Applied / extended};
+\draw[applied] (8.0, 4.5) rectangle ++(0.45, 0.45);
+\node[legendlabel] at (8.55, 4.725) {Allocation and collective choice};
 
-\draw[appendix] (-10, 1.9) rectangle ++(0.5, 0.5);
-\node[draw=none] at (-8.6, 2.15) {Appendix};
+\draw[appendix] (15.4, 4.5) rectangle ++(0.45, 0.45);
+\node[legendlabel] at (15.95, 4.725) {Appendix};
 
-% ── Core game theory foundations ─────────────────────────────────────────────
-\node[found] (games)          at (0, 0)           {Chapter 1\\Games};
-\node[found] (rationalisation)[right=of games]     {Chapter 2\\Rationalisation};
-\node[found] (zero_sum)       [below=of rationalisation] {Chapter 3\\Zero-Sum Games};
-\node[found] (nash)           [right=of zero_sum]  {Chapter 4\\Nash Equilibrium};
-\node[found] (brp)            [above=of nash]      {Chapter 13\\Best Response\\Polytopes};
-\node[found] (subgame)        [right=of brp]       {Chapter 5\\Subgame Perfection};
+% Chapters sit on a grid: one row per theme, ordered by chapter number
+% within each row so that a chapter is easy to locate. Columns are at
+% x = 0, 3.7, ..., 18.5; the theme rows are at y = 0, -3.4 and -8.6,
+% with appendices between the rows they support.
 
-% ── Dynamic and evolutionary chapters ────────────────────────────────────────
-\node[dynamic] (repeated)     [right=of nash]      {Chapter 6\\Repeated Games};
-\node[dynamic] (direct_recip) [right=of repeated]  {Chapter 7\\Direct Reciprocity};
-\node[dynamic] (replicator)   [below=of nash]      {Chapter 9\\Replicator Dynamics};
-\node[dynamic] (moran)        [right=of replicator]{Chapter 10\\Moran Process};
-\node[dynamic] (evol_bio)     [right=of moran]     {Chapter 8\\Evolutionary\\Biology};
-\node[dynamic] (further)      [below=of evol_bio]  {Chapter 11\\Learning and\\Evolutionary\\Dynamics};
-\node[dynamic] (graph)        [right=of further]   {Chapter 12\\Evolutionary\\Dynamics on\\Graphs};
+% Row 1: core concepts (chapters 1 to 5, and 12)
+\node[found] (games)           at (0, 0)      {Chapter 1\\Games};
+\node[found] (rationalisation) at (3.7, 0)    {Chapter 2\\Rationalisation};
+\node[found] (zero_sum)        at (7.4, 0)    {Chapter 3\\Zero-Sum Games};
+\node[found] (nash)            at (11.1, 0)   {Chapter 4\\Nash Equilibrium};
+\node[found] (subgame)         at (14.8, 0)   {Chapter 5\\Subgame Perfection};
+\node[found] (brp)             at (18.5, 0)   {Chapter 12\\Best Response\\Polytopes};
 
-% ── Applied chapters ──────────────────────────────────────────────────────────
-\node[applied] (routing)      [left=of replicator] {Chapter 14\\Routing Games};
-\node[applied] (auction)      [left=of routing]    {Chapter 16\\Auction Games};
-\node[applied] (matching)     [below=of auction]   {Chapter 15\\Matching Games};
-\node[applied] (social)       [below=of matching]  {Chapter 17\\Social Choice};
-\node[applied] (coop)         [right=of social]    {Chapter 18\\Cooperative Games};
-\node[applied] (thecore)      [right=of coop]      {Chapter 19\\The Core};
+% Row 2: dynamic and evolutionary chapters (6 to 11)
+\node[dynamic] (repeated)     at (0, -3.4)    {Chapter 6\\Repeated Games};
+\node[dynamic] (direct_recip) at (3.7, -3.4)  {Chapter 7\\Direct Reciprocity};
+\node[dynamic] (evol_bio)     at (7.4, -3.4)  {Chapter 8\\Evolutionary\\Biology};
+\node[dynamic] (replicator)   at (11.1, -3.4) {Chapter 9\\Replicator Dynamics};
+\node[dynamic] (moran)        at (14.8, -3.4) {Chapter 10\\Moran Process};
+\node[dynamic] (further)      at (18.5, -3.4) {Chapter 11\\Learning and\\Evolutionary\\Dynamics};
 
-% ── Appendices ────────────────────────────────────────────────────────────────
-\node[appendix] (numint)   [below=of replicator] {Appendix\\Numerical Integration};
-\node[appendix] (absorb)   [below=of moran]      {Appendix\\Absorbing\\Markov Chains};
-\node[appendix] (ergodic)  [below=of further]    {Appendix\\Ergodic\\Markov Chains};
-\node[appendix] (ip)       [below=of routing]    {Appendix\\Interior Point Opt.};
-\node[appendix] (intpivot) [above=of brp]        {Appendix\\Integer Pivoting};
+% Appendices, placed between the rows they support
+\node[appendix] (intpivot) at (12.95, 2.9)  {Appendix\\Integer Pivoting};
+\node[appendix] (ip)       at (0, -6.1)     {Appendix\\Interior Point Opt.};
+\node[appendix] (numint)   at (11.1, -6.1)  {Appendix\\Numerical Integration};
+\node[appendix] (absorb)   at (14.8, -6.1)  {Appendix\\Absorbing\\Markov Chains};
+\node[appendix] (ergodic)  at (18.5, -6.1)  {Appendix\\Ergodic\\Markov Chains};
 
-% ── Edges: foundations ───────────────────────────────────────────────────────
-\draw (games)          -- (rationalisation);
-\draw (rationalisation)-- (zero_sum);
-\draw (rationalisation)-- (nash);
-\draw (zero_sum)       -- (nash);
-\draw (nash)           -- (subgame);
-\draw (nash)           -- (brp);
-\draw (nash)           -- (repeated);
-\draw (nash)           -- (replicator);
-\draw (nash)           -- (routing);
-\draw (nash)           -- (auction);
-\draw (subgame)        -- (repeated);
+% Row 3: allocation and collective choice chapters (13 to 18)
+\node[applied] (routing)  at (0, -8.6)    {Chapter 13\\Routing Games};
+\node[applied] (matching) at (3.7, -8.6)  {Chapter 14\\Matching Games};
+\node[applied] (auction)  at (7.4, -8.6)  {Chapter 15\\Auction Games};
+\node[applied] (social)   at (11.1, -8.6) {Chapter 16\\Social Choice};
+\node[applied] (coop)     at (14.8, -8.6) {Chapter 17\\Cooperative Games};
+\node[applied] (thecore)  at (18.5, -8.6) {Chapter 18\\The Core};
 
-% ── Edges: dynamics ──────────────────────────────────────────────────────────
-\draw (repeated)       -- (direct_recip);
-\draw (direct_recip)   -- (evol_bio);
-\draw (evol_bio)       -- (moran);
-\draw[<->] (replicator)-- (moran);
-\draw (moran)          -- (further);
-\draw (replicator)     -- (further);
-\draw (evol_bio)       -- (further);
-\draw (moran)          -- (graph);
-\draw (further)        -- (graph);
+% All non-adjacent edges are routed with vertical and horizontal segments
+% only, on separate horizontal tracks so that parallel runs do not overlap.
+% Where a line must cross another it hops over it with a small arc.
 
-% ── Edges: applied ───────────────────────────────────────────────────────────
-\draw[<->] (matching)  -- (social);
-\draw (coop)           -- (thecore);
+% Edges: core row. The two skip edges share the track at y = 1.6.
+\draw (games)           -- (rationalisation);
+\draw (rationalisation) -- (zero_sum);
+\draw[rounded corners=6pt] (rationalisation.north) -- (3.7,1.6)
+      -- (10.5,1.6) -- ($(nash.north)+(-0.6,0)$);
+\draw (zero_sum)        -- (nash);
+\draw (nash)            -- (subgame);
+\draw[rounded corners=6pt] ($(nash.north)+(0.6,0)$) -- (11.7,1.6)
+      -- (18.2,1.6) -- ($(brp.north)+(-0.3,0)$);
 
-% ── Appendix edges (dashed) ──────────────────────────────────────────────────
-\draw[dashed path] (numint)   -- (replicator);
-\draw[dashed path] (absorb)   -- (moran);
-\draw[dashed path] (ergodic)  -- (moran);
-\draw[dashed path] (ergodic)  -- (further);
-\draw[dashed path] (intpivot) -- (brp);
-\draw[dashed path] (intpivot) -- (zero_sum);
-\draw[dashed path] (ip)       -- (routing);
+% Edges: into the dynamics row. The Nash edge runs on the track at
+% y = -0.85, the Subgame Perfection edge below it at y = -1.1, hopping
+% over the two vertical lines that leave Nash Equilibrium.
+\draw[rounded corners=6pt] ($(nash.south)+(-1.2,0)$) -- (9.9,-0.85)
+      -- (-0.6,-0.85) -- ($(repeated.north)+(-0.6,0)$);
+\draw[rounded corners=6pt] ($(subgame.south)+(-1.2,0)$) -- (13.6,-1.1)
+      -- (11.25,-1.1) arc[start angle=0, end angle=180, radius=0.4]
+      -- (0.6,-1.1) -- ($(repeated.north)+(0.6,0)$);
+\draw (nash) -- (replicator);
+
+% Edges: dynamics row. The skip edges to Moran Process and to Learning and
+% Evolutionary Dynamics run below the row (tracks at y = -4.6 and -5.0);
+% the Replicator Dynamics edge runs above it (track at y = -2.2), since its
+% span interleaves with the Chapter 8 to Chapter 10 edge.
+\draw (repeated)     -- (direct_recip);
+% The small arc hops over the Nash-to-allocation channel at x = 5.7.
+\draw (direct_recip) -- (5.45,-3.4)
+      arc[start angle=180, end angle=0, radius=0.25] -- (evol_bio);
+\draw[rounded corners=6pt] ($(evol_bio.south)+(0.4,0)$) -- (7.8,-4.6)
+      -- (14.2,-4.6) -- ($(moran.south)+(-0.6,0)$);
+\draw[<->] (replicator) -- (moran);
+\draw (moran)        -- (further);
+\draw[rounded corners=6pt] ($(replicator.north)+(0.6,0)$) -- (11.7,-2.2)
+      -- (18.0,-2.2) -- ($(further.north)+(-0.5,0)$);
+\draw[rounded corners=6pt] ($(evol_bio.south)+(-0.4,0)$) -- (7.0,-5.0)
+      -- (19.2,-5.0) -- ($(further.south)+(0.7,0)$);
+
+% Edges: Nash into the allocation row
+% Both edges share a channel that drops between columns 2 and 3, then
+% branches left to Routing Games and right to Auction Games.
+\draw[rounded corners=6pt] ($(nash.south)+(-0.5,0)$) -- ++(0,-1.75)
+      -- (5.7,-2.3) -- (5.7,-7.5) -- (7.4,-7.5) -- (auction.north);
+\draw[rounded corners=6pt] (5.7,-7.5) -- (1.0,-7.5)
+      -- ($(routing.north)+(1.0,0)$);
+
+% Edges: allocation row, with the skip edge on the track at y = -9.8
+\draw[<->, rounded corners=6pt] (matching.south) -- (3.7,-9.8)
+      -- (11.1,-9.8) -- (social.south);
+\draw (coop) -- (thecore);
+
+% Appendix edges (dashed)
+\draw[dashed path, rounded corners=6pt] (intpivot.west) -- (7.4,2.9)
+      -- (zero_sum.north);
+\draw[dashed path, rounded corners=6pt] (intpivot.east) -- (18.8,2.9)
+      -- ($(brp.north)+(0.3,0)$);
+\draw[dashed path] (ip)     -- (routing);
+\draw[dashed path] (numint) -- (replicator);
+\draw[dashed path] (absorb) -- (moran);
+\draw[dashed path, rounded corners=6pt] ($(ergodic.north)+(-0.6,0)$)
+      -- (17.9,-5.2) -- (15.6,-5.2) -- ($(moran.south)+(0.8,0)$);
+\draw[dashed path] (ergodic) -- (further);
 
 \end{tikzpicture}
 \end{document}
