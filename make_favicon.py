@@ -21,9 +21,10 @@ cmap_bg = LinearSegmentedColormap.from_list("bg", ["#0d1b2a", "#1b3a5c"], N=256)
 ax.imshow(grad, extent=[0, 1, 0, 1], aspect="auto",
           cmap=cmap_bg, origin="lower", zorder=0)
 
-TEAL   = "#5ec4a0"
+# Colours sampled from cover.png (replicator dynamics panel)
+TEAL   = "#3e8376"
 ACCENT = "#f5a623"
-WHITE  = "#f0f4f8"
+WHITE  = "#edf1f5"
 
 margin = 0.10
 sv1 = np.array([margin,      margin])
@@ -38,7 +39,7 @@ def bary_to_cart(b1, b2, b3):
 
 center = bary_to_cart(1/3, 1/3, 1/3)
 
-cmap_traj = LinearSegmentedColormap.from_list("traj", [TEAL, "#b0f0d8", WHITE], N=256)
+cmap_traj = LinearSegmentedColormap.from_list("traj", [TEAL, "#a9d0c8", WHITE], N=256)
 
 n = 400
 for r_idx, r in enumerate([0.06, 0.13, 0.20]):
@@ -50,10 +51,9 @@ for r_idx, r in enumerate([0.06, 0.13, 0.20]):
     b1, b2, b3 = b1/total, b2/total, b3/total
     pts = np.array([bary_to_cart(b1[i], b2[i], b3[i]) for i in range(n)])
     ax.plot(pts[:, 0], pts[:, 1], color=cmap_traj(r_idx / 2),
-            lw=1.6, alpha=0.55 + 0.20 * r_idx, zorder=4)
+            lw=1.6, zorder=4)
 
 ax.plot(*center, "o", color=ACCENT, ms=9, zorder=6)
-ax.plot(*center, "o", color="#fff", ms=3, zorder=7)
 
 fig.savefig("favicon.png", dpi=SIZE)
 plt.close(fig)
@@ -62,6 +62,7 @@ print("favicon.png written")
 src = Image.open("favicon.png").convert("RGBA")
 sizes = [16, 32, 48, 64, 128, 256]
 icons = [src.resize((s, s), Image.LANCZOS) for s in sizes]
-icons[0].save("favicon.ico", format="ICO", sizes=[(s, s) for s in sizes],
-              append_images=icons[1:])
+# Save from the largest frame: PIL drops any size larger than the base image
+icons[-1].save("favicon.ico", format="ICO", sizes=[(s, s) for s in sizes],
+               append_images=icons[:-1])
 print("favicon.ico written")
