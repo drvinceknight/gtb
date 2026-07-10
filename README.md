@@ -4,6 +4,21 @@ Join [the Game Theory Discord](https://github.com/drvinceknight/equilibrium_expl
 
 This is a Game Theory text book. You can read it [here](https://vknight.org/gtb/).
 
+## Citing the book
+
+Citation metadata is in [`CITATION.cff`](CITATION.cff); GitHub's 'Cite this
+repository' button generates APA and BibTeX entries from it. A suggested BibTeX
+entry is:
+
+```bibtex
+@book{knight2026gametheory,
+  author = {Knight, Vincent and Brown, James},
+  title  = {Game Theory: Theory, Software, Research},
+  year   = {2026},
+  url    = {https://vknight.org/gtb/},
+}
+```
+
 ## Building the book
 
 ### Prerequisites
