@@ -35,8 +35,8 @@ Every autumn on the Scottish hillside, red deer stags compete for access to
 females. Stags with larger, heavier antlers are more likely to win contests
 [@clutton1982functions; @kruuk2002antler], but growing such antlers over the
 summer demands significant energy that could otherwise be allocated to body
-condition, immune function, and winter survival [@bubenik1982energetics;
-@madsen2006antler].
+condition, immune function, and winter survival [@moen1999antler;
+@harshman2007cost].
 
 Now consider the next few generations, as heavy antler growth spreads. Most stags now
 have large antlers. Contests between them are no longer quick or risk-free; both stags
