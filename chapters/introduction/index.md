@@ -97,6 +97,29 @@ illustrations, may continue to use them and any variants of them in his own work
 and any reuse of an illustration outside this book requires his permission. Full
 details are in the `LICENSE` and `ILLUSTRATIONS.md` files in the [repository](https://github.com/drvinceknight/gt).
 
+## Citing this book
+
+If this book contributes to your work we would appreciate a citation. A
+suggested plain-text form is:
+
+> Knight, V. and Brown, J. (2026). *Game Theory: Theory, Software, Research*.
+> Available at [vknight.org/gtb](https://vknight.org/gtb/).
+
+The corresponding BibTeX entry is:
+
+```bibtex
+@book{knight2026gametheory,
+  author = {Knight, Vincent and Brown, James},
+  title  = {Game Theory: Theory, Software, Research},
+  year   = {2026},
+  url    = {https://vknight.org/gtb/},
+}
+```
+
+The repository also includes a
+[`CITATION.cff`](https://github.com/drvinceknight/gt/blob/main/CITATION.cff)
+file, from which GitHub can generate a citation in a number of common formats.
+
 ## What does this book cover?
 
 The book is organised into three broad themes.
