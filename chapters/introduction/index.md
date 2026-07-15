@@ -166,9 +166,9 @@ decision-making and impossibility results. [Cooperative Games](#chp:cooperative_
 considers coalition formation, the characteristic function, and the Shapley
 value.
 
-Five **appendices** provide self-contained mathematical background: numerical
+Six **appendices** provide self-contained mathematical background: numerical
 integration, absorbing Markov chains, ergodic Markov chains, interior point
-optimisation (KKT conditions), and integer pivoting.
+optimisation (KKT conditions), integer pivoting, and order statistics.
 
 Throughout, the emphasis is on games of complete information, in which the
 players, their available actions, and their payoffs are common knowledge. This is

@@ -32,6 +32,7 @@ project:
     - file: appendices/ergodic_markov_chains/index.md
     - file: appendices/interior_point_optimisation/index.md
     - file: appendices/integer_pivoting/index.md
+    - file: appendices/order_statistics/index.md
     - file: about_the_authors.md
   bibliography:
     - references.bib
