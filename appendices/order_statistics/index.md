@@ -368,7 +368,7 @@ distribution on $[0, 1]$.
 | $\mathbb{E}[X_{(k)}]$           | $\frac{k}{N + 1}$                  |
 | $\mathbb{E}[\max_i X_i]$        | $\frac{N}{N + 1}$                  |
 | $\mathbb{E}[\min_i X_i]$        | $\frac{1}{N + 1}$                  |
-| $\mathbb{E}\lvert X_1 - X_2 \rvert$ ($N=2$) | $\frac{1}{3}$          |
+| $\mathbb{E}\left|X_1 - X_2\right|$ ($N=2$) | $\frac{1}{3}$           |
 ```
 
 ```{important}
