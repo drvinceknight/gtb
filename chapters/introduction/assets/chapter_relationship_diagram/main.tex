@@ -59,11 +59,12 @@
 \node[dynamic] (further)      at (18.5, -3.4) {Chapter 11\\Learning and\\Evolutionary\\Dynamics};
 
 % Appendices, placed between the rows they support
-\node[appendix] (intpivot) at (12.95, 2.9)  {Appendix\\Integer Pivoting};
-\node[appendix] (ip)       at (0, -6.1)     {Appendix\\Interior Point Opt.};
-\node[appendix] (numint)   at (11.1, -6.1)  {Appendix\\Numerical Integration};
-\node[appendix] (absorb)   at (14.8, -6.1)  {Appendix\\Absorbing\\Markov Chains};
-\node[appendix] (ergodic)  at (18.5, -6.1)  {Appendix\\Ergodic\\Markov Chains};
+\node[appendix] (intpivot)  at (12.95, 2.9)  {Appendix\\Integer Pivoting};
+\node[appendix] (ip)        at (0, -6.1)     {Appendix\\Interior Point Opt.};
+\node[appendix] (orderstat) at (7.4, -6.1)   {Appendix\\Order Statistics};
+\node[appendix] (numint)    at (11.1, -6.1)  {Appendix\\Numerical Integration};
+\node[appendix] (absorb)    at (14.8, -6.1)  {Appendix\\Absorbing\\Markov Chains};
+\node[appendix] (ergodic)   at (18.5, -6.1)  {Appendix\\Ergodic\\Markov Chains};
 
 % Row 3: allocation and collective choice chapters (13 to 18)
 \node[applied] (routing)  at (0, -8.6)    {Chapter 13\\Routing Games};
@@ -133,6 +134,10 @@
 \draw[dashed path, rounded corners=6pt] (intpivot.east) -- (18.8,2.9)
       -- ($(brp.north)+(0.3,0)$);
 \draw[dashed path] (ip)     -- (routing);
+% Offset from the node centre so the edge clears the solid channel that
+% enters Auction Games at x = 7.4.
+\draw[dashed path] ($(orderstat.south)+(0.6,0)$)
+      -- ($(auction.north)+(0.6,0)$);
 \draw[dashed path] (numint) -- (replicator);
 \draw[dashed path] (absorb) -- (moran);
 \draw[dashed path, rounded corners=6pt] ($(ergodic.north)+(-0.6,0)$)

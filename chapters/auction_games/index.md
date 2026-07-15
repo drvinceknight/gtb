@@ -391,6 +391,9 @@ In $\text{Unif}[0, 1]$, the expected value of the $k$-th order statistic (i.e., 
 $$
 \mathbb{E}[v_{(k)}] = \frac{k}{N + 1}
 $$
+
+This fact, and related expectations of ordered uniform samples, are derived
+in [](#app:order_statistics).
 ```
 
 ---
@@ -1028,11 +1031,11 @@ print("Equal?", sym.simplify(E_R_first_simplified - E_R_second) == 0)
 import numpy as np
 
 # Numerical verification for N=3
-np.random.seed(42)
+rng = np.random.default_rng(seed=42)
 n_sims = 200_000
 N_val = 3
 
-valuations = np.random.uniform(0, 1, (n_sims, N_val))
+valuations = rng.uniform(0, 1, (n_sims, N_val))
 
 # First-price: each bid (N-1)/N * v, revenue = max bid
 bids_fp = (N_val - 1) / N_val * valuations
