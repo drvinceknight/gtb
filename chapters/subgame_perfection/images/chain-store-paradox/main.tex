@@ -3,12 +3,12 @@
 \usepackage{tikz}
 \usetikzlibrary{calc}
 
+\input{../../../../tex/gtbtikz}
 \begin{document}
-\pagecolor{white}
 
 \begin{tikzpicture}
-    \node [draw, color=red] (A) at (0, 0) {Entrant};
-        \node [draw, color=blue] (B) at ($(A) + (-2.5, -2)$) {Incumbent};
+    \node [draw, color=gtbcoral] (A) at (0, 0) {Entrant};
+        \node [draw, color=gtbblue] (B) at ($(A) + (-2.5, -2)$) {Incumbent};
         \node [draw] (O1) at ($(A) + (2.5, -2)$) {$(1, 5)$};
         \node [draw] (O3) at ($(B) + (-2.5, -2)$) {$(2, 2)$};
         \node [draw] (O2) at ($(B) + (2.5, -2)$) {$(0, 0)$};

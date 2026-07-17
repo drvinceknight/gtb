@@ -2,14 +2,14 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, positioning}
 
-\definecolor{gene}{HTML}{0072B2}
-\definecolor{eff}{HTML}{009E73}
+\definecolor{gene}{HTML}{5B90C6}
+\definecolor{eff}{HTML}{EBBF33}
 
+\input{../../../../tex/gtbtikz}
 \begin{document}
-\pagecolor{white}
 \begin{tikzpicture}[
     >=Stealth, font=\sffamily,
-    lab/.style={font=\sffamily\scriptsize, text=black!60, align=center},
+    lab/.style={font=\sffamily\scriptsize, text=gtbink!60, align=center},
     gnode/.style={draw=gene, text=gene, rounded corners=3pt, line width=1.0pt,
                   align=center, minimum width=2.6cm, minimum height=1.3cm,
                   font=\sffamily\small\bfseries},

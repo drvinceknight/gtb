@@ -2,6 +2,7 @@
 \usepackage{tikz}
 \usetikzlibrary{calc, positioning}
 
+\input{../../../../tex/gtbtikz}
 \begin{document}
 \begin{tikzpicture}[
     font=\sffamily,
@@ -13,13 +14,13 @@
         minimum height=1.1cm,
         align=center
     },
-    base/.style={draw=black, fill=white},
-    found/.style={base, fill=blue!10},
-    dynamic/.style={base, fill=green!15},
-    applied/.style={base, fill=orange!15},
-    appendix/.style={base, fill=gray!10, font=\small},
-    every path/.style={thick, draw=black!70, ->, >=latex},
-    dashed path/.style={thick, draw=black!40, dashed, ->, >=latex}
+    base/.style={draw=gtbink, fill=gtbpaper},
+    found/.style={base, fill=gtbpaper},
+    dynamic/.style={base, fill=gtbsage!40},
+    applied/.style={base, fill=gtbyellow!40},
+    appendix/.style={base, fill=gtbpaper, font=\small},
+    every path/.style={thick, draw=gtbink!70, ->, >=latex},
+    dashed path/.style={thick, draw=gtbink!40, dashed, ->, >=latex}
 ]
 
 % Legend as a single horizontal key row across the top of the diagram

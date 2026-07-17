@@ -5,14 +5,14 @@
 
 \usepackage{xcolor} % add to your preamble
 
-\definecolor{blue}{RGB}{0,114,178}
-\definecolor{orange}{RGB}{230,159,0}
-\definecolor{green}{RGB}{0,158,115}
+\definecolor{blue}{RGB}{91,144,198}
+\definecolor{orange}{RGB}{235,191,51}
+\definecolor{green}{RGB}{147,91,57}
 
 \pgfplotsset{compat=newest}
 
+\input{../../../../tex/gtbtikz}
 \begin{document}
-\pagecolor{white}
 \begin{tikzpicture}
 
   % Axes
@@ -44,7 +44,7 @@
     \node[above left, blue] at (\tnext,\xnext) {$x_{\i}$};
 
     % Step size label
-    \draw[green, <->] (\t,\x) -- (\tnext,\x) node[midway, fill=white, inner sep=1pt] {\scriptsize $h$};
+    \draw[green, <->] (\t,\x) -- (\tnext,\x) node[midway, fill=gtbpaper, inner sep=1pt] {\scriptsize $h$};
     \draw[orange, <->] (\tnext,\x) -- (\tnext,\xnext) node[midway, right, orange] {\scriptsize $x_{\ilast} h$};
 
     \xdef\x{\xnext}

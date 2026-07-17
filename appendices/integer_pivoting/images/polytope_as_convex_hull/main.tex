@@ -1,7 +1,7 @@
 \documentclass{standalone}
 \usepackage{tikz}
+\input{../../../../tex/gtbtikz}
 \begin{document}
-\pagecolor{white}
 
 \begin{tikzpicture}[scale=20]
   % Ax_1es
@@ -15,7 +15,7 @@
   \coordinate (D) at (0, 0.333);
 
   % Fill the polytope
-  \filldraw[fill=blue!10, draw=blue, thick]
+  \filldraw[fill=gtbpaper, draw=gtbblue, thick]
     (A) -- (B) -- (C) -- (D) -- cycle;
 
   % Draw the points
