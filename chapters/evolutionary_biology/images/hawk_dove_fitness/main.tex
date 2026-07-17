@@ -2,15 +2,15 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, calc}
 
-\definecolor{hawk}{HTML}{D55E00}
-\definecolor{dove}{HTML}{0072B2}
+\definecolor{hawk}{HTML}{935B39}
+\definecolor{dove}{HTML}{5B90C6}
 \definecolor{crit}{HTML}{555555}
 
+\input{../../../../tex/gtbtikz}
 \begin{document}
-\pagecolor{white}
 \begin{tikzpicture}[
     >=Stealth, font=\sffamily,
-    lab/.style={font=\sffamily\scriptsize, text=black!70},
+    lab/.style={font=\sffamily\scriptsize, text=gtbink!70},
 ]
 % data point (x,y) with x in [0,1], fitness y in [-1,2] maps to
 %   (x*8, 1.6 + y*1.6)
@@ -25,7 +25,7 @@
 
 % fitness = 0 reference
 \draw[black!25, dashed, line width=0.6pt] (0,\yz) -- (8,\yz);
-\node[lab, anchor=east, text=black!45] at (-0.08,\yz) {$0$};
+\node[lab, anchor=east, text=gtbink!45] at (-0.08,\yz) {$0$};
 
 % Hawk line: (0,2) -> (1,-1)
 \draw[hawk, line width=1.3pt] (0,{\yz+2*\ys}) -- (8,{\yz-1*\ys});
@@ -46,8 +46,8 @@
 \node[dove, font=\sffamily\small, anchor=north west] at (1.15,2.7) {$\pi_D(x)$};
 
 % region annotations
-\node[lab, text=black!55, align=center] at (2,0.55) {Hawks\\ increase};
-\node[lab, text=black!55, align=center] at (6,0.55) {Doves\\ increase};
+\node[lab, text=gtbink!55, align=center] at (2,0.55) {Hawks\\ increase};
+\node[lab, text=gtbink!55, align=center] at (6,0.55) {Doves\\ increase};
 
 \end{tikzpicture}
 \end{document}
