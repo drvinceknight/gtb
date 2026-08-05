@@ -292,6 +292,78 @@ Thus, any deviation $\bar{b} \ne \frac{N - 1}{N}v_i$ does not improve utility,
 and the symmetric profile in which every player bids $\tfrac{N-1}{N} v_i$ is a
 Bayesian Nash equilibrium.
 
+(theorem_revenue_equivalence)=
+
+### Theorem: Revenue Equivalence
+
+---
+
+Let $N$ risk-neutral bidders have valuations drawn independently from a common
+continuous distribution $F$ whose support is an interval
+$[\underline{v}, \overline{v}]$. Consider any two auction formats whose
+equilibria satisfy the following two conditions:
+
+1. the item is always won by the bidder with the highest valuation;
+2. a bidder with the lowest possible valuation has zero expected utility.
+
+Then the two formats yield the same expected revenue for the seller.
+
+---
+
+**Proof**
+
+Fix one of the two formats and a symmetric equilibrium of it. For a bidder with
+valuation $v$, let $P(z)$ denote their probability of winning, and $M(z)$ their
+expected payment, when they behave exactly as a bidder with valuation $z$ would,
+while all other bidders follow the equilibrium. Behaving as type $z$ gives
+expected utility $v P(z) - M(z)$, and in equilibrium the best choice is $z = v$,
+so the equilibrium expected utility is:
+
+$$
+U(v) = \max_{z} \left( v P(z) - M(z) \right) = v P(v) - M(v)
+$$
+
+Optimality at $v$ means $U(v) \geq v P(w) - M(w) = U(w) + (v - w) P(w)$ for any
+other valuation $w$, and swapping the roles of $v$ and $w$ gives
+$U(w) \geq U(v) + (w - v) P(v)$. For $w \leq v$ these combine into:
+
+$$
+(v - w) P(w) \; \leq \; U(v) - U(w) \; \leq \; (v - w) P(v)
+$$
+
+By the first condition the item always goes to the highest valuation, so a
+bidder behaving as type $t$ wins precisely when $t$ exceeds each of the other
+$N - 1$ independent valuations: $P(t) = F(t)^{N - 1}$, which is continuous.
+Dividing through by $v - w$ and letting $w \to v$, together with the same
+inequalities for $w \geq v$, gives $U'(v) = F(v)^{N - 1}$. Integrating from the
+lowest valuation $\underline{v}$, where the second condition gives
+$U(\underline{v}) = 0$:
+
+$$
+U(v) = \int_{\underline{v}}^{v} F(t)^{N - 1}\,dt
+$$
+
+Nothing on the right depends on which format was fixed: the winning probability
+is determined by the valuations alone, and the anchor at $\underline{v}$ is
+shared. Hence the expected payment
+
+$$
+M(v) = v F(v)^{N - 1} - U(v)
+$$
+
+is also the same in both formats, and the seller's expected revenue, the sum of
+the $N$ bidders' expected payments, coincides.
+
+[](#revenue_equivalence) verifies this directly for uniform valuations, where
+both the first-price and second-price sealed-bid auctions raise
+$\frac{N - 1}{N + 1}$ in expectation.
+
+The theorem holds far more generally: the same argument applies to any two
+formats sharing an arbitrary allocation rule, not just the efficient one, and
+to asymmetric bidders with valuations drawn from different distributions. This
+general form is due to [@myerson1981optimal], discussed further in
+[](#sec:notable_research_auction_games).
+
 ---
 
 ## Exercises
@@ -441,6 +513,8 @@ mean_utilities = np.mean(utilities, axis=0)
 print(f"Mean utility per bidder: {mean_utilities}")
 ```
 
+(sec:notable_research_auction_games)=
+
 ## Notable Research
 
 One of the early important publications in this field is [@vickrey1961counterspeculation],
@@ -449,8 +523,8 @@ truth-telling is optimal, but also discusses the first-price auction. Vickrey wa
 Prize in Economics in 1996 for this foundational work.
 
 Another foundational contribution is [@myerson1981optimal], which formulates the design of optimal
-auctions, introduces the concept of virtual valuations, and proves a generalisation of the result
-in [](#revenue_equivalence): the revenue equivalence theorem. This theorem shows
+auctions, introduces the concept of virtual valuations, and proves a generalisation of
+[](#theorem_revenue_equivalence), showing
 that all standard auctions yield the same expected revenue when bidders are risk-neutral and have
 independent private values.
 
