@@ -27,15 +27,20 @@ jobs:
         run: typst --version
       - name: Install dependencies
         run: uv sync
+      # pref-voting 0.5.4 raises SyntaxWarnings when first byte-compiled on
+      # Python 3.14; importing it here compiles it so the warnings land in
+      # this log rather than in the executed notebook output.
+      - name: Pre-compile pref_voting
+        run: uv run python -c "import pref_voting.profiles"
       # Reuse MyST's notebook execution cache, restoring from the cache built
       # on main so a pull request only re-executes the notebooks it changes.
       - name: Restore MyST execution cache
         uses: actions/cache@v4
         with:
           path: _build/execute
-          key: myst-execute-${{ hashFiles('chapters/**/index.md', 'appendices/**/index.md', 'uv.lock') }}
+          key: myst-execute-v2-${{ hashFiles('chapters/**/index.md', 'appendices/**/index.md', 'uv.lock') }}
           restore-keys: |
-            myst-execute-
+            myst-execute-v2-
       # Build the HTML site and the Typst PDF in a single pass: MyST executes
       # each notebook once and renders the PDF to exports/main.pdf. We assert
       # the PDF exists so a skipped render fails here, with diagnostics.
