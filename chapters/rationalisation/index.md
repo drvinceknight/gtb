@@ -514,7 +514,7 @@ a strategy $\sigma_r^*$ of the row player is a **best response** to a strategy
 $\sigma_c$ of the column player if and only if:
 
 $$
-\sigma_{r^*}(i) > 0 \quad \Rightarrow \quad (A \sigma_c^\mathsf{T})_i =
+\sigma_r^*(i) > 0 \quad \Rightarrow \quad (A \sigma_c^\mathsf{T})_i =
 \max_{k \in \mathcal{A}_1}(A \sigma_c^\mathsf{T})_k
 \quad \text{for all } i \in \mathcal{A}_1
 $$
