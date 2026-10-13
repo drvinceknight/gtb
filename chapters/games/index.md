@@ -494,8 +494,8 @@ c &\to (x_c, 1 - x_c)
 \end{aligned}
 $$
 
-Here, $x_b$ is the probability of choosing "sports" if Bob chose sports, and
-$x_c$ is the probability of choosing sports if Bob chose comedy.
+Here, $x_b$ is the probability of choosing "sports" if Bob chose comedy, and
+$x_c$ is the probability of choosing sports if Bob chose sports.
 
 If Celine is unaware of Bob’s decision, as in the [coordination game with imperfect information](#fig:battle_of_the_sexes_imperfect_information),
 then nodes **b** and **c** form a single information set. Her strategy becomes:
@@ -576,13 +576,13 @@ player) and Celine (the column player) are:
 
 $$
 M_r = \begin{pmatrix}
-3 & 3 & 1 & 1 \\
-0 & 2 & 0 & 2 \\
+2 & 0 & 2 & 0 \\
+1 & 1 & 3 & 3 \\
 \end{pmatrix}
 \qquad
 M_c = \begin{pmatrix}
-2 & 2 & 1 & 1 \\
-0 & 3 & 0 & 3 \\
+3 & 0 & 3 & 0 \\
+1 & 1 & 2 & 2 \\
 \end{pmatrix}
 $$
 
@@ -923,7 +923,7 @@ so $|\mathcal{N}| = 2$.
 
 - **Vertices** $V$: the root node $a$ (Bob's decision),
   two intermediate nodes $b$ and $c$ (Celine's decisions after Bob
-  plays Sports or Comedy respectively), and four terminal (leaf)
+  plays Comedy or Sports respectively), and four terminal (leaf)
   nodes corresponding to the four possible outcomes.
 
 - **Edges** $E$: the edge from $a$ to $b$ (labelled Comedy), the edge
