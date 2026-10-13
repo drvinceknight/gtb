@@ -441,6 +441,26 @@ We can visualise both of these expected utility functions in [](#fig:expected_ut
 Expected utility for each player as a function of the probability of playing Heads in Matching Pennies.
 ```
 
+(sec:linear_algebraic_formulation_of_expected_utility)=
+
+#### Linear Algebraic Form of Expected Utility
+
+The expected utility calculation defined in [](#eqn:expected_utility)
+corresponds to a matrix formulation using
+linear algebra:
+
+$$
+\label{eqn:linear_algebraic_formulation_of_expected_utility}
+u_i(\sigma_1, \sigma_2) = \sigma_1 M \sigma_2^T
+$$
+
+Here, $M$ is the payoff matrix for player $i$, and $\sigma_1$, $\sigma_2$ are
+row and column player strategies, treated as row vectors.
+
+This linear algebraic form will be important in later chapters,
+and it also enables **efficient numerical computation** in programming
+languages that support vectorized matrix operations.
+
 ---
 
 ### Definition: Strategy in Extensive Form Games
@@ -675,26 +695,6 @@ Determine all **information sets**.
 ```
 
 ## Programming
-
-(sec:linear_algebraic_formulation_of_expected_utility)=
-
-### Linear Algebraic Form of Expected Utility
-
-The expected utility calculation defined in [](#eqn:expected_utility)
-corresponds to a matrix formulation using
-linear algebra:
-
-$$
-\label{eqn:linear_algebraic_formulation_of_expected_utility}
-u_i(\sigma_1, \sigma_2) = \sigma_1 M \sigma_2^T
-$$
-
-Here, $M$ is the payoff matrix for player $i$, and $\sigma_1$, $\sigma_2$ are
-row and column player strategies, treated as row vectors.
-
-This linear algebraic form will be important in later chapters,
-and it also enables **efficient numerical computation** in programming
-languages that support vectorized matrix operations.
 
 (sec:using_numpy_for_utility_calculations)=
 
