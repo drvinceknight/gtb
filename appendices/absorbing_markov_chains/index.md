@@ -63,7 +63,7 @@ particular Absorbing Markov Chains.
 Let $ S = \{s_1, s_2, \dots, s_n\} $ be a finite set of **states**. A **Markov chain** is defined by:
 
 - A sequence of random variables $ X_0, X_1, X_2, \dots $, where each $ X_t \in S $
-- A **transition probability matrix** $ P \in \mathbb{R}\_{\geq 0}^{n \times n} $, where
+- A **transition probability matrix** $ P \in \mathbb{R}_{\geq 0}^{n \times n} $, where
 
 $$
 P_{ij} = \mathbb{P}(X_{t+1} = s_j \mid X_t = s_i)

@@ -166,8 +166,8 @@ returns all pairs of best responses:
 1. For all pairs of supports (subsets of the action space)
    $(I, J)$:
 2. Solve the following equations (to ensure best responses):
-   - $\sum_{i \in I} {\sigma_{r}}_i {M_{c}}\_{ij} = v \quad \text{for all } j \in J$
-   - $\sum_{j \in J} {M_r}_{ij} {\sigma\_{c}}\_j = u \quad \text{for all } i \in I$
+   - $\sum_{i \in I} {\sigma_{r}}_i {M_{c}}_{ij} = v \quad \text{for all } j \in J$
+   - $\sum_{j \in J} {M_r}_{ij} {\sigma_{c}}_j = u \quad \text{for all } i \in I$
 
 3. Solve the normalisation and non-negativity constraints:
    - $\sum_{i=1}^m {\sigma_{r}}_i = 1$ and ${\sigma_1}_i \geq 0$ for all $i$
