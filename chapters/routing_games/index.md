@@ -276,7 +276,7 @@ This leads to the definition of a Nash flow.
 
 For a routing game $(G,r,c)$ a flow $\tilde f$ is called a **Nash flow**
 if and only if for every commodity $i$ and any two paths
-$P_1,P_2\in\mathcal{P}\_i$ such that $f\_{P_1}>0$ then:
+$P_1,P_2\in\mathcal{P}_i$ such that $f_{P_1}>0$ then:
 
 $$c_{P_1}(f)\leq c_{P_2}(f)$$
 
