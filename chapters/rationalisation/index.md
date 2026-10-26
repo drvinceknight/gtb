@@ -272,8 +272,8 @@ as well as $c_3$, and strictly better for at least one row.
 We remove $c_3$ from consideration.
 
 **Step 2:** With $c_3$ removed, the row player now compares $r_1$ and $r_2$.
-Row $r_2$ is weakly dominated by $r_1$, since $r_1$ yields outcomes that are
-always at least as good and sometimes strictly better.
+Row $r_2$ is strictly dominated by $r_1$, since $r_1$ yields a strictly higher
+payoff against both remaining columns.
 We eliminate $r_2$.
 
 **Step 3:** Finally, the column player is left with $c_1$ and $c_2$.
@@ -316,8 +316,8 @@ M_c = \begin{pmatrix}
 \end{pmatrix}
 $$
 
-Although some weakly dominated strategies may be eliminated here,
-we still end up with multiple strategy combinations remaining.
+In this game, no action is strictly or weakly dominated for either player,
+not even by a mixed strategy.
 No single obvious solution emerges from dominance alone.
 Here is another example:
 
