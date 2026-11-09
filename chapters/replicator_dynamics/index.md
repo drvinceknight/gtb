@@ -278,9 +278,11 @@ Consider a population of animals. These animals, when they interact, will
 always share their food. Due to a genetic mutation, some of these animals may
 act in an aggressive manner and not share their food. If two aggressive animals
 meet, they both compete and end up with no food. If an aggressive animal meets a
-sharing one, the aggressive one will take most of the food.
+sharing one, the aggressive one will take most of the food. We call the animals
+that share Doves and the aggressive animals Hawks.
 
-These interactions can be represented using the matrix $A$:
+These interactions can be represented using the matrix $M$, where the first
+strategy is Dove and the second is Hawk:
 
 $$
 M = \begin{pmatrix}
@@ -517,8 +519,9 @@ when considering equilibria in strategies.
 #### Example: Evolutionary stability in the Hawk-Dove game
 
 Let us consider the **Hawk-Dove** game. The associated symmetric two-player game
-can be written in a general form. Let $v$ denote the value of the resource and $c$ the cost of conflict
-with $v < c$.
+can be written in a general form. Let $v$ denote the value of the resource and
+$c$ the cost of conflict with $v < c$. Note that, unlike the previous example, we
+take Hawk as the first strategy and Dove as the second.
 
 Row player's payoff matrix:
 
@@ -540,7 +543,9 @@ v & \frac{v}{2}
 \end{pmatrix}
 $$
 
-To find symmetric Nash equilibria, we apply the support enumeration algorithm:
+To find symmetric Nash equilibria, we apply the support enumeration algorithm.
+Let $\sigma^* = (q^*, 1 - q^*)$, where $q^*$ is the probability of playing Hawk.
+Both strategies must give the same payoff against $\sigma^*$:
 
 $$
 \begin{aligned}
@@ -553,15 +558,13 @@ This gives
 
 $$\sigma^* = \left(\frac{v}{c}, 1 - \frac{v}{c}\right)$$
 
-where individuals are aggressive with probability $\frac{v}{c}$ and share
-otherwise.
+where individuals play Hawk with probability $\frac{v}{c}$ and Dove otherwise.
 
 To determine whether this strategy is evolutionarily stable, we check the
 conditions of the characterisation theorem.
 
-Since $f(\sigma^*, \sigma^*) = f(\sigma^*, \text{Aggressive}) =
-f(\sigma^*, \text{Sharing})$, the **first condition** does _not_ hold. We must
-therefore verify the **second condition**:
+Since $f(\sigma^*, \sigma^*) = f(\sigma^*, H) = f(\sigma^*, D)$, the **first
+condition** does _not_ hold. We must therefore verify the **second condition**:
 
 $$
 f(\sigma^*, \sigma) > f(\sigma, \sigma)
@@ -585,10 +588,8 @@ $$
 Subtracting the two expressions gives:
 
 $$
-\begin{align*}
-f(\sigma^*, \sigma) - f(\sigma, \sigma) \\
-&= \frac{c}{2} \left( \frac{v}{c} - \omega \right)^2 > 0
-\end{align*}
+f(\sigma^*, \sigma) - f(\sigma, \sigma)
+= \frac{c}{2} \left( \frac{v}{c} - \omega \right)^2 > 0
 $$
 
 This inequality is strictly satisfied for all $\omega \ne \frac{v}{c}$, so the
@@ -613,10 +614,9 @@ $$
 
 #### Example: The Replicator Mutator Dynamics Equation for the Hawk Dove Game
 
-Let there be
-a 10% chance that
-aggressive individuals will produce sharing ones in which case the matrix $Q$ is given
-by:
+Let there be a 10% chance that Hawks will produce Doves. With Dove as the first
+strategy, as in [](#eqn:replicator_dynamics_equation_for_hawk_dove), the matrix
+$Q$ is given by:
 
 $$
 Q = \begin{pmatrix}
