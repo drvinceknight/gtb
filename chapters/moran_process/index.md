@@ -567,47 +567,46 @@ $$
 
 2. Find all **Nash equilibria** of the game as a function of $a$.  
 
-3. Now consider a **two-type Moran process** with a population of size $N$.  
-Type $1$ individuals play row $1$; type $2$ individuals play row $2$.
+3. Now consider a **two-type Moran process** with a population of size $N$.
+   Type $1$ individuals play row $1$; type $2$ individuals play row $2$.
 
-The fitness of each type is given by:
+   The fitness of each type is given by:
 
-$$
-f_1(i) = \left(\frac{(i-1) M_{11} + (N-i) M_{12}}{N-1}\right),
-$$
+   $$
+   f_1(i) = \left(\frac{(i-1) M_{11} + (N-i) M_{12}}{N-1}\right),
+   $$
 
-$$
-f_2(i) = \left(\frac{i\, M_{21} + (N-i-1) M_{22}}{N-1}\right),
-$$
+   $$
+   f_2(i) = \left(\frac{i\, M_{21} + (N-i-1) M_{22}}{N-1}\right),
+   $$
 
-where $i$ is the number of type-1 individuals.
+   where $i$ is the number of type-1 individuals.
 
-Using the standard formula:
+   Using the standard formula:
 
-$$
-\begin{align*}
-\rho_i \\
-&=
-\frac{
-1 + \sum_{j=1}^{i-1} \prod_{k=1}^{j} \gamma_k
-}{
-1 + \sum_{j=1}^{N-1} \prod_{k=1}^{j} \gamma_k
-},
-\qquad
-\gamma_k = \frac{f_2(k)}{f_1(k)},
-\end{align*}
-$$
+   $$
+   \rho_i =
+   \frac{
+   1 + \sum_{j=1}^{i-1} \prod_{k=1}^{j} \gamma_k
+   }{
+   1 + \sum_{j=1}^{N-1} \prod_{k=1}^{j} \gamma_k
+   },
+   \qquad
+   \gamma_k = \frac{f_2(k)}{f_1(k)},
+   $$
 
-4. Compute explicitly the fixation probability of a **single mutant** ($\rho_1$) for  
-$N \in \{2, 3, 4\}$.  
+   compute explicitly the fixation probability of a **single mutant** ($\rho_1$)
+   for $N \in \{2, 3, 4\}$.
 
-5. For $N\in\{2, 3, 4\}$, analyse the fixation probability $\rho_1$ in the two limits:
+4. For $N\in\{2, 3, 4\}$, analyse the fixation probability $\rho_1$ in the two
+   limits:
 
-1. $a \to 0$,  
-2. $a \to \infty$.
+   1. $a \to 0$,
+   2. $a \to \infty$.
 
-Explain the evolutionary intuition behind these two limiting behaviours and relate 
-them to the role of **fitness amplification** in frequency-dependent selection. 
+   Explain the evolutionary intuition behind these two limiting behaviours and
+   relate them to the role of **fitness amplification** in frequency-dependent
+   selection.
 ```
 
 ## Programming
@@ -1019,7 +1018,7 @@ $$
 $(r_1, c_2)$ is a Nash Equilibrium if and only if:
 
 $$
-a \geq 2 \text{ and } 2a \geq 3a \Rightarrow a \geq 0
+a \geq 2 \text{ and } 2a \geq 3a \Leftrightarrow a \geq 2 \text{ and } a \leq 0
 $$
 
 This is not possible.
@@ -1028,7 +1027,7 @@ $(r_2, c_1)$ is a Nash equilibrium if and only if:
 
 
 $$
-2a \geq 3a \text{ and } a \geq 2a 
+2a \geq 3a \text{ and } a \geq 2 \Leftrightarrow a \leq 0 \text{ and } a \geq 2
 $$
 
 Which is again, not possible.
@@ -1096,7 +1095,7 @@ plt.text(5, 2, r"$\{(r_1, c_1)\}$")
 plt.text(0.75, 1.5, r"$\{(r_1, c_1), (\sigma_1, \sigma_2),(r_2, c_2) \}$", rotation=90);
 ```
 
-4. For $N=2$:
+3. For $N=2$:
 
 $$
 \begin{align}
@@ -1217,9 +1216,7 @@ rho_1_N_4 = 1 / (1 + gamma.subs({i: 1})+ gamma.subs({i: 1}) * gamma.subs({i: 2})
 sym.simplify(rho_1_N_4)
 ```
 
-5. 
-
-a. For all $N=2$ we have:
+4. In the limit $a \to 0$, for $N=2$ we have:
 
 $$\lim_{a\to 0}\rho_1=1/3$$
 
@@ -1227,7 +1224,7 @@ For $N\in\{3, 4\}$
 
 $$\lim_{a\to 0}\rho_1=0$$
 
-b. For $N=2$ we have:
+In the limit $a \to \infty$, for $N=2$ we have:
 
 $$\lim_{a\to \infty}\rho_1=\lim_{a\to \infty}1/3=1/3$$
 
