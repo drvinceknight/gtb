@@ -235,7 +235,11 @@ $$
 The chain is ergodic whenever $0 < p, q, p', q' < 1$ (all probabilities
 strictly interior). For boundary cases such as pure TFT $(p=1, q=0)$, the
 chain may not be ergodic in general; the stationary distribution must be
-verified separately.
+verified separately. If every state leads to the same absorbing state, that
+state gives the unique stationary distribution and the formulas above still
+hold. If there is more than one absorbing state (or closed set of states),
+there is more than one stationary distribution and the long-run average
+payoffs depend on the starting state.
 ```
 
 (theorem:steady_state_distribution_for_two_reactive_strategies)=
@@ -763,21 +767,20 @@ M &=
 \end{align*}
 $$
 
-This chain has two absorbing components. Starting from $CC$: always stays in
-$CC$. Starting from $CD$: moves to $DC$, then back to $CC$, then stays. Starting
-from $DC$: moves to $CC$. Starting from $DD$: moves to $DC \to CC$.
+This chain has a single absorbing state, $CC$. Starting from $CC$: always
+stays in $CC$. Starting from $CD$: moves to $DC$, then to $CC$, then stays.
+Starting from $DC$: moves to $CC$. Starting from $DD$: moves to $DC \to CC$.
 
-Since all states eventually reach $CC$ (an absorbing state), the chain is **not
-ergodic** (it has an absorbing state rather than a unique stationary
-distribution with full support). However, it has a unique stationary distribution:
+The chain is **not ergodic**: it is not irreducible, since once in $CC$ it can
+never reach any other state. However, since every state eventually reaches $CC$
+and stays there, it has a unique stationary distribution:
 
 $$
 \pi = (1, 0, 0, 0)
 $$
 
-since all paths lead to $CC$ and stay there.
-
-The long-run average payoffs is given by the [](#theorem:long_run_average_payoff_via_stationary_distribution)
+Because this stationary distribution is unique, the long-run average payoffs
+are still given by the [](#theorem:long_run_average_payoff_via_stationary_distribution)
 
 $$
 \bar{u}_1 = R \cdot 1 + S \cdot 0 + T \cdot 0 + P \cdot 0 = R = 3
@@ -833,10 +836,10 @@ $$
 \pi = (0, 0, 0, 1)
 $$
 
-The chain is **not ergodic** (absorbing state at $DD$), but it has a unique
-stationary distribution with $\pi_{DD} = 1$.
-
-The long-run average payoffs is given by the [](#theorem:long_run_average_payoff_via_stationary_distribution)
+The chain is **not ergodic**: it is not irreducible, since once in $DD$ it can
+never leave. However, its stationary distribution, with $\pi_{DD} = 1$, is
+unique, so the long-run average payoffs are still given by the
+[](#theorem:long_run_average_payoff_via_stationary_distribution)
 
 $$
 \bar{u}_1 = R \cdot 0 + S \cdot 0 + T \cdot 0 + P \cdot 1 = P = 1
