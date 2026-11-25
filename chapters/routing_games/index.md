@@ -175,6 +175,48 @@ f_P&\geq 0
 \end{align*}
 $$
 
+(sec:minimising_over_a_rectangle)=
+
+### Minimising a convex function over a rectangle
+
+In the examples of this chapter a flow is described by two numbers, $\alpha$ and
+$\beta$, each restricted to an interval: $0 \leq \alpha \leq 1/2$ and
+$0 \leq \beta \leq 1/2$. Minimising a function $F(\alpha, \beta)$ over this square
+comes down to two checks.
+
+1. **Inside the square:** if the minimum is not on the boundary, both partial
+   derivatives are zero there:
+
+   $$
+   \frac{\partial F}{\partial \alpha} = 0
+   \qquad\text{and}\qquad
+   \frac{\partial F}{\partial \beta} = 0.
+   $$
+
+2. **On the boundary:** if the minimum is on an edge, then the derivative along
+   that edge is zero, and moving away from the edge into the square cannot
+   decrease $F$. For example, on the edge $\alpha = 1/2$ we need
+   $\frac{\partial F}{\partial \beta} = 0$ and
+   $\frac{\partial F}{\partial \alpha} \leq 0$: since $F$ decreases (or stays
+   the same) as $\alpha$ increases, the best we can do is push $\alpha$ as far
+   as it goes. On the edge $\alpha = 0$ the inequality is reversed:
+   $\frac{\partial F}{\partial \alpha} \geq 0$. At a corner, the inequality
+   applies to both variables.
+
+These checks find candidates for a minimum. When $F$ is **convex**, any point
+that passes them is the minimum over the whole square, and no further
+comparison is needed. All the functions we minimise in this chapter are convex.
+In particular, the potential function defined below is convex whenever every edge
+cost is non-decreasing in the flow on that edge.
+
+```{note}
+These two checks are a special case of the
+[Karush-Kuhn-Tucker conditions](#app:kkt_conditions), which handle general
+constraints. The Lagrange multiplier of a constraint on the boundary measures
+how strongly the function would like to leave the region through that boundary:
+it is the size of the derivative in the inequality above.
+```
+
 #### Example: Optimal Flow for the Delivery Companies Games
 
 In [](#fig:competing_delivery_companies_routing_game_with_flow_vector)
@@ -205,32 +247,29 @@ The plot of $(\alpha, \beta)$.
 ```
 
 The minimal point looks to be near the right boundary of the square, although it
-is unclear if it is on the boundary or not. It is in fact **not on the
-boundary**
-taking this fact as an assumption, identity the optimal flow using the
-[Karush-Kuhn-Tucker conditions](#app:kkt_conditions).
+is unclear from the plot whether it is on the boundary or not. We first look for
+a point inside the square where both partial derivatives are zero, as described in
+[](#sec:minimising_over_a_rectangle). Differentiating $C$ term by term:
 
-Let us first define the Lagrangian:
+$$
+\frac{\partial C}{\partial \alpha} = 3\alpha^2 + 2\alpha + 2\beta - 2
+= 3\alpha^2 - 2(1-\alpha-\beta)
+$$
 
-$$\mathcal{L}(\alpha,\beta,\lambda)=C(\alpha,\beta)-\lambda_1\alpha-\lambda_2(\alpha-1/2)-\lambda_3\beta-\lambda_4\beta$$
+$$
+\frac{\partial C}{\partial \beta} = 3\beta + 2\alpha + 2\beta - 2
+= 3\beta - 2(1-\alpha-\beta)
+$$
 
-If $f^*$ is the minimal point then the complementary
-slackness implies that $\lambda_i=0$ for all $i$, since this point does not sit
-on any boundary which would make the corresponding constraint function
-$g_i(f^*)=0$.
+Setting both of these equal to zero:
 
-Thus:
+$$
+3\alpha^2 - 2(1-\alpha-\beta) = 0
+\qquad\text{and}\qquad
+3\beta - 2(1-\alpha-\beta) = 0
+$$
 
-$$\mathcal{L}(\alpha,\beta,\lambda)=C(\alpha,\beta)$$
-
-We note that the feasiblity constraints all hold for $f^*$ so we are left to
-check stationarity:
-
-$$\frac{\partial \mathcal{L}}{\partial \alpha}=\frac{\partial C}{\partial \alpha}=3\alpha^2-2(1-\alpha-\beta)=0$$
-and
-$$\frac{\partial \mathcal{L}}{\partial \alpha}=\frac{\partial C}{\partial \beta}=3\beta-2(1-\alpha-\beta)=0$$
-
-which gives:
+The second equation is linear in $\beta$, which gives:
 
 $$
 \label{eqn:beta_as_a_function_of_alpha}
@@ -245,12 +284,24 @@ which has solutions:
 
 $$\left\{- \frac{1}{5} - \frac{\sqrt{11}}{5}, \; \frac{\sqrt{11}}{5} - \frac{1}{5}\right\}$$
 
-Only one of those is positive satisfying the constraints, substituting it in to
+Only one of those is positive, substituting it in to
 [](#eqn:beta_as_a_function_of_alpha) gives:
 
 $$\beta=\frac{12}{25} - \frac{2 \sqrt{11}}{25}$$
 
-thus the optimal flow is:
+This point, approximately $(0.463, 0.215)$, lies inside the square. The function
+$C$ is convex on the square: its matrix of second derivatives,
+
+$$
+\begin{pmatrix}
+6\alpha + 2 & 2\\
+2 & 5
+\end{pmatrix},
+$$
+
+has a positive top left entry and a positive determinant, $30\alpha + 6$, for
+all $\alpha \geq 0$. Thus this point is the minimum and there is no need to check
+the boundary. The optimal flow is:
 
 $$
 f^* = \left(\frac{\sqrt{11}}{5} - \frac{1}{5}, \; \frac{12}{25} - \frac{2 \sqrt{11}}{25}\right)
@@ -348,11 +399,12 @@ $$
 
 A feasible flow $\tilde f$ is a Nash flow for the routing game $(G,r,c)$ if and only if it is a minima for $\Phi(f)$.
 
-We state this result without proof. It follows from the first-order (KKT)
-optimality conditions for minimising the potential $\Phi$, which for the
-non-atomic routing game coincide with the equal-cost condition defining a Nash
-flow. The [KKT conditions](#app:kkt_conditions) are the tool used to check
-particular flows in the exercises below.
+We state this result without proof. The key observation is that differentiating
+$\Phi$ with respect to the amount of flow moved from one path to another gives the
+difference between the costs of the two paths. Thus the checks of
+[](#sec:minimising_over_a_rectangle) become: two used paths have equal cost, and
+a path that carries all of a commodity's traffic is no more expensive than the
+alternative. This is exactly the definition of a Nash flow.
 
 ### Definition: Marginal Cost
 
@@ -417,7 +469,8 @@ A routing game known as Braess's paradox.
 ```{exercise} 
 :label: nash_flow_via_potential_minimisation
 
-Use [](#thrm:nash_flow_minimises_the_potential_function) and [](#app:kkt_conditions) to verify that
+Use [](#thrm:nash_flow_minimises_the_potential_function) and
+[](#sec:minimising_over_a_rectangle) to verify that
 $\tilde f=(1/2,1/5)$ is a Nash flow for [](#fig:competing_delivery_companies_routing_game_with_flow_vector).
 ```
 
@@ -763,41 +816,57 @@ $$
 
 subject to $0\leq\alpha\leq 1/2$ and $0\leq\beta\leq 1/2$.
 
-Since the minimum may lie in the interior or on the boundary, we apply the KKT conditions. The feasible region is defined by:
+The point $(1/2, 1/5)$ lies on the edge $\alpha = 1/2$ of the square, so we use the
+boundary check of [](#sec:minimising_over_a_rectangle): we need
+$\frac{\partial\Phi}{\partial\beta} = 0$ and
+$\frac{\partial\Phi}{\partial\alpha} \leq 0$.
+
+We first compute the partial derivatives. The first two terms of $\Phi$ each
+depend on one variable only. For the last term we use the chain rule: the
+derivative of $1-\alpha-\beta$ with respect to $\alpha$ is $-1$, so
 
 $$
-g_1(\alpha,\beta)=\alpha\geq 0,\quad g_2(\alpha,\beta)=1/2-\alpha\geq 0,\quad g_3(\alpha,\beta)=\beta\geq 0,\quad g_4(\alpha,\beta)=1/2-\beta\geq 0
+\frac{\partial}{\partial\alpha}\left(\frac{(1-\alpha-\beta)^2}{2}\right)
+= (1-\alpha-\beta)\cdot(-1)
+= -(1-\alpha-\beta)
 $$
 
-At $(\alpha,\beta)=(1/2,1/5)$: constraint $g_2$ is active ($\alpha=1/2$), while $g_1$, $g_3$, $g_4$ are inactive. By complementary slackness, $\lambda_1=\lambda_3=\lambda_4=0$, and $\lambda_2\geq 0$.
-
-The KKT stationarity conditions are:
+and the same holds for the derivative with respect to $\beta$. This gives:
 
 $$
-\frac{\partial\Phi}{\partial\alpha}-\lambda_2\cdot(-1)=0\implies \alpha^2-(1-\alpha-\beta)+\lambda_2=0
+\frac{\partial\Phi}{\partial\alpha} = \alpha^2-(1-\alpha-\beta)
+\qquad\text{and}\qquad
+\frac{\partial\Phi}{\partial\beta} = \frac{3\beta}{2}-(1-\alpha-\beta)
 $$
 
-$$
-\frac{\partial\Phi}{\partial\beta}-0=0\implies \frac{3\beta}{2}-(1-\alpha-\beta)=0
-$$
+Note that $\frac{\partial\Phi}{\partial\alpha}$ is the cost of the path
+$(s_1, t)$ minus the cost of the path $(s_1, a, t)$, and similarly
+$\frac{\partial\Phi}{\partial\beta}$ is the cost of $(s_2, t)$ minus the cost of
+$(s_2, a, t)$.
 
-Evaluating the second condition at $(1/2, 1/5)$:
-
-$$
-\frac{3}{2}\cdot\frac{1}{5}-\left(1-\frac{1}{2}-\frac{1}{5}\right)=\frac{3}{10}-\frac{3}{10}=0\checkmark
-$$
-
-For the first condition at $(1/2, 1/5)$:
+Evaluating the derivative along the edge at $(1/2, 1/5)$:
 
 $$
-\left(\frac{1}{2}\right)^2-\left(1-\frac{1}{2}-\frac{1}{5}\right)+\lambda_2=\frac{1}{4}-\frac{3}{10}+\lambda_2=-\frac{1}{20}+\lambda_2=0
+\frac{\partial\Phi}{\partial\beta}
+= \frac{3}{2}\cdot\frac{1}{5}-\left(1-\frac{1}{2}-\frac{1}{5}\right)
+= \frac{3}{10}-\frac{3}{10}=0\checkmark
 $$
 
+Evaluating the derivative pointing into the square at $(1/2, 1/5)$:
+
 $$
-\implies\lambda_2=\frac{1}{20}>0\checkmark
+\frac{\partial\Phi}{\partial\alpha}
+= \left(\frac{1}{2}\right)^2-\left(1-\frac{1}{2}-\frac{1}{5}\right)
+= \frac{1}{4}-\frac{3}{10}
+= -\frac{1}{20}\leq 0\checkmark
 $$
 
-All KKT conditions are satisfied with $\lambda_2=1/20>0$, confirming that $(1/2,1/5)$ is a minimum of $\Phi$ and therefore a Nash flow.
+Both checks hold. Since $\Phi$ is convex, $(1/2,1/5)$ is the minimum of $\Phi$ and
+therefore a Nash flow.
+
+In terms of the routing game: commodity 2 splits its traffic so that both of its
+paths cost the same, and the path $(s_1, t)$ is cheaper than $(s_1, a, t)$ by
+$1/20$, so commodity 1 sends all of its traffic along $(s_1, t)$.
 
 ```{code-cell} python3
 import numpy as np
