@@ -114,10 +114,16 @@ population.
 
 ---
 
-A common representation of the fitness function $f$ is to use a game.
-In this setting, the fitness of an individual of type $i$ is:
+A common representation of the fitness function $f$ is to use a game with an
+$m \times m$ payoff matrix $A$. Let $v = (v_1, \dots, v_m)$ where $v_j$ is the
+number of individuals of type $j$, so that $\sum_{j=1}^m v_j = N$. In this
+setting, the fitness of an individual of type $i$ is:
 
-$$f_i(v) = (v_{i} - 1)A_{ii} + \sum_{j\ne i, j=1}^{N}v_jA_{ij}$$
+$$f_i(v) = (v_{i} - 1)A_{ii} + \sum_{j\ne i, j=1}^{m}v_jA_{ij}$$
+
+The individual plays every other member of the population once: there are
+$v_i - 1$ other individuals of its own type and $v_j$ individuals of each other
+type $j$.
 
 #### Example: Selection Probabilities for citation behaviour.
 
